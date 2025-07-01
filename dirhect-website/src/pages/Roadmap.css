@@ -530,12 +530,12 @@
   transform: translateX(3px);
 }
 
-/* Feedback Section */
-.roadmap-feedback {
+/* Support Section (renomeada de Feedback) */
+.roadmap-support {
   margin-top: 4rem;
 }
 
-.roadmap-feedback-card {
+.roadmap-support-card {
   background: white;
   padding: 3rem;
   border-radius: 24px;
@@ -546,7 +546,7 @@
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
-.roadmap-feedback-card::before {
+.roadmap-support-card::before {
   content: '';
   position: absolute;
   top: 0;
@@ -558,7 +558,7 @@
   pointer-events: none;
 }
 
-.roadmap-feedback-card h3 {
+.roadmap-support-card h3 {
   font-size: 2rem;
   font-weight: 800;
   margin-bottom: 1rem;
@@ -568,14 +568,14 @@
   color: #1e293b;
 }
 
-.roadmap-feedback-card h3 .gradient-text {
+.roadmap-support-card h3 .gradient-text {
   background: var(--gradient);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
 
-.roadmap-feedback-card p {
+.roadmap-support-card p {
   font-size: 1.1rem;
   margin-bottom: 2rem;
   color: #64748b;
@@ -587,7 +587,7 @@
   z-index: 2;
 }
 
-.roadmap-feedback-btn {
+.roadmap-support-btn {
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
@@ -605,17 +605,17 @@
   box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
 }
 
-.roadmap-feedback-btn:hover {
+.roadmap-support-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
 }
 
-.roadmap-feedback-btn svg {
+.roadmap-support-btn svg {
   transition: transform 0.3s ease;
 }
 
-.roadmap-feedback-btn:hover svg {
-  transform: translateX(3px);
+.roadmap-support-btn:hover svg {
+  transform: scale(1.1);
 }
 
 /* Responsive Design */
@@ -691,11 +691,11 @@
     font-size: 2rem;
   }
 
-  .roadmap-feedback-card {
+  .roadmap-support-card {
     padding: 2rem;
   }
 
-  .roadmap-feedback-card h3 {
+  .roadmap-support-card h3 {
     font-size: 1.5rem;
   }
 
@@ -726,15 +726,15 @@
     font-size: 1.25rem;
   }
 
-  .roadmap-feedback-card {
+  .roadmap-support-card {
     padding: 1.5rem;
   }
 
-  .roadmap-feedback-card h3 {
+  .roadmap-support-card h3 {
     font-size: 1.25rem;
   }
 
-  .roadmap-feedback-card p {
+  .roadmap-support-card p {
     font-size: 1rem;
   }
 } 

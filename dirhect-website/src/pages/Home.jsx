@@ -5,6 +5,7 @@ import AppFeatures from '../components/AppFeatures'
 import Solutions from '../components/Solutions'
 import SecuritySection from '../components/SecuritySection'
 import Footer from '../components/Footer'
+import FloatingButtons from '../components/FloatingButtons'
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
       <AppFeatures />
       <Solutions />
       <SecuritySection />
+      <FloatingButtons />
       <Footer />
     </div>
   )

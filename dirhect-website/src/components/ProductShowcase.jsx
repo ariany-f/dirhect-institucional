@@ -1,119 +1,189 @@
-import { useState, useEffect } from 'react'
-import { Users, Shield, Zap, BarChart3, FileCheck, Clock } from 'lucide-react'
+import { useState, useEffect, useRef } from 'react'
+import { 
+  ChevronDown, 
+  Play, 
+  Pause, 
+  RotateCcw, 
+  Volume2, 
+  VolumeX,
+  Smartphone,
+  Monitor,
+  Tablet
+} from 'lucide-react'
 import './ProductShowcase.css'
 
 const ProductShowcase = () => {
-  const [activeCard, setActiveCard] = useState(0)
-
-  const products = [
-    {
-      id: 'ats',
-      title: 'O melhor ATS para seu perfil',
-      subtitle: 'Sistema completo de gestão de candidatos com IA integrada.',
-      description: 'Conheça o ATS Dirhect',
-      icon: <Users size={32} />,
-      color: 'from-blue-500 to-purple-600',
-      features: [
-        'Triagem inteligente de currículos',
-        'Pipeline visual de candidatos',
-        'Relatórios avançados de recrutamento'
-      ]
-    },
-    {
-      id: 'automation',
-      title: 'Automação que funciona',
-      subtitle: 'Automatize 98% dos seus processos de elegibilidade.',
-      description: 'Conheça a Automação Dirhect',
-      icon: <Zap size={32} />,
-      color: 'from-purple-500 to-pink-600',
-      features: [
-        'Verificação automática de critérios',
-        'Redução de 90% em erros manuais',
-        'Integração com sistemas existentes'
-      ]
-    },
-    {
-      id: 'digital',
-      title: 'Admissão 100% digital',
-      subtitle: 'Processo de admissão sem papel, rápido e seguro.',
-      description: 'Conheça a Admissão Digital',
-      icon: <FileCheck size={32} />,
-      color: 'from-green-500 to-teal-600',
-      features: [
-        'Assinatura eletrônica válida',
-        'Onboarding automatizado',
-        'Redução de 70% no tempo'
-      ]
-    }
-  ]
+  const [activeTab, setActiveTab] = useState('desktop')
+  const [isPlaying, setIsPlaying] = useState(false)
+  const [isMuted, setIsMuted] = useState(true)
+  const [isVisible, setIsVisible] = useState(false)
+  const videoRef = useRef(null)
+  const sectionRef = useRef(null)
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveCard((prev) => (prev + 1) % products.length)
-    }, 4000)
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true)
+        }
+      },
+      { threshold: 0.2 }
+    )
 
-    return () => clearInterval(interval)
-  }, [products.length])
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  const togglePlay = () => {
+    if (videoRef.current) {
+      if (isPlaying) {
+        videoRef.current.pause()
+      } else {
+        videoRef.current.play()
+      }
+      setIsPlaying(!isPlaying)
+    }
+  }
+
+  const toggleMute = () => {
+    if (videoRef.current) {
+      videoRef.current.muted = !isMuted
+      setIsMuted(!isMuted)
+    }
+  }
+
+  const restartVideo = () => {
+    if (videoRef.current) {
+      videoRef.current.currentTime = 0
+      videoRef.current.play()
+      setIsPlaying(true)
+    }
+  }
 
   return (
-    <section className="product-showcase section">
+    <section ref={sectionRef} className={`product-showcase ${isVisible ? 'visible' : ''}`}>
       <div className="container">
         <div className="showcase-content">
-          <div className="showcase-text">
+          <div className="showcase-header">
+            <div className="showcase-badge">
+              <span>📱 Multiplataforma</span>
+            </div>
             <h2 className="showcase-title">
-              {products[activeCard].title}
+              Experimente nossa <span className="gradient-text">plataforma</span> em ação
             </h2>
             <p className="showcase-subtitle">
-              {products[activeCard].subtitle}
+              Veja como nossa solução funciona perfeitamente em todos os dispositivos,
+              oferecendo uma experiência consistente e intuitiva.
             </p>
-            <button className="btn-primary showcase-cta">
-              {products[activeCard].description}
-            </button>
-            
-            <div className="product-features">
-              {products[activeCard].features.map((feature, index) => (
-                <div key={index} className="feature-item">
-                  <div className="feature-dot"></div>
-                  <span>{feature}</span>
-                </div>
-              ))}
-            </div>
           </div>
 
-          <div className="showcase-visual">
-            <div className="cards-container">
-              {products.map((product, index) => (
-                <div
-                  key={product.id}
-                  className={`product-card ${index === activeCard ? 'active' : ''} ${index < activeCard ? 'prev' : ''} ${index > activeCard ? 'next' : ''}`}
-                  style={{
-                    '--card-index': index,
-                    '--active-index': activeCard
-                  }}
-                >
-                  <div className={`card-gradient ${product.color}`}>
-                    <div className="card-icon">
-                      {product.icon}
-                    </div>
-                    <div className="card-content">
-                      <h3>{product.title}</h3>
-                      <p>{product.subtitle}</p>
+          <div className="device-tabs">
+            <button 
+              className={`device-tab ${activeTab === 'desktop' ? 'active' : ''}`}
+              onClick={() => setActiveTab('desktop')}
+            >
+              <Monitor size={20} />
+              <span>Desktop</span>
+            </button>
+            <button 
+              className={`device-tab ${activeTab === 'tablet' ? 'active' : ''}`}
+              onClick={() => setActiveTab('tablet')}
+            >
+              <Tablet size={20} />
+              <span>Tablet</span>
+            </button>
+            <button 
+              className={`device-tab ${activeTab === 'mobile' ? 'active' : ''}`}
+              onClick={() => setActiveTab('mobile')}
+            >
+              <Smartphone size={20} />
+              <span>Mobile</span>
+            </button>
+          </div>
+
+          <div className="showcase-demo">
+            <div className={`demo-container ${activeTab}`}>
+              <div className="demo-screen">
+                <div className="screen-header">
+                  <div className="screen-controls">
+                    <span className="control red"></span>
+                    <span className="control yellow"></span>
+                    <span className="control green"></span>
+                  </div>
+                  <div className="screen-title">Dirhect - Sistema de RH</div>
+                </div>
+                
+                <div className="screen-content">
+                  <video 
+                    ref={videoRef}
+                    className="demo-video"
+                    muted={isMuted}
+                    loop
+                    onPlay={() => setIsPlaying(true)}
+                    onPause={() => setIsPlaying(false)}
+                  >
+                    <source src="/videos/demo.mp4" type="video/mp4" />
+                    Seu navegador não suporta vídeos HTML5.
+                  </video>
+                  
+                  <div className="video-overlay">
+                    <div className="loading-demo">
+                      <div className="loading-bars">
+                        <div className="bar"></div>
+                        <div className="bar"></div>
+                        <div className="bar"></div>
+                        <div className="bar"></div>
+                      </div>
+                      <span>Carregando demonstração...</span>
                     </div>
                   </div>
                 </div>
-              ))}
+                
+                <div className="video-controls">
+                  <button onClick={togglePlay} className="control-btn">
+                    {isPlaying ? <Pause size={16} /> : <Play size={16} />}
+                    <span>{isPlaying ? 'Pausar' : 'Reproduzir'}</span>
+                  </button>
+                  
+                  <button onClick={restartVideo} className="control-btn">
+                    <RotateCcw size={16} />
+                    <span>Reiniciar</span>
+                  </button>
+                  
+                  <button onClick={toggleMute} className="control-btn">
+                    {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+                    <span>{isMuted ? 'Som' : 'Mudo'}</span>
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="showcase-indicators">
-          {products.map((_, index) => (
-            <button
-              key={index}
-              className={`indicator ${index === activeCard ? 'active' : ''}`}
-              onClick={() => setActiveCard(index)}
-            />
-          ))}
+          <div className="showcase-features">
+            <div className="feature-item">
+              <div className="feature-icon">🚀</div>
+              <h4>Performance</h4>
+              <p>Interface rápida e responsiva</p>
+            </div>
+            <div className="feature-item">
+              <div className="feature-icon">🎨</div>
+              <h4>Design Moderno</h4>
+              <p>UX/UI intuitiva e elegante</p>
+            </div>
+            <div className="feature-item">
+              <div className="feature-icon">📱</div>
+              <h4>Responsivo</h4>
+              <p>Funciona em todos os dispositivos</p>
+            </div>
+            <div className="feature-item">
+              <div className="feature-icon">🔒</div>
+              <h4>Seguro</h4>
+              <p>Proteção máxima dos dados</p>
+            </div>
+          </div>
         </div>
       </div>
     </section>

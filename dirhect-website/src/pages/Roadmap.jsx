@@ -3,14 +3,16 @@ import { Calendar, Clock, CheckCircle, Circle, AlertCircle, ArrowRight, Users, Z
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import './Roadmap.css'
+import FloatingButtons from '../components/FloatingButtons'
 
 const Roadmap = () => {
   const [roadmapItems, setRoadmapItems] = useState([])
   const [isLoading, setIsLoading] = useState(true)
   const [selectedQuarter, setSelectedQuarter] = useState('all')
 
-  // Dados fake do roadmap que simulariam vir do WordPress
+  // Dados fake do roadmap incluindo funcionalidades já lançadas
   const fakeRoadmapData = [
+    // Funcionalidades já lançadas
     {
       id: 1,
       title: "IA Generativa para Descrições de Cargos",
@@ -21,6 +23,7 @@ const Roadmap = () => {
       category: "IA & Automação",
       votes: 247,
       estimatedDate: "2023-12-15",
+      launchedDate: "2023-12-10",
       features: [
         "Geração automática de descrições",
         "Análise de mercado integrada",
@@ -28,6 +31,43 @@ const Roadmap = () => {
         "Integração com banco de dados de competências"
       ]
     },
+    {
+      id: 7,
+      title: "Dashboard de Performance 3.0",
+      description: "Nova versão do dashboard com visualizações interativas, comparativos históricos e métricas de engajamento em tempo real.",
+      status: "completed",
+      priority: "high",
+      quarter: "Q3 2023",
+      category: "Analytics",
+      votes: 198,
+      estimatedDate: "2023-09-30",
+      launchedDate: "2023-09-25",
+      features: [
+        "Gráficos interativos",
+        "Comparativos históricos",
+        "Métricas de engajamento",
+        "Exportação em PDF"
+      ]
+    },
+    {
+      id: 8,
+      title: "Sistema de Avaliação 360°",
+      description: "Plataforma completa para avaliações 360 graus com feedback multidirecional, relatórios automatizados e planos de desenvolvimento.",
+      status: "completed",
+      priority: "medium",
+      quarter: "Q2 2023",
+      category: "Avaliações",
+      votes: 167,
+      estimatedDate: "2023-06-30",
+      launchedDate: "2023-06-28",
+      features: [
+        "Avaliação multidirecional",
+        "Relatórios automatizados",
+        "Planos de desenvolvimento",
+        "Notificações inteligentes"
+      ]
+    },
+    // Funcionalidades em desenvolvimento
     {
       id: 2,
       title: "Dashboard Analytics Avançado",
@@ -45,6 +85,7 @@ const Roadmap = () => {
         "Relatórios customizáveis"
       ]
     },
+    // Funcionalidades planejadas
     {
       id: 3,
       title: "Integração com Microsoft Teams",
@@ -115,13 +156,13 @@ const Roadmap = () => {
     }
   ]
 
-  const quarters = ['all', 'Q4 2023', 'Q1 2024', 'Q2 2024', 'Q3 2024']
+  const quarters = ['all', 'Q2 2023', 'Q3 2023', 'Q4 2023', 'Q1 2024', 'Q2 2024', 'Q3 2024']
 
   const getStatusConfig = (status) => {
     const configs = {
       completed: {
         icon: <CheckCircle size={20} />,
-        text: 'Concluído',
+        text: 'Lançado',
         color: '#10b981',
         bgColor: 'rgba(16, 185, 129, 0.1)'
       },
@@ -164,9 +205,18 @@ const Roadmap = () => {
     }, 1000)
   }, [])
 
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   const filteredItems = selectedQuarter === 'all' 
     ? roadmapItems 
     : roadmapItems.filter(item => item.quarter === selectedQuarter)
+
+  const completedItems = roadmapItems.filter(item => item.status === 'completed')
+  const inProgressItems = roadmapItems.filter(item => item.status === 'in-progress')
+  const plannedItems = roadmapItems.filter(item => item.status === 'planned' || item.status === 'research')
 
   if (isLoading) {
     return (
@@ -198,24 +248,22 @@ const Roadmap = () => {
             </h1>
             
             <p className="roadmap-subtitle">
-              Acompanhe as próximas funcionalidades e melhorias que estamos desenvolvendo 
+              Acompanhe as funcionalidades já lançadas e as próximas melhorias que estamos desenvolvendo 
               para revolucionar ainda mais sua experiência de RH
             </p>
 
             <div className="roadmap-stats">
               <div className="roadmap-stat">
-                <div className="roadmap-stat-number">{roadmapItems.length}</div>
-                <div className="roadmap-stat-label">Funcionalidades</div>
+                <div className="roadmap-stat-number">{completedItems.length}</div>
+                <div className="roadmap-stat-label">Já Lançadas</div>
               </div>
               <div className="roadmap-stat">
-                <div className="roadmap-stat-number">
-                  {roadmapItems.reduce((sum, item) => sum + item.votes, 0)}
-                </div>
-                <div className="roadmap-stat-label">Votos da Comunidade</div>
+                <div className="roadmap-stat-number">{inProgressItems.length}</div>
+                <div className="roadmap-stat-label">Em Desenvolvimento</div>
               </div>
               <div className="roadmap-stat">
-                <div className="roadmap-stat-number">4</div>
-                <div className="roadmap-stat-label">Trimestres</div>
+                <div className="roadmap-stat-number">{plannedItems.length}</div>
+                <div className="roadmap-stat-label">Planejadas</div>
               </div>
             </div>
           </div>
@@ -288,7 +336,12 @@ const Roadmap = () => {
                   <div className="roadmap-card-footer">
                     <div className="roadmap-card-date">
                       <Calendar size={16} />
-                      <span>Previsão: {new Date(item.estimatedDate).toLocaleDateString('pt-BR')}</span>
+                      <span>
+                        {item.status === 'completed' 
+                          ? `Lançado: ${new Date(item.launchedDate).toLocaleDateString('pt-BR')}`
+                          : `Previsão: ${new Date(item.estimatedDate).toLocaleDateString('pt-BR')}`
+                        }
+                      </span>
                     </div>
                     
                     <div className="roadmap-card-votes">
@@ -297,33 +350,22 @@ const Roadmap = () => {
                     </div>
                   </div>
 
-                  <div className="roadmap-card-cta">
-                    <button className="roadmap-vote-btn">
-                      <span>Votar nesta funcionalidade</span>
-                      <ArrowRight size={16} />
-                    </button>
-                  </div>
+                  {item.status !== 'completed' && (
+                    <div className="roadmap-card-cta">
+                      <button className="roadmap-vote-btn">
+                        <span>Votar nesta funcionalidade</span>
+                        <ArrowRight size={16} />
+                      </button>
+                    </div>
+                  )}
                 </div>
               )
             })}
           </div>
-
-          <div className="roadmap-feedback">
-            <div className="roadmap-feedback-card">
-              <h3>Sua <span className="gradient-text">opinião</span> é importante!</h3>
-              <p>
-                Tem alguma sugestão de funcionalidade? Quer votar em alguma das propostas? 
-                Entre em contato conosco e ajude a moldar o futuro da plataforma.
-              </p>
-              <button className="roadmap-feedback-btn">
-                <span>Enviar Sugestão</span>
-                <ArrowRight size={20} />
-              </button>
-            </div>
-          </div>
         </div>
       </main>
 
+      <FloatingButtons />
       <Footer />
     </div>
   )

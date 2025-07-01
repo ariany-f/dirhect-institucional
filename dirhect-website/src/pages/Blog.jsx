@@ -3,11 +3,17 @@ import { Calendar, User, ArrowRight, Clock } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import FloatingButtons from '../components/FloatingButtons'
 import './Blog.css'
 
 const Blog = () => {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   // Posts estáticos baseados no News.jsx
   const blogPosts = [
@@ -97,7 +103,7 @@ const Blog = () => {
   }
 
   return (
-    <div>
+    <div className="blog-page">
       <Header />
       
       <main className="blog-main">
@@ -119,8 +125,12 @@ const Blog = () => {
               </div>
             ) : (
               <div className="posts-grid">
-                {posts.map((post) => (
-                  <article key={post.id} className="post-card card">
+                {posts.map((post, index) => (
+                  <article 
+                    key={post.id} 
+                    className="post-card card"
+                    style={{ '--delay': `${index * 0.1}s` }}
+                  >
                     <div className="post-image">
                       <img src={post.featured_media} alt={stripHtml(post.title.rendered)} />
                       <div className="post-category-badge">{post.category}</div>
@@ -163,6 +173,7 @@ const Blog = () => {
         </section>
       </main>
       
+      <FloatingButtons />
       <Footer />
     </div>
   )

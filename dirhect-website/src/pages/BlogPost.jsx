@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { Calendar, Clock, ArrowLeft, ArrowRight, User, Tag, Share2, Facebook, Twitter, Linkedin } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import FloatingButtons from '../components/FloatingButtons'
 import './BlogPost.css'
 
 const BlogPost = () => {
@@ -223,6 +224,11 @@ const BlogPost = () => {
     window.scrollTo(0, 0)
   }, [id])
 
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   const formatDate = (dateString) => {
     return dateString
   }
@@ -283,7 +289,7 @@ const BlogPost = () => {
   }
 
   return (
-    <div>
+    <div className="blog-post-page">
       <Header />
       
       <main className="blog-post-main">
@@ -423,6 +429,7 @@ const BlogPost = () => {
         )}
       </main>
       
+      <FloatingButtons />
       <Footer />
     </div>
   )
