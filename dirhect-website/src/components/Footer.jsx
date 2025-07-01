@@ -26,10 +26,11 @@ const Footer = () => {
           <div className="footer-section">
             <h4>Soluções</h4>
             <ul className="footer-links">
-              <li><a href="#solucoes">Automação de Elegibilidade</a></li>
-              <li><a href="#solucoes">ATS Completo</a></li>
-              <li><a href="#solucoes">Admissão Digital</a></li>
+              <li><a href="#solucoes">Portal de RH</a></li>
+              <li><a href="#solucoes">Gestão de Tarefas</a></li>
               <li><a href="#solucoes">Gestão de Benefícios</a></li>
+              <li><a href="#solucoes">Admissão Digital</a></li>
+              <li><a href="#solucoes">Integrações</a></li>
             </ul>
           </div>
 
