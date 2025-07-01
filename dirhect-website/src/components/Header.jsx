@@ -49,10 +49,12 @@ const Header = () => {
           <img width={140} src="/images/logo_dirhect_rgb_16317_horizontal.png" alt="Dirhect Logo" />
         </Link>
         
-        {/* Overlay para mobile */}
-        {isMobileMenuOpen && <div className="mobile-overlay" onClick={() => setIsMobileMenuOpen(false)} />}
-        
         <nav className={`nav ${isMobileMenuOpen ? 'nav-mobile-open' : ''}`}>
+          {/* Logo no menu mobile */}
+          <div className="mobile-menu-logo">
+            <img width={160} src="/images/logo_dirhect_rgb_16317_horizontal.png" alt="Dirhect Logo" />
+          </div>
+          
           <ul className="nav-links">
             <li>
               <a 
