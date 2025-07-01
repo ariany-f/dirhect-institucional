@@ -8,7 +8,7 @@ body {
 }
 
 .demo-hero {
-  background: linear-gradient(135deg, var(--white) 0%, var(--gray-100) 100%);
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   padding: 150px 0 80px;
   text-align: center;
   position: relative;
@@ -19,14 +19,27 @@ body {
 .demo-hero::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
   background: 
-    radial-gradient(circle at 20% 30%, rgba(93, 11, 98, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 70%, rgba(12, 0, 76, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+  animation: backgroundFloat 20s ease-in-out infinite;
   pointer-events: none;
+}
+
+@keyframes backgroundFloat {
+  0%, 100% {
+    transform: rotate(0deg) translate(0, 0);
+  }
+  33% {
+    transform: rotate(120deg) translate(-20px, -10px);
+  }
+  66% {
+    transform: rotate(240deg) translate(20px, 10px);
+  }
 }
 
 .demo-header {
@@ -37,19 +50,29 @@ body {
 .demo-header h1 {
   font-size: 3.5rem;
   margin-bottom: 1.5rem;
-  font-weight: 800;
+  font-weight: 900;
+  color: #1e293b;
+  letter-spacing: -0.03em;
+}
+
+.demo-header .gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .demo-header p {
   font-size: 1.25rem;
   max-width: 600px;
   margin: 0 auto;
-  color: var(--text-secondary);
+  color: #64748b;
+  line-height: 1.6;
 }
 
 .demo-form-section {
   padding: 80px 0;
-  background: var(--white);
+  background: white;
   overflow-x: hidden;
   width: 100%;
 }
@@ -59,13 +82,16 @@ body {
   grid-template-columns: 2fr 1fr;
   gap: 6rem;
   align-items: flex-start;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 3rem;
 }
 
 .form-container {
   background: white;
-  border-radius: 20px;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08);
-  border: 1px solid var(--gray-200);
+  border-radius: 24px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
   overflow: hidden;
   width: 100%;
   max-width: 100%;
@@ -86,10 +112,10 @@ body {
 .form-section h3 {
   font-size: 1.5rem;
   font-weight: 700;
-  color: var(--text-primary);
+  color: #1e293b;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 2px solid var(--gray-200);
+  border-bottom: 2px solid #e2e8f0;
 }
 
 .form-grid {
@@ -110,7 +136,7 @@ body {
 
 .form-group label {
   font-weight: 600;
-  color: var(--text-primary);
+  color: #1e293b;
   font-size: 0.95rem;
 }
 
@@ -123,7 +149,7 @@ body {
 .input-wrapper svg {
   position: absolute;
   left: 1rem;
-  color: var(--text-secondary);
+  color: #64748b;
   z-index: 2;
 }
 
@@ -134,7 +160,7 @@ body {
   max-width: 100%;
   box-sizing: border-box;
   padding: 1rem 1rem 1rem 3rem;
-  border: 2px solid var(--gray-300);
+  border: 2px solid #e2e8f0;
   border-radius: 12px;
   font-size: 1rem;
   font-family: inherit;
@@ -150,8 +176,8 @@ body {
 .form-group select:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 3px rgba(12, 0, 76, 0.1);
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
 .form-group textarea {
@@ -179,7 +205,7 @@ body {
 }
 
 .checkbox-item:hover {
-  background: var(--gray-100);
+  background: #f8fafc;
 }
 
 .checkbox-item input[type="checkbox"] {
@@ -189,7 +215,7 @@ body {
 .checkmark {
   width: 20px;
   height: 20px;
-  border: 2px solid var(--gray-300);
+  border: 2px solid #e2e8f0;
   border-radius: 4px;
   position: relative;
   transition: all 0.3s ease;
@@ -198,38 +224,48 @@ body {
 
 .checkbox-item input[type="checkbox"]:checked + .checkmark {
   background: var(--gradient);
-  border-color: var(--primary-color);
+  border-color: transparent;
 }
 
 .checkbox-item input[type="checkbox"]:checked + .checkmark::after {
-  content: '✓';
+  content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
+  left: 6px;
+  top: 2px;
+  width: 6px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
 }
 
 .terms-checkbox {
-  background: var(--gray-100);
-  padding: 1.5rem;
-  border-radius: 12px;
-  border: 1px solid var(--gray-200);
+  margin-top: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .terms-checkbox a {
-  color: var(--primary-color);
-  text-decoration: underline;
+  color: #3b82f6;
+  text-decoration: none;
 }
 
 .submit-btn {
   width: 100%;
-  padding: 1.25rem;
-  font-size: 1.2rem;
+  background: var(--gradient);
+  color: white;
+  border: none;
+  padding: 1.25rem 2rem;
+  border-radius: 12px;
   font-weight: 700;
-  margin-top: 2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+}
+
+.submit-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
 }
 
 .submit-btn:disabled {
@@ -239,10 +275,10 @@ body {
 
 .demo-benefits {
   background: white;
-  border-radius: 20px;
+  border-radius: 24px;
   padding: 2.5rem;
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.08);
-  border: 1px solid var(--gray-200);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e2e8f0;
   height: fit-content;
   position: sticky;
   top: 120px;
@@ -251,7 +287,8 @@ body {
 .demo-benefits h3 {
   font-size: 1.5rem;
   margin-bottom: 2rem;
-  color: var(--text-primary);
+  color: #1e293b;
+  font-weight: 700;
 }
 
 .benefits-list {
@@ -265,10 +302,21 @@ body {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
+  padding: 1rem;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.benefit-item:hover {
+  background: #f1f5f9;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
 
 .benefit-item svg {
-  color: var(--primary-color);
+  color: #3b82f6;
   flex-shrink: 0;
   margin-top: 0.25rem;
 }
@@ -276,26 +324,29 @@ body {
 .benefit-item h4 {
   font-size: 1.1rem;
   margin-bottom: 0.5rem;
-  color: var(--text-primary);
+  color: #1e293b;
+  font-weight: 600;
 }
 
 .benefit-item p {
-  color: var(--text-secondary);
+  color: #64748b;
   font-size: 0.95rem;
   margin: 0;
+  line-height: 1.5;
 }
 
 .contact-info {
   padding: 2rem;
-  background: var(--gray-100);
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   border-radius: 16px;
-  border: 1px solid var(--gray-200);
+  border: 1px solid #e2e8f0;
 }
 
 .contact-info h4 {
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
-  color: var(--text-primary);
+  color: #1e293b;
+  font-weight: 600;
 }
 
 .contact-methods {
@@ -308,12 +359,22 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: var(--text-primary);
+  color: #1e293b;
   font-weight: 500;
+  padding: 0.75rem;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  transition: all 0.3s ease;
+}
+
+.contact-method:hover {
+  background: #f8fafc;
+  transform: translateY(-1px);
 }
 
 .contact-method svg {
-  color: var(--primary-color);
+  color: #3b82f6;
   flex-shrink: 0;
 }
 
@@ -323,7 +384,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, var(--white) 0%, var(--gray-100) 100%);
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
   padding: 150px 0 80px;
 }
 
@@ -333,20 +394,22 @@ body {
 }
 
 .success-icon {
-  color: var(--success-color);
+  color: #10b981;
   margin-bottom: 2rem;
 }
 
 .success-content h1 {
   font-size: 3rem;
   margin-bottom: 1.5rem;
-  color: var(--text-primary);
+  color: #1e293b;
+  font-weight: 900;
 }
 
 .success-content p {
   font-size: 1.25rem;
   margin-bottom: 3rem;
-  color: var(--text-secondary);
+  color: #64748b;
+  line-height: 1.6;
 }
 
 .success-info {
@@ -360,18 +423,37 @@ body {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: var(--text-primary);
+  color: #1e293b;
   font-weight: 500;
 }
 
 .info-item svg {
-  color: var(--primary-color);
+  color: #3b82f6;
+}
+
+.btn-primary {
+  background: var(--gradient);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
 }
 
 /* Responsive */
 @media (max-width: 1200px) {
   .demo-content {
     gap: 4rem;
+    padding: 0 2rem;
   }
   
   .demo-benefits {
@@ -383,6 +465,7 @@ body {
   .demo-content {
     grid-template-columns: 1fr;
     gap: 3rem;
+    padding: 0 2rem;
   }
 
   .demo-benefits {
@@ -427,6 +510,10 @@ body {
     padding: 50px 0;
   }
 
+  .demo-content {
+    padding: 0 1.5rem;
+  }
+
   .demo-form {
     padding: 2rem;
   }
@@ -442,175 +529,172 @@ body {
   .demo-benefits {
     padding: 2rem;
   }
-  
+
   .benefits-list {
-    gap: 1rem;
+    gap: 1.25rem;
   }
-  
-  .benefit-item {
-    flex-direction: row;
-    align-items: flex-start;
+
+  .demo-benefit-item {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
   }
-  
-  .benefit-item h4 {
-    font-size: 1rem;
+
+  .demo-benefit-item h4 {
+    margin-bottom: 0.75rem;
   }
-  
-  .benefit-item p {
+
+  .demo-benefit-item p {
     font-size: 0.9rem;
   }
 
   .success-content h1 {
-    font-size: 2rem;
+    font-size: 2.5rem;
   }
 
   .success-info {
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
   }
-  
+
   .contact-info {
     padding: 1.5rem;
   }
 }
 
 @media (max-width: 640px) {
-  .container {
+  .demo-content {
     padding: 0 1rem;
   }
   
   .demo-hero {
     padding: 100px 0 40px;
   }
-  
+
   .demo-header h1 {
     font-size: 2rem;
   }
-  
+
   .demo-header p {
     font-size: 1rem;
   }
-  
+
   .demo-form {
     padding: 1.5rem;
   }
-  
+
   .form-section h3 {
     font-size: 1.2rem;
     margin-bottom: 1.5rem;
   }
-  
+
   .form-group label {
     font-size: 0.9rem;
   }
-  
+
   .form-group input,
   .form-group select,
   .form-group textarea {
-    padding: 0.875rem 0.875rem 0.875rem 2.5rem;
-    font-size: 0.95rem;
+    font-size: 16px; /* Previne zoom no iOS */
   }
-  
+
   .form-group input:not(.input-wrapper input) {
-    padding: 0.875rem;
+    padding: 1rem;
   }
-  
+
   .input-wrapper svg {
     left: 0.75rem;
     width: 18px;
     height: 18px;
   }
-  
+
   .checkbox-item {
-    padding: 0.5rem;
     font-size: 0.9rem;
+    padding: 0.5rem;
   }
-  
+
   .checkmark {
     width: 18px;
     height: 18px;
   }
-  
+
   .terms-checkbox {
-    padding: 1rem;
     font-size: 0.9rem;
   }
-  
+
   .submit-btn {
-    padding: 1rem;
-    font-size: 1.1rem;
+    padding: 1rem 1.5rem;
+    font-size: 0.95rem;
   }
-  
+
   .demo-benefits {
     padding: 1.5rem;
   }
-  
+
   .demo-benefits h3 {
-    font-size: 1.3rem;
+    font-size: 1.25rem;
     margin-bottom: 1.5rem;
   }
-  
-  .benefit-item svg {
+
+  .demo-benefit-item svg {
     width: 20px;
     height: 20px;
   }
-  
+
   .contact-info {
-    padding: 1rem;
+    padding: 1.25rem;
   }
-  
+
   .contact-info h4 {
     font-size: 1rem;
   }
-  
+
   .contact-method {
     font-size: 0.9rem;
+    padding: 0.5rem;
   }
-  
+
   .contact-method svg {
     width: 18px;
     height: 18px;
   }
-  
+
   .form-grid {
-    grid-template-columns: 1fr;
     gap: 1rem;
   }
-  
+
   .form-group-full {
-    grid-column: 1;
+    grid-column: 1 / -1;
   }
 }
 
 @media (max-width: 480px) {
   .demo-header h1 {
-    font-size: 1.8rem;
+    font-size: 1.75rem;
   }
-  
+
   .demo-form {
-    padding: 1rem;
+    padding: 1.25rem;
   }
-  
+
   .form-container {
     border-radius: 16px;
-    margin: 0 0.5rem;
   }
-  
+
   .demo-benefits {
-    padding: 1rem;
     border-radius: 16px;
-    margin: 0 0.5rem;
+    padding: 1.25rem;
   }
-  
+
   .success-content {
-    padding: 0 1rem;
+    padding: 1rem;
   }
-  
+
   .success-content h1 {
-    font-size: 1.8rem;
+    font-size: 2rem;
   }
-  
+
   .success-content p {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
 } 

@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { Building2, Users, Mail, Phone, MapPin, Calendar, CheckCircle2 } from 'lucide-react'
@@ -77,6 +77,11 @@ const Demo = () => {
       setSubmitSuccess(true)
     }, 2000)
   }
+
+  // Scroll para o topo quando a página carregar
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   if (submitSuccess) {
     return (
@@ -310,28 +315,28 @@ const Demo = () => {
             <div className="demo-benefits">
               <h3>O que você terá na demonstração:</h3>
               <div className="benefits-list">
-                <div className="benefit-item">
+                <div className="demo-benefit-item">
                   <CheckCircle2 size={24} />
                   <div>
                     <h4>Análise Personalizada</h4>
                     <p>Avaliação específica das necessidades da sua empresa</p>
                   </div>
                 </div>
-                <div className="benefit-item">
+                <div className="demo-benefit-item">
                   <CheckCircle2 size={24} />
                   <div>
                     <h4>Demo Ao Vivo</h4>
                     <p>Apresentação completa das funcionalidades da plataforma</p>
                   </div>
                 </div>
-                <div className="benefit-item">
+                <div className="demo-benefit-item">
                   <CheckCircle2 size={24} />
                   <div>
                     <h4>Consultoria Gratuita</h4>
                     <p>Orientações sobre implementação e melhores práticas</p>
                   </div>
                 </div>
-                <div className="benefit-item">
+                <div className="demo-benefit-item">
                   <CheckCircle2 size={24} />
                   <div>
                     <h4>Proposta Customizada</h4>

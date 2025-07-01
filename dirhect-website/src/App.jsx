@@ -5,6 +5,7 @@ import Blog from './pages/Blog'
 import BlogPost from './pages/BlogPost'
 import Roadmap from './pages/Roadmap'
 import Demo from './pages/Demo'
+import TechnicalDocumentation from './pages/TechnicalDocumentation'
 import './App.css'
 import Hero from './components/Hero'
 import WhyChoose from './components/WhyChoose'
@@ -15,8 +16,8 @@ import News from './components/News'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import Header from './components/Header'
-import ProductShowcase from './components/ProductShowcase'
 import SecuritySection from './components/SecuritySection'
+import Integrations from './components/Integrations'
 import FloatingButtons from './components/FloatingButtons'
 
 const GRADIENT = 'linear-gradient(to left, #0c004c, #5d0b62)';
@@ -46,6 +47,7 @@ function App() {
               <WhyChoose />
               <Solutions />
               <About />
+              <Integrations />
               <AppFeatures />
               <SecuritySection />
               <News />
@@ -58,6 +60,7 @@ function App() {
           <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/roadmap" element={<Roadmap />} />
           <Route path="/demo" element={<Demo />} />
+          <Route path="/docs" element={<TechnicalDocumentation />} />
         </Routes>
       </div>
     </Router>
