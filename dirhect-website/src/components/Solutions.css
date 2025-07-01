@@ -1,0 +1,523 @@
+/* Seção Solutions */
+.solutions {
+  padding: 80px 0;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.solutions::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(93, 11, 98, 0.03) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(12, 0, 76, 0.03) 0%, transparent 50%);
+  pointer-events: none;
+}
+
+.solutions .container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-header h2 {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+.gradient-text {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Carrossel de pilares estilo Nubank */
+.pillars-showcase {
+  margin-bottom: 4rem;
+}
+
+.pillars-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.pillar-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.pillar-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.pillar-icon-wrapper {
+  width: 70px;
+  height: 70px;
+  background: var(--gradient);
+  border-radius: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  box-shadow: 0 8px 25px rgba(12, 0, 76, 0.3);
+}
+
+.pillar-text h3 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+  color: var(--text-primary);
+}
+
+.pillar-description {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.pillar-benefits {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 1.5rem;
+  border: 1px solid var(--gray-200);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.pillar-benefits h4 {
+  font-size: 1rem;
+  margin: 0 0 1rem 0;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.pillar-benefits ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.pillar-benefits li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+.pillar-benefits li svg {
+  color: var(--primary-color);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* Controles do carrossel */
+.carousel-controls {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-top: 1.5rem;
+}
+
+.control-btn {
+  width: 44px;
+  height: 44px;
+  border: 2px solid var(--primary-color);
+  border-radius: 50%;
+  background: white;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(12, 0, 76, 0.15);
+}
+
+.control-btn:hover {
+  background: var(--primary-color);
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 6px 20px rgba(12, 0, 76, 0.3);
+}
+
+.control-btn.play-pause {
+  background: var(--gradient);
+  color: white;
+  border: none;
+}
+
+.control-btn.play-pause:hover {
+  background: linear-gradient(135deg, var(--secondary-color) 0%, var(--primary-color) 100%);
+  transform: scale(1.1);
+}
+
+/* Indicadores */
+.carousel-indicators {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  border: 2px solid var(--gray-300);
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.indicator.active {
+  background: var(--gradient);
+  border-color: var(--primary-color);
+  transform: scale(1.2);
+}
+
+.indicator:not(.active):hover {
+  background: var(--gray-200);
+  border-color: var(--primary-color);
+  transform: scale(1.1);
+}
+
+/* Visual do pilar */
+.pillar-visual {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pillar-image-container {
+  position: relative;
+  width: 100%;
+  max-width: 450px;
+  height: 350px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.pillar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.pillar-image-container:hover .pillar-image {
+  transform: scale(1.05);
+}
+
+.image-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  padding: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+
+.overlay-content {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  color: white;
+  font-weight: 600;
+}
+
+.pillar-number {
+  font-size: 1.8rem;
+}
+
+.pillar-total {
+  font-size: 1rem;
+  color: #b3b3b3;
+}
+
+/* Seção de resultados */
+.results-section {
+  text-align: center;
+}
+
+.results-section h3 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.benefit-card {
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  border: 1px solid var(--gray-200);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+
+.benefit-card:hover {
+  transform: translateY(-6px);
+  background: white;
+  border-color: var(--primary-color);
+  box-shadow: 0 8px 30px rgba(12, 0, 76, 0.15);
+}
+
+.benefit-icon {
+  width: 50px;
+  height: 50px;
+  background: var(--gradient);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
+.benefit-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.benefit-value {
+  font-size: 2.2rem;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--primary-color);
+}
+
+.benefit-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.benefit-description {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* Media Queries para responsividade */
+@media (max-width: 1024px) {
+  .solutions {
+    padding: 60px 0;
+    min-height: auto;
+  }
+
+  .section-header h2 {
+    font-size: 2.8rem;
+  }
+
+  .section-header {
+    margin-bottom: 3rem;
+  }
+
+  .pillars-showcase {
+    margin-bottom: 3rem;
+  }
+
+  .pillars-content {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .pillar-text {
+    order: 2;
+    gap: 1.5rem;
+  }
+
+  .pillar-visual {
+    order: 1;
+  }
+
+  .pillar-image-container {
+    max-width: 400px;
+    height: 300px;
+  }
+
+  .pillar-text h3 {
+    font-size: 2rem;
+  }
+
+  .benefits-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.2rem;
+  }
+
+  .benefit-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .results-section h3 {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .solutions {
+    padding: 50px 0;
+  }
+
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+
+  .section-header h2 {
+    font-size: 2.2rem;
+  }
+
+  .pillars-showcase {
+    margin-bottom: 2.5rem;
+  }
+
+  .pillars-content {
+    gap: 2.5rem;
+  }
+
+  .pillar-text h3 {
+    font-size: 1.8rem;
+  }
+
+  .pillar-description {
+    font-size: 1rem;
+  }
+
+  .pillar-image-container {
+    max-width: 350px;
+    height: 260px;
+  }
+
+  .carousel-controls {
+    justify-content: center;
+    margin-top: 1rem;
+  }
+
+  .carousel-indicators {
+    justify-content: center;
+    margin-top: 0.8rem;
+  }
+
+  .results-section h3 {
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+  }
+
+  .benefit-card {
+    padding: 1.5rem 1rem;
+  }
+
+  .benefits-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .benefit-value {
+    font-size: 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .solutions {
+    padding: 40px 0;
+  }
+
+  .section-header h2 {
+    font-size: 1.8rem;
+  }
+
+  .section-header {
+    margin-bottom: 2rem;
+  }
+
+  .pillars-showcase {
+    margin-bottom: 2rem;
+  }
+
+  .pillar-text h3 {
+    font-size: 1.6rem;
+  }
+
+  .pillar-description {
+    font-size: 0.95rem;
+  }
+
+  .pillar-image-container {
+    max-width: 300px;
+    height: 220px;
+  }
+
+  .pillar-benefits {
+    padding: 1.2rem;
+  }
+
+  .control-btn {
+    width: 40px;
+    height: 40px;
+  }
+
+  .benefit-value {
+    font-size: 1.8rem;
+  }
+
+  .benefit-title {
+    font-size: 0.9rem;
+  }
+
+  .benefit-description {
+    font-size: 0.8rem;
+  }
+
+  .results-section h3 {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+  }
+} 

@@ -1,0 +1,31 @@
+{
+  "name": "Dirhect - Gestão de RH Inteligente",
+  "short_name": "Dirhect",
+  "description": "Revolucione sua gestão de RH com automação de elegibilidade, ATS completo e admissão digital.",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#0c004c",
+  "background_color": "#fafafa",
+  "icons": [
+    {
+      "src": "/images/cropped-Favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/cropped-Favicon-180x180.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/cropped-Favicon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/cropped-Favicon-270x270.png",
+      "sizes": "270x270",
+      "type": "image/png"
+    }
+  ]
+} 

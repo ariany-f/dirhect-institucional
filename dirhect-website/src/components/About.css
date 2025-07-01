@@ -1,0 +1,25 @@
+.about {
+  background: var(--white);
+  padding: 80px 0;
+}
+
+.about .section-header {
+  margin-bottom: 4rem;
+}
+
+.about-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about-text h3 {
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.about-text p {
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+  line-height: 1.7;
+} 

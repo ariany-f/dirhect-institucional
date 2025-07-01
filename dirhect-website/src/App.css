@@ -1,0 +1,38 @@
+.app {
+  min-height: 100vh;
+  background: var(--white);
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Selection styling */
+::selection {
+  background: rgba(12, 0, 76, 0.2);
+  color: var(--text-primary);
+}
+
+::-moz-selection {
+  background: rgba(12, 0, 76, 0.2);
+  color: var(--text-primary);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gray-300);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--gray-400);
+} 
