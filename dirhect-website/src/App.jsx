@@ -8,6 +8,7 @@ import Demo from './pages/Demo'
 import TechnicalDocumentation from './pages/TechnicalDocumentation'
 import PoliticaPrivacidade from './pages/PoliticaPrivacidade'
 import TermosUso from './pages/TermosUso'
+import NotFound from './pages/NotFound'
 import './App.css'
 import Hero from './components/Hero'
 import WhyChoose from './components/WhyChoose'
@@ -65,6 +66,7 @@ function App() {
           <Route path="/docs" element={<TechnicalDocumentation />} />
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/termos-uso" element={<TermosUso />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
     </Router>
