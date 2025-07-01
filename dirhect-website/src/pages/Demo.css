@@ -316,7 +316,6 @@ body {
 }
 
 .benefit-item svg {
-  color: #3b82f6;
   flex-shrink: 0;
   margin-top: 0.25rem;
 }
