@@ -32,32 +32,6 @@ const Hero = () => {
                 Reduza erros, economize tempo e foque no que realmente importa.
               </p>
             </div>
-
-            <div className="hero-cards">
-              <div className="hero-card">
-                <div className="hero-card-icon">
-                  <Zap size={24} />
-                </div>
-                <h3>Automação Completa</h3>
-                <p>Processos automatizados que eliminam retrabalhos e aumentam a eficiência</p>
-              </div>
-              
-              <div className="hero-card">
-                <div className="hero-card-icon">
-                  <Users size={24} />
-                </div>
-                <h3>Portal Centralizado</h3>
-                <p>Toda comunicação e documentação em um só lugar para sua equipe</p>
-              </div>
-              
-              <div className="hero-card">
-                <div className="hero-card-icon">
-                  <Shield size={24} />
-                </div>
-                <h3>Segurança Total</h3>
-                <p>Proteção de dados conforme LGPD e máxima segurança para sua empresa</p>
-              </div>
-            </div>
           </div>
 
           {/* Seção do CNPJ na inferior direita */}

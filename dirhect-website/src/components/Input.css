@@ -1,0 +1,207 @@
+/* Input Wrapper */
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.input-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #374151;
+  letter-spacing: -0.01em;
+}
+
+.input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* Base Input Styles */
+.input-field {
+  width: 100%;
+  font-family: inherit;
+  font-weight: 500;
+  border: 2px solid #e5e7eb;
+  border-radius: 16px;
+  background: #f9fafb;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  color: #1f2937;
+  letter-spacing: -0.01em;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #3b82f6;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08);
+  transform: translateY(-1px);
+}
+
+.input-field::placeholder {
+  color: #9ca3af;
+  font-weight: 400;
+}
+
+/* Input Variants */
+.input-field--default {
+  /* Default styles already defined above */
+}
+
+.input-field--minimal {
+  background: transparent;
+  border-color: #d1d5db;
+  border-radius: 12px;
+}
+
+.input-field--minimal:focus {
+  background: #f9fafb;
+  border-color: #3b82f6;
+}
+
+.input-field--solid {
+  background: white;
+  border-color: #d1d5db;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.input-field--solid:focus {
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.08), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Input Sizes */
+.input-field--sm {
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+}
+
+.input-field--md {
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+}
+
+.input-field--lg {
+  padding: 1.25rem 1.5rem;
+  font-size: 1.125rem;
+}
+
+/* Input with Icons */
+.input-field--with-icon.input-field--icon-left {
+  padding-left: 3rem;
+}
+
+.input-field--with-icon.input-field--icon-right {
+  padding-right: 3rem;
+}
+
+.input-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #6b7280;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.input-icon--left {
+  left: 1rem;
+}
+
+.input-icon--right {
+  right: 1rem;
+}
+
+/* Input States */
+.input-field--error {
+  border-color: #ef4444;
+  background: #fef2f2;
+}
+
+.input-field--error:focus {
+  border-color: #ef4444;
+  box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+  background: white;
+}
+
+.input-field--focused {
+  /* Focus styles already applied via :focus */
+}
+
+/* Helper Text */
+.input-helper {
+  font-size: 0.8rem;
+  color: #6b7280;
+  line-height: 1.4;
+}
+
+.input-error {
+  font-size: 0.8rem;
+  color: #ef4444;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+/* Size adjustments for icons */
+.input-field--sm.input-field--with-icon.input-field--icon-left {
+  padding-left: 2.5rem;
+}
+
+.input-field--sm.input-field--with-icon.input-field--icon-right {
+  padding-right: 2.5rem;
+}
+
+.input-field--sm + .input-icon--left {
+  left: 0.75rem;
+}
+
+.input-field--sm + .input-icon--right {
+  right: 0.75rem;
+}
+
+.input-field--lg.input-field--with-icon.input-field--icon-left {
+  padding-left: 3.5rem;
+}
+
+.input-field--lg.input-field--with-icon.input-field--icon-right {
+  padding-right: 3.5rem;
+}
+
+.input-field--lg + .input-icon--left {
+  left: 1.25rem;
+}
+
+.input-field--lg + .input-icon--right {
+  right: 1.25rem;
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .input-field--sm {
+    padding: 0.7rem 0.9rem;
+    font-size: 0.85rem;
+  }
+
+  .input-field--md {
+    padding: 0.9rem 1.1rem;
+    font-size: 0.95rem;
+  }
+
+  .input-field--lg {
+    padding: 1.1rem 1.3rem;
+    font-size: 1.05rem;
+  }
+
+  .input-label {
+    font-size: 0.85rem;
+  }
+
+  .input-helper,
+  .input-error {
+    font-size: 0.75rem;
+  }
+} 
