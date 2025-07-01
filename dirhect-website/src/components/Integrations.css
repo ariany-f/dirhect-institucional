@@ -260,7 +260,7 @@
 }
 
 .integration-features li svg {
-  color: #10b981;
+  color: var(--primary-color);
   flex-shrink: 0;
 }
 

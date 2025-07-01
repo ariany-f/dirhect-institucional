@@ -63,6 +63,20 @@
   font-weight: 400;
 }
 
+/* Princípios Section */
+.principles-section {
+  margin-bottom: 4rem;
+}
+
+.principles-section > h3 {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 2rem;
+  letter-spacing: 0.05em;
+}
+
 /* Principles Grid */
 .principles-grid {
   display: grid;
@@ -129,7 +143,7 @@
   --index: 2;
 }
 
-.principle-card h3 {
+.principle-card h4 {
   font-size: 1.5rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
@@ -151,6 +165,51 @@
   color: #475569;
   font-weight: 400;
   margin: 0;
+}
+
+/* Missão e Visão Section */
+.mission-vision-section {
+  background: white;
+  border-radius: 20px;
+  padding: 3rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.about-item h3 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.about-item h3::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 0;
+  width: 40px;
+  height: 3px;
+  background: var(--gradient);
+  border-radius: 2px;
+}
+
+.about-item p {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: #475569;
+  margin: 0;
+  text-align: justify;
 }
 
 /* Animations */
@@ -187,12 +246,20 @@
     padding: 2rem;
   }
   
-  .principle-card h3 {
+  .principle-card h4 {
     font-size: 1.25rem;
   }
   
   .principle-card p {
     font-size: 0.9rem;
+  }
+  
+  .about-grid {
+    gap: 2.5rem;
+  }
+  
+  .mission-vision-section {
+    padding: 2.5rem;
   }
 }
 
@@ -209,6 +276,10 @@
     font-size: 1rem;
   }
   
+  .principles-section > h3 {
+    font-size: 1.75rem;
+  }
+  
   .principles-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -218,8 +289,25 @@
     padding: 1.5rem;
   }
   
-  .principle-card h3 {
+  .principle-card h4 {
     font-size: 1.25rem;
+  }
+  
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .mission-vision-section {
+    padding: 2rem;
+  }
+  
+  .about-item h3 {
+    font-size: 1.5rem;
+  }
+  
+  .about-item p {
+    font-size: 1rem;
   }
 }
 
@@ -236,16 +324,33 @@
     font-size: 1.75rem;
   }
   
+  .principles-section > h3 {
+    font-size: 1.5rem;
+  }
+  
   .principle-card {
     padding: 1.25rem;
   }
   
-  .principle-card h3 {
+  .principle-card h4 {
     font-size: 1.125rem;
     margin-bottom: 1rem;
   }
   
   .principle-card p {
     font-size: 0.9rem;
+  }
+  
+  .mission-vision-section {
+    padding: 1.5rem;
+  }
+  
+  .about-item h3 {
+    font-size: 1.25rem;
+  }
+  
+  .about-item p {
+    text-align: left;
+    font-size: 0.95rem;
   }
 } 
