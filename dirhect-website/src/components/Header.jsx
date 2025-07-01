@@ -1,11 +1,30 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Menu } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
+import { useState, useEffect } from 'react'
 import './Header.css'
 
 const Header = () => {
   const location = useLocation()
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+  // Prevenir scroll quando menu mobile estiver aberto
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+
+    // Cleanup ao desmontar
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [isMobileMenuOpen])
 
   const handleAnchorClick = (anchor) => {
+    // Fechar menu mobile
+    setIsMobileMenuOpen(false)
+    
     // Se já estamos na home, rola para a seção
     if (location.pathname === '/') {
       const element = document.querySelector(anchor)
@@ -19,6 +38,10 @@ const Header = () => {
     }
   }
 
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen)
+  }
+
   return (
     <header className="header">
       <div className="header-content">
@@ -26,7 +49,10 @@ const Header = () => {
           <img width={140} src="/images/logo_dirhect_rgb_16317_horizontal.png" alt="Dirhect Logo" />
         </Link>
         
-        <nav className="nav">
+        {/* Overlay para mobile */}
+        {isMobileMenuOpen && <div className="mobile-overlay" onClick={() => setIsMobileMenuOpen(false)} />}
+        
+        <nav className={`nav ${isMobileMenuOpen ? 'nav-mobile-open' : ''}`}>
           <ul className="nav-links">
             <li>
               <a 
@@ -50,8 +76,8 @@ const Header = () => {
                 Soluções
               </a>
             </li>
-            <li><Link to="/roadmap">Roadmap</Link></li>
-            <li><Link to="/blog">Blog</Link></li>
+            <li><Link to="/roadmap" onClick={() => setIsMobileMenuOpen(false)}>Roadmap</Link></li>
+            <li><Link to="/blog" onClick={() => setIsMobileMenuOpen(false)}>Blog</Link></li>
             <li>
               <a 
                 href="/#sobre" 
@@ -76,13 +102,20 @@ const Header = () => {
             </li>
           </ul>
           
-          <Link to="/demo" className="cta-button">
+          <Link 
+            to="/demo" 
+            className="cta-button"
+            onClick={() => setIsMobileMenuOpen(false)}
+          >
             Demonstração
           </Link>
         </nav>
         
-        <button className="mobile-menu-button">
-          <Menu size={24} />
+        <button 
+          className="mobile-menu-button"
+          onClick={toggleMobileMenu}
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
     </header>
