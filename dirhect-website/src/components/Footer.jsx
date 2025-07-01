@@ -66,10 +66,10 @@ const Footer = () => {
         <div className="footer-bottom">
           <div className="footer-divider"></div>
           <div className="footer-bottom-content">
-            <p>&copy; 2024 Dirhect. Todos os direitos reservados.</p>
+            <p>&copy; {new Date().getFullYear()} Dirhect. Todos os direitos reservados.</p>
             <div className="footer-legal">
-              <a href="#">Política de Privacidade</a>
-              <a href="#">Termos de Uso</a>
+              <Link to="/politica-privacidade">Política de Privacidade</Link>
+              <Link to="/termos-uso">Termos de Uso</Link>
             </div>
           </div>
         </div>

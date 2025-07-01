@@ -6,6 +6,8 @@ import BlogPost from './pages/BlogPost'
 import Roadmap from './pages/Roadmap'
 import Demo from './pages/Demo'
 import TechnicalDocumentation from './pages/TechnicalDocumentation'
+import PoliticaPrivacidade from './pages/PoliticaPrivacidade'
+import TermosUso from './pages/TermosUso'
 import './App.css'
 import Hero from './components/Hero'
 import WhyChoose from './components/WhyChoose'
@@ -61,6 +63,8 @@ function App() {
           <Route path="/roadmap" element={<Roadmap />} />
           <Route path="/demo" element={<Demo />} />
           <Route path="/docs" element={<TechnicalDocumentation />} />
+          <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
+          <Route path="/termos-uso" element={<TermosUso />} />
         </Routes>
       </div>
     </Router>
