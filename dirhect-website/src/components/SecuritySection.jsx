@@ -83,7 +83,7 @@ const SecuritySection = () => {
             <span>Segurança Máxima</span>
           </div>
           <h2 className="security-title">
-            Seus dados protegidos com <span className="gradient-text">segurança militar</span>
+            Seus dados <span className="gradient-text">protegidos</span>
           </h2>
           <p className="security-subtitle">
             Implementamos os mais altos padrões de segurança para garantir 
