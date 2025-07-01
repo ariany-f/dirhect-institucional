@@ -55,7 +55,7 @@ const SecuritySection = () => {
     {
       icon: <Shield size={24} />,
       title: 'Criptografia AES-256',
-      description: 'Proteção com criptografia de nível militar.',
+      description: 'Proteção com criptografia.',
       details: [
         'Criptografia em trânsito e repouso',
         'Chaves gerenciadas automaticamente',
