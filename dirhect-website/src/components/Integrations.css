@@ -364,6 +364,12 @@
   border-radius: 2px;
 }
 
+.benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+
 .benefit-item {
   text-align: left;
   padding: 2.5rem;
@@ -418,10 +424,10 @@
 }
 
 .benefit-item:hover .benefit-icon {
+  transform: scale(1.1);
   background: var(--gradient);
   border-color: transparent;
   color: white;
-  transform: scale(1.1);
 }
 
 .benefit-title {
