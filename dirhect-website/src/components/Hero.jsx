@@ -1,10 +1,25 @@
 import { ArrowRight, Users, Zap, CheckCircle, Shield, Clock, TrendingUp } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import './Hero.css'
 
 const Hero = () => {
   const [cnpj, setCnpj] = useState('')
+
+  // Garantir que as animações funcionem corretamente
+  useEffect(() => {
+    // Scroll para o topo se necessário e reiniciar animações
+    window.scrollTo(0, 0)
+    
+    // Garantir que as animações CSS sejam aplicadas corretamente
+    const elements = document.querySelectorAll('.hero, .hero-main-content, .hero-cta-section')
+    elements.forEach(element => {
+      element.style.animationPlayState = 'paused'
+      // Força um reflow
+      element.offsetHeight
+      element.style.animationPlayState = 'running'
+    })
+  }, [])
 
   // Função para aplicar máscara de CNPJ
   const formatCNPJ = (value) => {

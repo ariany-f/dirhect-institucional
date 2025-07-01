@@ -5,7 +5,7 @@
   position: relative;
   overflow: hidden;
   opacity: 0;
-  animation: heroFadeIn 1s ease-out 0.2s forwards;
+  animation: heroFadeIn 1s ease-out 0.2s both;
   display: flex;
   align-items: center;
 }
@@ -67,7 +67,7 @@
 .hero-main-content {
   transform: translateY(30px);
   opacity: 0;
-  animation: slideUpFadeIn 1s ease-out 0.4s forwards;
+  animation: slideUpFadeIn 1s ease-out 0.4s both;
 }
 
 @keyframes slideUpFadeIn {
@@ -127,7 +127,7 @@
   color: #64748b;
   margin-bottom: 1.5rem;
   opacity: 0;
-  animation: fadeInUp 1s ease-out 0.8s forwards;
+  animation: fadeInUp 1s ease-out 0.8s both;
   letter-spacing: -0.01em;
 }
 
@@ -137,7 +137,7 @@
   color: #64748b;
   max-width: 520px;
   opacity: 0;
-  animation: fadeInUp 1s ease-out 1s forwards;
+  animation: fadeInUp 1s ease-out 1s both;
   font-weight: 400;
 }
 
@@ -170,15 +170,15 @@
 }
 
 .hero-card:nth-child(1) {
-  animation: cardSlideIn 1s ease-out 1.2s forwards;
+  animation: cardSlideIn 1s ease-out 1.2s both;
 }
 
 .hero-card:nth-child(2) {
-  animation: cardSlideIn 1s ease-out 1.4s forwards;
+  animation: cardSlideIn 1s ease-out 1.4s both;
 }
 
 .hero-card:nth-child(3) {
-  animation: cardSlideIn 1s ease-out 1.6s forwards;
+  animation: cardSlideIn 1s ease-out 1.6s both;
 }
 
 @keyframes cardSlideIn {
@@ -261,7 +261,7 @@
   height: 100%;
   opacity: 0;
   transform: translateX(30px);
-  animation: slideInRight 1s ease-out 0.6s forwards;
+  animation: slideInRight 1s ease-out 0.6s both;
 }
 
 @keyframes slideInRight {
@@ -310,7 +310,7 @@
   color: #1e293b;
   margin-bottom: 1rem;
   opacity: 0;
-  animation: fadeInUp 1s ease-out 1.2s forwards;
+  animation: fadeInUp 1s ease-out 1.2s both;
   letter-spacing: -0.02em;
 }
 
@@ -319,14 +319,14 @@
   margin-bottom: 2rem;
   line-height: 1.7;
   opacity: 0;
-  animation: fadeInUp 1s ease-out 1.4s forwards;
+  animation: fadeInUp 1s ease-out 1.4s both;
   font-size: 1rem;
   font-weight: 400;
 }
 
 .hero-cta-form {
   opacity: 0;
-  animation: fadeInUp 1s ease-out 1.6s forwards;
+  animation: fadeInUp 1s ease-out 1.6s both;
 }
 
 .hero-input-container {
