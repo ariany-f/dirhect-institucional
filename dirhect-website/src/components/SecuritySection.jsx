@@ -44,8 +44,7 @@ const SecuritySection = () => {
       details: [
         'Autenticação via SMS e email',
         'Suporte a aplicativos autenticadores',
-        'Login seguro em duas etapas',
-        'Proteção contra acesso não autorizado'
+        'Login seguro em duas etapas'
       ]
     },
     {
@@ -55,7 +54,6 @@ const SecuritySection = () => {
       details: [
         'Banco de dados dedicado por cliente',
         'Isolamento total entre empresas',
-        'Backup individual e seguro',
         'Performance otimizada por organização'
       ]
     },
@@ -65,7 +63,6 @@ const SecuritySection = () => {
       description: 'Todos os dados são protegidos com criptografia de nível militar AES-256.',
       details: [
         'Criptografia em trânsito e em repouso',
-        'Algoritmos aprovados pelo NIST',
         'Chaves gerenciadas automaticamente',
         'Certificados SSL/TLS sempre atualizados'
       ]
@@ -77,7 +74,6 @@ const SecuritySection = () => {
       details: [
         'Controle total sobre dados pessoais',
         'Ferramentas para consentimento',
-        'Relatórios de conformidade',
         'Processo de exclusão de dados'
       ]
     },
@@ -88,7 +84,6 @@ const SecuritySection = () => {
       details: [
         'Rastreamento de todas as ações',
         'Logs de acesso e modificações',
-        'Trilha de auditoria completa',
         'Alertas de atividades suspeitas'
       ]
     }

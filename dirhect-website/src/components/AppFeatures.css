@@ -131,32 +131,37 @@
 }
 
 .desktop-mockup {
-  flex-shrink: 0;
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
 }
 
 .desktop-frame {
   background: #1f2937;
   border-radius: 20px;
-  padding: 12px;
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.25);
-  position: relative;
+  padding: 20px;
+  box-shadow: 
+    0 25px 50px rgba(0, 0, 0, 0.15),
+    inset 0 1px 2px rgba(255, 255, 255, 0.5);
+  transform: perspective(1000px) rotateX(5deg);
+  transition: transform 0.3s ease;
 }
 
 .desktop-screen {
-  background: white;
+  background: #1a1a1a;
   border-radius: 12px;
-  width: 800px;
-  height: 500px;
   overflow: hidden;
+  aspect-ratio: 20 / 9;
+  box-shadow: 
+    inset 0 0 0 2px rgba(255, 255, 255, 0.1),
+    0 15px 35px rgba(0, 0, 0, 0.3);
   position: relative;
-  display: flex;
-  flex-direction: column;
 }
 
-/* Desktop Interface */
 .desktop-interface {
-  flex: 1;
-  overflow-y: auto;
+  width: 100%;
+  height: 100%;
   background: #f8fafc;
 }
 
@@ -170,24 +175,14 @@
   animation: screenFadeIn 1s ease-out 0.8s both;
 }
 
-@keyframes screenFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .demo-screenshot {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top;
+  object-position: left center;
   border-radius: 8px;
   transition: opacity 0.3s ease;
+  background: #f8fafc;
 }
 
 .desktop-mockup {
@@ -1484,9 +1479,8 @@
 
 /* Responsive Design */
 @media (max-width: 1200px) {
-  .desktop-screen {
-    width: 700px;
-    height: 450px;
+  .desktop-mockup {
+    max-width: 800px;
   }
 
   .app-showcase {
@@ -1517,9 +1511,8 @@
     text-align: center;
   }
 
-  .desktop-screen {
-    width: 600px;
-    height: 400px;
+  .desktop-mockup {
+    max-width: 700px;
   }
 
   .time-tracking-layout {
@@ -1540,14 +1533,13 @@
     font-size: 2.5rem;
   }
 
-  .desktop-screen {
-    width: 100%;
-    max-width: 500px;
-    height: 350px;
+  .desktop-mockup {
+    max-width: 100%;
   }
 
-  .desktop-screen-content {
-    padding: 1rem;
+  .desktop-frame {
+    padding: 12px;
+    transform: none;
   }
 
   .dashboard-metrics {
@@ -1576,9 +1568,8 @@
     font-size: 2rem;
   }
 
-  .desktop-screen {
-    width: 100%;
-    height: 300px;
+  .desktop-frame {
+    padding: 8px;
   }
 
   .actions-grid {
