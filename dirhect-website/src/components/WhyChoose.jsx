@@ -43,10 +43,6 @@ const WhyChoose = () => {
               </p>
             </div>
           </div>
-
-          <div className="platform-description">
-            <h3>Uma plataforma pensada para quem precisa organizar a operação, ganhar produtividade e melhorar a experiência do cliente final.</h3>
-          </div>
         </div>
       </div>
     </section>

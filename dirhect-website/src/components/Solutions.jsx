@@ -167,43 +167,46 @@ const Solutions = () => {
                 </div>
               </div>
 
-              {/* Controles do carrossel */}
-              <div className="carousel-controls">
-                <button 
-                  className="control-btn" 
-                  onClick={prevPillar}
-                  aria-label="Anterior"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                
-                <button 
-                  className="control-btn play-pause" 
-                  onClick={togglePlayPause}
-                  aria-label={isPlaying ? "Pausar" : "Reproduzir"}
-                >
-                  {isPlaying ? <Pause size={20} /> : <Play size={20} />}
-                </button>
-                
-                <button 
-                  className="control-btn" 
-                  onClick={nextPillar}
-                  aria-label="Próximo"
-                >
-                  <ChevronRight size={20} />
-                </button>
-              </div>
+              {/* Wrapper dos controles para posição fixa */}
+              <div className="carousel-controls-wrapper">
+                {/* Controles do carrossel */}
+                <div className="carousel-controls">
+                  <button 
+                    className="control-btn" 
+                    onClick={prevPillar}
+                    aria-label="Anterior"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  
+                  <button 
+                    className="control-btn play-pause" 
+                    onClick={togglePlayPause}
+                    aria-label={isPlaying ? "Pausar" : "Reproduzir"}
+                  >
+                    {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+                  </button>
+                  
+                  <button 
+                    className="control-btn" 
+                    onClick={nextPillar}
+                    aria-label="Próximo"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                </div>
 
-              {/* Indicadores */}
-              <div className="carousel-indicators">
-                {mainPillars.map((_, index) => (
-                  <button
-                    key={index}
-                    className={`indicator ${index === activePillar ? 'active' : ''}`}
-                    onClick={() => setActivePillar(index)}
-                    aria-label={`Ir para pilar ${index + 1}`}
-                  />
-                ))}
+                {/* Indicadores */}
+                <div className="carousel-indicators">
+                  {mainPillars.map((_, index) => (
+                    <button
+                      key={index}
+                      className={`indicator ${index === activePillar ? 'active' : ''}`}
+                      onClick={() => setActivePillar(index)}
+                      aria-label={`Ir para pilar ${index + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
             </div>
 

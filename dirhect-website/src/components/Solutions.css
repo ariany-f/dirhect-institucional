@@ -66,21 +66,31 @@
   margin: 3rem 0;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
   border: 1px solid #e2e8f0;
+  height: 650px; /* Altura fixa */
 }
 
 .pillars-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4rem;
-  align-items: center;
+  align-items: flex-start;
+  height: 100%;
 }
 
 .pillar-text {
   max-width: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
 }
 
 .pillar-info {
-  margin-bottom: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 480px; /* Altura fixa para a área de informações */
+  overflow: hidden;
 }
 
 .pillar-icon-wrapper {
@@ -94,6 +104,7 @@
   color: var(--primary-color);
   margin-bottom: 1.5rem;
   transition: all 0.3s ease;
+  flex-shrink: 0;
 }
 
 .pillar-text h3 {
@@ -101,6 +112,7 @@
   font-weight: 700;
   color: #1e293b;
   margin: 0 0 1rem 0;
+  flex-shrink: 0;
 }
 
 .pillar-description {
@@ -108,6 +120,20 @@
   color: #64748b;
   line-height: 1.6;
   margin-bottom: 2rem;
+  flex-shrink: 0;
+  height: 80px; /* Altura fixa para a descrição */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.pillar-benefits {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px; /* Altura mínima para os benefícios */
+  max-height: 250px; /* Altura máxima para os benefícios */
 }
 
 .pillar-benefits h4 {
@@ -115,6 +141,7 @@
   font-weight: 600;
   color: #1e293b;
   margin: 0 0 1rem 0;
+  flex-shrink: 0;
 }
 
 .pillar-benefits ul {
@@ -124,6 +151,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+  flex: 1;
+  overflow: hidden;
 }
 
 .pillar-benefits li {
@@ -136,17 +165,28 @@
 }
 
 .pillar-benefits li svg {
-  color: #22c55e;
+  color: var(--primary-color);
   flex-shrink: 0;
   margin-top: 0.125rem;
 }
 
-/* Controles do carrossel */
+/* Controles do carrossel - posição fixa */
+.carousel-controls-wrapper {
+  flex-shrink: 0;
+  height: 80px; /* Altura fixa para os controles */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 1rem;
+}
+
 .solutions .carousel-controls {
   display: flex;
   align-items: center;
   gap: 1rem;
   margin-bottom: 1rem;
+  position: relative;
+  z-index: 10;
 }
 
 .solutions .control-btn {
@@ -209,21 +249,26 @@
 .pillar-visual {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  height: 100%;
 }
 
 .pillar-image-container {
   position: relative;
-  max-width: 400px;
-  width: 100%;
+  width: 400px;
+  height: 300px;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+  margin-top: 100px; /* Centraliza verticalmente */
 }
 
 .pillar-image {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
   display: block;
   transition: transform 0.3s ease;
 }
@@ -362,15 +407,49 @@
 
   .pillars-showcase {
     padding: 2rem;
+    height: auto;
+    min-height: 600px;
   }
 
   .pillars-content {
     grid-template-columns: 1fr;
     gap: 3rem;
+    height: auto;
+  }
+
+  .pillar-text {
+    height: auto;
+  }
+
+  .pillar-info {
+    height: auto;
+  }
+
+  .pillar-description {
+    height: auto;
+    -webkit-line-clamp: none;
+  }
+
+  .pillar-benefits {
+    min-height: auto;
+    max-height: none;
+  }
+
+  .carousel-controls-wrapper {
+    height: auto;
   }
 
   .pillar-visual {
     order: -1;
+    height: auto;
+    justify-content: center;
+  }
+
+  .pillar-image-container {
+    width: 100%;
+    max-width: 400px;
+    height: 250px;
+    margin-top: 0;
   }
 
   .results-section h3 {
@@ -396,8 +475,8 @@
     margin: 2rem 0;
   }
 
-  .pillars-content {
-    gap: 2rem;
+  .pillar-image-container {
+    height: 200px;
   }
 
   .pillar-text h3 {
@@ -405,12 +484,12 @@
   }
 
   .pillar-description {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
   }
 
   .solutions .carousel-controls {
     justify-content: center;
-    margin-bottom: 1.5rem;
+    margin-top: 2rem;
   }
 
   .solutions .carousel-indicators {
@@ -418,7 +497,7 @@
   }
 
   .results-section h3 {
-    font-size: 1.75rem;
+    font-size: 1.8rem;
   }
 
   .benefits-grid {
@@ -437,7 +516,7 @@
 
 @media (max-width: 480px) {
   .solutions {
-    padding: 40px 0;
+    padding: 3rem 0;
   }
 
   .section-header h2 {
@@ -450,15 +529,15 @@
 
   .pillars-showcase {
     padding: 1rem;
-    border-radius: 16px;
+    margin: 1.5rem 0;
   }
 
   .pillar-text h3 {
-    font-size: 1.25rem;
+    font-size: 1.3rem;
   }
 
   .pillar-description {
-    font-size: 0.95rem;
+    font-size: 0.85rem;
   }
 
   .solutions .control-btn {
@@ -467,7 +546,7 @@
   }
 
   .benefit-value {
-    font-size: 1.75rem;
+    font-size: 1.8rem;
   }
 
   .benefit-title {
