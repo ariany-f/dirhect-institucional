@@ -3,14 +3,9 @@ import {
   Shield, 
   Lock, 
   Eye, 
-  Server, 
+  Database, 
   CheckCircle, 
-  AlertTriangle,
-  Key,
-  Database,
-  Globe,
-  Award,
-  ArrowRight
+  Key
 } from 'lucide-react'
 import './SecuritySection.css'
 
@@ -38,85 +33,45 @@ const SecuritySection = () => {
 
   const securityFeatures = [
     {
-      icon: <Lock size={32} />,
-      title: 'Autenticação Multifatorial (MFA)',
-      description: 'Acesso seguro com múltiplas camadas de autenticação para proteger contas de usuários.',
+      icon: <Lock size={24} />,
+      title: 'Autenticação Multifatorial',
+      description: 'Acesso seguro com múltiplas camadas de autenticação.',
       details: [
         'Autenticação via SMS e email',
-        'Suporte a aplicativos autenticadores',
+        'Suporte a apps autenticadores',
         'Login seguro em duas etapas'
       ]
     },
     {
-      icon: <Database size={32} />,
-      title: 'Bancos de Dados Isolados',
-      description: 'Cada cliente possui um banco de dados completamente isolado, garantindo total privacidade.',
+      icon: <Database size={24} />,
+      title: 'Bancos Isolados',
+      description: 'Cada cliente possui um banco completamente isolado.',
       details: [
-        'Banco de dados dedicado por cliente',
+        'Banco dedicado por cliente',
         'Isolamento total entre empresas',
-        'Performance otimizada por organização'
+        'Performance otimizada'
       ]
     },
     {
-      icon: <Shield size={32} />,
-      title: 'Criptografia Avançada',
-      description: 'Todos os dados são protegidos com criptografia de nível militar AES-256.',
+      icon: <Shield size={24} />,
+      title: 'Criptografia AES-256',
+      description: 'Proteção com criptografia de nível militar.',
       details: [
-        'Criptografia em trânsito e em repouso',
+        'Criptografia em trânsito e repouso',
         'Chaves gerenciadas automaticamente',
-        'Certificados SSL/TLS sempre atualizados'
+        'Certificados SSL/TLS atualizados'
       ]
     },
     {
-      icon: <Eye size={32} />,
+      icon: <Eye size={24} />,
       title: 'Conformidade LGPD',
-      description: 'Total conformidade com a Lei Geral de Proteção de Dados brasileira.',
+      description: 'Total conformidade com a LGPD brasileira.',
       details: [
-        'Controle total sobre dados pessoais',
+        'Controle sobre dados pessoais',
         'Ferramentas para consentimento',
         'Processo de exclusão de dados'
       ]
-    },
-    {
-      icon: <Key size={32} />,
-      title: 'Log de Eventos Completo',
-      description: 'Registro detalhado de todas as atividades para auditoria e segurança.',
-      details: [
-        'Rastreamento de todas as ações',
-        'Logs de acesso e modificações',
-        'Alertas de atividades suspeitas'
-      ]
     }
-  ]
-
-  const certifications = [
-    {
-      icon: <Award size={24} />,
-      title: 'ISO 27001',
-      description: 'Certificação internacional de segurança da informação'
-    },
-    {
-      icon: <Database size={24} />,
-      title: 'LGPD Compliant',
-      description: 'Total conformidade com a Lei Geral de Proteção de Dados'
-    },
-    {
-      icon: <Globe size={24} />,
-      title: 'SOC 2 Type II',
-      description: 'Auditoria independente de controles de segurança'
-    },
-    {
-      icon: <Key size={24} />,
-      title: 'GDPR Ready',
-      description: 'Preparado para regulamentações europeias'
-    }
-  ]
-
-  const securityStats = [
-    { value: '99.99%', label: 'Uptime Garantido' },
-    { value: '0', label: 'Vazamentos de Dados' },
-    { value: '<1s', label: 'Tempo de Detecção' },
-    { value: '256-bit', label: 'Criptografia' }
   ]
 
   return (
@@ -131,7 +86,7 @@ const SecuritySection = () => {
             Seus dados protegidos com <span className="gradient-text">segurança militar</span>
           </h2>
           <p className="security-subtitle">
-            Implementamos os mais altos padrões de segurança da indústria para garantir 
+            Implementamos os mais altos padrões de segurança para garantir 
             que suas informações sensíveis estejam sempre protegidas.
           </p>
         </div>
@@ -155,7 +110,7 @@ const SecuritySection = () => {
                   <div className="feature-details">
                     {feature.details.map((detail, detailIndex) => (
                       <div key={detailIndex} className="detail-item">
-                        <CheckCircle size={16} />
+                        <CheckCircle size={14} />
                         <span>{detail}</span>
                       </div>
                     ))}
@@ -163,31 +118,6 @@ const SecuritySection = () => {
                 </div>
               </div>
             ))}
-          </div>
-
-          <div className="security-visual">
-            <div className="shield-container">
-              <div className="shield-layers">
-                <div className="layer layer-1"></div>
-                <div className="layer layer-2"></div>
-                <div className="layer layer-3"></div>
-                <div className="shield-core">
-                  <Shield size={60} />
-                </div>
-              </div>
-              <div className="security-particles">
-                {[...Array(12)].map((_, i) => (
-                  <div 
-                    key={i} 
-                    className="particle"
-                    style={{ 
-                      '--delay': `${i * 0.5}s`,
-                      '--rotation': `${i * 30}deg`
-                    }}
-                  ></div>
-                ))}
-              </div>
-            </div>
           </div>
         </div>
       </div>
