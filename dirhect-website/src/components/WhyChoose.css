@@ -1,6 +1,6 @@
 .why-choose {
   background: var(--white);
-  padding: 80px 0 20px 0;
+  padding: 4rem 0;
   position: relative;
 }
 
@@ -18,14 +18,14 @@
 }
 
 .why-choose .section-header {
-  margin-bottom: 6rem;
+  margin-bottom: 3rem;
   position: relative;
   z-index: 2;
 }
 
 .why-choose .section-header h2 {
   font-size: 3.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   line-height: 1.1;
 }
 
@@ -43,13 +43,13 @@
 .sides-comparison {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  margin-bottom: 6rem;
+  gap: 2rem;
+  margin-bottom: 3rem;
 }
 
 .side-card {
   background: white;
-  padding: 3rem;
+  padding: 2rem;
   border-radius: 24px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
   border: 1px solid var(--gray-200);
@@ -82,8 +82,8 @@
 .side-header {
   display: flex;
   align-items: center;
-  gap: 1.5rem;
-  margin-bottom: 2rem;
+  gap: 1rem;
+  margin-bottom: 1rem;
   position: relative;
   z-index: 2;
 }
@@ -110,7 +110,7 @@
 }
 
 .question-section {
-  margin-bottom: 6rem;
+  margin-bottom: 2rem;
   display: flex;
   justify-content: center;
 }
@@ -118,7 +118,7 @@
 .question-card {
   background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
   color: white;
-  padding: 4rem;
+  padding: 2.5rem;
   border-radius: 32px;
   text-align: center;
   max-width: 800px;
@@ -140,7 +140,7 @@
 }
 
 .question-icon {
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   position: relative;
   z-index: 2;
 }
@@ -151,7 +151,7 @@
 
 .question-card h3 {
   font-size: 2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   color: white;
   position: relative;
   z-index: 2;
@@ -183,11 +183,11 @@
 /* Responsive */
 @media (max-width: 1024px) {
   .why-choose {
-    padding: 80px 0;
+    padding: 3rem 0;
   }
   
   .why-choose .section-header {
-    margin-bottom: 4rem;
+    margin-bottom: 2.5rem;
   }
   
   .why-choose .section-header h2 {
@@ -195,12 +195,12 @@
   }
   
   .sides-comparison {
-    gap: 3rem;
-    margin-bottom: 4rem;
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
   }
   
   .question-section {
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
   }
   
   .platform-description h3 {
@@ -210,7 +210,7 @@
 
 @media (max-width: 768px) {
   .why-choose {
-    padding: 60px 0;
+    padding: 3rem 0;
   }
   
   .why-choose .section-header h2 {
@@ -223,16 +223,17 @@
   
   .sides-comparison {
     grid-template-columns: 1fr;
-    gap: 2rem;
-    margin-bottom: 3rem;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
   }
   
   .side-card {
-    padding: 2rem;
+    padding: 1.5rem;
   }
   
   .side-header {
     gap: 1rem;
+    margin-bottom: 0.75rem;
   }
   
   .side-header h3 {
@@ -240,7 +241,7 @@
   }
   
   .question-card {
-    padding: 2.5rem;
+    padding: 2rem;
     margin: 0 1rem;
   }
   
@@ -253,7 +254,7 @@
   }
   
   .question-section {
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
   }
   
   .platform-description h3 {
@@ -268,11 +269,11 @@
   }
   
   .side-card {
-    padding: 1.5rem;
+    padding: 1.25rem;
   }
   
   .question-card {
-    padding: 2rem 1.5rem;
+    padding: 1.5rem;
   }
   
   .platform-description h3 {
