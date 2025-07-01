@@ -427,7 +427,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .not-found-page {
-    padding: 140px 1rem 2rem;
+    padding: 60px 1rem 2rem;
   }
 
   .not-found-content {
@@ -490,7 +490,7 @@
 
 @media (max-width: 480px) {
   .not-found-page {
-    padding: 160px 1rem 1.5rem;
+    padding: 80px 1rem 1.5rem;
   }
 
   .not-found-content {
