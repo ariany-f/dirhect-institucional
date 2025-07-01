@@ -37,12 +37,8 @@ const WhyChoose = () => {
 
           <div className="question-section">
             <div className="question-card">
-              <div className="question-icon">
-                <AlertTriangle size={40} />
-              </div>
-              <h3>A pergunta é</h3>
               <p>
-                Sua equipe está focada em gerar valor para o cliente... ou presa em 
+                Sua equipe está focada em gerar valor para o cliente ou presa em 
                 retrabalhos e riscos operacionais causados pela falta de integração?
               </p>
             </div>
