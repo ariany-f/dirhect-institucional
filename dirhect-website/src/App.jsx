@@ -15,6 +15,9 @@ import News from './components/News'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
 import Header from './components/Header'
+import ProductShowcase from './components/ProductShowcase'
+import SecuritySection from './components/SecuritySection'
+import FloatingButtons from './components/FloatingButtons'
 
 const GRADIENT = 'linear-gradient(to left, #0c004c, #5d0b62)';
 
@@ -44,8 +47,10 @@ function App() {
               <Solutions />
               <About />
               <AppFeatures />
+              <SecuritySection />
               <News />
               <Contact />
+              <FloatingButtons />
               <Footer />
             </>
           } />

@@ -1,20 +1,19 @@
 import { useState, useEffect, useRef } from 'react'
 import { 
-  Smartphone, 
   Monitor, 
-  Tablet, 
-  Download, 
-  Star, 
   Users, 
-  Shield,
-  Zap,
-  CheckCircle 
+  BarChart3,
+  ArrowRight,
+  Play,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react'
 import './AppFeatures.css'
 
 const AppFeatures = () => {
-  const [activeView, setActiveView] = useState('mobile')
   const [isVisible, setIsVisible] = useState(false)
+  const [currentDemo, setCurrentDemo] = useState(0)
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true)
   const sectionRef = useRef(null)
 
   useEffect(() => {
@@ -34,35 +33,58 @@ const AppFeatures = () => {
     return () => observer.disconnect()
   }, [])
 
-  const features = [
+  // Auto-slide functionality para os demos
+  useEffect(() => {
+    if (!isAutoPlaying) return
+
+    const interval = setInterval(() => {
+      setCurrentDemo((prev) => (prev + 1) % appDemos.length)
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [isAutoPlaying])
+
+  const appDemos = [
     {
-      icon: <Zap size={24} />,
-      title: 'Performance',
-      description: 'Aplicativo otimizado para máxima velocidade',
-      stats: '99.9%',
-      label: 'Uptime'
+      id: 'atividades-dashboard',
+      title: 'Atividades',
+      description: 'Gerenciamento completo de tarefas e processos de RH',
+      image: '/images/showcase/atividades-dashboard.png'
     },
     {
-      icon: <Shield size={24} />,
-      title: 'Segurança',
-      description: 'Proteção avançada dos seus dados',
-      stats: '256-bit',
-      label: 'Encryption'
+      id: 'contratos-beneficios',
+      title: 'Contratos',
+      description: 'Gestão de contratos e benefícios corporativos',
+      image: '/images/showcase/contratos-beneficios.png'
     },
     {
-      icon: <Users size={24} />,
-      title: 'Usuários Ativos',
-      description: 'Milhares de empresas confiam em nós',
-      stats: '50k+',
-      label: 'Empresas'
+      id: 'elegibilidade-grupos',
+      title: 'Elegibilidade',
+      description: 'Configuração de grupos elegíveis para benefícios',
+      image: '/images/showcase/elegibilidade-grupos.png'
+    },
+    {
+      id: 'ferias-calendario',
+      title: 'Férias',
+      description: 'Calendário inteligente para gestão de férias',
+      image: '/images/showcase/ferias-calendario.png'
     }
   ]
 
-  const appStats = [
-    { value: '4.9', label: 'Avaliação', icon: <Star size={16} /> },
-    { value: '100k+', label: 'Downloads', icon: <Download size={16} /> },
-    { value: '99%', label: 'Satisfação', icon: <CheckCircle size={16} /> }
-  ]
+  const nextDemo = () => {
+    setCurrentDemo((prev) => (prev + 1) % appDemos.length)
+    setIsAutoPlaying(false)
+  }
+
+  const prevDemo = () => {
+    setCurrentDemo((prev) => (prev - 1 + appDemos.length) % appDemos.length)
+    setIsAutoPlaying(false)
+  }
+
+  const selectDemo = (index) => {
+    setCurrentDemo(index)
+    setIsAutoPlaying(false)
+  }
 
   return (
     <section ref={sectionRef} className={`app-features ${isVisible ? 'visible' : ''}`}>
@@ -70,119 +92,100 @@ const AppFeatures = () => {
         <div className="features-content">
           <div className="features-header">
             <div className="features-badge">
-              <span>📱 Aplicativo Mobile</span>
+              <Monitor size={16} />
+              <span>Plataforma Desktop</span>
             </div>
             <h2 className="features-title">
-              Tenha o poder do RH <span className="gradient-text">na palma da mão</span>
+              Tenha o controle total do seu RH <span className="gradient-text">em uma plataforma completa</span>
             </h2>
             <p className="features-subtitle">
-              Nosso aplicativo mobile oferece todas as funcionalidades essenciais 
-              para gestão de RH, permitindo que você trabalhe de qualquer lugar com 
-              máxima eficiência e segurança.
+              Nossa plataforma desktop oferece todas as funcionalidades essenciais 
+              para gestão de RH, com interface intuitiva e recursos avançados 
+              para máxima produtividade.
             </p>
           </div>
 
-          <div className="device-selector">
-            <button 
-              className={`device-btn ${activeView === 'mobile' ? 'active' : ''}`}
-              onClick={() => setActiveView('mobile')}
-            >
-              <Smartphone size={20} />
-              <span>Mobile</span>
-            </button>
-            <button 
-              className={`device-btn ${activeView === 'tablet' ? 'active' : ''}`}
-              onClick={() => setActiveView('tablet')}
-            >
-              <Tablet size={20} />
-              <span>Tablet</span>
-            </button>
-            <button 
-              className={`device-btn ${activeView === 'desktop' ? 'active' : ''}`}
-              onClick={() => setActiveView('desktop')}
-            >
-              <Monitor size={20} />
-              <span>Desktop</span>
-            </button>
-          </div>
-
           <div className="app-showcase">
-            <div className={`device-mockup ${activeView}`}>
-              <div className="device-frame">
-                <div className="device-screen">
-                  <div className="app-interface">
-                    <div className="loading-skeleton">
-                      <div className="skeleton-header">
-                        <div className="skeleton-line short"></div>
-                        <div className="skeleton-circle"></div>
-                      </div>
-                      <div className="skeleton-content">
-                        <div className="skeleton-line"></div>
-                        <div className="skeleton-line medium"></div>
-                        <div className="skeleton-line short"></div>
-                      </div>
-                      <div className="skeleton-cards">
-                        <div className="skeleton-card"></div>
-                        <div className="skeleton-card"></div>
-                        <div className="skeleton-card"></div>
-                      </div>
+            <div className="desktop-mockup">
+              <div className="desktop-frame">
+                <div className="desktop-screen">
+                  <div className="desktop-interface">
+                    <div className="desktop-screen-content">
+                      <img 
+                        src={appDemos[currentDemo].image}
+                        alt={appDemos[currentDemo].title}
+                        className="demo-screenshot"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div className="app-features-grid">
-              {features.map((feature, index) => (
-                <div 
-                  key={index}
-                  className="feature-card"
-                  style={{ '--delay': `${1.2 + (index * 0.2)}s` }}
-                >
-                  <div className="feature-icon">
-                    {feature.icon}
-                  </div>
-                  <div className="feature-content">
-                    <h4>{feature.title}</h4>
-                    <p>{feature.description}</p>
-                    <div className="feature-stats">
-                      <span className="stats-value">{feature.stats}</span>
-                      <span className="stats-label">{feature.label}</span>
-                    </div>
-                  </div>
-                </div>
-              ))}
+            <div className="app-info">
+              <h4>{appDemos[currentDemo]?.title}</h4>
+              <p>{appDemos[currentDemo]?.description}</p>
+              
+              <div className="demo-navigation">
+                {appDemos.map((demo, index) => (
+                  <button
+                    key={demo.id}
+                    className={`nav-indicator ${index === currentDemo ? 'active' : ''}`}
+                    onClick={() => selectDemo(index)}
+                  >
+                    <span className="indicator-number">{index + 1}</span>
+                    <span className="indicator-title">{demo.title}</span>
+                  </button>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className="app-stats">
-            <h3>Por que escolher nosso app?</h3>
-            <div className="stats-grid">
-              {appStats.map((stat, index) => (
-                <div 
-                  key={index}
-                  className="stat-item"
-                  style={{ '--delay': `${1.8 + (index * 0.1)}s` }}
-                >
-                  <div className="stat-icon">{stat.icon}</div>
-                  <div className="stat-value">{stat.value}</div>
-                  <div className="stat-label">{stat.label}</div>
-                </div>
-              ))}
+          <div className="app-features-grid">
+            <div className="feature-card">
+              <div className="feature-icon">
+                <Monitor size={28} />
+              </div>
+              <div className="feature-content">
+                <h4>Interface Profissional</h4>
+                <p>Design moderno e intuitivo otimizado para produtividade máxima no ambiente corporativo</p>
+              </div>
+            </div>
+            
+            <div className="feature-card">
+              <div className="feature-icon">
+                <Users size={28} />
+              </div>
+              <div className="feature-content">
+                <h4>Gestão Completa</h4>
+                <p>Todas as funcionalidades de RH integradas em uma única plataforma poderosa</p>
+              </div>
+            </div>
+            
+            <div className="feature-card">
+              <div className="feature-icon">
+                <BarChart3 size={28} />
+              </div>
+              <div className="feature-content">
+                <h4>Analytics Avançado</h4>
+                <p>Relatórios detalhados e métricas em tempo real para decisões estratégicas inteligentes</p>
+              </div>
             </div>
           </div>
 
-          <div className="download-section">
-            <h3>Baixe agora e transforme seu RH</h3>
-            <p>Disponível para todas as plataformas</p>
-            <div className="download-buttons">
-              <button className="download-btn primary">
-                <Download size={20} />
-                <span>Download App</span>
-              </button>
-              <button className="download-btn secondary">
-                <Monitor size={20} />
-                <span>Acessar Web</span>
+          <div className="demo-cta-section">
+            <div className="cta-content">
+              <div className="cta-icon">
+                <Play size={48} />
+              </div>
+              <h3>Veja o Dirhect em ação</h3>
+              <p>
+                Agende uma demonstração personalizada e descubra como nossa plataforma 
+                pode transformar a gestão de RH da sua empresa.
+              </p>
+              <button className="demo-btn">
+                <span>Agendar Demonstração</span>
+                <ArrowRight size={20} />
               </button>
             </div>
           </div>
@@ -192,4 +195,4 @@ const AppFeatures = () => {
   )
 }
 
-export default AppFeatures 
+export default AppFeatures

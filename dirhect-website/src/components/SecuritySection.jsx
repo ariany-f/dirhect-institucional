@@ -9,7 +9,8 @@ import {
   Key,
   Database,
   Globe,
-  Award 
+  Award,
+  ArrowRight
 } from 'lucide-react'
 import './SecuritySection.css'
 
@@ -37,47 +38,58 @@ const SecuritySection = () => {
 
   const securityFeatures = [
     {
-      icon: <Shield size={32} />,
-      title: 'Criptografia de Ponta',
-      description: 'Todos os dados são protegidos com criptografia AES-256, o padrão militar de segurança.',
-      details: [
-        'Criptografia em trânsito e em repouso',
-        'Chaves gerenciadas automaticamente',
-        'Certificados SSL/TLS atualizados',
-        'Algoritmos aprovados pelo NIST'
-      ]
-    },
-    {
       icon: <Lock size={32} />,
-      title: 'Autenticação Multifatorial',
-      description: 'Múltiplas camadas de autenticação garantem que apenas usuários autorizados acessem o sistema.',
+      title: 'Autenticação Multifatorial (MFA)',
+      description: 'Acesso seguro com múltiplas camadas de autenticação para proteger contas de usuários.',
       details: [
         'Autenticação via SMS e email',
         'Suporte a aplicativos autenticadores',
-        'Biometria quando disponível',
-        'Tokens de segurança físicos'
+        'Login seguro em duas etapas',
+        'Proteção contra acesso não autorizado'
+      ]
+    },
+    {
+      icon: <Database size={32} />,
+      title: 'Bancos de Dados Isolados',
+      description: 'Cada cliente possui um banco de dados completamente isolado, garantindo total privacidade.',
+      details: [
+        'Banco de dados dedicado por cliente',
+        'Isolamento total entre empresas',
+        'Backup individual e seguro',
+        'Performance otimizada por organização'
+      ]
+    },
+    {
+      icon: <Shield size={32} />,
+      title: 'Criptografia Avançada',
+      description: 'Todos os dados são protegidos com criptografia de nível militar AES-256.',
+      details: [
+        'Criptografia em trânsito e em repouso',
+        'Algoritmos aprovados pelo NIST',
+        'Chaves gerenciadas automaticamente',
+        'Certificados SSL/TLS sempre atualizados'
       ]
     },
     {
       icon: <Eye size={32} />,
-      title: 'Monitoramento 24/7',
-      description: 'Sistema de monitoramento contínuo identifica e responde a ameaças em tempo real.',
+      title: 'Conformidade LGPD',
+      description: 'Total conformidade com a Lei Geral de Proteção de Dados brasileira.',
       details: [
-        'Detecção de anomalias por IA',
-        'Alertas automáticos de segurança',
-        'Log completo de atividades',
-        'Resposta automática a incidentes'
+        'Controle total sobre dados pessoais',
+        'Ferramentas para consentimento',
+        'Relatórios de conformidade',
+        'Processo de exclusão de dados'
       ]
     },
     {
-      icon: <Server size={32} />,
-      title: 'Infraestrutura Segura',
-      description: 'Hospedagem em data centers certificados com as mais altas classificações de segurança.',
+      icon: <Key size={32} />,
+      title: 'Log de Eventos Completo',
+      description: 'Registro detalhado de todas as atividades para auditoria e segurança.',
       details: [
-        'Data centers ISO 27001',
-        'Backup automático e redundante',
-        'Rede isolada e protegida',
-        'Controle físico de acesso'
+        'Rastreamento de todas as ações',
+        'Logs de acesso e modificações',
+        'Trilha de auditoria completa',
+        'Alertas de atividades suspeitas'
       ]
     }
   ]
@@ -117,7 +129,8 @@ const SecuritySection = () => {
       <div className="container">
         <div className="security-header">
           <div className="security-badge">
-            <span>🔒 Segurança Máxima</span>
+            <Shield size={16} />
+            <span>Segurança Máxima</span>
           </div>
           <h2 className="security-title">
             Seus dados protegidos com <span className="gradient-text">segurança militar</span>
@@ -126,19 +139,6 @@ const SecuritySection = () => {
             Implementamos os mais altos padrões de segurança da indústria para garantir 
             que suas informações sensíveis estejam sempre protegidas.
           </p>
-        </div>
-
-        <div className="security-stats">
-          {securityStats.map((stat, index) => (
-            <div 
-              key={index}
-              className="stat-item"
-              style={{ '--delay': `${0.6 + (index * 0.1)}s` }}
-            >
-              <div className="stat-value">{stat.value}</div>
-              <div className="stat-label">{stat.label}</div>
-            </div>
-          ))}
         </div>
 
         <div className="security-features">
@@ -193,40 +193,6 @@ const SecuritySection = () => {
                 ))}
               </div>
             </div>
-          </div>
-        </div>
-
-        <div className="certifications-section">
-          <h3>Certificações e Conformidade</h3>
-          <div className="certifications-grid">
-            {certifications.map((cert, index) => (
-              <div 
-                key={index}
-                className="certification-card"
-                style={{ '--delay': `${1.8 + (index * 0.1)}s` }}
-              >
-                <div className="cert-icon">
-                  {cert.icon}
-                </div>
-                <h4>{cert.title}</h4>
-                <p>{cert.description}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="security-cta">
-          <div className="cta-content">
-            <AlertTriangle size={48} className="warning-icon" />
-            <h3>Segurança não é opção, é obrigatório</h3>
-            <p>
-              Proteja sua empresa com a solução de RH mais segura do mercado. 
-              Teste gratuitamente e veja como mantemos seus dados seguros.
-            </p>
-            <button className="security-btn">
-              <Shield size={20} />
-              <span>Teste a Segurança Agora</span>
-            </button>
           </div>
         </div>
       </div>
