@@ -118,7 +118,7 @@ const Integrations = () => {
             {benefits.map((benefit, index) => (
               <div 
                 key={index} 
-                className="benefit-item"
+                className=""
                 style={{ '--animation-delay': `${(index + 2) * 0.1}s` }}
               >
                 <div className="benefit-icon">
@@ -135,7 +135,6 @@ const Integrations = () => {
 
         {/* CTA Section */}
         <div className="integrations-cta">
-          <div className="cta-content">
             <h3>Pronto para Integrar?</h3>
             <p>Nossa equipe técnica está pronta para configurar a integração com seu sistema atual</p>
             <div className="cta-buttons">
@@ -149,7 +148,6 @@ const Integrations = () => {
               >
                 <span>Documentação Técnica</span>
               </button>
-            </div>
           </div>
         </div>
       </div>
