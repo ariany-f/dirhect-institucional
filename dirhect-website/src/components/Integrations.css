@@ -127,6 +127,9 @@
   opacity: 0;
   transform: translateY(30px);
   animation: cardSlideIn 0.8s ease-out var(--animation-delay) forwards;
+  display: flex;
+  flex-direction: column;
+  min-height: 600px;
 }
 
 @keyframes cardSlideIn {
@@ -215,6 +218,9 @@
 
 .integration-card-content {
   margin-bottom: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .integration-name {
@@ -230,6 +236,11 @@
   line-height: 1.6;
   margin-bottom: 2rem;
   font-size: 1rem;
+  flex: 1;
+}
+
+.integration-features {
+  margin-top: auto;
 }
 
 .integration-features h4 {
@@ -267,6 +278,7 @@
 .integration-card-footer {
   border-top: 1px solid #f1f5f9;
   padding-top: 1.5rem;
+  margin-top: auto;
 }
 
 .integration-cta {

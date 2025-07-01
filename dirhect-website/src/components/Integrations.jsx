@@ -107,13 +107,6 @@ const Integrations = () => {
                   </ul>
                 </div>
               </div>
-
-              <div className="integration-card-footer">
-                <button className="integration-cta">
-                  <span>Saiba Mais</span>
-                  <ArrowRight className="w-4 h-4" />
-                </button>
-              </div>
             </div>
           ))}
         </div>
