@@ -30,6 +30,7 @@ export const wordpressService = {
         author: this.getAuthorName(post),
         featured_media: this.getFeaturedImage(post),
         categories: this.getCategories(post),
+        categoryIds: this.getCategoryIds(post),
         tags: this.getTags(post),
         slug: post.slug,
         link: post.link,
@@ -63,6 +64,7 @@ export const wordpressService = {
         author: this.getAuthorName(post),
         featured_media: this.getFeaturedImage(post),
         categories: this.getCategories(post),
+        categoryIds: this.getCategoryIds(post),
         tags: this.getTags(post),
         slug: post.slug,
         link: post.link,
@@ -71,6 +73,57 @@ export const wordpressService = {
     } catch (error) {
       console.error('Erro ao buscar post do WordPress:', error)
       throw error
+    }
+  },
+
+  // Buscar posts relacionados por categoria
+  async getRelatedPosts(postId, categoryIds, limit = 3) {
+    try {
+      if (!categoryIds || categoryIds.length === 0) {
+        return []
+      }
+
+      const searchParams = new URLSearchParams({
+        per_page: limit + 1, // +1 para excluir o post atual se aparecer
+        categories: categoryIds[0], // Usar o primeiro ID da categoria
+        exclude: postId,
+        _embed: true
+      })
+
+      const response = await fetch(`${WORDPRESS_API_URL}/posts?${searchParams}`)
+      
+      if (!response.ok) {
+        console.warn('Erro ao buscar posts relacionados, usando fallback')
+        return []
+      }
+
+      const posts = await response.json()
+      
+      // Transformar os dados e filtrar o post atual
+      const relatedPosts = posts
+        .filter(post => post.id !== postId)
+        .slice(0, limit)
+        .map(post => ({
+          id: post.id,
+          title: { rendered: post.title.rendered },
+          excerpt: { rendered: post.excerpt.rendered },
+          content: { rendered: post.content.rendered },
+          date: post.date,
+          modified: post.modified,
+          author: this.getAuthorName(post),
+          featured_media: this.getFeaturedImage(post),
+          categories: this.getCategories(post),
+          categoryIds: this.getCategoryIds(post),
+          tags: this.getTags(post),
+          slug: post.slug,
+          link: post.link,
+          readTime: this.calculateReadTime(post.content.rendered)
+        }))
+
+      return relatedPosts
+    } catch (error) {
+      console.error('Erro ao buscar posts relacionados:', error)
+      return []
     }
   },
 
@@ -107,12 +160,23 @@ export const wordpressService = {
     return '/images/blog/news.webp'
   },
 
-  // Extrair categorias
+  // Extrair categorias (nomes)
   getCategories(post) {
     if (post._embedded?.['wp:term']?.[0]) {
       return post._embedded['wp:term'][0].map(cat => cat.name)
     }
     return ['Geral']
+  },
+
+  // Extrair IDs das categorias
+  getCategoryIds(post) {
+    if (post._embedded?.['wp:term']?.[0]) {
+      return post._embedded['wp:term'][0].map(cat => cat.id)
+    }
+    if (post.categories && Array.isArray(post.categories)) {
+      return post.categories
+    }
+    return []
   },
 
   // Extrair tags
@@ -144,6 +208,7 @@ export const wordpressService = {
         author: 'Equipe Dirhect',
         featured_media: '/images/blog/news.webp',
         categories: ['Produto'],
+        categoryIds: [1],
         tags: [],
         slug: 'nova-funcionalidade-admissao-digital',
         readTime: '3 min'
@@ -157,6 +222,7 @@ export const wordpressService = {
         author: 'Ana Costa',
         featured_media: '/images/blog/news-2.webp',
         categories: ['Dicas'],
+        categoryIds: [2],
         tags: [],
         slug: 'como-reduzir-erros-rh',
         readTime: '5 min'
@@ -170,6 +236,7 @@ export const wordpressService = {
         author: 'Carlos Ferreira',
         featured_media: '/images/blog/news-3.webp',
         categories: ['Tutorial'],
+        categoryIds: [3],
         tags: [],
         slug: 'integracao-sistemas-erp',
         readTime: '7 min'
@@ -183,6 +250,7 @@ export const wordpressService = {
         author: 'Equipe Dirhect',
         featured_media: '/images/blog/news.webp',
         categories: ['Tendências'],
+        categoryIds: [4],
         tags: [],
         slug: 'futuro-rh-tendencias-2025',
         readTime: '6 min'
@@ -196,6 +264,7 @@ export const wordpressService = {
         author: 'Ana Costa',
         featured_media: '/images/blog/news-2.webp',
         categories: ['Segurança'],
+        categoryIds: [5],
         tags: [],
         slug: 'seguranca-dados-rh',
         readTime: '4 min'
@@ -209,6 +278,7 @@ export const wordpressService = {
         author: 'Carlos Ferreira',
         featured_media: '/images/blog/news-3.webp',
         categories: ['Estratégia'],
+        categoryIds: [6],
         tags: [],
         slug: 'automatizacao-processos-roi',
         readTime: '8 min'

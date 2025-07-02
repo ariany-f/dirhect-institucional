@@ -42,13 +42,13 @@ const BlogPost = () => {
           setPost(fetchedPost)
           
           // Buscar posts relacionados (mesma categoria)
-          if (fetchedPost.categories && fetchedPost.categories.length > 0) {
+          if (fetchedPost.categoryIds && fetchedPost.categoryIds.length > 0) {
             try {
-              const related = await wordpressService.getPosts({
-                per_page: 3,
-                exclude: [fetchedPost.id],
-                categories: fetchedPost.categories[0]
-              })
+              const related = await wordpressService.getRelatedPosts(
+                fetchedPost.id,
+                fetchedPost.categoryIds,
+                3
+              )
               setRelatedPosts(related)
             } catch (err) {
               console.log('Erro ao buscar posts relacionados:', err)
