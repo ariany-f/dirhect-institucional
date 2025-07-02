@@ -27,14 +27,6 @@ const Contact = () => {
                 <p>(11) 9999-9999</p>
               </div>
             </div>
-            
-            <div className="contact-item">
-              <MapPin size={24} />
-              <div>
-                <h4>Endereço</h4>
-                <p>São Paulo, SP</p>
-              </div>
-            </div>
           </div>
         </div>
       </div>

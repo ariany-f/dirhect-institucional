@@ -4,87 +4,44 @@ import { Link } from 'react-router-dom'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import FloatingButtons from '../components/FloatingButtons'
+import { wordpressService } from '../services/wordpressService'
 import './Blog.css'
 
 const Blog = () => {
   const [posts, setPosts] = useState([])
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState(null)
 
   // Scroll to top when component mounts
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
-  // Posts estáticos baseados no News.jsx
-  const blogPosts = [
-    {
-      id: 1,
-      title: { rendered: 'Nova funcionalidade: Admissão Digital Inteligente' },
-      excerpt: { rendered: 'Agora você pode automatizar todo o processo de admissão com nossa nova ferramenta de IA que valida documentos automaticamente.' },
-      date: '2025-01-15T10:00:00',
-      author: 'Equipe Dirhect',
-      featured_media: '/images/blog/news.webp',
-      category: 'Produto',
-      readTime: '3 min'
-    },
-    {
-      id: 2,
-      title: { rendered: 'Como reduzir 90% dos erros em processos de RH' },
-      excerpt: { rendered: 'Descubra as estratégias que empresas líderes estão usando para minimizar erros operacionais e aumentar a eficiência.' },
-      date: '2025-01-12T14:30:00',
-      author: 'Ana Costa',
-      featured_media: '/images/blog/news-2.webp',
-      category: 'Dicas',
-      readTime: '5 min'
-    },
-    {
-      id: 3,
-      title: { rendered: 'Integração com sistemas ERP: Guia completo' },
-      excerpt: { rendered: 'Tudo que você precisa saber sobre como integrar a Dirhect com seu sistema ERP atual de forma simples e rápida.' },
-      date: '2025-01-10T09:15:00',
-      author: 'Carlos Ferreira',
-      featured_media: '/images/blog/news-3.webp',
-      category: 'Tutorial',
-      readTime: '7 min'
-    },
-    {
-      id: 4,
-      title: { rendered: 'O Futuro do RH: Tendências para 2025' },
-      excerpt: { rendered: 'Explore as principais tendências que moldarão o mercado de recursos humanos nos próximos anos e como se preparar.' },
-      date: '2025-01-08T16:20:00',
-      author: 'Equipe Dirhect',
-      featured_media: '/images/blog/news.webp',
-      category: 'Tendências',
-      readTime: '6 min'
-    },
-    {
-      id: 5,
-      title: { rendered: 'Segurança de Dados em RH: Melhores Práticas' },
-      excerpt: { rendered: 'Como proteger informações sensíveis dos colaboradores e estar em conformidade com a LGPD.' },
-      date: '2025-01-05T11:45:00',
-      author: 'Ana Costa',
-      featured_media: '/images/blog/news-2.webp',
-      category: 'Segurança',
-      readTime: '4 min'
-    },
-    {
-      id: 6,
-      title: { rendered: 'Automatização de Processos: ROI em RH' },
-      excerpt: { rendered: 'Calcule o retorno sobre investimento da automação de processos de RH na sua empresa.' },
-      date: '2025-01-03T08:30:00',
-      author: 'Carlos Ferreira',
-      featured_media: '/images/blog/news-3.webp',
-      category: 'Estratégia',
-      readTime: '8 min'
-    }
-  ]
-
+  // Buscar posts do WordPress
   useEffect(() => {
-    // Simular carregamento
-    setTimeout(() => {
-      setPosts(blogPosts)
-      setLoading(false)
-    }, 1000)
+    const fetchPosts = async () => {
+      try {
+        setLoading(true)
+        setError(null)
+        const fetchedPosts = await wordpressService.getPosts({
+          per_page: 12,
+          status: 'publish',
+          orderby: 'date',
+          order: 'desc'
+        })
+        setPosts(fetchedPosts)
+      } catch (err) {
+        console.error('Erro ao carregar posts:', err)
+        setError('Erro ao carregar posts do blog')
+        // Use fallback posts em caso de erro
+        const fallbackPosts = wordpressService.getFallbackPosts()
+        setPosts(fallbackPosts)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchPosts()
   }, [])
 
   const formatDate = (dateString) => {
@@ -100,6 +57,13 @@ const Blog = () => {
     const tmp = document.createElement('div')
     tmp.innerHTML = html
     return tmp.textContent || tmp.innerText || ''
+  }
+
+  const getCategoryName = (categories) => {
+    if (Array.isArray(categories) && categories.length > 0) {
+      return categories[0]
+    }
+    return 'Geral'
   }
 
   return (
@@ -123,7 +87,14 @@ const Blog = () => {
                 <div className="loading-spinner"></div>
                 <p>Carregando posts...</p>
               </div>
-            ) : (
+            ) : error ? (
+              <div className="error-message">
+                <p>{error}</p>
+                <p><small>Exibindo conteúdo em cache</small></p>
+              </div>
+            ) : null}
+            
+            {!loading && posts.length > 0 && (
               <div className="posts-grid">
                 {posts.map((post, index) => (
                   <article 
@@ -132,8 +103,16 @@ const Blog = () => {
                     style={{ '--delay': `${index * 0.1}s` }}
                   >
                     <div className="post-image">
-                      <img src={post.featured_media} alt={stripHtml(post.title.rendered)} />
-                      <div className="post-category-badge">{post.category}</div>
+                      <img 
+                        src={post.featured_media} 
+                        alt={stripHtml(post.title.rendered)}
+                        onError={(e) => {
+                          e.target.src = '/images/blog/news.webp'
+                        }}
+                      />
+                      <div className="post-category-badge">
+                        {getCategoryName(post.categories)}
+                      </div>
                     </div>
                     
                     <div className="post-content">
@@ -160,13 +139,22 @@ const Blog = () => {
                         {stripHtml(post.excerpt.rendered)}
                       </p>
                       
-                      <Link to={`/blog/${post.id}`} className="read-more">
+                      <Link 
+                        to={`/blog/${post.slug || post.id}`} 
+                        className="read-more"
+                      >
                         Ler mais
                         <ArrowRight size={16} />
                       </Link>
                     </div>
                   </article>
                 ))}
+              </div>
+            )}
+
+            {!loading && posts.length === 0 && (
+              <div className="no-posts">
+                <p>Nenhum post encontrado.</p>
               </div>
             )}
           </div>

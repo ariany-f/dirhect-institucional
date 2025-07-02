@@ -22,10 +22,8 @@ const Demo = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false)
 
   const necessidadesOptions = [
-    'Automação de Elegibilidade',
-    'ATS - Sistema de Recrutamento',
     'Admissão Digital',
-    'Gestão de Benefícios',
+    'Gestão de Benefícios e Elegibilidade',
     'Relatórios e Analytics',
     'Integração com Sistemas Existentes'
   ]
@@ -298,7 +296,13 @@ const Demo = () => {
                       required
                     />
                     <span className="checkmark"></span>
-                    Aceito os <a href="#">Termos de Uso</a> e <a href="#">Política de Privacidade</a> *
+                    <div className="terms-text">
+                      Aceito os termos e condições: *
+                      <div className="terms-links">
+                        <a href="/termos-uso" target="_blank" rel="noopener noreferrer">Termos de Uso</a>
+                        <a href="/politica-privacidade" target="_blank" rel="noopener noreferrer">Política de Privacidade</a>
+                      </div>
+                    </div>
                   </label>
                 </div>
 
@@ -327,13 +331,6 @@ const Demo = () => {
                   <div>
                     <h4>Demo Ao Vivo</h4>
                     <p>Apresentação completa das funcionalidades da plataforma</p>
-                  </div>
-                </div>
-                <div className="demo-benefit-item">
-                  <CheckCircle2 size={24} />
-                  <div>
-                    <h4>Consultoria Gratuita</h4>
-                    <p>Orientações sobre implementação e melhores práticas</p>
                   </div>
                 </div>
                 <div className="demo-benefit-item">

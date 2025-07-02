@@ -1,37 +1,84 @@
+import { useState, useEffect } from 'react'
 import { ArrowRight, Calendar, Clock } from 'lucide-react'
 import { Link } from 'react-router-dom'
+import { wordpressService } from '../services/wordpressService'
 import './News.css'
 
 const News = () => {
-  const newsItems = [
-    {
-      id: 1,
-      title: "Nova funcionalidade: Admissão Digital Inteligente",
-      description: "Agora você pode automatizar todo o processo de admissão com nossa nova ferramenta de IA que valida documentos automaticamente.",
-      date: "15 de Janeiro, 2025",
-      readTime: "3 min",
-      category: "Produto",
-      image: "/images/blog/news.webp"
-    },
-    {
-      id: 2,
-      title: "Como reduzir 90% dos erros em processos de RH",
-      description: "Descubra as estratégias que empresas líderes estão usando para minimizar erros operacionais e aumentar a eficiência.",
-      date: "12 de Janeiro, 2025",
-      readTime: "5 min",
-      category: "Dicas",
-      image: "/images/blog/news-2.webp"
-    },
-    {
-      id: 3,
-      title: "Integração com sistemas ERP: Guia completo",
-      description: "Tudo que você precisa saber sobre como integrar a Dirhect com seu sistema ERP atual de forma simples e rápida.",
-      date: "10 de Janeiro, 2025",
-      readTime: "7 min",
-      category: "Tutorial",
-      image: "/images/blog/news-3.webp"
+  const [newsItems, setNewsItems] = useState([])
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        setLoading(true)
+        const posts = await wordpressService.getPosts({
+          per_page: 3,
+          status: 'publish',
+          orderby: 'date',
+          order: 'desc'
+        })
+        setNewsItems(posts)
+      } catch (error) {
+        console.error('Erro ao buscar posts para News:', error)
+        // Em caso de erro, usa posts do fallback
+        const fallbackPosts = wordpressService.getFallbackPosts()
+        setNewsItems(fallbackPosts.slice(0, 3))
+      } finally {
+        setLoading(false)
+      }
     }
-  ]
+
+    fetchPosts()
+  }, [])
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString)
+    return date.toLocaleDateString('pt-BR', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    })
+  }
+
+  const stripHtml = (html) => {
+    const tmp = document.createElement('div')
+    tmp.innerHTML = html
+    return tmp.textContent || tmp.innerText || ''
+  }
+
+  const getCategoryName = (categories) => {
+    if (Array.isArray(categories) && categories.length > 0) {
+      return categories[0]
+    }
+    return 'Geral'
+  }
+
+  if (loading) {
+    return (
+      <section className="news section">
+        <div className="container">
+          <div className="news-header">
+            <div className="news-header-content">
+              <h2>Fique por dentro das <span className="gradient-text">novidades</span></h2>
+              <p>Últimas atualizações, dicas e insights sobre gestão de RH</p>
+            </div>
+            <Link to="/blog" className="news-cta">
+              Ir para o blog
+              <ArrowRight size={20} />
+            </Link>
+          </div>
+
+          <div className="news-grid">
+            <div className="loading">
+              <div className="loading-spinner"></div>
+              <p>Carregando posts...</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   return (
     <section className="news section">
@@ -51,15 +98,21 @@ const News = () => {
           {newsItems.map((item) => (
             <article key={item.id} className="news-card">
               <div className="news-image">
-                <img src={item.image} alt={item.title} />
-                <div className="news-category">{item.category}</div>
+                <img 
+                  src={item.featured_media} 
+                  alt={stripHtml(item.title.rendered)}
+                  onError={(e) => {
+                    e.target.src = '/images/blog/news.webp'
+                  }}
+                />
+                <div className="news-category">{getCategoryName(item.categories)}</div>
               </div>
               
               <div className="news-content">
                 <div className="news-meta">
                   <span className="news-date">
                     <Calendar size={14} />
-                    {item.date}
+                    {formatDate(item.date)}
                   </span>
                   <span className="news-read-time">
                     <Clock size={14} />
@@ -67,10 +120,10 @@ const News = () => {
                   </span>
                 </div>
                 
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
+                <h3>{stripHtml(item.title.rendered)}</h3>
+                <p>{stripHtml(item.excerpt.rendered)}</p>
                 
-                <Link to={`/blog/${item.id}`} className="news-link">
+                <Link to={`/blog/${item.slug || item.id}`} className="news-link">
                   Ler mais
                   <ArrowRight size={16} />
                 </Link>

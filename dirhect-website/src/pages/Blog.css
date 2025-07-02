@@ -275,7 +275,7 @@
 }
 
 .post-title {
-  font-size: 1.5rem;
+  font-size:1rem;
   font-weight: 800;
   color: #1e293b;
   margin-bottom: 1rem;
@@ -309,6 +309,7 @@
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  z-index: 1;
 }
 
 .read-more::before {
@@ -320,7 +321,7 @@
   height: 100%;
   background: var(--gradient);
   transition: left 0.3s ease;
-  z-index: 1;
+  z-index: -1;
 }
 
 .read-more:hover::before {

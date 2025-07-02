@@ -40,7 +40,8 @@ const Footer = () => {
               <li><Link to="/">Sobre Nós</Link></li>
               <li><Link to="/blog">Blog</Link></li>
               <li><a href="#contato">Contato</a></li>
-              <li><a href="#">Carreiras</a></li>
+              <li><Link to="/docs">Documentação</Link></li>
+              <li><Link to="/roadmap">Roadmap</Link></li>
             </ul>
           </div>
 
@@ -54,10 +55,6 @@ const Footer = () => {
               <div className="contact-item">
                 <Phone size={16} />
                 <span>(11) 9999-9999</span>
-              </div>
-              <div className="contact-item">
-                <MapPin size={16} />
-                <span>São Paulo, SP</span>
               </div>
             </div>
           </div>

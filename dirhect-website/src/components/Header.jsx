@@ -78,8 +78,6 @@ const Header = () => {
                 Soluções
               </a>
             </li>
-            <li><Link to="/roadmap" onClick={() => setIsMobileMenuOpen(false)}>Roadmap</Link></li>
-            <li><Link to="/blog" onClick={() => setIsMobileMenuOpen(false)}>Blog</Link></li>
             <li>
               <a 
                 href="/#sobre" 
