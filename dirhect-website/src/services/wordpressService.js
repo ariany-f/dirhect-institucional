@@ -1,6 +1,8 @@
 const WORDPRESS_API_URL = 'https://dirhect-institucional.thunderbold.com.br/wp-json/wp/v2'
 
 export const wordpressService = {
+  WORDPRESS_API_URL, // Exportar a URL para uso externo
+
   // Buscar posts do blog
   async getPosts(params = {}) {
     try {
