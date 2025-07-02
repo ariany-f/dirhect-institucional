@@ -95,25 +95,64 @@ const Blog = () => {
     fetchPosts(1, false)
   }, [fetchPosts])
 
-  // Função para detectar scroll
+  // Função para detectar scroll com múltiplas verificações
   const handleScroll = useCallback(() => {
     if (loadingMore || !hasMore) return
 
-    const scrollTop = document.documentElement.scrollTop
-    const scrollHeight = document.documentElement.scrollHeight
-    const clientHeight = document.documentElement.clientHeight
+    const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+    const scrollHeight = document.documentElement.scrollHeight || document.body.scrollHeight
+    const clientHeight = document.documentElement.clientHeight || window.innerHeight
 
-    // Se chegou perto do final da página (100px antes do final)
-    if (scrollTop + clientHeight >= scrollHeight - 100) {
+    // Calcular a posição atual como porcentagem
+    const scrollPercentage = (scrollTop / (scrollHeight - clientHeight)) * 100
+
+    // Verificar se os últimos posts estão visíveis
+    const postsGrid = document.querySelector('.posts-grid')
+    let lastPostVisible = false
+    
+    if (postsGrid) {
+      const postCards = postsGrid.querySelectorAll('.post-card')
+      if (postCards.length > 0) {
+        const lastCard = postCards[Math.max(0, postCards.length - 3)] // Terceiro último card
+        const rect = lastCard.getBoundingClientRect()
+        lastPostVisible = rect.top < clientHeight + 200 // 200px de margem
+      }
+    }
+
+    // Múltiplos pontos de gatilho para garantir carregamento suave
+    const triggers = [
+      scrollTop + clientHeight >= scrollHeight - 600, // 600px antes do final
+      scrollPercentage >= 60, // 60% da página
+      scrollTop + clientHeight >= scrollHeight * 0.7, // 70% da altura total
+      lastPostVisible // Terceiro último post visível
+    ]
+
+    // Se qualquer condição for verdadeira, carregar mais posts
+    if (triggers.some(trigger => trigger)) {
       fetchPosts(currentPage + 1, true)
     }
   }, [loadingMore, hasMore, currentPage, fetchPosts])
 
-  // Adicionar listener de scroll
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+  // Throttle da função de scroll para melhor performance
+  const throttledHandleScroll = useCallback(() => {
+    let timeoutId = null
+    
+    return () => {
+      if (timeoutId) return
+      
+      timeoutId = setTimeout(() => {
+        handleScroll()
+        timeoutId = null
+      }, 100) // 100ms de throttle
+    }
   }, [handleScroll])
+
+  // Adicionar listener de scroll com throttle
+  useEffect(() => {
+    const scrollHandler = throttledHandleScroll()
+    window.addEventListener('scroll', scrollHandler, { passive: true })
+    return () => window.removeEventListener('scroll', scrollHandler)
+  }, [throttledHandleScroll])
 
   const formatDate = (dateString) => {
     const date = new Date(dateString)
