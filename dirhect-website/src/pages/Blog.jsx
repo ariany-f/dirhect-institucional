@@ -147,17 +147,20 @@ const Blog = () => {
             <div className="blog-hero-content text-center">
               <h1>Blog <span className="gradient-text">Dirhect</span></h1>
               <p>Insights, tendências e novidades sobre gestão de RH e tecnologia</p>
-              {totalPosts > 0 && (
-                <p className="blog-stats">
-                  {posts.length} de {totalPosts} posts carregados
-                </p>
-              )}
             </div>
           </div>
         </section>
 
         <section className="blog-content section">
           <div className="container">
+            {totalPosts > 0 && (
+              <div className="blog-stats-header">
+                <p className="posts-counter">
+                  Exibindo {posts.length} de {totalPosts} posts
+                </p>
+              </div>
+            )}
+
             {loading ? (
               <div className="loading">
                 <div className="loading-spinner"></div>
@@ -209,7 +212,7 @@ const Blog = () => {
                           </div>
                         </div>
                         
-                        <h2 className="post-title">
+                        <h2 className="blog-post-title">
                           {stripHtml(post.title.rendered)}
                         </h2>
                         
