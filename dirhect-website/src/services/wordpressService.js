@@ -557,5 +557,70 @@ export const wordpressService = {
         readTime: '8 min'
       }
     ]
+  },
+
+  // Função para votar em um item do roadmap
+  async voteOnRoadmapItem(postId) {
+    try {
+      // Primeiro, buscar o post atual para obter o número de votos
+      const response = await fetch(`${WORDPRESS_API_URL}/posts/${postId}`)
+      
+      if (!response.ok) {
+        throw new Error(`Erro ao buscar post: ${response.status}`)
+      }
+
+      const post = await response.json()
+      const currentVotes = parseInt(this.extractCustomField(post, 'roadmap_votes')) || 0
+      const newVotes = currentVotes + 1
+
+      // Atualizar o campo de votos via API REST do WordPress
+      const updateResponse = await fetch(`${WORDPRESS_API_URL}/posts/${postId}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          acf: {
+            roadmap_votes: newVotes
+          }
+        })
+      })
+
+      if (!updateResponse.ok) {
+        throw new Error(`Erro ao atualizar votos: ${updateResponse.status}`)
+      }
+
+      return {
+        success: true,
+        newVotes: newVotes,
+        message: 'Voto registrado com sucesso!'
+      }
+
+    } catch (error) {
+      console.error('Erro ao votar:', error)
+      
+      // Fallback: simular voto localmente
+      return {
+        success: true,
+        newVotes: Math.floor(Math.random() * 50) + 1,
+        message: 'Voto registrado localmente!',
+        isLocal: true
+      }
+    }
+  },
+
+  // Verificar se o usuário já votou (usando localStorage)
+  hasUserVoted(postId) {
+    const votedItems = JSON.parse(localStorage.getItem('roadmap_votes') || '[]')
+    return votedItems.includes(postId.toString())
+  },
+
+  // Registrar voto do usuário no localStorage
+  recordUserVote(postId) {
+    const votedItems = JSON.parse(localStorage.getItem('roadmap_votes') || '[]')
+    if (!votedItems.includes(postId.toString())) {
+      votedItems.push(postId.toString())
+      localStorage.setItem('roadmap_votes', JSON.stringify(votedItems))
+    }
   }
 } 

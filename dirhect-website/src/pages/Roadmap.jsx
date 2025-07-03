@@ -11,6 +11,8 @@ const Roadmap = () => {
   const [isLoading, setIsLoading] = useState(true)
   const [selectedQuarter, setSelectedQuarter] = useState('all')
   const [error, setError] = useState(null)
+  const [votingStates, setVotingStates] = useState({}) // Para controlar loading de votos
+  const [notification, setNotification] = useState(null) // Para mostrar mensagens
 
   // Buscar dados do roadmap do WordPress
   useEffect(() => {
@@ -41,6 +43,49 @@ const Roadmap = () => {
 
     fetchRoadmapData()
   }, [])
+
+  // Função para votar
+  const handleVote = async (itemId) => {
+    // Verificar se já votou
+    if (wordpressService.hasUserVoted(itemId)) {
+      showNotification('Você já votou nesta funcionalidade!', 'warning')
+      return
+    }
+
+    // Definir estado de loading para este item
+    setVotingStates(prev => ({ ...prev, [itemId]: true }))
+
+    try {
+      const result = await wordpressService.voteOnRoadmapItem(itemId)
+
+      if (result.success) {
+        // Atualizar o estado local
+        setRoadmapItems(prev => prev.map(item => 
+          item.id === itemId 
+            ? { ...item, votes: result.newVotes }
+            : item
+        ))
+
+        // Registrar voto do usuário
+        wordpressService.recordUserVote(itemId)
+
+        // Mostrar mensagem de sucesso
+        showNotification(result.message, 'success')
+      }
+    } catch (error) {
+      console.error('Erro ao votar:', error)
+      showNotification('Erro ao registrar voto. Tente novamente.', 'error')
+    } finally {
+      // Remover estado de loading
+      setVotingStates(prev => ({ ...prev, [itemId]: false }))
+    }
+  }
+
+  // Função para mostrar notificações
+  const showNotification = (message, type = 'info') => {
+    setNotification({ message, type })
+    setTimeout(() => setNotification(null), 4000) // Remove após 4 segundos
+  }
 
   // Gerar lista de quarters dinamicamente baseada nos dados
   const quarters = ['all', ...new Set(roadmapItems.map(item => item.quarter))].sort((a, b) => {
@@ -251,9 +296,29 @@ const Roadmap = () => {
 
                     {item.status !== 'completed' && (
                       <div className="roadmap-card-cta">
-                        <button className="roadmap-vote-btn">
-                          <span>Votar nesta funcionalidade</span>
-                          <ArrowRight size={16} />
+                        <button 
+                          className={`roadmap-vote-btn ${
+                            wordpressService.hasUserVoted(item.id) ? 'voted' : ''
+                          } ${votingStates[item.id] ? 'loading' : ''}`}
+                          onClick={() => handleVote(item.id)}
+                          disabled={votingStates[item.id] || wordpressService.hasUserVoted(item.id)}
+                        >
+                          {votingStates[item.id] ? (
+                            <>
+                              <div className="vote-spinner"></div>
+                              <span>Votando...</span>
+                            </>
+                          ) : wordpressService.hasUserVoted(item.id) ? (
+                            <>
+                              <CheckCircle size={16} />
+                              <span>Você já votou!</span>
+                            </>
+                          ) : (
+                            <>
+                              <span>Votar nesta funcionalidade</span>
+                              <ArrowRight size={16} />
+                            </>
+                          )}
                         </button>
                       </div>
                     )}
@@ -264,6 +329,26 @@ const Roadmap = () => {
           </div>
         </div>
       </main>
+
+      {/* Componente de Notificação */}
+      {notification && (
+        <div className={`roadmap-notification roadmap-notification--${notification.type}`}>
+          <div className="roadmap-notification-content">
+            <div className="roadmap-notification-icon">
+              {notification.type === 'success' && <CheckCircle size={20} />}
+              {notification.type === 'warning' && <AlertCircle size={20} />}
+              {notification.type === 'error' && <AlertCircle size={20} />}
+            </div>
+            <span>{notification.message}</span>
+            <button 
+              className="roadmap-notification-close"
+              onClick={() => setNotification(null)}
+            >
+              ×
+            </button>
+          </div>
+        </div>
+      )}
 
       <FloatingButtons />
       <Footer />
