@@ -24,6 +24,7 @@ const BlogPost = () => {
         let fetchedPost = null
         
         // Tentar buscar por ID numérico primeiro
+        // O wordpressService.getPost() automaticamente verifica e exclui posts da categoria roadmap
         if (!isNaN(id)) {
           try {
             fetchedPost = await wordpressService.getPost(id)
@@ -33,6 +34,7 @@ const BlogPost = () => {
         }
         
         // Se não encontrou por ID ou se o ID não é numérico, buscar por slug
+        // O wordpressService.getPosts() automaticamente exclui a categoria roadmap
         if (!fetchedPost) {
           const posts = await wordpressService.getPosts({ per_page: 100 })
           fetchedPost = posts.find(p => p.slug === id || p.id === parseInt(id))
@@ -42,6 +44,7 @@ const BlogPost = () => {
           setPost(fetchedPost)
           
           // Buscar posts relacionados (mesma categoria)
+          // O wordpressService.getRelatedPosts() automaticamente exclui a categoria roadmap
           if (fetchedPost.categoryIds && fetchedPost.categoryIds.length > 0) {
             try {
               const related = await wordpressService.getRelatedPosts(

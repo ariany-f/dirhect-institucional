@@ -1,17 +1,61 @@
 const WORDPRESS_API_URL = 'https://dirhect-institucional.thunderbold.com.br/wp-json/wp/v2'
 
+// Cache para o ID da categoria roadmap
+let roadmapCategoryId = null
+
 export const wordpressService = {
   WORDPRESS_API_URL, // Exportar a URL para uso externo
 
-  // Buscar posts do blog
+  // Buscar o ID da categoria roadmap
+  async getRoadmapCategoryId() {
+    if (roadmapCategoryId !== null) {
+      return roadmapCategoryId
+    }
+
+    try {
+      const response = await fetch(`${WORDPRESS_API_URL}/categories?slug=roadmap`)
+      
+      if (!response.ok) {
+        console.warn('Erro ao buscar categoria roadmap')
+        return null
+      }
+
+      const categories = await response.json()
+      if (categories.length > 0) {
+        roadmapCategoryId = categories[0].id
+        return roadmapCategoryId
+      }
+    } catch (error) {
+      console.warn('Erro ao buscar categoria roadmap:', error)
+    }
+
+    roadmapCategoryId = null
+    return null
+  },
+
+  // Buscar posts do blog (excluindo categoria roadmap)
   async getPosts(params = {}) {
     try {
+      // Buscar ID da categoria roadmap para excluir
+      const roadmapId = await this.getRoadmapCategoryId()
+
       const searchParams = new URLSearchParams({
         per_page: params.perPage || 10,
         page: params.page || 1,
         _embed: true, // Include embedded resources like featured media and author
         ...params
       })
+
+      // Excluir categoria roadmap se encontrada
+      if (roadmapId && !params.categories_exclude) {
+        searchParams.set('categories_exclude', roadmapId)
+      } else if (roadmapId && params.categories_exclude) {
+        // Se já existe exclusão de categorias, adicionar roadmap
+        const existingExcludes = Array.isArray(params.categories_exclude) 
+          ? params.categories_exclude 
+          : [params.categories_exclude]
+        searchParams.set('categories_exclude', [...existingExcludes, roadmapId].join(','))
+      }
 
       const response = await fetch(`${WORDPRESS_API_URL}/posts?${searchParams}`)
       
@@ -56,6 +100,12 @@ export const wordpressService = {
 
       const post = await response.json()
       
+      // Verificar se o post pertence à categoria roadmap
+      const roadmapId = await this.getRoadmapCategoryId()
+      if (roadmapId && post.categories && post.categories.includes(roadmapId)) {
+        throw new Error('Post pertence à categoria roadmap e não deve ser exibido')
+      }
+      
       return {
         id: post.id,
         title: { rendered: post.title.rendered },
@@ -78,12 +128,15 @@ export const wordpressService = {
     }
   },
 
-  // Buscar posts relacionados por categoria
+  // Buscar posts relacionados por categoria (excluindo categoria roadmap)
   async getRelatedPosts(postId, categoryIds, limit = 3) {
     try {
       if (!categoryIds || categoryIds.length === 0) {
         return []
       }
+
+      // Buscar ID da categoria roadmap para excluir
+      const roadmapId = await this.getRoadmapCategoryId()
 
       const searchParams = new URLSearchParams({
         per_page: limit + 1, // +1 para excluir o post atual se aparecer
@@ -91,6 +144,11 @@ export const wordpressService = {
         exclude: postId,
         _embed: true
       })
+
+      // Excluir categoria roadmap se encontrada
+      if (roadmapId) {
+        searchParams.set('categories_exclude', roadmapId)
+      }
 
       const response = await fetch(`${WORDPRESS_API_URL}/posts?${searchParams}`)
       
@@ -198,7 +256,220 @@ export const wordpressService = {
     return `${readTime} min`
   },
 
-  // Posts estáticos como fallback
+  // Buscar posts APENAS da categoria roadmap (para a página de roadmap)
+  async getRoadmapPosts(params = {}) {
+    try {
+      // Buscar ID da categoria roadmap
+      const roadmapId = await this.getRoadmapCategoryId()
+      
+      if (!roadmapId) {
+        console.warn('Categoria roadmap não encontrada')
+        return this.getFallbackRoadmapPosts()
+      }
+
+      const searchParams = new URLSearchParams({
+        per_page: params.perPage || 50,
+        page: params.page || 1,
+        categories: roadmapId, // INCLUIR apenas posts da categoria roadmap
+        _embed: true,
+        orderby: 'date',
+        order: 'desc',
+        ...params
+      })
+
+      const response = await fetch(`${WORDPRESS_API_URL}/posts?${searchParams}`)
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const posts = await response.json()
+      
+      // Transformar os dados para o formato esperado pelo roadmap
+      return posts.map(post => {
+        // Extrair datas e formatá-las corretamente
+        const estimatedDateRaw = this.extractCustomField(post, 'roadmap_estimated_date')
+        const launchedDateRaw = this.extractCustomField(post, 'roadmap_launched_date')
+        
+        const estimatedDate = this.formatACFDate(estimatedDateRaw) || post.date
+        const launchedDate = this.formatACFDate(launchedDateRaw)
+        
+        // Extrair funcionalidades e processar
+        const featuresRaw = this.extractCustomField(post, 'roadmap_features')
+        const features = this.processFeaturesList(featuresRaw)
+        
+        // Extrair outros campos com valores padrão inteligentes
+        const status = this.extractCustomField(post, 'roadmap_status') || 'planned'
+        const priority = this.extractCustomField(post, 'roadmap_priority') || 'medium'
+        const quarter = this.extractCustomField(post, 'roadmap_quarter') || this.getQuarterFromDate(post.date)
+        const category = this.extractCustomField(post, 'roadmap_category') || 'Produto'
+        const votes = parseInt(this.extractCustomField(post, 'roadmap_votes')) || 0
+
+        return {
+          id: post.id,
+          title: post.title.rendered,
+          description: this.stripHtml(post.excerpt.rendered) || this.stripHtml(post.content.rendered).substring(0, 200) + '...',
+          content: post.content.rendered,
+          date: post.date,
+          modified: post.modified,
+          author: this.getAuthorName(post),
+          featured_media: this.getFeaturedImage(post),
+          categories: this.getCategories(post),
+          categoryIds: this.getCategoryIds(post),
+          tags: this.getTags(post),
+          slug: post.slug,
+          link: post.link,
+          // Campos específicos do roadmap (com tratamento robusto)
+          status: status,
+          priority: priority,
+          quarter: quarter,
+          category: category,
+          votes: votes,
+          estimatedDate: estimatedDate,
+          launchedDate: launchedDate,
+          features: features
+        }
+      })
+    } catch (error) {
+      console.error('Erro ao buscar posts do roadmap:', error)
+      return this.getFallbackRoadmapPosts()
+    }
+  },
+
+  // Extrair custom fields do WordPress
+  extractCustomField(post, fieldName) {
+    // Tentar extrair de meta fields
+    if (post.meta && post.meta[fieldName]) {
+      return post.meta[fieldName]
+    }
+    
+    // Tentar extrair de ACF (Advanced Custom Fields)
+    if (post.acf && post.acf[fieldName]) {
+      return post.acf[fieldName]
+    }
+    
+    // Tratar casos específicos de nomes de campos com erro
+    if (fieldName === 'roadmap_estimated_date' && post.acf) {
+      // Verificar se existe o campo com nome duplicado/errado
+      if (post.acf['roadmap_estimatroadmap_estimated_dateed_date']) {
+        return post.acf['roadmap_estimatroadmap_estimated_dateed_date']
+      }
+    }
+    
+    return null
+  },
+
+  // Formatar data do ACF para formato padrão
+  formatACFDate(dateValue) {
+    if (!dateValue) return null
+    
+    // Se já está no formato correto (YYYY-MM-DD)
+    if (dateValue.includes('-')) {
+      return dateValue
+    }
+    
+    // Se está no formato YYYYMMDD (formato do ACF)
+    if (dateValue.length === 8 && !isNaN(dateValue)) {
+      const year = dateValue.substring(0, 4)
+      const month = dateValue.substring(4, 6)
+      const day = dateValue.substring(6, 8)
+      return `${year}-${month}-${day}`
+    }
+    
+    return dateValue
+  },
+
+  // Processar lista de funcionalidades
+  processFeaturesList(featuresString) {
+    if (!featuresString || featuresString.trim() === '') {
+      return ['Funcionalidade em desenvolvimento']
+    }
+    
+    const features = featuresString.split('\n')
+      .map(f => f.trim())
+      .filter(f => f.length > 0)
+    
+    return features.length > 0 ? features : ['Funcionalidade em desenvolvimento']
+  },
+
+  // Gerar quarter baseado na data
+  getQuarterFromDate(dateString) {
+    const date = new Date(dateString)
+    const year = date.getFullYear()
+    const month = date.getMonth() + 1
+    
+    if (month <= 3) return `Q1 ${year}`
+    if (month <= 6) return `Q2 ${year}`
+    if (month <= 9) return `Q3 ${year}`
+    return `Q4 ${year}`
+  },
+
+  // Função para remover HTML
+  stripHtml(html) {
+    const tmp = document.createElement('div')
+    tmp.innerHTML = html
+    return tmp.textContent || tmp.innerText || ''
+  },
+
+  // Posts de roadmap como fallback
+  getFallbackRoadmapPosts() {
+    return [
+      {
+        id: 1,
+        title: "IA Generativa para Descrições de Cargos",
+        description: "Implementação de inteligência artificial para gerar automaticamente descrições detalhadas de cargos baseadas em competências e responsabilidades.",
+        status: "completed",
+        priority: "high",
+        quarter: "Q4 2023",
+        category: "IA & Automação",
+        votes: 247,
+        estimatedDate: "2023-12-15",
+        launchedDate: "2023-12-10",
+        features: [
+          "Geração automática de descrições",
+          "Análise de mercado integrada",
+          "Templates personalizáveis",
+          "Integração com banco de dados de competências"
+        ]
+      },
+      {
+        id: 2,
+        title: "Dashboard Analytics Avançado",
+        description: "Nova interface de analytics com métricas em tempo real, previsões de turnover e insights baseados em machine learning.",
+        status: "in-progress",
+        priority: "high",
+        quarter: "Q1 2024",
+        category: "Analytics",
+        votes: 189,
+        estimatedDate: "2024-03-30",
+        features: [
+          "Métricas em tempo real",
+          "Previsões de turnover",
+          "Alertas inteligentes",
+          "Relatórios customizáveis"
+        ]
+      },
+      {
+        id: 3,
+        title: "Integração com Microsoft Teams",
+        description: "Integração nativa com Microsoft Teams para onboarding, comunicação interna e gestão de documentos.",
+        status: "planned",
+        priority: "medium",
+        quarter: "Q2 2024",
+        category: "Integrações",
+        votes: 156,
+        estimatedDate: "2024-06-15",
+        features: [
+          "Onboarding via Teams",
+          "Notificações automáticas",
+          "Compartilhamento de documentos",
+          "Chatbot integrado"
+        ]
+      }
+    ]
+  },
+
+  // Posts estáticos como fallback (sem categoria roadmap)
   getFallbackPosts() {
     return [
       {

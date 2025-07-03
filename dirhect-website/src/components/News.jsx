@@ -12,6 +12,7 @@ const News = () => {
     const fetchPosts = async () => {
       try {
         setLoading(true)
+        // O wordpressService.getPosts() automaticamente exclui a categoria roadmap
         const posts = await wordpressService.getPosts({
           per_page: 3,
           status: 'publish',

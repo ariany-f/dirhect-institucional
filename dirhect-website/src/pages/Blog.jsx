@@ -33,7 +33,17 @@ const Blog = () => {
         setLoadingMore(true)
       }
 
-      const response = await fetch(`${wordpressService.WORDPRESS_API_URL || 'https://dirhect-institucional.thunderbold.com.br/wp-json/wp/v2'}/posts?per_page=${postsPerPage}&page=${page}&_embed=true`)
+      // Buscar ID da categoria roadmap para excluir
+      const roadmapId = await wordpressService.getRoadmapCategoryId()
+      
+      // Construir URL com exclusão de categoria roadmap
+      let apiUrl = `${wordpressService.WORDPRESS_API_URL || 'https://dirhect-institucional.thunderbold.com.br/wp-json/wp/v2'}/posts?per_page=${postsPerPage}&page=${page}&_embed=true`
+      
+      if (roadmapId) {
+        apiUrl += `&categories_exclude=${roadmapId}`
+      }
+      
+      const response = await fetch(apiUrl)
       
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`)
