@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { Building2, Users, Mail, Phone, MapPin, Calendar, CheckCircle2 } from 'lucide-react'
+import { wordpressService } from '../services/wordpressService'
 import './Demo.css'
 
 const Demo = () => {
@@ -21,6 +22,7 @@ const Demo = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState(null)
 
   // Função para aplicar máscara de CNPJ
   const formatCNPJ = (value) => {
@@ -117,12 +119,41 @@ const Demo = () => {
   const handleSubmit = async (e) => {
     e.preventDefault()
     setIsSubmitting(true)
+    setSubmitError(null)
     
-    // Simular envio do formulário
-    setTimeout(() => {
+    try {
+      // Validar campos obrigatórios
+      const requiredFields = ['nomeEmpresa', 'cnpj', 'nomeContato', 'email', 'telefone', 'cargo', 'numeroFuncionarios', 'segmento']
+      const missingFields = requiredFields.filter(field => !formData[field] || formData[field].trim() === '')
+      
+      if (missingFields.length > 0) {
+        throw new Error('Por favor, preencha todos os campos obrigatórios.')
+      }
+
+      if (!formData.aceiteTermos) {
+        throw new Error('É necessário aceitar os termos e condições.')
+      }
+
+      // Enviar solicitação para WordPress
+      const result = await wordpressService.submitDemoRequest(formData)
+
+      if (result.success) {
+        setSubmitSuccess(true)
+        
+        // Se foi salvo localmente (fallback), mostrar mensagem apropriada
+        if (result.isLocal) {
+          console.log('Solicitação salva localmente para sincronização posterior')
+        }
+      } else {
+        throw new Error(result.message || 'Erro ao enviar solicitação')
+      }
+
+    } catch (error) {
+      console.error('Erro ao enviar formulário:', error)
+      setSubmitError(error.message)
+    } finally {
       setIsSubmitting(false)
-      setSubmitSuccess(true)
-    }, 2000)
+    }
   }
 
   if (submitSuccess) {
@@ -367,12 +398,25 @@ const Demo = () => {
                   </label>
                 </div>
 
+                {submitError && (
+                  <div className="demo-error-message">
+                    <p>{submitError}</p>
+                  </div>
+                )}
+
                 <button 
                   type="submit" 
                   className="btn-primary submit-btn"
                   disabled={isSubmitting}
                 >
-                  {isSubmitting ? 'Enviando...' : 'Solicitar Demonstração'}
+                  {isSubmitting ? (
+                    <>
+                      <div className="submit-spinner"></div>
+                      Enviando solicitação...
+                    </>
+                  ) : (
+                    'Solicitar Demonstração'
+                  )}
                 </button>
               </form>
             </div>

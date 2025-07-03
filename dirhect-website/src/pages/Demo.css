@@ -396,73 +396,117 @@ body {
 
 /* Success Page */
 .demo-success {
-  min-height: 100vh;
+  min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-  padding: 150px 0 80px;
+  padding: 2rem;
+  background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
 }
 
 .success-content {
+  background: white;
+  padding: 4rem 3rem;
+  border-radius: 24px;
   text-align: center;
   max-width: 600px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+  border: 1px solid #e2e8f0;
 }
 
 .success-icon {
   color: #10b981;
   margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
 }
 
 .success-content h1 {
-  font-size: 3rem;
-  margin-bottom: 1.5rem;
+  font-size: 2.5rem;
+  font-weight: 800;
   color: #1e293b;
-  font-weight: 900;
+  margin-bottom: 1.5rem;
+  letter-spacing: -0.02em;
 }
 
-.success-content p {
-  font-size: 1.25rem;
-  margin-bottom: 3rem;
+.success-content > p {
+  font-size: 1.1rem;
   color: #64748b;
   line-height: 1.6;
+  margin-bottom: 2.5rem;
 }
 
 .success-info {
   display: flex;
   justify-content: center;
   gap: 2rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2.5rem;
 }
 
 .info-item {
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  color: #1e293b;
-  font-weight: 500;
+  color: #10b981;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
 .info-item svg {
-  color: #3b82f6;
+  color: #10b981;
 }
 
-.btn-primary {
-  background: var(--gradient);
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
+/* Mensagem de erro */
+.demo-error-message {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.2);
   border-radius: 12px;
-  font-weight: 700;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  animation: errorSlideIn 0.3s ease-out;
 }
 
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+@keyframes errorSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.demo-error-message p {
+  color: #ef4444;
+  font-weight: 500;
+  margin: 0;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+/* Spinner do botão de envio */
+.submit-spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: submitSpinnerRotate 1s linear infinite;
+  margin-right: 0.5rem;
+}
+
+@keyframes submitSpinnerRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 56px;
 }
 
 /* Responsive */

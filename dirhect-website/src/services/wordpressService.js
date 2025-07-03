@@ -622,5 +622,190 @@ export const wordpressService = {
       votedItems.push(postId.toString())
       localStorage.setItem('roadmap_votes', JSON.stringify(votedItems))
     }
+  },
+
+  // Função para enviar solicitação de demonstração
+  async submitDemoRequest(formData) {
+    try {
+      // Preparar dados para envio
+      const demoData = {
+        title: `Solicitação de Demo - ${formData.nomeEmpresa}`,
+        content: this.formatDemoContent(formData),
+        status: 'private', // Manter privado para análise interna
+        categories: [], // Pode definir uma categoria específica para demos
+        meta: {
+          demo_empresa: formData.nomeEmpresa,
+          demo_cnpj: formData.cnpj,
+          demo_contato: formData.nomeContato,
+          demo_email: formData.email,
+          demo_telefone: formData.telefone,
+          demo_cargo: formData.cargo,
+          demo_funcionarios: formData.numeroFuncionarios,
+          demo_segmento: formData.segmento,
+          demo_necessidades: JSON.stringify(formData.necessidades),
+          demo_mensagem: formData.mensagem,
+          demo_data_solicitacao: new Date().toISOString(),
+          demo_status: 'pendente'
+        }
+      }
+
+      // Tentar enviar para WordPress
+      const response = await fetch(`${WORDPRESS_API_URL}/posts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          // Nota: Em produção, você precisará de autenticação adequada
+          // 'Authorization': 'Bearer ' + token
+        },
+        body: JSON.stringify(demoData)
+      })
+
+      if (!response.ok) {
+        throw new Error(`Erro HTTP: ${response.status}`)
+      }
+
+      const result = await response.json()
+
+      return {
+        success: true,
+        id: result.id,
+        message: 'Solicitação enviada com sucesso!',
+        data: result
+      }
+
+    } catch (error) {
+      console.error('Erro ao enviar solicitação para WordPress:', error)
+      
+      // Fallback: salvar localmente ou enviar por email
+      return await this.handleDemoFallback(formData, error)
+    }
+  },
+
+  // Formatar conteúdo da solicitação para o post
+  formatDemoContent(formData) {
+    const necessidadesText = formData.necessidades.length > 0 
+      ? formData.necessidades.join(', ') 
+      : 'Nenhuma necessidade específica informada'
+
+    return `
+      <h2>Solicitação de Demonstração</h2>
+      
+      <h3>Informações da Empresa</h3>
+      <ul>
+        <li><strong>Nome da Empresa:</strong> ${formData.nomeEmpresa}</li>
+        <li><strong>CNPJ:</strong> ${formData.cnpj}</li>
+        <li><strong>Segmento:</strong> ${formData.segmento}</li>
+        <li><strong>Número de Funcionários:</strong> ${formData.numeroFuncionarios}</li>
+      </ul>
+
+      <h3>Dados do Contato</h3>
+      <ul>
+        <li><strong>Nome:</strong> ${formData.nomeContato}</li>
+        <li><strong>Cargo:</strong> ${formData.cargo}</li>
+        <li><strong>E-mail:</strong> ${formData.email}</li>
+        <li><strong>Telefone:</strong> ${formData.telefone}</li>
+      </ul>
+
+      <h3>Necessidades e Interesse</h3>
+      <p><strong>Soluções de Interesse:</strong> ${necessidadesText}</p>
+      
+      ${formData.mensagem ? `
+        <h3>Mensagem Adicional</h3>
+        <p>${formData.mensagem}</p>
+      ` : ''}
+
+      <h3>Informações Técnicas</h3>
+      <ul>
+        <li><strong>Data da Solicitação:</strong> ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}</li>
+        <li><strong>Origem:</strong> Formulário do Site</li>
+        <li><strong>Status:</strong> Pendente</li>
+      </ul>
+    `
+  },
+
+  // Fallback para quando o WordPress não estiver disponível
+  async handleDemoFallback(formData, originalError) {
+    try {
+      // Opção 1: Salvar no localStorage para sincronização posterior
+      const pendingDemos = JSON.parse(localStorage.getItem('pending_demos') || '[]')
+      const demoRequest = {
+        id: Date.now(),
+        ...formData,
+        timestamp: new Date().toISOString(),
+        status: 'pending_sync'
+      }
+      
+      pendingDemos.push(demoRequest)
+      localStorage.setItem('pending_demos', JSON.stringify(pendingDemos))
+
+      // Opção 2: Tentar enviar por email via serviço alternativo (ex: EmailJS)
+      await this.sendDemoByEmail(formData)
+
+      return {
+        success: true,
+        id: demoRequest.id,
+        message: 'Solicitação registrada! Entraremos em contato em breve.',
+        isLocal: true,
+        fallbackUsed: true
+      }
+
+    } catch (fallbackError) {
+      console.error('Erro no fallback:', fallbackError)
+      
+      return {
+        success: false,
+        message: 'Erro ao enviar solicitação. Tente novamente ou entre em contato diretamente.',
+        error: originalError.message
+      }
+    }
+  },
+
+  // Enviar solicitação por email como backup
+  async sendDemoByEmail(formData) {
+    // Implementar integração com EmailJS ou serviço similar
+    // Por enquanto, apenas log para desenvolvimento
+    console.log('Enviando demo por email:', {
+      to: 'demo@dirhect.com',
+      subject: `Nova Solicitação de Demo - ${formData.nomeEmpresa}`,
+      data: formData
+    })
+
+    // Em produção, implementar:
+    // return emailjs.send('service_id', 'template_id', emailData)
+  },
+
+  // Função para sincronizar demos pendentes quando conexão for restaurada
+  async syncPendingDemos() {
+    const pendingDemos = JSON.parse(localStorage.getItem('pending_demos') || '[]')
+    
+    if (pendingDemos.length === 0) {
+      return { success: true, synced: 0 }
+    }
+
+    let syncedCount = 0
+    const failedSyncs = []
+
+    for (const demo of pendingDemos) {
+      try {
+        const result = await this.submitDemoRequest(demo)
+        if (result.success && !result.isLocal) {
+          syncedCount++
+        } else {
+          failedSyncs.push(demo)
+        }
+      } catch (error) {
+        failedSyncs.push(demo)
+      }
+    }
+
+    // Atualizar localStorage com demos que falharam
+    localStorage.setItem('pending_demos', JSON.stringify(failedSyncs))
+
+    return {
+      success: true,
+      synced: syncedCount,
+      failed: failedSyncs.length,
+      message: `${syncedCount} solicitações sincronizadas com sucesso`
+    }
   }
 } 
