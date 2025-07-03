@@ -13,6 +13,7 @@ const Demo = () => {
     cargo: '',
     numeroFuncionarios: '',
     segmento: '',
+    cnpj: '',
     necessidades: [],
     mensagem: '',
     aceiteTermos: false
@@ -20,6 +21,44 @@ const Demo = () => {
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+
+  // Função para aplicar máscara de CNPJ
+  const formatCNPJ = (value) => {
+    // Remove tudo que não é número
+    const cleanValue = value.replace(/\D/g, '')
+    
+    // Aplica a máscara: XX.XXX.XXX/XXXX-XX
+    if (cleanValue.length <= 2) {
+      return cleanValue
+    } else if (cleanValue.length <= 5) {
+      return cleanValue.replace(/(\d{2})(\d{0,3})/, '$1.$2')
+    } else if (cleanValue.length <= 8) {
+      return cleanValue.replace(/(\d{2})(\d{3})(\d{0,3})/, '$1.$2.$3')
+    } else if (cleanValue.length <= 12) {
+      return cleanValue.replace(/(\d{2})(\d{3})(\d{3})(\d{0,4})/, '$1.$2.$3/$4')
+    } else {
+      return cleanValue.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{0,2})/, '$1.$2.$3/$4-$5')
+    }
+  }
+
+  // Capturar CNPJ da URL quando o componente carregar
+  useEffect(() => {
+    // Scroll para o topo quando a página carregar
+    window.scrollTo(0, 0)
+
+    // Capturar CNPJ da URL
+    const urlParams = new URLSearchParams(window.location.search)
+    const cnpjFromUrl = urlParams.get('cnpj')
+    
+    if (cnpjFromUrl) {
+      // Formatar o CNPJ e preencher o campo
+      const formattedCNPJ = formatCNPJ(cnpjFromUrl)
+      setFormData(prev => ({
+        ...prev,
+        cnpj: formattedCNPJ
+      }))
+    }
+  }, [])
 
   const necessidadesOptions = [
     'Admissão Digital',
@@ -50,10 +89,20 @@ const Demo = () => {
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target
-    setFormData(prev => ({
-      ...prev,
-      [name]: type === 'checkbox' ? checked : value
-    }))
+    
+    // Aplicar formatação especial para CNPJ
+    if (name === 'cnpj') {
+      const formattedValue = formatCNPJ(value)
+      setFormData(prev => ({
+        ...prev,
+        [name]: formattedValue
+      }))
+    } else {
+      setFormData(prev => ({
+        ...prev,
+        [name]: type === 'checkbox' ? checked : value
+      }))
+    }
   }
 
   const handleNecessidadeChange = (necessidade) => {
@@ -75,11 +124,6 @@ const Demo = () => {
       setSubmitSuccess(true)
     }, 2000)
   }
-
-  // Scroll para o topo quando a página carregar
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
 
   if (submitSuccess) {
     return (
@@ -150,6 +194,23 @@ const Demo = () => {
                           value={formData.nomeEmpresa}
                           onChange={handleInputChange}
                           placeholder="Digite o nome da sua empresa"
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label>CNPJ *</label>
+                      <div className="input-wrapper">
+                        <Building2 size={20} />
+                        <input
+                          type="text"
+                          name="cnpj"
+                          value={formData.cnpj}
+                          onChange={handleInputChange}
+                          placeholder="XX.XXX.XXX/XXXX-XX"
+                          maxLength="18"
+                          inputMode="numeric"
                           required
                         />
                       </div>
