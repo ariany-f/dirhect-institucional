@@ -60,7 +60,7 @@ const Hero = () => {
           <div className="hero-main-content">
             <div className="hero-text">
               <h1 className="hero-title">
-                Uma plataforma que faz <span className="gradient-text">mais por você</span>
+                Uma plataforma que faz <span className="gradient-text">mais pelo seu RH</span>
               </h1>
               
               <p className="hero-subtitle">
