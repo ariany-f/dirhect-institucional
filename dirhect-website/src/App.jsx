@@ -22,6 +22,8 @@ import Header from './components/Header'
 import SecuritySection from './components/SecuritySection'
 import Integrations from './components/Integrations'
 import FloatingButtons from './components/FloatingButtons'
+import PartnersStrip from './components/PartnersStrip'
+import Parceiros from './pages/Parceiros'
 
 const GRADIENT = 'linear-gradient(to left, #0c004c, #5d0b62)';
 
@@ -48,6 +50,7 @@ function App() {
             <>
               <Hero />
               <WhyChoose />
+              <PartnersStrip />
               <Solutions />
               <About />
               <Integrations />
@@ -66,6 +69,7 @@ function App() {
           <Route path="/docs" element={<TechnicalDocumentation />} />
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/termos-uso" element={<TermosUso />} />
+          <Route path="/parceiros" element={<Parceiros />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </div>
