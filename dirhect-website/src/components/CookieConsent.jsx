@@ -4,11 +4,16 @@ import './CookieConsent.css'
 
 const CookieConsent = () => {
   const [showConsent, setShowConsent] = useState(false)
+  const [hasConsented, setHasConsented] = useState(false)
+  const [userChoice, setUserChoice] = useState(null)
 
   useEffect(() => {
     // Verificar se o usuário já deu consentimento
-    const hasConsented = localStorage.getItem('cookieConsent')
-    if (!hasConsented) {
+    const consent = localStorage.getItem('cookieConsent')
+    if (consent) {
+      setHasConsented(true)
+      setUserChoice(consent)
+    } else {
       // Mostrar o aviso após 2 segundos para não atrapalhar a navegação inicial
       const timer = setTimeout(() => {
         setShowConsent(true)
@@ -20,11 +25,15 @@ const CookieConsent = () => {
 
   const handleAccept = () => {
     localStorage.setItem('cookieConsent', 'accepted')
+    setHasConsented(true)
+    setUserChoice('accepted')
     setShowConsent(false)
   }
 
   const handleDecline = () => {
     localStorage.setItem('cookieConsent', 'declined')
+    setHasConsented(true)
+    setUserChoice('declined')
     setShowConsent(false)
   }
 
@@ -32,8 +41,27 @@ const CookieConsent = () => {
     setShowConsent(false)
   }
 
-  if (!showConsent) return null
+  const handleReopen = () => {
+    setShowConsent(true)
+  }
 
+  // Se não tem consentimento e não está mostrando o aviso, não renderiza nada
+  if (!hasConsented && !showConsent) return null
+
+  // Se tem consentimento, mostra apenas o ícone de cookies
+  if (hasConsented && !showConsent) {
+    return (
+      <button 
+        className="cookie-icon-btn" 
+        onClick={handleReopen}
+        aria-label="Gerenciar preferências de cookies"
+      >
+        <Cookie size={20} />
+      </button>
+    )
+  }
+
+  // Se está mostrando o aviso de consentimento
   return (
     <div className="cookie-consent">
       <div className="cookie-consent-content">
@@ -53,13 +81,13 @@ const CookieConsent = () => {
 
         <div className="cookie-consent-actions">
           <button 
-            className="cookie-btn cookie-btn-decline" 
+            className={`cookie-btn cookie-btn-decline ${userChoice === 'declined' ? 'selected' : ''}`}
             onClick={handleDecline}
           >
             Recusar
           </button>
           <button 
-            className="cookie-btn cookie-btn-accept" 
+            className={`cookie-btn cookie-btn-accept ${userChoice === 'accepted' ? 'selected' : ''}`}
             onClick={handleAccept}
           >
             Aceitar

@@ -1,3 +1,29 @@
+/* Cookie Icon Button (ao lado do scroll up) */
+.cookie-icon-btn {
+  position: fixed;
+  bottom: 2rem;
+  left: 2rem;
+  width: 48px;
+  height: 48px;
+  background: #64748b;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+  z-index: 999;
+}
+
+.cookie-icon-btn:hover {
+  background: #475569;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+}
+
 /* Cookie Consent Component */
 .cookie-consent {
   position: fixed;
@@ -109,6 +135,21 @@
   box-shadow: 0 6px 20px rgba(12, 0, 76, 0.3);
 }
 
+.cookie-btn-accept.selected {
+  background: linear-gradient(135deg, #0c004c 0%, #5d0b62 100%);
+  color: white;
+  box-shadow: 0 4px 12px rgba(12, 0, 76, 0.3);
+  transform: translateY(-1px);
+}
+
+.cookie-btn-decline.selected {
+  background: #475569;
+  color: white;
+  border-color: #475569;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
 .cookie-close-btn {
   position: absolute;
   top: 1rem;
@@ -132,6 +173,13 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .cookie-icon-btn {
+    bottom: 1rem;
+    left: 1rem;
+    width: 44px;
+    height: 44px;
+  }
+
   .cookie-consent {
     bottom: 1rem;
     left: 1rem;
@@ -159,6 +207,13 @@
 }
 
 @media (max-width: 480px) {
+  .cookie-icon-btn {
+    bottom: 0.75rem;
+    left: 0.75rem;
+    width: 40px;
+    height: 40px;
+  }
+
   .cookie-consent {
     bottom: 0.75rem;
     left: 0.75rem;
