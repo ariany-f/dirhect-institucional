@@ -30,6 +30,11 @@ const Parceiros = () => {
   const [activeSlide, setActiveSlide] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
 
+  // Rolar para o topo quando a página carregar
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
+
   const slides = [
     {
       title: "Nossa Missão",
