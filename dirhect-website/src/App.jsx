@@ -24,6 +24,7 @@ import Integrations from './components/Integrations'
 import FloatingButtons from './components/FloatingButtons'
 import PartnersStrip from './components/PartnersStrip'
 import Parceiros from './pages/Parceiros'
+import CookieConsent from './components/CookieConsent'
 
 const GRADIENT = 'linear-gradient(to left, #0c004c, #5d0b62)';
 
@@ -72,6 +73,7 @@ function App() {
           <Route path="/parceiros" element={<Parceiros />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        <CookieConsent />
       </div>
     </Router>
   )
