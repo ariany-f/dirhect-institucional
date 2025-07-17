@@ -13,8 +13,8 @@ const PartnersStrip = () => {
     { name: 'Nexti RH Inteligente', logo: '/images/logos/nexti-logo-white.png' }
   ]
 
-  // Duplicar os parceiros para criar o efeito infinito
-  const duplicatedPartners = [...partners, ...partners]
+  // Triplicar os parceiros para criar o efeito infinito sem espaços em branco
+  const duplicatedPartners = [...partners, ...partners, ...partners]
 
   const handleClick = () => {
     navigate('/parceiros')
