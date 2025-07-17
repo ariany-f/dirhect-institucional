@@ -33,53 +33,31 @@ const Blog = () => {
         setLoadingMore(true)
       }
 
-      // Buscar ID da categoria roadmap para excluir
-      const roadmapId = await wordpressService.getRoadmapCategoryId()
-      
-      // Construir URL com exclusão de categoria roadmap
-      let apiUrl = `${wordpressService.WORDPRESS_API_URL || 'https://dirhect-institucional.thunderbold.com.br/wp-json/wp/v2'}/posts?per_page=${postsPerPage}&page=${page}&_embed=true`
-      
-      if (roadmapId) {
-        apiUrl += `&categories_exclude=${roadmapId}`
-      }
-      
-      const response = await fetch(apiUrl)
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
-      }
-
-      const fetchedPosts = await response.json()
-      const totalPages = parseInt(response.headers.get('X-WP-TotalPages') || '1')
-      const total = parseInt(response.headers.get('X-WP-Total') || '0')
-
-      // Transformar os dados para o formato esperado
-      const transformedPosts = fetchedPosts.map(post => ({
-        id: post.id,
-        title: { rendered: post.title.rendered },
-        excerpt: { rendered: post.excerpt.rendered },
-        content: { rendered: post.content.rendered },
-        date: post.date,
-        modified: post.modified,
-        author: wordpressService.getAuthorName(post),
-        featured_media: wordpressService.getFeaturedImage(post),
-        categories: wordpressService.getCategories(post),
-        categoryIds: wordpressService.getCategoryIds(post),
-        tags: wordpressService.getTags(post),
-        slug: post.slug,
-        link: post.link,
-        readTime: wordpressService.calculateReadTime(post.content.rendered)
-      }))
+      // Usar o método getPosts do serviço que já exclui roadmap e banco-conhecimento por padrão
+      const fetchedPosts = await wordpressService.getPosts({
+        perPage: postsPerPage,
+        page: page,
+        includeAllCategories: false // Excluir roadmap e banco-conhecimento
+      })
 
       if (append) {
-        setPosts(prevPosts => [...prevPosts, ...transformedPosts])
+        setPosts(prevPosts => [...prevPosts, ...fetchedPosts])
       } else {
-        setPosts(transformedPosts)
+        setPosts(fetchedPosts)
       }
 
-      setTotalPosts(total)
-      setHasMore(page < totalPages)
+      // Como o método getPosts não retorna informações de paginação,
+      // vamos estimar baseado no número de posts retornados
+      const hasMorePosts = fetchedPosts.length === postsPerPage
+      setHasMore(hasMorePosts)
       setCurrentPage(page)
+      
+      // Atualizar total de posts (estimativa baseada nos posts carregados)
+      if (page === 1) {
+        setTotalPosts(fetchedPosts.length)
+      } else {
+        setTotalPosts(prev => prev + fetchedPosts.length)
+      }
 
     } catch (err) {
       console.error('Erro ao carregar posts:', err)

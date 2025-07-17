@@ -1,10 +1,295 @@
-const WORDPRESS_API_URL = 'https://dirhect-institucional.thunderbold.com.br/wp-json/wp/v2'
+// Usar import.meta.env para Vite em vez de process.env
+const WORDPRESS_API_URL = import.meta.env.VITE_WORDPRESS_API_URL || 'https://dirhect-institucional.thunderbold.com.br/wp-json/wp/v2'
 
 // Cache para o ID da categoria roadmap
 let roadmapCategoryId = null
+// Cache para o ID da categoria banco-conhecimento
+let knowledgeCategoryId = null
+// Cache para verificação de token
+let lastTokenCheck = 0
+let tokenCheckCache = null
+// Cache para detectar qual plugin JWT está sendo usado
+let jwtPluginType = null
 
 export const wordpressService = {
   WORDPRESS_API_URL, // Exportar a URL para uso externo
+
+  // Detectar qual plugin JWT está sendo usado (sempre Simple JWT Login)
+  async detectJWTPlugin() {
+    return 'simple-jwt-login'
+  },
+
+  // URL base para endpoints JWT (sempre Simple JWT Login)
+  async getJWT_API_URL() {
+    return WORDPRESS_API_URL.replace('/wp/v2', '/simple-jwt-login/v1')
+  },
+
+  // Chave JWT de descriptografia (do .env)
+  get JWT_DECRYPTION_KEY() {
+    return import.meta.env.VITE_JWT_DECRYPTION_KEY || '9e2f0b6d8d7a4f21a70d8711c909a532873adea9cf10273c64c4d2c7c9a8f8f2'
+  },
+
+  // Login de administrador (Simple JWT Login)
+  async adminLogin(username, password) {
+    try {
+      console.log('=== DEBUG LOGIN ===')
+      console.log('Tentando login com:', username)
+      
+      const jwtApiUrl = await this.getJWT_API_URL()
+      console.log('JWT API URL:', jwtApiUrl)
+      
+      // Tentar diferentes formatos de parâmetros
+      let response
+      let data
+      
+      // Primeiro, tentar com email se o username parece ser um email
+      if (username.includes('@')) {
+        console.log('Tentando com email...')
+        response = await fetch(`${jwtApiUrl}/auth`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: username, password })
+        })
+        
+        if (response.ok) {
+          data = await response.json()
+          if (data.success && data.data && data.data.jwt) {
+            console.log('Login com email funcionou!')
+          } else {
+            throw new Error('Login com email falhou')
+          }
+        } else {
+          throw new Error('Login com email falhou')
+        }
+      } else {
+        // Tentar com username
+        console.log('Tentando com username...')
+        response = await fetch(`${jwtApiUrl}/auth`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ username, password })
+        })
+        
+        if (!response.ok) {
+          // Se falhar com username, tentar com login
+          console.log('Tentando com login...')
+          response = await fetch(`${jwtApiUrl}/auth`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ login: username, password })
+          })
+        }
+        
+        data = await response.json()
+      }
+
+      console.log('Response status:', response.status)
+      console.log('Response ok:', response.ok)
+
+      if (!response.ok) {
+        const errorData = data || await response.json().catch(() => ({}))
+        console.error('Erro na resposta:', errorData)
+        throw new Error(errorData.message || 'Credenciais inválidas')
+      }
+
+      console.log('Resposta completa:', data)
+      
+      // Simple JWT Login retorna em data.data.jwt
+      if (!data.success || !data.data || !data.data.jwt) {
+        console.error('Formato de resposta inválido:', data)
+        throw new Error('Formato de resposta inválido')
+      }
+      
+      const token = data.data.jwt
+      const userData = data.data
+
+      console.log('Token:', token)
+      
+      // Verificar se o token é válido (tem 3 partes)
+      const tokenParts = token.split('.')
+      if (tokenParts.length !== 3) {
+        console.error('Token JWT inválido - número incorreto de segmentos:', tokenParts.length)
+        throw new Error('Token JWT inválido')
+      }
+      
+      console.log('Token obtido:', token ? 'SIM' : 'NÃO')
+      console.log('Token (primeiros 50 chars):', token ? token.substring(0, 50) + '...' : 'NULO')
+      
+      // Salvar token no localStorage
+      localStorage.setItem('adminToken', token)
+      localStorage.setItem('adminUser', JSON.stringify({
+        email: userData.user_email || username,
+        name: userData.display_name || username
+      }))
+      localStorage.setItem('adminTokenExpiry', Date.now() + (7 * 24 * 60 * 60 * 1000)) // 7 dias
+      
+      console.log('Token salvo no localStorage:', localStorage.getItem('adminToken') ? 'SIM' : 'NÃO')
+      console.log('Dados do usuário salvos:', localStorage.getItem('adminUser') ? 'SIM' : 'NÃO')
+      console.log('Expiração salva:', localStorage.getItem('adminTokenExpiry') ? 'SIM' : 'NÃO')
+      
+      // Disparar evento customizado para notificar outros componentes
+      window.dispatchEvent(new CustomEvent('authStateChanged', { 
+        detail: { 
+          isAuthenticated: true, 
+          user: {
+            email: userData.user_email || username,
+            name: userData.display_name || username
+          }
+        } 
+      }))
+      
+      const result = {
+        success: true,
+        token: token,
+        user: {
+          email: userData.user_email || username,
+          name: userData.display_name || username
+        }
+      }
+      
+      console.log('Resultado do login:', result)
+      console.log('========================')
+      
+      return result
+    } catch (error) {
+      console.error('Erro no login admin:', error)
+      throw error
+    }
+  },
+
+  // Verificar token de autenticação (Simple JWT Login)
+  async verifyAdminToken(token) {
+    try {
+      // Verificar cache (não verificar mais de uma vez a cada 5 minutos)
+      const now = Date.now()
+      if (tokenCheckCache && (now - lastTokenCheck) < 300000) { // 5 minutos
+        return tokenCheckCache
+      }
+      
+      // Adicionar timeout para evitar travamento
+      const controller = new AbortController()
+      const timeoutId = setTimeout(() => controller.abort(), 10000) // 10 segundos de timeout
+      
+      const jwtApiUrl = await this.getJWT_API_URL()
+      
+      const response = await fetch(`${jwtApiUrl}/auth/validate`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        },
+        signal: controller.signal
+      })
+
+      clearTimeout(timeoutId)
+
+      if (!response.ok) {
+        // Se for erro 401 (não autorizado), o token é inválido
+        if (response.status === 401) {
+          throw new Error('Token inválido')
+        }
+        // Para outros erros, não fazer logout automático
+        console.warn('Erro na verificação do token:', response.status)
+        const result = {
+          success: true,
+          user: {
+            email: 'admin',
+            name: 'Administrador'
+          }
+        }
+        // Cache do resultado
+        tokenCheckCache = result
+        lastTokenCheck = now
+        return result
+      }
+
+      const userData = await response.json()
+      
+      // Simple JWT Login retorna em data.user
+      const user = userData.user || userData
+      
+      const result = {
+        success: true,
+        user: {
+          email: user.user_email || user.email || 'admin',
+          name: user.display_name || user.name || 'Administrador'
+        }
+      }
+      
+      // Cache do resultado
+      tokenCheckCache = result
+      lastTokenCheck = now
+      
+      return result
+    } catch (error) {
+      console.error('Erro na verificação do token:', error)
+      if (error.name === 'AbortError') {
+        throw new Error('Timeout na verificação do token')
+      }
+      // Para erros de rede, não fazer logout automático
+      if (error.message.includes('fetch')) {
+        console.warn('Erro de rede na verificação do token, mantendo sessão')
+        const result = {
+          success: true,
+          user: {
+            email: 'admin',
+            name: 'Administrador'
+          }
+        }
+        // Cache do resultado
+        tokenCheckCache = result
+        lastTokenCheck = Date.now()
+        return result
+      }
+      throw error
+    }
+  },
+
+  // Logout
+  adminLogout() {
+    localStorage.removeItem('adminToken')
+    localStorage.removeItem('adminUser')
+    localStorage.removeItem('adminTokenExpiry')
+    
+    // Limpar cache de verificação de token
+    lastTokenCheck = 0
+    tokenCheckCache = null
+    
+    // Disparar evento customizado para notificar outros componentes
+    window.dispatchEvent(new CustomEvent('authStateChanged', { 
+      detail: { isAuthenticated: false, user: null } 
+    }))
+    
+    return { success: true }
+  },
+
+  // Verificar se o token expirou
+  isTokenExpired() {
+    const expiry = localStorage.getItem('adminTokenExpiry')
+    console.log('=== DEBUG isTokenExpired ===')
+    console.log('Expiry no localStorage:', expiry)
+    
+    if (!expiry) {
+      console.log('Nenhuma expiração encontrada, retornando true (expirado)')
+      return true
+    }
+    
+    const expiryTime = parseInt(expiry)
+    const currentTime = Date.now()
+    const isExpired = currentTime > expiryTime
+    
+    console.log('Expiry time:', expiryTime)
+    console.log('Current time:', currentTime)
+    console.log('Is expired:', isExpired)
+    console.log('========================')
+    
+    return isExpired
+  },
 
   // Buscar o ID da categoria roadmap
   async getRoadmapCategoryId() {
@@ -33,12 +318,36 @@ export const wordpressService = {
     return null
   },
 
-  // Buscar posts do blog (excluindo categoria roadmap)
+  // Buscar o ID da categoria banco-conhecimento
+  async getKnowledgeCategoryId() {
+    if (knowledgeCategoryId !== null) {
+      return knowledgeCategoryId
+    }
+
+    try {
+      const response = await fetch(`${WORDPRESS_API_URL}/categories?slug=banco-conhecimento`)
+      
+      if (!response.ok) {
+        console.warn('Erro ao buscar categoria banco-conhecimento')
+        return null
+      }
+
+      const categories = await response.json()
+      if (categories.length > 0) {
+        knowledgeCategoryId = categories[0].id
+        return knowledgeCategoryId
+      }
+    } catch (error) {
+      console.warn('Erro ao buscar categoria banco-conhecimento:', error)
+    }
+
+    knowledgeCategoryId = null
+    return null
+  },
+
+  // Buscar posts do blog (com opção de excluir categorias)
   async getPosts(params = {}) {
     try {
-      // Buscar ID da categoria roadmap para excluir
-      const roadmapId = await this.getRoadmapCategoryId()
-
       const searchParams = new URLSearchParams({
         per_page: params.perPage || 10,
         page: params.page || 1,
@@ -46,15 +355,20 @@ export const wordpressService = {
         ...params
       })
 
-      // Excluir categoria roadmap se encontrada
-      if (roadmapId && !params.categories_exclude) {
-        searchParams.set('categories_exclude', roadmapId)
-      } else if (roadmapId && params.categories_exclude) {
-        // Se já existe exclusão de categorias, adicionar roadmap
-        const existingExcludes = Array.isArray(params.categories_exclude) 
-          ? params.categories_exclude 
-          : [params.categories_exclude]
-        searchParams.set('categories_exclude', [...existingExcludes, roadmapId].join(','))
+      // Se não foi especificado para excluir categorias, excluir roadmap e banco-conhecimento por padrão
+      if (!params.includeAllCategories) {
+        // Buscar IDs das categorias para excluir
+        const roadmapId = await this.getRoadmapCategoryId()
+        const knowledgeId = await this.getKnowledgeCategoryId()
+        
+        // Excluir categorias roadmap e banco-conhecimento
+        const excludeCategories = []
+        if (roadmapId) excludeCategories.push(roadmapId)
+        if (knowledgeId) excludeCategories.push(knowledgeId)
+        
+        if (excludeCategories.length > 0) {
+          searchParams.set('categories_exclude', excludeCategories.join(','))
+        }
       }
 
       const response = await fetch(`${WORDPRESS_API_URL}/posts?${searchParams}`)
@@ -100,12 +414,6 @@ export const wordpressService = {
 
       const post = await response.json()
       
-      // Verificar se o post pertence à categoria roadmap
-      const roadmapId = await this.getRoadmapCategoryId()
-      if (roadmapId && post.categories && post.categories.includes(roadmapId)) {
-        throw new Error('Post pertence à categoria roadmap e não deve ser exibido')
-      }
-      
       return {
         id: post.id,
         title: { rendered: post.title.rendered },
@@ -128,15 +436,12 @@ export const wordpressService = {
     }
   },
 
-  // Buscar posts relacionados por categoria (excluindo categoria roadmap)
+  // Buscar posts relacionados por categoria
   async getRelatedPosts(postId, categoryIds, limit = 3) {
     try {
       if (!categoryIds || categoryIds.length === 0) {
         return []
       }
-
-      // Buscar ID da categoria roadmap para excluir
-      const roadmapId = await this.getRoadmapCategoryId()
 
       const searchParams = new URLSearchParams({
         per_page: limit + 1, // +1 para excluir o post atual se aparecer
@@ -144,11 +449,6 @@ export const wordpressService = {
         exclude: postId,
         _embed: true
       })
-
-      // Excluir categoria roadmap se encontrada
-      if (roadmapId) {
-        searchParams.set('categories_exclude', roadmapId)
-      }
 
       const response = await fetch(`${WORDPRESS_API_URL}/posts?${searchParams}`)
       
@@ -346,14 +646,6 @@ export const wordpressService = {
     // Tentar extrair de ACF (Advanced Custom Fields)
     if (post.acf && post.acf[fieldName]) {
       return post.acf[fieldName]
-    }
-    
-    // Tratar casos específicos de nomes de campos com erro
-    if (fieldName === 'roadmap_estimated_date' && post.acf) {
-      // Verificar se existe o campo com nome duplicado/errado
-      if (post.acf['roadmap_estimatroadmap_estimated_dateed_date']) {
-        return post.acf['roadmap_estimatroadmap_estimated_dateed_date']
-      }
     }
     
     return null
@@ -624,188 +916,639 @@ export const wordpressService = {
     }
   },
 
-  // Função para enviar solicitação de demonstração
-  async submitDemoRequest(formData) {
+  // Criar/editar post (versão melhorada que funciona com qualquer usuário)
+  async savePost(token, postData) {
     try {
-      // Preparar dados para envio
-      const demoData = {
-        title: `Solicitação de Demo - ${formData.nomeEmpresa}`,
-        content: this.formatDemoContent(formData),
-        status: 'private', // Manter privado para análise interna
-        categories: [], // Pode definir uma categoria específica para demos
-        meta: {
-          demo_empresa: formData.nomeEmpresa,
-          demo_cnpj: formData.cnpj,
-          demo_contato: formData.nomeContato,
-          demo_email: formData.email,
-          demo_telefone: formData.telefone,
-          demo_cargo: formData.cargo,
-          demo_funcionarios: formData.numeroFuncionarios,
-          demo_segmento: formData.segmento,
-          demo_necessidades: JSON.stringify(formData.necessidades),
-          demo_mensagem: formData.mensagem,
-          demo_data_solicitacao: new Date().toISOString(),
-          demo_status: 'pendente'
-        }
+      const method = postData.id ? 'PUT' : 'POST'
+      const url = postData.id 
+        ? `${WORDPRESS_API_URL}/posts/${postData.id}`
+        : `${WORDPRESS_API_URL}/posts`
+
+      // Preparar dados do post com status draft por padrão (mais permissivo)
+      const postPayload = {
+        title: postData.title,
+        content: postData.content,
+        excerpt: postData.excerpt || '',
+        status: 'draft' // Sempre começar como draft para evitar problemas de permissão
       }
 
-      // Tentar enviar para WordPress
-      const response = await fetch(`${WORDPRESS_API_URL}/posts`, {
-        method: 'POST',
+      // Se é uma edição e o post já existe, manter o status original
+      if (postData.id && postData.status) {
+        postPayload.status = postData.status
+      }
+
+      // Se o usuário quer publicar diretamente, tentar
+      if (postData.status === 'publish') {
+        postPayload.status = 'publish'
+      }
+
+      console.log('Salvando post com payload:', postPayload)
+
+      const response = await fetch(url, {
+        method,
         headers: {
           'Content-Type': 'application/json',
-          // Nota: Em produção, você precisará de autenticação adequada
-          // 'Authorization': 'Bearer ' + token
+          'Authorization': `Bearer ${token}`
         },
-        body: JSON.stringify(demoData)
+        body: JSON.stringify(postPayload)
       })
 
       if (!response.ok) {
-        throw new Error(`Erro HTTP: ${response.status}`)
+        const errorData = await response.json().catch(() => ({}))
+        console.error('Erro na resposta:', response.status, errorData)
+        
+        // Se falhou com publish, tentar como draft
+        if (postPayload.status === 'publish' && response.status === 403) {
+          console.log('Tentando salvar como draft...')
+          postPayload.status = 'draft'
+          
+          const retryResponse = await fetch(url, {
+            method,
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(postPayload)
+          })
+
+          if (retryResponse.ok) {
+            const result = await retryResponse.json()
+            console.log('Post salvo como draft com sucesso')
+            return { ...result, saved_as_draft: true }
+          } else {
+            const retryError = await retryResponse.json().catch(() => ({}))
+            throw new Error(retryError.message || 'Erro ao salvar post como draft')
+          }
+        }
+        
+        throw new Error(errorData.message || `Erro ao salvar post (${response.status})`)
       }
 
       const result = await response.json()
-
-      return {
-        success: true,
-        id: result.id,
-        message: 'Solicitação enviada com sucesso!',
-        data: result
-      }
-
+      console.log('Post salvo com sucesso:', result)
+      return result
     } catch (error) {
-      console.error('Erro ao enviar solicitação para WordPress:', error)
-      
-      // Fallback: salvar localmente ou enviar por email
-      return await this.handleDemoFallback(formData, error)
+      console.error('Erro ao salvar post:', error)
+      throw error
     }
   },
 
-  // Formatar conteúdo da solicitação para o post
-  formatDemoContent(formData) {
-    const necessidadesText = formData.necessidades.length > 0 
-      ? formData.necessidades.join(', ') 
-      : 'Nenhuma necessidade específica informada'
+  // Deletar post
+  async deletePost(token, postId) {
+    try {
+      const response = await fetch(`${WORDPRESS_API_URL}/posts/${postId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
 
-    return `
-      <h2>Solicitação de Demonstração</h2>
-      
-      <h3>Informações da Empresa</h3>
-      <ul>
-        <li><strong>Nome da Empresa:</strong> ${formData.nomeEmpresa}</li>
-        <li><strong>CNPJ:</strong> ${formData.cnpj}</li>
-        <li><strong>Segmento:</strong> ${formData.segmento}</li>
-        <li><strong>Número de Funcionários:</strong> ${formData.numeroFuncionarios}</li>
-      </ul>
+      if (!response.ok) {
+        throw new Error('Erro ao deletar post')
+      }
 
-      <h3>Dados do Contato</h3>
-      <ul>
-        <li><strong>Nome:</strong> ${formData.nomeContato}</li>
-        <li><strong>Cargo:</strong> ${formData.cargo}</li>
-        <li><strong>E-mail:</strong> ${formData.email}</li>
-        <li><strong>Telefone:</strong> ${formData.telefone}</li>
-      </ul>
-
-      <h3>Necessidades e Interesse</h3>
-      <p><strong>Soluções de Interesse:</strong> ${necessidadesText}</p>
-      
-      ${formData.mensagem ? `
-        <h3>Mensagem Adicional</h3>
-        <p>${formData.mensagem}</p>
-      ` : ''}
-
-      <h3>Informações Técnicas</h3>
-      <ul>
-        <li><strong>Data da Solicitação:</strong> ${new Date().toLocaleDateString('pt-BR')} às ${new Date().toLocaleTimeString('pt-BR')}</li>
-        <li><strong>Origem:</strong> Formulário do Site</li>
-        <li><strong>Status:</strong> Pendente</li>
-      </ul>
-    `
+      return { success: true }
+    } catch (error) {
+      console.error('Erro ao deletar post:', error)
+      throw error
+    }
   },
 
-  // Fallback para quando o WordPress não estiver disponível
-  async handleDemoFallback(formData, originalError) {
+  // Buscar itens do roadmap para administração
+  async getAdminRoadmap(token, params = {}) {
     try {
-      // Opção 1: Salvar no localStorage para sincronização posterior
-      const pendingDemos = JSON.parse(localStorage.getItem('pending_demos') || '[]')
-      const demoRequest = {
-        id: Date.now(),
-        ...formData,
-        timestamp: new Date().toISOString(),
-        status: 'pending_sync'
+      console.log('Buscando roadmap admin...')
+      
+      const roadmapId = await this.getRoadmapCategoryId()
+      console.log('ID da categoria roadmap:', roadmapId)
+      
+      if (!roadmapId) {
+        console.log('Categoria roadmap não encontrada, retornando fallback')
+        return this.getFallbackRoadmapPosts()
+      }
+
+      // Construir URL igual ao roadmap público
+      let apiUrl = `${WORDPRESS_API_URL}/posts?per_page=${params.per_page || 50}&page=${params.page || 1}&categories=${roadmapId}&_embed=true&status=publish,draft&orderby=date&order=desc`
+      
+      console.log('URL da requisição roadmap:', apiUrl)
+      
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (!response.ok) {
+        console.error('Erro na resposta da API roadmap:', response.status, response.statusText)
+        throw new Error(`Erro ao buscar roadmap: ${response.status}`)
+      }
+
+      const posts = await response.json()
+      console.log('Itens do roadmap encontrados:', posts.length)
+      
+      // Transformar para formato do roadmap (igual ao getRoadmapPosts)
+      return posts.map(post => {
+        // Extrair datas e formatá-las corretamente
+        const estimatedDateRaw = this.extractCustomField(post, 'roadmap_estimated_date')
+        const launchedDateRaw = this.extractCustomField(post, 'roadmap_launched_date')
+        
+        const estimatedDate = this.formatACFDate(estimatedDateRaw) || post.date
+        const launchedDate = this.formatACFDate(launchedDateRaw)
+        
+        // Extrair funcionalidades e processar
+        const featuresRaw = this.extractCustomField(post, 'roadmap_features')
+        const features = this.processFeaturesList(featuresRaw)
+        
+        // Extrair outros campos com valores padrão inteligentes
+        const status = this.extractCustomField(post, 'roadmap_status') || 'planned'
+        const priority = this.extractCustomField(post, 'roadmap_priority') || 'medium'
+        const quarter = this.extractCustomField(post, 'roadmap_quarter') || this.getQuarterFromDate(post.date)
+        const category = this.extractCustomField(post, 'roadmap_category') || 'Produto'
+        const votes = parseInt(this.extractCustomField(post, 'roadmap_votes')) || 0
+
+        return {
+          id: post.id,
+          title: post.title?.rendered || post.title || 'Sem título',
+          description: this.stripHtml(post.excerpt?.rendered) || this.stripHtml(post.content?.rendered).substring(0, 200) + '...' || 'Sem descrição',
+          content: post.content?.rendered || post.content || '',
+          status: status,
+          priority: priority,
+          quarter: quarter,
+          category: category,
+          votes: votes,
+          estimatedDate: estimatedDate,
+          launchedDate: launchedDate,
+          features: features,
+          date: post.date,
+          author: this.getAuthorName(post)
+        }
+      })
+    } catch (error) {
+      console.error('Erro ao buscar roadmap admin:', error)
+      // Retornar dados de fallback em caso de erro
+      return this.getFallbackRoadmapPosts()
+    }
+  },
+
+  // Salvar item do roadmap
+  async saveRoadmapItem(token, itemData) {
+    try {
+      let roadmapId = await this.getRoadmapCategoryId()
+      if (!roadmapId) {
+        // Criar categoria roadmap se não existir
+        const categoryResponse = await fetch(`${WORDPRESS_API_URL}/categories`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            name: 'Roadmap',
+            slug: 'roadmap'
+          })
+        })
+        
+        if (categoryResponse.ok) {
+          const category = await categoryResponse.json()
+          roadmapId = category.id
+        }
+      }
+
+      const method = itemData.id ? 'PUT' : 'POST'
+      const url = itemData.id 
+        ? `${WORDPRESS_API_URL}/posts/${itemData.id}`
+        : `${WORDPRESS_API_URL}/posts`
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          title: itemData.title,
+          content: itemData.content || '',
+          excerpt: itemData.description || '',
+          status: 'publish',
+          categories: [roadmapId],
+          meta: {
+            roadmap_status: itemData.status || 'planned',
+            roadmap_priority: itemData.priority || 'medium',
+            roadmap_quarter: itemData.quarter || '',
+            roadmap_category: itemData.category || '',
+            roadmap_estimated_date: itemData.estimatedDate || '',
+            roadmap_launched_date: itemData.launchedDate || '',
+            roadmap_features: typeof itemData.features === 'string' ? itemData.features.split('\n').filter(f => f.trim()) : (itemData.features || [])
+            // Não incluir roadmap_votes aqui - manter o valor atual no WordPress
+          }
+        })
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.message || 'Erro ao salvar item do roadmap')
+      }
+
+      return await response.json()
+    } catch (error) {
+      console.error('Erro ao salvar item do roadmap:', error)
+      throw error
+    }
+  },
+
+  // Buscar artigos do banco de conhecimento
+  async getAdminKnowledge(token, params = {}) {
+    try {
+      console.log('Buscando conhecimento admin...')
+      
+      // Buscar ID da categoria banco-conhecimento
+      const knowledgeCategoryId = await this.getKnowledgeCategoryId()
+      console.log('ID da categoria banco-conhecimento:', knowledgeCategoryId)
+      
+      if (!knowledgeCategoryId) {
+        console.log('Categoria banco-conhecimento não encontrada, retornando array vazio')
+        return []
+      }
+
+      // Construir URL para buscar apenas posts da categoria banco-conhecimento
+      let apiUrl = `${WORDPRESS_API_URL}/posts?per_page=${params.per_page || 50}&page=${params.page || 1}&categories=${knowledgeCategoryId}&_embed=true&status=publish,draft&orderby=date&order=desc`
+      
+      console.log('URL da requisição conhecimento:', apiUrl)
+      
+      const response = await fetch(apiUrl, {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (!response.ok) {
+        console.error('Erro na resposta da API conhecimento:', response.status, response.statusText)
+        throw new Error(`Erro ao buscar artigos: ${response.status}`)
+      }
+
+      const posts = await response.json()
+      console.log('Artigos encontrados:', posts.length)
+      
+      // Transformar para formato do banco de conhecimento
+      return posts.map(post => ({
+        id: post.id,
+        title: { rendered: post.title?.rendered || post.title || 'Sem título' },
+        content: { rendered: post.content?.rendered || post.content || '' },
+        excerpt: { rendered: post.excerpt?.rendered || post.excerpt || '' },
+        status: post.status || 'draft',
+        date: post.date,
+        modified: post.modified,
+        author: this.getAuthorName(post),
+        category: this.extractCustomField(post, 'knowledge_category') || '',
+        views: parseInt(this.extractCustomField(post, 'knowledge_views')) || 0,
+        featured: Boolean(this.extractCustomField(post, 'knowledge_featured')),
+        tags: this.extractCustomField(post, 'knowledge_tags') || [],
+        slug: post.slug
+      }))
+    } catch (error) {
+      console.error('Erro ao buscar artigos admin:', error)
+      // Retornar array vazio em caso de erro
+      return []
+    }
+  },
+
+  // Salvar artigo do banco de conhecimento
+  async saveKnowledgeArticle(token, articleData) {
+    try {
+      let knowledgeId = await this.getKnowledgeCategoryId()
+      if (!knowledgeId) {
+        // Criar categoria banco-conhecimento se não existir
+        const categoryResponse = await fetch(`${WORDPRESS_API_URL}/categories`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            name: 'Banco de Conhecimento',
+            slug: 'banco-conhecimento'
+          })
+        })
+        
+        if (categoryResponse.ok) {
+          const category = await categoryResponse.json()
+          knowledgeId = category.id
+        }
+      }
+
+      const method = articleData.id ? 'PUT' : 'POST'
+      const url = articleData.id 
+        ? `${WORDPRESS_API_URL}/posts/${articleData.id}`
+        : `${WORDPRESS_API_URL}/posts`
+
+      const response = await fetch(url, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          title: articleData.title,
+          content: articleData.content,
+          excerpt: articleData.excerpt || '',
+          status: 'publish',
+          categories: [knowledgeId],
+          meta: {
+            knowledge_category: articleData.category || '',
+            knowledge_featured: articleData.featured || false,
+            knowledge_tags: articleData.tags || [],
+            knowledge_views: articleData.views || 0
+          }
+        })
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        throw new Error(errorData.message || 'Erro ao salvar artigo')
+      }
+
+      return await response.json()
+    } catch (error) {
+      console.error('Erro ao salvar artigo:', error)
+      throw error
+    }
+  },
+
+  // Testar conexão com a API do WordPress
+  async testConnection() {
+    try {
+      console.log('Testando conexão com WordPress...')
+      const response = await fetch(`${WORDPRESS_API_URL}/posts?per_page=1`)
+      
+      if (!response.ok) {
+        throw new Error(`Erro na conexão: ${response.status} ${response.statusText}`)
       }
       
-      pendingDemos.push(demoRequest)
-      localStorage.setItem('pending_demos', JSON.stringify(pendingDemos))
-
-      // Opção 2: Tentar enviar por email via serviço alternativo (ex: EmailJS)
-      await this.sendDemoByEmail(formData)
-
+      const data = await response.json()
+      console.log('Conexão bem-sucedida! Posts disponíveis:', data.length)
+      
       return {
         success: true,
-        id: demoRequest.id,
-        message: 'Solicitação registrada! Entraremos em contato em breve.',
-        isLocal: true,
-        fallbackUsed: true
+        message: 'Conexão com WordPress estabelecida com sucesso',
+        postsCount: data.length
       }
-
-    } catch (fallbackError) {
-      console.error('Erro no fallback:', fallbackError)
-      
+    } catch (error) {
+      console.error('Erro na conexão com WordPress:', error)
       return {
         success: false,
-        message: 'Erro ao enviar solicitação. Tente novamente ou entre em contato diretamente.',
-        error: originalError.message
+        message: `Erro na conexão: ${error.message}`,
+        error: error
       }
     }
   },
 
-  // Enviar solicitação por email como backup
-  async sendDemoByEmail(formData) {
-    // Implementar integração com EmailJS ou serviço similar
-    // Por enquanto, apenas log para desenvolvimento
-    console.log('Enviando demo por email:', {
-      to: 'demo@dirhect.com',
-      subject: `Nova Solicitação de Demo - ${formData.nomeEmpresa}`,
-      data: formData
-    })
-
-    // Em produção, implementar:
-    // return emailjs.send('service_id', 'template_id', emailData)
-  },
-
-  // Função para sincronizar demos pendentes quando conexão for restaurada
-  async syncPendingDemos() {
-    const pendingDemos = JSON.parse(localStorage.getItem('pending_demos') || '[]')
+  // Verificar se usuário está autenticado
+  isAuthenticated() {
+    console.log('=== DEBUG isAuthenticated ===')
+    const token = localStorage.getItem('adminToken')
+    console.log('Token no localStorage:', token ? 'EXISTE' : 'NÃO EXISTE')
+    console.log('Token valor:', token)
     
-    if (pendingDemos.length === 0) {
-      return { success: true, synced: 0 }
+    if (!token) {
+      console.log('Token não encontrado, retornando false')
+      return false
     }
+    
+    // Verificar se o token expirou
+    const isExpired = this.isTokenExpired()
+    console.log('Token expirado:', isExpired)
+    
+    if (isExpired) {
+      console.log('Token expirado, fazendo logout automático')
+      this.adminLogout()
+      return false
+    }
+    
+    // Verificar se temos dados do usuário
+    const user = localStorage.getItem('adminUser')
+    console.log('Dados do usuário:', user ? 'EXISTEM' : 'NÃO EXISTEM')
+    console.log('Dados do usuário valor:', user)
+    
+    if (!user) {
+      console.log('Dados do usuário não encontrados, fazendo logout')
+      this.adminLogout()
+      return false
+    }
+    
+    console.log('Usuário autenticado, retornando true')
+    console.log('========================')
+    return true
+  },
 
-    let syncedCount = 0
-    const failedSyncs = []
+  // Obter usuário atual
+  getCurrentUser() {
+    if (!this.isAuthenticated()) return null
+    
+    const userStr = localStorage.getItem('adminUser')
+    return userStr ? JSON.parse(userStr) : null
+  },
 
-    for (const demo of pendingDemos) {
-      try {
-        const result = await this.submitDemoRequest(demo)
-        if (result.success && !result.isLocal) {
-          syncedCount++
-        } else {
-          failedSyncs.push(demo)
-        }
-      } catch (error) {
-        failedSyncs.push(demo)
+  // Obter token atual
+  getCurrentToken() {
+    console.log('=== DEBUG getCurrentToken ===')
+    console.log('isAuthenticated():', this.isAuthenticated())
+    console.log('localStorage adminToken:', localStorage.getItem('adminToken'))
+    console.log('localStorage adminUser:', localStorage.getItem('adminUser'))
+    console.log('localStorage adminTokenExpiry:', localStorage.getItem('adminTokenExpiry'))
+    
+    if (!this.isAuthenticated()) {
+      console.log('Usuário não autenticado, retornando null')
+      return null
+    }
+    
+    const token = localStorage.getItem('adminToken')
+    console.log('Token encontrado:', token ? 'SIM' : 'NÃO')
+    console.log('========================')
+    return token
+  },
+
+  // Método de debug para verificar estado da autenticação
+  debugAuth() {
+    console.log('=== DEBUG AUTH STATE ===')
+    console.log('adminToken:', localStorage.getItem('adminToken'))
+    console.log('adminUser:', localStorage.getItem('adminUser'))
+    console.log('adminTokenExpiry:', localStorage.getItem('adminTokenExpiry'))
+    console.log('isAuthenticated():', this.isAuthenticated())
+    console.log('isTokenExpired():', this.isTokenExpired())
+    console.log('========================')
+  },
+
+  // Método para forçar login e verificar token
+  async forceLoginAndCheck(username, password) {
+    try {
+      console.log('=== FORÇANDO LOGIN ===')
+      
+      // Limpar localStorage primeiro
+      localStorage.clear()
+      console.log('localStorage limpo')
+      
+      // Fazer login
+      const result = await this.adminLogin(username, password)
+      console.log('Login realizado:', result.success)
+      
+      // Verificar se o token foi salvo
+      const savedToken = localStorage.getItem('adminToken')
+      console.log('Token salvo:', savedToken ? 'SIM' : 'NÃO')
+      console.log('Token (primeiros 50 chars):', savedToken ? savedToken.substring(0, 50) + '...' : 'NULO')
+      
+      // Verificar autenticação
+      const isAuth = this.isAuthenticated()
+      console.log('isAuthenticated():', isAuth)
+      
+      // Verificar getCurrentToken
+      const currentToken = this.getCurrentToken()
+      console.log('getCurrentToken():', currentToken ? 'SIM' : 'NÃO')
+      
+      console.log('========================')
+      
+      return {
+        success: result.success,
+        tokenSaved: !!savedToken,
+        isAuthenticated: isAuth,
+        currentToken: !!currentToken
       }
+    } catch (error) {
+      console.error('Erro no forceLoginAndCheck:', error)
+      throw error
     }
+  },
 
-    // Atualizar localStorage com demos que falharam
-    localStorage.setItem('pending_demos', JSON.stringify(failedSyncs))
-
+  // Método simples para testar token diretamente
+  testTokenDirectly() {
+    console.log('=== TESTE DIRETO DO TOKEN ===')
+    const token = localStorage.getItem('adminToken')
+    const user = localStorage.getItem('adminUser')
+    const expiry = localStorage.getItem('adminTokenExpiry')
+    
+    console.log('Token direto:', token)
+    console.log('User direto:', user)
+    console.log('Expiry direto:', expiry)
+    
+    if (token) {
+      console.log('Token existe, testando se é válido...')
+      console.log('Token (primeiros 50 chars):', token.substring(0, 50) + '...')
+      
+      // Testar se o token é um JWT válido (tem 3 partes separadas por ponto)
+      const parts = token.split('.')
+      console.log('Partes do JWT:', parts.length)
+      
+      if (parts.length === 3) {
+        console.log('Formato JWT válido')
+        try {
+          // Decodificar o payload (segunda parte)
+          const payload = JSON.parse(atob(parts[1]))
+          console.log('Payload do JWT:', payload)
+          
+          // Verificar se tem exp (expiration)
+          if (payload.exp) {
+            const expDate = new Date(payload.exp * 1000)
+            const now = new Date()
+            console.log('Expiração do JWT:', expDate)
+            console.log('Agora:', now)
+            console.log('JWT expirado:', now > expDate)
+          }
+        } catch (e) {
+          console.log('Erro ao decodificar JWT:', e)
+        }
+      } else {
+        console.log('Formato JWT inválido')
+      }
+    } else {
+      console.log('Token não existe')
+    }
+    
+    console.log('========================')
     return {
-      success: true,
-      synced: syncedCount,
-      failed: failedSyncs.length,
-      message: `${syncedCount} solicitações sincronizadas com sucesso`
+      token: !!token,
+      user: !!user,
+      expiry: !!expiry
+    }
+  },
+
+  // Criar/editar post usando endpoint customizado
+  async savePostCustom(token, postData) {
+    try {
+      const response = await fetch(`${WORDPRESS_API_URL.replace('/wp/v2', '/dirhect/v1')}/posts`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          title: postData.title,
+          content: postData.content,
+          excerpt: postData.excerpt || '',
+          status: postData.status || 'draft'
+        })
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        console.error('Erro na resposta custom:', response.status, errorData)
+        throw new Error(errorData.message || `Erro ao salvar post (${response.status})`)
+      }
+
+      const result = await response.json()
+      console.log('Post salvo com sucesso (custom):', result)
+      return result
+    } catch (error) {
+      console.error('Erro ao salvar post (custom):', error)
+      throw error
+    }
+  },
+
+  // Buscar posts usando endpoint customizado
+  async getPostsCustom(token, params = {}) {
+    try {
+      const searchParams = new URLSearchParams({
+        per_page: params.perPage || 10,
+        page: params.page || 1,
+        ...params
+      })
+
+      const response = await fetch(`${WORDPRESS_API_URL.replace('/wp/v2', '/dirhect/v1')}/posts?${searchParams}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const result = await response.json()
+      return result.data || []
+    } catch (error) {
+      console.error('Erro ao buscar posts (custom):', error)
+      throw error
+    }
+  },
+
+  // Validar JWT usando endpoint customizado
+  async validateJWTCustom(token) {
+    try {
+      const response = await fetch(`${WORDPRESS_API_URL.replace('/wp/v2', '/dirhect/v1')}/validate-jwt`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        }
+      })
+
+      const result = await response.json()
+      return result
+    } catch (error) {
+      console.error('Erro ao validar JWT (custom):', error)
+      throw error
     }
   }
-} 
+}

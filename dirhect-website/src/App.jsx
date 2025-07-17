@@ -9,6 +9,10 @@ import TechnicalDocumentation from './pages/TechnicalDocumentation'
 import PoliticaPrivacidade from './pages/PoliticaPrivacidade'
 import TermosUso from './pages/TermosUso'
 import NotFound from './pages/NotFound'
+import Admin from './pages/Admin'
+import CriarPost from './pages/CriarPost'
+import CriarRoadmap from './pages/CriarRoadmap'
+import CriarConhecimento from './pages/CriarConhecimento'
 import './App.css'
 import Hero from './components/Hero'
 import WhyChoose from './components/WhyChoose'
@@ -71,6 +75,10 @@ function App() {
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/termos-uso" element={<TermosUso />} />
           <Route path="/parceiros" element={<Parceiros />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/criar-post" element={<CriarPost />} />
+          <Route path="/admin/criar-roadmap" element={<CriarRoadmap />} />
+          <Route path="/admin/criar-conhecimento" element={<CriarConhecimento />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <CookieConsent />
