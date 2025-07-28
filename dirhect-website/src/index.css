@@ -1,34 +1,36 @@
 :root {
-  --primary-color: #0c004c;
-  --secondary-color: #5d0b62;
-  --gradient: linear-gradient(to left, #0c004c, #5d0b62);
-  --gradient-vertical: linear-gradient(to bottom, #0c004c, #5d0b62);
-  --dark-gradient: linear-gradient(to left, #4d428a, #5d0b62);
-  --white: #FAFAFA;
+  --primary-color: #ffaa00;
+  --secondary-color: #4d4d4d;
+  --gradient: linear-gradient(to left, #ffaa00, #ff8c00);
+  --gradient-vertical: linear-gradient(to bottom, #ffaa00, #ff8c00);
+  --dark-gradient: linear-gradient(to left, #e69500, #cc7a00);
+  --white: #ffffff;
   --gray-100: #f5f5f5;
-  --gray-200: #e5e5e5;
-  --gray-300: #d4d4d4;
-  --gray-400: #a3a3a3;
-  --gray-500: #737373;
-  --gray-600: #525252;
-  --gray-700: #404040;
-  --gray-800: #262626;
-  --gray-900: #171717;
+  --gray-200: #e8e8e8;
+  --gray-300: #d1d1d1;
+  --gray-400: #b3b3b3;
+  --gray-500: #999999;
+  --gray-600: #808080;
+  --gray-700: #666666;
+  --gray-800: #4d4d4d;
+  --gray-900: #333333;
   --text-primary: #1a1a1a;
-  --text-secondary: #666666;
-  --border-radius: 12px;
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-  --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.15);
+  --text-secondary: #4d4d4d;
+  --border-radius: 16px;
+  --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.12);
   
   /* Gradientes coloridos para cartões */
-  --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-  --gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #ec4899 100%);
-  --gradient-green: linear-gradient(135deg, #10b981 0%, #14b8a6 100%);
-  --gradient-orange: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+  --gradient-blue: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  --gradient-purple: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  --gradient-green: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  --gradient-orange: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
+  --gradient-pink: linear-gradient(135deg, #ec4899 0%, #be185d 100%);
+  --gradient-cyan: linear-gradient(135deg, #06b6d4 0%, #0891b2 100%);
   
   /* Cores de status */
   --success-color: #10b981;
-  --warning-color: #f59e0b;
+  --warning-color: #ffaa00;
   --error-color: #ef4444;
   --info-color: #3b82f6;
 }
@@ -40,7 +42,7 @@
 }
 
 body {
-  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: var(--white);
   color: var(--text-primary);
   line-height: 1.6;
@@ -55,6 +57,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-weight: 700;
   line-height: 1.2;
   color: var(--text-primary);
@@ -110,23 +113,41 @@ button {
 .btn-primary {
   background: var(--gradient);
   color: white;
-  padding: 18px 36px;
-  border-radius: 12px;
+  padding: 16px 32px;
+  border-radius: var(--border-radius);
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1rem;
   box-shadow: 
-    0 8px 25px rgba(12, 0, 76, 0.3),
+    0 4px 15px rgba(255, 170, 0, 0.3),
     0 0 0 1px rgba(255, 255, 255, 0.1) inset;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   cursor: pointer;
   letter-spacing: -0.01em;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-primary:hover::before {
+  left: 100%;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 
-    0 12px 35px rgba(12, 0, 76, 0.4),
+    0 8px 25px rgba(255, 170, 0, 0.4),
     0 0 0 1px rgba(255, 255, 255, 0.2) inset;
 }
 
@@ -134,19 +155,37 @@ button {
   background: transparent;
   color: var(--primary-color);
   border: 2px solid var(--primary-color);
-  padding: 16px 32px;
-  border-radius: 12px;
+  padding: 14px 28px;
+  border-radius: var(--border-radius);
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1rem;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   letter-spacing: -0.01em;
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-secondary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background: var(--gradient);
+  transition: width 0.3s ease;
+  z-index: -1;
+}
+
+.btn-secondary:hover::before {
+  width: 100%;
 }
 
 .btn-secondary:hover {
-  background: var(--primary-color);
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(12, 0, 76, 0.3);
+  box-shadow: 0 8px 25px rgba(255, 170, 0, 0.3);
 }
 
 .card {
@@ -154,11 +193,14 @@ button {
   border-radius: var(--border-radius);
   box-shadow: var(--shadow);
   transition: all 0.3s ease;
+  border: 1px solid var(--gray-200);
+  overflow: hidden;
 }
 
 .card:hover {
   transform: translateY(-4px);
   box-shadow: var(--shadow-hover);
+  border-color: var(--gray-300);
 }
 
 .gradient-text {
@@ -222,6 +264,16 @@ button {
 
 .mb-8 {
   margin-bottom: 2rem;
+}
+
+.stat-number {
+  font-size: 3rem;
+  color: white;
+  line-height: 1;
+  margin: 0 0.25rem;
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
 }
 
 @media (max-width: 768px) {

@@ -144,12 +144,12 @@ const Header = () => {
     <header className="header">
       <div className="header-content">
         <Link to="/" className="logo">
-          <img width={140} src="/images/logo_dirhect_rgb_16317_horizontal.png" alt="Dirhect Logo" />
+          <img width={140} src="/images/dirhect_color.svg" alt="Dirhect Logo" />
         </Link>
         
         <nav className={`nav ${isMobileMenuOpen ? 'nav-mobile-open' : ''}`}>
           <div className="mobile-menu-header">
-            <img width={160} src="/images/logo_dirhect_rgb_16317_horizontal.png" alt="Dirhect Logo" className="mobile-menu-logo" />
+            <img width={160} src="/images/dirhect_color.svg" alt="Dirhect Logo" className="mobile-menu-logo" />
             <button className="mobile-menu-close" onClick={() => setIsMobileMenuOpen(false)}>
               <X size={32} />
             </button>

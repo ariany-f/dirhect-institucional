@@ -1,7 +1,7 @@
 /* Stats Section */
 .stats-section {
   padding: 6rem 0;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  background: linear-gradient(135deg, #333333 0%, #4d4d4d 50%, #666666 100%);
   position: relative;
   overflow: hidden;
   opacity: 0;
@@ -22,8 +22,8 @@
   right: 0;
   bottom: 0;
   background: 
-    radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 20% 20%, rgba(255, 170, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, rgba(77, 77, 77, 0.1) 0%, transparent 50%);
   pointer-events: none;
 }
 
@@ -62,21 +62,21 @@
   border-radius: 50px;
   font-size: 0.875rem;
   font-weight: 600;
-  color: #60a5fa;
-  border: 1px solid rgba(96, 165, 250, 0.2);
+  color: #ffaa00;
+  border: 1px solid rgba(255, 170, 0, 0.2);
   margin-bottom: 2rem;
-  box-shadow: 0 4px 20px rgba(96, 165, 250, 0.1);
+  box-shadow: 0 4px 20px rgba(255, 170, 0, 0.1);
   animation: badgeGlow 3s ease-in-out infinite;
 }
 
 @keyframes badgeGlow {
   0%, 100% { 
     transform: translateY(0px);
-    box-shadow: 0 4px 20px rgba(96, 165, 250, 0.1);
+    box-shadow: 0 4px 20px rgba(255, 170, 0, 0.1);
   }
   50% { 
     transform: translateY(-3px);
-    box-shadow: 0 8px 30px rgba(96, 165, 250, 0.2);
+    box-shadow: 0 8px 30px rgba(255, 170, 0, 0.2);
   }
 }
 
@@ -90,7 +90,7 @@
 }
 
 .stats-title .gradient-text {
-  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -98,7 +98,7 @@
 
 .stats-subtitle {
   font-size: 1.25rem;
-  color: #94a3b8;
+  color: #b3b3b3;
   max-width: 600px;
   margin: 0 auto;
   line-height: 1.6;
@@ -196,7 +196,7 @@
 .stat-prefix,
 .stat-suffix {
   font-size: 1.5rem;
-  color: #94a3b8;
+  color: #b3b3b3;
   font-weight: 700;
 }
 
@@ -219,7 +219,7 @@
 }
 
 .stat-description {
-  color: #94a3b8;
+  color: #b3b3b3;
   line-height: 1.5;
   font-size: 0.95rem;
   font-weight: 400;
@@ -314,7 +314,7 @@
 
 .trust-badge-subtitle {
   font-size: 0.8rem;
-  color: #94a3b8;
+  color: #b3b3b3;
   font-weight: 500;
 }
 

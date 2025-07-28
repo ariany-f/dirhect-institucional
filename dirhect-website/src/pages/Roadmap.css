@@ -54,8 +54,8 @@
   width: 200%;
   height: 200%;
   background: 
-    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 20% 80%, rgba(255, 170, 0, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(77, 77, 77, 0.05) 0%, transparent 50%);
   animation: backgroundFloat 15s ease-in-out infinite;
   pointer-events: none;
 }
@@ -139,7 +139,7 @@
 }
 
 .roadmap-title .gradient-text {
-  background: var(--gradient);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -154,7 +154,7 @@
   left: 0;
   width: 0;
   height: 4px;
-  background: var(--gradient);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   border-radius: 2px;
   animation: underlineGrow 1.5s ease-out 1s forwards;
 }
@@ -277,9 +277,9 @@
 }
 
 .roadmap-filter-tab.active {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   color: white;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 4px 15px rgba(255, 170, 0, 0.3);
 }
 
 /* Roadmap Grid */
@@ -514,7 +514,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: var(--gradient);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   transition: left 0.3s ease;
   z-index: 1;
 }
@@ -527,7 +527,7 @@
   border-color: transparent;
   color: white;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 8px 25px rgba(255, 170, 0, 0.3);
 }
 
 .roadmap-vote-btn span,
@@ -692,7 +692,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: var(--gradient);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   opacity: 0.05;
   pointer-events: none;
 }
@@ -708,7 +708,7 @@
 }
 
 .roadmap-support-card h3 .gradient-text {
-  background: var(--gradient);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -730,7 +730,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  background: var(--gradient);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   color: white;
   padding: 1rem 2rem;
   border: none;
@@ -741,12 +741,12 @@
   transition: all 0.3s ease;
   position: relative;
   z-index: 2;
-  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 20px rgba(255, 170, 0, 0.3);
 }
 
 .roadmap-support-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 8px 30px rgba(255, 170, 0, 0.4);
 }
 
 .roadmap-support-btn svg {

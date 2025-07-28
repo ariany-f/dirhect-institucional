@@ -1,6 +1,6 @@
 /* Partners Strip Component */
 .partners-strip {
-  background: #4a5568;
+  background: #4d4d4d;
   padding: 1.5rem 0;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -8,7 +8,7 @@
 }
 
 .partners-strip:hover {
-  background: #2d3748;
+  background: #333333;
 }
 
 .partners-strip-container {

@@ -7,7 +7,7 @@
 /* Hero Section */
 .docs-hero {
   padding: 120px 0 80px;
-  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  background: linear-gradient(135deg, #333333 0%, #4d4d4d 100%);
   color: white;
   position: relative;
   overflow: hidden;
@@ -21,8 +21,8 @@
   width: 200%;
   height: 200%;
   background: 
-    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 20% 80%, rgba(255, 170, 0, 0.1) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(77, 77, 77, 0.1) 0%, transparent 50%);
   animation: backgroundFloat 20s ease-in-out infinite;
   pointer-events: none;
 }
@@ -92,7 +92,7 @@
 }
 
 .docs-title .gradient-text {
-  background: linear-gradient(135deg, #60a5fa 0%, #a78bfa 100%);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -121,7 +121,7 @@
   display: block;
   font-size: 2.5rem;
   font-weight: 900;
-  color: #60a5fa;
+  color: #ffaa00;
   margin-bottom: 0.5rem;
 }
 
@@ -172,9 +172,9 @@
 }
 
 .tab-button.active {
-  background: var(--gradient);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   color: white;
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 15px rgba(255, 170, 0, 0.3);
 }
 
 /* Content Section */
@@ -489,7 +489,7 @@
 }
 
 .docs-cta .cta-content svg {
-  color: var(--primary-color);
+  color: #ffaa00;
   margin-bottom: 1.5rem;
 }
 
@@ -517,7 +517,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  background: var(--gradient);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   color: white;
   padding: 1rem 2rem;
   border: none;
@@ -526,12 +526,12 @@
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 20px rgba(255, 170, 0, 0.3);
 }
 
 .docs-cta .cta-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(59, 130, 246, 0.4);
+  box-shadow: 0 8px 30px rgba(255, 170, 0, 0.4);
 }
 
 .docs-cta .cta-secondary {

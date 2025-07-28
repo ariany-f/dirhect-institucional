@@ -18,8 +18,8 @@
   width: 200%;
   height: 200%;
   background: 
-    radial-gradient(circle at 20% 80%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 20% 80%, rgba(255, 170, 0, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(77, 77, 77, 0.05) 0%, transparent 50%);
   animation: backgroundFloat 15s ease-in-out infinite;
   pointer-events: none;
 }
@@ -167,7 +167,7 @@
 
 /* Quick CTA Section */
 .quick-cta-section {
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   color: white;
   padding: 3rem 0;
   position: relative;
@@ -318,10 +318,10 @@
 }
 
 .category-tab.active {
-  background: var(--gradient);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   color: white;
   border-color: transparent;
-  box-shadow: 0 4px 20px rgba(12, 0, 76, 0.2);
+  box-shadow: 0 4px 20px rgba(255, 170, 0, 0.2);
 }
 
 .category-tab.active::before {
@@ -442,14 +442,14 @@
 }
 
 .partners-control-btn.partners-play-pause {
-  background: var(--gradient);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   color: white;
   border-color: transparent;
 }
 
 .partners-control-btn.partners-play-pause:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(12, 0, 76, 0.3);
+  box-shadow: 0 8px 20px rgba(255, 170, 0, 0.3);
 }
 
 .partners-carousel-indicators {
@@ -469,12 +469,12 @@
 }
 
 .partners-indicator.active {
-  background: var(--primary-color);
+  background: #ffaa00;
   transform: scale(1.2);
 }
 
 .partners-indicator:hover {
-  background: var(--primary-color);
+  background: #ffaa00;
   opacity: 0.7;
 }
 
@@ -533,7 +533,7 @@
 .partnership-benefits-grid .benefit-icon {
   width: 64px;
   height: 64px;
-  background: var(--gradient);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   border-radius: 16px;
   display: flex;
   align-items: center;
@@ -590,7 +590,7 @@
 /* Partnership CTA Section */
 .partnership-cta-section {
   padding: 5rem 0;
-  background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   color: white;
 }
 
@@ -893,7 +893,7 @@
   gap: 0.5rem;
   width: 100%;
   padding: 0.75rem 1.5rem;
-  background: var(--gradient);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   color: white;
   border: none;
   border-radius: 8px;
@@ -905,7 +905,7 @@
 
 .partner-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(12, 0, 76, 0.3);
+  box-shadow: 0 8px 25px rgba(255, 170, 0, 0.3);
 }
 
 /* Partnership Program */
@@ -929,8 +929,8 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: rgba(59, 130, 246, 0.1);
-  color: #3b82f6;
+  background: rgba(255, 170, 0, 0.1);
+  color: #ffaa00;
   padding: 0.75rem 1.5rem;
   border-radius: 50px;
   font-size: 0.875rem;
@@ -978,7 +978,7 @@
 .benefit-icon {
   width: 60px;
   height: 60px;
-  background: var(--gradient);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -1051,7 +1051,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  background: var(--gradient);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   color: white;
   border: none;
   padding: 1rem 2rem;
@@ -1064,7 +1064,7 @@
 
 .partnership-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(12, 0, 76, 0.3);
+  box-shadow: 0 8px 25px rgba(255, 170, 0, 0.3);
 }
 
 /* Partnership Form Section */
@@ -1211,7 +1211,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.75rem;
-  background: var(--gradient);
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
   color: white;
   border: none;
   padding: 1rem 2.5rem;
@@ -1220,12 +1220,12 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 20px rgba(12, 0, 76, 0.2);
+  box-shadow: 0 4px 20px rgba(255, 170, 0, 0.2);
 }
 
 .submit-button:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 30px rgba(12, 0, 76, 0.3);
+  box-shadow: 0 8px 30px rgba(255, 170, 0, 0.3);
 }
 
 .submit-button:active {

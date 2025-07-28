@@ -1,7 +1,7 @@
 /* SecuritySection Component */
 .security-section {
   padding: 4rem 0;
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+  background: linear-gradient(135deg, #333333 0%, #4d4d4d 50%, #666666 100%);
   position: relative;
   overflow: hidden;
   color: white;
@@ -23,8 +23,8 @@
   width: 200%;
   height: 200%;
   background: 
-    radial-gradient(circle at 30% 70%, rgba(59, 130, 246, 0.05) 0%, transparent 50%),
-    radial-gradient(circle at 70% 30%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+    radial-gradient(circle at 30% 70%, rgba(255, 170, 0, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, rgba(77, 77, 77, 0.05) 0%, transparent 50%);
   animation: backgroundFloat 20s ease-in-out infinite;
   pointer-events: none;
 }
@@ -118,7 +118,7 @@
 .stat-item:hover {
   transform: translateY(-8px);
   background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(59, 130, 246, 0.5);
+  border-color: rgba(255, 170, 0, 0.5);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
@@ -195,7 +195,7 @@
 .feature-item:hover,
 .feature-item.active {
   background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(59, 130, 246, 0.3);
+  border-color: rgba(255, 170, 0, 0.3);
   transform: translateY(-5px);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
@@ -217,7 +217,7 @@
   color: white;
   flex-shrink: 0;
   transition: transform 0.3s ease;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 170, 0, 0.3);
 }
 
 .feature-item:hover .feature-icon {
@@ -295,14 +295,14 @@
 .layer-1 {
   width: 100%;
   height: 100%;
-  border-color: #3b82f6;
+  border-color: #ffaa00;
   animation: pulse 3s ease-in-out infinite;
 }
 
 .layer-2 {
   width: 80%;
   height: 80%;
-  border-color: #8b5cf6;
+  border-color: #4d4d4d;
   animation: pulse 3s ease-in-out infinite 1s;
 }
 
@@ -323,7 +323,7 @@
   justify-content: center;
   color: white;
   z-index: 10;
-  box-shadow: 0 20px 40px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 20px 40px rgba(255, 170, 0, 0.3);
   animation: float 6s ease-in-out infinite;
 }
 
@@ -357,7 +357,7 @@
   position: absolute;
   width: 3px;
   height: 3px;
-  background: #3b82f6;
+  background: #ffaa00;
   border-radius: 50%;
   top: 50%;
   left: 50%;
@@ -416,7 +416,7 @@
 .certification-card:hover {
   transform: translateY(-8px);
   background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(59, 130, 246, 0.5);
+  border-color: rgba(255, 170, 0, 0.5);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
 }
 
@@ -431,7 +431,7 @@
   color: white;
   margin: 0 auto 1.5rem;
   transition: transform 0.3s ease;
-  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 12px rgba(255, 170, 0, 0.3);
 }
 
 .certification-card:hover .cert-icon {

@@ -1,16 +1,15 @@
-import { Mail, Phone, MapPin, Linkedin, Instagram } from 'lucide-react'
+import { Mail, Phone, Linkedin, Instagram } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import './Footer.css'
 
 const Footer = () => {
   return (
     <footer className="footer">
-      <div className="footer-gradient"></div>
       <div className="container">
         <div className="footer-content">
           <div className="footer-section">
             <div className="footer-logo">
-              <img width={50} src="/images/logo.png" alt="Dirhect" className="logo-image" />
+              <img src="/images/dirhect_color_invert.svg" alt="Dirhect" className="logo-image" />
               <p>Revolucionando a gestão de RH com tecnologia inteligente e automação avançada.</p>
             </div>
             <div className="footer-social">
@@ -62,7 +61,6 @@ const Footer = () => {
         </div>
 
         <div className="footer-bottom">
-          <div className="footer-divider"></div>
           <div className="footer-bottom-content">
             <p>&copy; {new Date().getFullYear()} Dirhect. Todos os direitos reservados.</p>
             <div className="footer-legal">
