@@ -19,7 +19,10 @@ import {
   ChevronLeft,
   ChevronRight,
   Pause,
-  Play
+  Play,
+  BarChart3,
+  Heart,
+  Target
 } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -38,6 +41,7 @@ const Parceiros = () => {
   const slides = [
     {
       title: "Nossa Missão",
+      icon: <Target size={48} />,
       content: [
         "O Dirhect foi feito para conectar empresas, pessoas e tecnologia de forma inteligente — e queremos parceiros que compartilhem dessa missão.",
         "Ao se tornar um parceiro Dirhect, você acessa uma plataforma moderna, com módulos completos para digitalização de processos de RH e automação da gestão de benefícios. Mais do que um sistema, você leva inovação para seus clientes e gera uma nova fonte de receita recorrente para o seu negócio."
@@ -45,6 +49,7 @@ const Parceiros = () => {
     },
     {
       title: "Nossos Valores",
+      icon: <Heart size={48} />,
       content: [
         "Mais do que fechar negócios, queremos construir parcerias duradouras, éticas e com foco em resultado.",
         "Se você acredita em transformar o RH com tecnologia acessível e de alta performance, o seu lugar é aqui."
@@ -169,6 +174,12 @@ const Parceiros = () => {
             <p className="partners-subtitle">
               Você é consultor, representa uma consultoria de RH, atua com implantação de sistemas como TOTVS, LG, SAP ou oferece serviços de BPO?
             </p>
+            <p className="partners-subtitle">
+              O Programa de Parcerias Dirhect é uma oportunidade para empresas que desejam expandir seu portfólio de soluções em RH, oferecendo tecnologia de ponta para automatizar e simplificar a administração de benefícios.
+            </p>
+            <p className="partners-subtitle">
+              Ao indicar ou vender o Dirhect, você aumenta seu faturamento com comissões atrativas e se torna parte da transformação digital na gestão de benefícios, ajudando empresas a ganhar eficiência, reduzir custos e oferecer mais valor aos colaboradores.
+            </p>
           </div>
         </div>
       </section>
@@ -202,6 +213,9 @@ const Parceiros = () => {
             <div className="slider-text">
               <div className="slide-info">
                 <h3>{slides[activeSlide].title}</h3>
+                <div className="slide-icon">
+                  {slides[activeSlide].icon}
+                </div>
               </div>
 
               {/* Controles do carrossel */}
@@ -253,6 +267,54 @@ const Parceiros = () => {
                     <p key={idx}>{paragraph}</p>
                   ))}
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Por que ser nosso parceiro? */}
+      <section className="partnership-benefits-section">
+        <div className="container">
+          
+          <div className="partnership-reasons-grid">
+            <div className="reason-card">
+              <div className="reason-icon">
+                <TrendingUp size={24} />
+              </div>
+              <div className="reason-content">
+                <h5>Amplie</h5>
+                <p>Inclua no seu portfólio uma solução completa e integrada para gestão de benefícios, admissão digital, portal de RH e integração com sistemas de folha, consolidando sua empresa como referência em tecnologia para RH.</p>
+              </div>
+            </div>
+            
+            <div className="reason-card">
+              <div className="reason-icon">
+                <BarChart3 size={24} />
+              </div>
+              <div className="reason-content">
+                <h5>Aumente</h5>
+                <p>Ganhe comissões recorrentes e novas oportunidades de negócio a cada cliente que implementar o Dirhect com a sua indicação ou apoio comercial.</p>
+              </div>
+            </div>
+            
+            <div className="reason-card">
+              <div className="reason-icon">
+                <Heart size={24} />
+              </div>
+              <div className="reason-content">
+                <h5>Fidelize</h5>
+                <p>Ofereça aos seus clientes uma plataforma que automatiza processos, reduz riscos e melhora a experiência do RH e dos colaboradores, garantindo satisfação e retenção.</p>
+              </div>
+            </div>
+            
+            <div className="reason-card">
+              <div className="reason-icon">
+                <Zap size={24} />
+              </div>
+              <div className="reason-content">
+                <h5>Transforme</h5>
+                <p>Seja protagonista na digitalização da gestão de benefícios no Brasil, ajudando empresas a otimizar custos, evitar fraudes e dar mais autonomia ao RH.</p>
               </div>
             </div>
           </div>
