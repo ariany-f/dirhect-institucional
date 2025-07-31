@@ -64,6 +64,7 @@ const Footer = () => {
           <div className="footer-bottom-content">
             <p>&copy; {new Date().getFullYear()} Dirhect. Todos os direitos reservados.</p>
             <div className="footer-legal">
+              <Link to="/admin">Área Privada</Link>
               <Link to="/politica-privacidade">Política de Privacidade</Link>
               <Link to="/termos-uso">Termos de Uso</Link>
             </div>
