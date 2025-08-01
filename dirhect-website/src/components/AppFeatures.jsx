@@ -49,25 +49,25 @@ const AppFeatures = () => {
       id: 'atividades-dashboard',
       title: 'Atividades',
       description: 'Gerenciamento completo de tarefas e processos de RH',
-      image: '/images/showcase/atividades-dashboard.png'
+      image: '/images/showcase/SITE - GESTAO TAREFAS.png'
     },
     {
       id: 'contratos-beneficios',
       title: 'Contratos',
-      description: 'Gestão de contratos e benefícios corporativos',
-      image: '/images/showcase/contratos-beneficios.png'
+      description: 'Gestão de contratos e benefícios corporativos para sua empresa',
+      image: '/images/showcase/SITE - BENEFICIOS.png'
     },
     {
       id: 'elegibilidade-grupos',
       title: 'Elegibilidade',
       description: 'Configuração de grupos elegíveis para benefícios',
-      image: '/images/showcase/elegibilidade-grupos.png'
+      image: '/images/showcase/SITE - BENEFICIOS.png'
     },
     {
-      id: 'ferias-calendario',
-      title: 'Férias',
-      description: 'Calendário inteligente para gestão de férias',
-      image: '/images/showcase/ferias-calendario.png'
+      id: 'admissao-digital',
+      title: 'Admissão Digital',
+      description: 'Criação de processos de admissão digital',
+      image: '/images/showcase/SITE - PORTAL RH.png'
     }
   ]
 
