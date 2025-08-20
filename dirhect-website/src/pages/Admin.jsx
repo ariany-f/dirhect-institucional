@@ -13,7 +13,12 @@ import {
   AlertCircle,
   FileText,
   Map,
-  BookOpen
+  BookOpen,
+  Users,
+  Shield,
+  PenTool,
+  Crown,
+  Key
 } from 'lucide-react'
 import { createPortal } from 'react-dom'
 import Header from '../components/Header'
@@ -23,8 +28,11 @@ import RichTextEditor from '../components/RichTextEditor'
 import './Admin.css'
 
 const Admin = () => {
+  console.log('Admin component rendering...')
+  
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState(null)
+  const [userRoles, setUserRoles] = useState([])
   const [activeTab, setActiveTab] = useState('posts')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
@@ -33,10 +41,14 @@ const Admin = () => {
   const [posts, setPosts] = useState([])
   const [roadmap, setRoadmap] = useState([])
   const [knowledge, setKnowledge] = useState([])
+  const [users, setUsers] = useState([])
   const [showForm, setShowForm] = useState(false)
   const [editingItem, setEditingItem] = useState(null)
   const [formData, setFormData] = useState({})
   const [saving, setSaving] = useState(false)
+  const [showPasswordModal, setShowPasswordModal] = useState(false)
+  const [passwordData, setPasswordData] = useState({})
+  const [changingPassword, setChangingPassword] = useState(false)
 
   // Estados para paginação
   const [currentPage, setCurrentPage] = useState(1)
@@ -47,6 +59,19 @@ const Admin = () => {
   // Estados para notificações
   const [notification, setNotification] = useState(null)
 
+  // Atualizar totalPages ao mudar de aba ou dados
+  useEffect(() => {
+    const currentTab = activeTab || 'posts'
+    let total = 0
+    if (currentTab === 'posts') total = posts.length
+    if (currentTab === 'roadmap') total = roadmap.length
+    if (currentTab === 'knowledge') total = knowledge.length
+    if (currentTab === 'users') total = users.length
+    setTotalPages(Math.max(1, Math.ceil(total / itemsPerPage)))
+    setTotalItems(total)
+    setCurrentPage(1)
+  }, [activeTab, posts, roadmap, knowledge, users, itemsPerPage])
+
   useEffect(() => {
     checkAuth()
   }, [])
@@ -56,6 +81,9 @@ const Admin = () => {
       setLoading(true)
       
       if (!wordpressService.isAuthenticated()) {
+        setIsAuthenticated(false)
+        setUser(null)
+        setUserRoles([])
         setLoading(false)
         return
       }
@@ -64,15 +92,37 @@ const Admin = () => {
       const result = await wordpressService.verifyAdminToken(token)
       
       if (result.success) {
-        setUser(result.user)
+        console.log('Verificação de token bem-sucedida:', result)
+        
+        // Buscar informações completas do usuário
+        try {
+          const userInfo = await wordpressService.getCurrentUserInfo(token)
+          console.log('Informações completas do usuário:', userInfo)
+          
+          setUser(userInfo)
+          setUserRoles(userInfo.roles || [])
+          console.log('userRoles definido na verificação:', userInfo.roles || [])
+        } catch (error) {
+          console.warn('Erro ao buscar informações completas do usuário:', error)
+          // Usar informações do resultado da verificação
+          setUser(result.user)
+          setUserRoles(result.user.roles || [])
+        }
+        
         setIsAuthenticated(true)
         await loadContent(1)
       } else {
         wordpressService.adminLogout()
+        setIsAuthenticated(false)
+        setUser(null)
+        setUserRoles([])
       }
     } catch (error) {
       console.error('Erro na verificação:', error)
       wordpressService.adminLogout()
+      setIsAuthenticated(false)
+      setUser(null)
+      setUserRoles([])
       showNotification('Sessão expirada. Faça login novamente.', 'error')
     } finally {
       setLoading(false)
@@ -93,13 +143,41 @@ const Admin = () => {
       )
       
       if (result.success) {
+        console.log('Login bem-sucedido - result:', result)
+        console.log('User do resultado:', result.user)
+        console.log('Roles do resultado:', result.user.roles)
+        
         setUser(result.user)
+        setUserRoles(result.user.roles || [])
+        console.log('userRoles definido como:', result.user.roles || [])
+        
+        // Buscar informações atualizadas do usuário para garantir permissões corretas
+        try {
+          const token = wordpressService.getCurrentToken()
+          const userInfo = await wordpressService.getCurrentUserInfo(token)
+          console.log('Informações atualizadas do usuário:', userInfo)
+          
+          // Atualizar com as informações mais recentes
+          setUser(userInfo)
+          setUserRoles(userInfo.roles || [])
+          console.log('userRoles atualizado para:', userInfo.roles || [])
+        } catch (error) {
+          console.warn('Erro ao buscar informações atualizadas do usuário:', error)
+          // Continuar com as informações do login
+        }
+        
         setIsAuthenticated(true)
         await loadContent(1)
         
         // Disparar evento customizado para notificar o header
         window.dispatchEvent(new CustomEvent('authStateChanged', { 
-          detail: { isAuthenticated: true, user: result.user } 
+          detail: { 
+            isAuthenticated: true, 
+            user: {
+              ...result.user,
+              roles: result.user.roles || ['administrator']
+            }
+          } 
         }))
         
         showNotification('Login realizado com sucesso!', 'success')
@@ -117,6 +195,7 @@ const Admin = () => {
     wordpressService.adminLogout()
     setIsAuthenticated(false)
     setUser(null)
+    setUserRoles([])
     setPosts([])
     setRoadmap([])
     setKnowledge([])
@@ -154,8 +233,8 @@ const Admin = () => {
       
       console.log('Iniciando carregamento de conteúdo...')
       
-      // Carregar todos os dados de uma vez (posts, roadmap e conhecimento)
-      const [postsData, roadmapData, knowledgeData] = await Promise.all([
+      // Carregar todos os dados de uma vez (posts, roadmap, conhecimento e usuários)
+      const [postsData, roadmapData, knowledgeData, usersData] = await Promise.all([
         wordpressService.getPosts({ 
           perPage: 100, // Carregar mais itens de uma vez
           page: 1,
@@ -168,12 +247,14 @@ const Admin = () => {
         wordpressService.getAdminKnowledge(token, { 
           per_page: 100,
           page: 1
-        })
+        }),
+        wordpressService.getUsers(token)
       ])
       
       console.log('Posts carregados:', postsData.length)
       console.log('Roadmap carregado:', roadmapData.length)
       console.log('Conhecimento carregado:', knowledgeData.length)
+      console.log('Usuários carregados:', usersData.length)
       
       // Transformar posts para formato do admin
       const transformedPosts = postsData.map(post => ({
@@ -232,8 +313,30 @@ const Admin = () => {
       
       setKnowledge(transformedKnowledge)
       
+      // Transformar dados dos usuários
+      const transformedUsers = usersData.map(user => {
+        console.log('Usuário original:', user)
+        console.log('Roles do usuário:', user.roles)
+        
+        const transformed = {
+          id: user.id,
+          username: user.slug || user.username,
+          name: user.name,
+          email: user.email || '',
+          roles: user.roles || ['subscriber'],
+          registered: user.registered || new Date().toISOString(),
+          status: user.status || 'active',
+          avatar: user.avatar_urls?.['96'] || null
+        }
+        
+        console.log('Usuário transformado:', transformed)
+        return transformed
+      })
+      
+      setUsers(transformedUsers)
+      
       // Atualizar paginação baseada no total de itens
-      const totalItems = Math.max(postsData.length, roadmapData.length, knowledgeData.length)
+      const totalItems = Math.max(postsData.length, roadmapData.length, knowledgeData.length, usersData.length)
       setTotalItems(totalItems)
       setTotalPages(Math.ceil(totalItems / itemsPerPage))
       setCurrentPage(1)
@@ -330,12 +433,31 @@ const Admin = () => {
           }
           setKnowledge(prev => editingItem ? prev.map(k => k.id === editingItem.id ? transformedKnowledge : k) : [...prev, transformedKnowledge])
           break
+        case 'user':
+          if (editingItem) {
+            result = await wordpressService.updateUser(token, editingItem.id, formData)
+          } else {
+            result = await wordpressService.createUser(token, formData)
+          }
+          // Transformar o resultado para o formato esperado pelo admin
+          const transformedUser = {
+            id: result.id,
+            username: result.slug || result.username,
+            name: result.name,
+            email: result.email || '',
+            roles: result.roles || ['subscriber'],
+            registered: result.registered || new Date().toISOString(),
+            status: result.status || 'active',
+            avatar: result.avatar_urls?.['96'] || null
+          }
+          setUsers(prev => editingItem ? prev.map(u => u.id === editingItem.id ? transformedUser : u) : [...prev, transformedUser])
+          break
       }
       
       setShowForm(false)
       setEditingItem(null)
       setFormData({})
-      showNotification(`${type === 'post' ? 'Post' : type === 'roadmap' ? 'Item do roadmap' : 'Artigo'} salvo com sucesso!`, 'success')
+      showNotification(`${type === 'post' ? 'Post' : type === 'roadmap' ? 'Item do roadmap' : type === 'knowledge' ? 'Artigo' : 'Usuário'} salvo com sucesso!`, 'success')
       
     } catch (error) {
       console.error('Erro ao salvar:', error)
@@ -362,7 +484,47 @@ const Admin = () => {
     }
   }
 
+  const handleChangePassword = async () => {
+    if (!passwordData.newPassword || passwordData.newPassword.length < 6) {
+      showNotification('A nova senha deve ter pelo menos 6 caracteres.', 'error')
+      return
+    }
+
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      showNotification('As senhas não coincidem.', 'error')
+      return
+    }
+
+    try {
+      setChangingPassword(true)
+      const token = wordpressService.getCurrentToken()
+      
+      await wordpressService.updateUserPassword(token, passwordData.userId, passwordData.newPassword)
+      
+      setShowPasswordModal(false)
+      setPasswordData({})
+      showNotification('Senha alterada com sucesso!', 'success')
+      
+    } catch (error) {
+      console.error('Erro ao alterar senha:', error)
+      showNotification(error.message || 'Erro ao alterar senha', 'error')
+    } finally {
+      setChangingPassword(false)
+    }
+  }
+
   const handleDelete = async (type, id) => {
+    // Verificar permissões antes de permitir excluir
+    if (type === 'user' && !canManageUsers()) {
+      showNotification('Apenas administradores podem excluir usuários.', 'error')
+      return
+    }
+    
+    if (type !== 'user' && !canManageContent()) {
+      showNotification('Você não tem permissão para excluir conteúdo.', 'error')
+      return
+    }
+    
     if (!window.confirm('Tem certeza que deseja excluir este item?')) return
     
     try {
@@ -381,6 +543,10 @@ const Admin = () => {
           await wordpressService.deletePost(token, id) // Knowledge também são posts
           setKnowledge(prev => prev.filter(k => k.id !== id))
           break
+        case 'user':
+          await wordpressService.deleteUser(token, id)
+          setUsers(prev => prev.filter(u => u.id !== id))
+          break
       }
       
       showNotification('Item excluído com sucesso!', 'success')
@@ -392,6 +558,17 @@ const Admin = () => {
   }
 
   const handleEdit = (type, item) => {
+    // Verificar permissões antes de permitir editar
+    if (type === 'user' && !canManageUsers()) {
+      showNotification('Apenas administradores podem editar usuários.', 'error')
+      return
+    }
+    
+    if (type !== 'user' && !canManageContent()) {
+      showNotification('Você não tem permissão para editar conteúdo.', 'error')
+      return
+    }
+    
     // Extrair dados corretamente baseado no tipo
     let extractedData = {}
     
@@ -484,6 +661,33 @@ const Admin = () => {
           extractedData.lastUpdated = item.meta.knowledge_last_updated || extractedData.lastUpdated
         }
         break
+      case 'user':
+        console.log('Editando usuário:', item)
+        console.log('Roles do item:', item.roles)
+        
+        // Extrair o role corretamente - pode ser string ou array
+        let userRole = 'subscriber'
+        if (Array.isArray(item.roles)) {
+          userRole = item.roles[0] || 'subscriber'
+        } else if (typeof item.roles === 'string') {
+          userRole = item.roles
+        } else if (item.roles && item.roles.length > 0) {
+          userRole = item.roles[0]
+        }
+        
+        console.log('Role extraído:', userRole)
+        
+        extractedData = {
+          id: item.id,
+          username: item.username,
+          name: item.name,
+          email: item.email || '',
+          roles: userRole,
+          status: item.status || 'active'
+        }
+        
+        console.log('Dados extraídos:', extractedData)
+        break
     }
     
     setEditingItem(item)
@@ -492,9 +696,39 @@ const Admin = () => {
   }
 
   const handleNew = (type) => {
+    // Verificar permissões antes de permitir criar
+    if (type === 'user' && !canManageUsers()) {
+      showNotification('Apenas administradores podem criar usuários.', 'error')
+      return
+    }
+    
+    if (type !== 'user' && !canCreateContent()) {
+      showNotification('Você não tem permissão para criar conteúdo.', 'error')
+      return
+    }
+    
     setEditingItem(null)
     setFormData({})
     setShowForm(type)
+  }
+
+  // Funções para verificar permissões
+  const isAdministrator = () => {
+    return userRoles.includes('administrator')
+  }
+
+  const canManageUsers = () => {
+    console.log('Verificando permissões de usuários - userRoles:', userRoles)
+    console.log('isAdministrator():', isAdministrator())
+    return isAdministrator()
+  }
+
+  const canManageContent = () => {
+    return userRoles.includes('administrator') || userRoles.includes('editor')
+  }
+
+  const canCreateContent = () => {
+    return userRoles.includes('administrator') || userRoles.includes('editor') || userRoles.includes('author')
   }
 
   const showNotification = (message, type = 'info') => {
@@ -524,7 +758,9 @@ const Admin = () => {
     return 'Sem título'
   }
 
-  const renderLoginForm = () => (
+  const renderLoginForm = () => {
+    console.log('Renderizando formulário de login')
+    return (
     <div className="admin-login">
       <div className="admin-login-card">
         <h2>Área Administrativa</h2>
@@ -568,7 +804,8 @@ const Admin = () => {
         </form>
       </div>
     </div>
-  )
+    )
+  }
 
   const renderForm = () => {
     if (!showForm) return null
@@ -605,6 +842,26 @@ const Admin = () => {
             { name: 'difficulty', label: 'Nível de Dificuldade', type: 'select', required: true, options: ['beginner', 'intermediate', 'advanced', 'expert'] },
             { name: 'featured', label: 'Artigo Destacado', type: 'checkbox', required: false }
           ]
+        case 'user':
+          const userFields = [
+            { name: 'username', label: 'Nome de Usuário', type: 'text', required: true, placeholder: 'Digite o nome de usuário' },
+            { name: 'name', label: 'Nome Completo', type: 'text', required: true, placeholder: 'Digite o nome completo' },
+            { name: 'email', label: 'E-mail', type: 'email', required: true, placeholder: 'Digite o e-mail' }
+          ]
+          
+          // Adicionar campo de senha apenas para novos usuários
+          if (!editingItem) {
+            userFields.push(
+              { name: 'password', label: 'Senha', type: 'password', required: true, placeholder: 'Digite a senha', minLength: 6 }
+            )
+          }
+          
+          userFields.push(
+            { name: 'roles', label: 'Nível de Acesso', type: 'select', required: true, options: ['subscriber', 'author', 'editor', 'administrator'] },
+            { name: 'status', label: 'Status', type: 'select', required: true, options: ['active', 'inactive'] }
+          )
+          
+          return userFields
         default:
           return []
       }
@@ -616,7 +873,7 @@ const Admin = () => {
       <div className="admin-form-overlay">
         <div className="admin-form">
           <div className="form-header">
-            <h3>{editingItem ? 'Editar' : 'Novo'} {showForm === 'post' ? 'Post' : showForm === 'roadmap' ? 'Item do Roadmap' : 'Artigo'}</h3>
+            <h3>{editingItem ? 'Editar' : 'Novo'} {showForm === 'post' ? 'Post' : showForm === 'roadmap' ? 'Item do Roadmap' : showForm === 'knowledge' ? 'Artigo' : 'Usuário'}</h3>
             <button onClick={() => setShowForm(false)} className="close-btn">
               <X size={20} />
             </button>
@@ -672,6 +929,12 @@ const Admin = () => {
                          option === 'high' ? 'Alta' :
                          option === 'draft' ? 'Rascunho' :
                          option === 'publish' ? 'Publicado' :
+                         option === 'subscriber' ? 'Assinante' :
+                         option === 'author' ? 'Autor' :
+                         option === 'editor' ? 'Editor' :
+                         option === 'administrator' ? 'Administrador' :
+                         option === 'active' ? 'Ativo' :
+                         option === 'inactive' ? 'Inativo' :
                          option}
                       </option>
                     ))}
@@ -760,9 +1023,71 @@ const Admin = () => {
     return createPortal(modalContent, document.body)
   }
 
+  const renderPasswordModal = () => {
+    if (!showPasswordModal) return null
+
+    const modalContent = (
+      <div className="admin-form-overlay">
+        <div className="admin-form password-modal">
+          <div className="form-header">
+            <h3>Alterar Senha</h3>
+            <button onClick={() => setShowPasswordModal(false)} className="close-btn">
+              <X size={20} />
+            </button>
+          </div>
+          
+          <div className="password-user-info">
+            <p>Alterando senha do usuário: <strong>{passwordData.userName}</strong></p>
+          </div>
+          
+          <form onSubmit={(e) => { e.preventDefault(); handleChangePassword() }}>
+            <div className="form-group">
+              <label htmlFor="newPassword">Nova Senha</label>
+              <input
+                type="password"
+                id="newPassword"
+                value={passwordData.newPassword || ''}
+                onChange={(e) => setPasswordData(prev => ({ ...prev, newPassword: e.target.value }))}
+                required
+                placeholder="Digite a nova senha"
+                minLength={6}
+                disabled={changingPassword}
+              />
+            </div>
+            
+            <div className="form-group">
+              <label htmlFor="confirmPassword">Confirmar Nova Senha</label>
+              <input
+                type="password"
+                id="confirmPassword"
+                value={passwordData.confirmPassword || ''}
+                onChange={(e) => setPasswordData(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                required
+                placeholder="Confirme a nova senha"
+                minLength={6}
+                disabled={changingPassword}
+              />
+            </div>
+            
+            <div className="form-actions">
+              <button type="button" onClick={() => setShowPasswordModal(false)} disabled={changingPassword}>
+                Cancelar
+              </button>
+              <button type="submit" className="save-btn" disabled={changingPassword}>
+                {changingPassword ? 'Alterando...' : 'Alterar Senha'}
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    )
+
+    return createPortal(modalContent, document.body)
+  }
+
   const renderAdminPanel = () => (
     <div className="admin-panel">
-      <div className="admin-header">
+        <div className="admin-header">
         <div className="admin-user-info">
           <h2>Painel Administrativo</h2>
           <p>Bem-vindo, {user?.name}</p>
@@ -800,12 +1125,30 @@ const Admin = () => {
           <BookOpen size={16} />
           Banco de Conhecimento ({knowledge.length})
         </button>
+        {canManageUsers() && (
+          <button 
+            className={`tab-btn ${activeTab === 'users' ? 'active' : ''}`}
+            onClick={() => handleTabChange('users')}
+          >
+            <Users size={16} />
+            Usuários ({users.length})
+          </button>
+        )}
       </div>
 
       <div className="admin-content">
         {activeTab === 'posts' && renderPostsTab()}
         {activeTab === 'roadmap' && renderRoadmapTab()}
         {activeTab === 'knowledge' && renderKnowledgeTab()}
+        {activeTab === 'users' && renderUsersTab()}
+        {!activeTab && (
+          <div className="content-tab">
+            <div className="empty-state">
+              <FileText size={48} />
+              <p>Selecione uma aba para começar</p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
@@ -913,26 +1256,17 @@ const Admin = () => {
     return items.slice(startIdx, endIdx)
   }
 
-  // Atualizar totalPages ao mudar de aba ou dados
-  useEffect(() => {
-    let total = 0
-    if (activeTab === 'posts') total = posts.length
-    if (activeTab === 'roadmap') total = roadmap.length
-    if (activeTab === 'knowledge') total = knowledge.length
-    setTotalPages(Math.max(1, Math.ceil(total / itemsPerPage)))
-    setTotalItems(total)
-    setCurrentPage(1)
-  }, [activeTab, posts, roadmap, knowledge, itemsPerPage])
-
   // Atualizar renderização das tabs para usar apenas os itens da página atual
   const renderPostsTab = () => (
     <div className="content-tab">
       <div className="tab-header">
         <h3>Gerenciar Posts</h3>
-        <button onClick={() => handleNew('post')} className="add-btn">
-          <Plus size={16} />
-          Novo Post
-        </button>
+        {canCreateContent() && (
+          <button onClick={() => handleNew('post')} className="add-btn">
+            <Plus size={16} />
+            Novo Post
+          </button>
+        )}
       </div>
       
       <div className="content-list">
@@ -953,12 +1287,16 @@ const Admin = () => {
                 <button className="action-btn view" onClick={() => handleView('post', post)}>
                   <Eye size={14} />
                 </button>
-                <button className="action-btn edit" onClick={() => handleEdit('post', post)}>
-                  <Edit size={14} />
-                </button>
-                <button className="action-btn delete" onClick={() => handleDelete('post', post.id)}>
-                  <Trash2 size={14} />
-                </button>
+                {canManageContent() && (
+                  <>
+                    <button className="action-btn edit" onClick={() => handleEdit('post', post)}>
+                      <Edit size={14} />
+                    </button>
+                    <button className="action-btn delete" onClick={() => handleDelete('post', post.id)}>
+                      <Trash2 size={14} />
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           ))
@@ -973,10 +1311,12 @@ const Admin = () => {
     <div className="content-tab">
       <div className="tab-header">
         <h3>Gerenciar Roadmap</h3>
-        <button onClick={() => handleNew('roadmap')} className="add-btn">
-          <Plus size={16} />
-          Nova Funcionalidade
-        </button>
+        {canCreateContent() && (
+          <button onClick={() => handleNew('roadmap')} className="add-btn">
+            <Plus size={16} />
+            Nova Funcionalidade
+          </button>
+        )}
       </div>
       
       <div className="content-list">
@@ -999,12 +1339,16 @@ const Admin = () => {
                 <button className="action-btn view" onClick={() => handleView('roadmap', item)}>
                   <Eye size={14} />
                 </button>
-                <button className="action-btn edit" onClick={() => handleEdit('roadmap', item)}>
-                  <Edit size={14} />
-                </button>
-                <button className="action-btn delete" onClick={() => handleDelete('roadmap', item.id)}>
-                  <Trash2 size={14} />
-                </button>
+                {canManageContent() && (
+                  <>
+                    <button className="action-btn edit" onClick={() => handleEdit('roadmap', item)}>
+                      <Edit size={14} />
+                    </button>
+                    <button className="action-btn delete" onClick={() => handleDelete('roadmap', item.id)}>
+                      <Trash2 size={14} />
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           ))
@@ -1019,10 +1363,12 @@ const Admin = () => {
     <div className="content-tab">
       <div className="tab-header">
         <h3>Banco de Conhecimento</h3>
-        <button onClick={() => handleNew('knowledge')} className="add-btn">
-          <Plus size={16} />
-          Novo Artigo
-        </button>
+        {canCreateContent() && (
+          <button onClick={() => handleNew('knowledge')} className="add-btn">
+            <Plus size={16} />
+            Novo Artigo
+          </button>
+        )}
       </div>
       
       <div className="content-list">
@@ -1044,12 +1390,16 @@ const Admin = () => {
                 <button className="action-btn view" onClick={() => handleView('knowledge', item)}>
                   <Eye size={14} />
                 </button>
-                <button className="action-btn edit" onClick={() => handleEdit('knowledge', item)}>
-                  <Edit size={14} />
-                </button>
-                <button className="action-btn delete" onClick={() => handleDelete('knowledge', item.id)}>
-                  <Trash2 size={14} />
-                </button>
+                {canManageContent() && (
+                  <>
+                    <button className="action-btn edit" onClick={() => handleEdit('knowledge', item)}>
+                      <Edit size={14} />
+                    </button>
+                    <button className="action-btn delete" onClick={() => handleDelete('knowledge', item.id)}>
+                      <Trash2 size={14} />
+                    </button>
+                  </>
+                )}
               </div>
             </div>
           ))
@@ -1059,6 +1409,108 @@ const Admin = () => {
       {renderPagination()}
     </div>
   )
+
+  const renderUsersTab = () => {
+    // Verificar se o usuário tem permissão para gerenciar usuários
+    if (!canManageUsers()) {
+      return (
+        <div className="content-tab">
+          <div className="permission-denied">
+            <Shield size={48} />
+            <h3>Acesso Negado</h3>
+            <p>Apenas administradores podem gerenciar usuários.</p>
+          </div>
+        </div>
+      )
+    }
+
+    return (
+      <div className="content-tab">
+        <div className="tab-header">
+          <h3>Gerenciar Usuários</h3>
+          <button onClick={() => handleNew('user')} className="add-btn">
+            <Plus size={16} />
+            Novo Usuário
+          </button>
+        </div>
+      
+      <div className="content-list">
+        {users.length === 0 ? (
+          <div className="empty-state">
+            <Users size={48} />
+            <p>Nenhum usuário encontrado</p>
+          </div>
+        ) : (
+          getCurrentPageItems(users).map(user => (
+            <div key={user.id} className="content-item">
+              <div className="item-info">
+                <div className="user-avatar">
+                  {user.avatar ? (
+                    <img src={user.avatar} alt={user.name} />
+                  ) : (
+                    <div className="avatar-placeholder">
+                      {user.name?.charAt(0)?.toUpperCase() || user.username?.charAt(0)?.toUpperCase() || 'U'}
+                    </div>
+                  )}
+                </div>
+                <div className="user-details">
+                  <h4>{user.name}</h4>
+                  <span className="username">@{user.username}</span>
+                  <span className="email">{user.email}</span>
+                  <div className="user-roles">
+                    {user.roles?.map(role => (
+                      <span key={role} className={`role-badge role-${role}`}>
+                        {role === 'administrator' && <Crown size={12} />}
+                        {role === 'editor' && <Shield size={12} />}
+                        {role === 'author' && <PenTool size={12} />}
+                        {role === 'subscriber' && <User size={12} />}
+                        {role === 'administrator' ? 'Admin' :
+                         role === 'editor' ? 'Editor' :
+                         role === 'author' ? 'Autor' :
+                         role === 'subscriber' ? 'Assinante' : role}
+                      </span>
+                    ))}
+                  </div>
+                  <span className={`status ${user.status}`}>{user.status === 'active' ? 'Ativo' : 'Inativo'}</span>
+                  <span className="registered">
+                    {user.registered && !isNaN(new Date(user.registered).getTime()) 
+                      ? new Date(user.registered).toLocaleDateString('pt-BR')
+                      : 'Data não disponível'
+                    }
+                  </span>
+                </div>
+              </div>
+              <div className="item-actions">
+                {canManageUsers() && (
+                  <>
+                    <button 
+                      className="action-btn password" 
+                      onClick={() => {
+                        setPasswordData({ userId: user.id, userName: user.name })
+                        setShowPasswordModal(true)
+                      }}
+                      title="Alterar senha"
+                    >
+                      <Key size={14} />
+                    </button>
+                    <button className="action-btn edit" onClick={() => handleEdit('user', user)}>
+                      <Edit size={14} />
+                    </button>
+                    <button className="action-btn delete" onClick={() => handleDelete('user', user.id)}>
+                      <Trash2 size={14} />
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+      
+      {renderPagination()}
+    </div>
+  )
+}
 
   if (loading) {
     return (
@@ -1071,13 +1523,16 @@ const Admin = () => {
       </div>
     )
   }
-
+  
+  console.log('Renderizando Admin - isAuthenticated:', isAuthenticated, 'loading:', loading)
+  
   return (
     <div className="admin-page">
       <Header />
       <main className="admin-main">
         {isAuthenticated ? renderAdminPanel() : renderLoginForm()}
         {renderForm()}
+        {renderPasswordModal()}
       </main>
       
       {/* Notificação */}

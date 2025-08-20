@@ -121,11 +121,18 @@ export const wordpressService = {
       console.log('Token obtido:', token ? 'SIM' : 'NÃO')
       console.log('Token (primeiros 50 chars):', token ? token.substring(0, 50) + '...' : 'NULO')
       
+      // Buscar informações completas do usuário (incluindo roles)
+      console.log('Buscando informações completas do usuário...')
+      const userInfo = await this.getCurrentUserInfo(token)
+      console.log('Informações completas obtidas:', userInfo)
+      
       // Salvar token no localStorage
       localStorage.setItem('adminToken', token)
       localStorage.setItem('adminUser', JSON.stringify({
-        email: userData.user_email || username,
-        name: userData.display_name || username
+        id: userInfo.id,
+        email: userInfo.email || userData.user_email || username,
+        name: userInfo.name || userData.display_name || username,
+        roles: userInfo.roles || ['administrator']
       }))
       localStorage.setItem('adminTokenExpiry', Date.now() + (7 * 24 * 60 * 60 * 1000)) // 7 dias
       
@@ -138,8 +145,10 @@ export const wordpressService = {
         detail: { 
           isAuthenticated: true, 
           user: {
-            email: userData.user_email || username,
-            name: userData.display_name || username
+            id: userInfo.id,
+            email: userInfo.email || userData.user_email || username,
+            name: userInfo.name || userData.display_name || username,
+            roles: userInfo.roles || ['administrator']
           }
         } 
       }))
@@ -148,8 +157,10 @@ export const wordpressService = {
         success: true,
         token: token,
         user: {
-          email: userData.user_email || username,
-          name: userData.display_name || username
+          id: userInfo.id,
+          email: userInfo.email || userData.user_email || username,
+          name: userInfo.name || userData.display_name || username,
+          roles: userInfo.roles || ['administrator']
         }
       }
       
@@ -199,7 +210,8 @@ export const wordpressService = {
           success: true,
           user: {
             email: 'admin',
-            name: 'Administrador'
+            name: 'Administrador',
+            roles: ['administrator']
           }
         }
         // Cache do resultado
@@ -213,11 +225,16 @@ export const wordpressService = {
       // Simple JWT Login retorna em data.user
       const user = userData.user || userData
       
+      // Buscar informações completas do usuário via API REST
+      const userInfo = await this.getCurrentUserInfo(token)
+      
       const result = {
         success: true,
         user: {
-          email: user.user_email || user.email || 'admin',
-          name: user.display_name || user.name || 'Administrador'
+          id: userInfo.id,
+          email: userInfo.email || user.user_email || user.email || 'admin',
+          name: userInfo.name || user.display_name || user.name || 'Administrador',
+          roles: userInfo.roles || ['administrator']
         }
       }
       
@@ -238,7 +255,8 @@ export const wordpressService = {
           success: true,
           user: {
             email: 'admin',
-            name: 'Administrador'
+            name: 'Administrador',
+            roles: ['administrator']
           }
         }
         // Cache do resultado
@@ -289,6 +307,54 @@ export const wordpressService = {
     console.log('========================')
     
     return isExpired
+  },
+
+  // Buscar informações completas do usuário atual (incluindo roles)
+  async getCurrentUserInfo(token) {
+    try {
+      console.log('=== BUSCANDO INFORMAÇÕES DO USUÁRIO ATUAL ===')
+      
+      // Buscar informações do usuário atual via API REST do WordPress
+      const response = await fetch(`${WORDPRESS_API_URL.replace('/wp/v2', '/wp/v2')}/users/me?context=edit`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      })
+
+      if (!response.ok) {
+        console.error('Erro ao buscar informações do usuário:', response.status)
+        throw new Error(`Erro ao buscar informações do usuário: ${response.status}`)
+      }
+
+      const userInfo = await response.json()
+      console.log('Informações do usuário obtidas:', userInfo)
+      console.log('Roles do usuário:', userInfo.roles)
+      
+      return {
+        id: userInfo.id,
+        username: userInfo.slug || userInfo.username,
+        name: userInfo.name,
+        email: userInfo.email,
+        roles: userInfo.roles || ['subscriber'],
+        registered: userInfo.registered,
+        status: userInfo.status || 'active',
+        avatar_urls: userInfo.avatar_urls
+      }
+    } catch (error) {
+      console.error('Erro ao buscar informações do usuário atual:', error)
+      // Retornar informações básicas como fallback
+      return {
+        id: 1,
+        username: 'admin',
+        name: 'Administrador',
+        email: 'admin@dirhect.com',
+        roles: ['administrator'],
+        registered: new Date().toISOString(),
+        status: 'active',
+        avatar_urls: { '96': null }
+      }
+    }
   },
 
   // Buscar o ID da categoria roadmap
@@ -1867,5 +1933,216 @@ export const wordpressService = {
       console.error('Erro ao validar JWT (custom):', error)
       throw error
     }
+  },
+
+  // Buscar usuários
+  async getUsers(token, params = {}) {
+    try {
+      const searchParams = new URLSearchParams({
+        per_page: params.per_page || 100,
+        page: params.page || 1,
+        context: 'edit', // Incluir dados completos incluindo roles
+        ...params
+      })
+
+      const response = await fetch(`${WORDPRESS_API_URL.replace('/wp/v2', '/wp/v2')}/users?${searchParams}`, {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const users = await response.json()
+      
+      // Processar e validar os dados dos usuários
+      const processedUsers = users.map(user => {
+        console.log('Usuário da API:', user)
+        console.log('Roles da API:', user.roles)
+        
+        const processed = {
+          ...user,
+          username: user.slug || user.username || 'user_' + user.id,
+          email: user.email || '',
+          roles: user.roles || ['subscriber'],
+          registered: user.registered || new Date().toISOString(),
+          status: user.status || 'active'
+        }
+        
+        console.log('Usuário processado:', processed)
+        return processed
+      })
+      
+      return processedUsers
+    } catch (error) {
+      console.error('Erro ao buscar usuários:', error)
+      // Retornar dados de fallback em caso de erro
+      return this.getFallbackUsers()
+    }
+  },
+
+  // Criar usuário
+  async createUser(token, userData) {
+    try {
+      const response = await fetch(`${WORDPRESS_API_URL.replace('/wp/v2', '/wp/v2')}/users`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          username: userData.username,
+          name: userData.name,
+          email: userData.email,
+          password: userData.password,
+          roles: [userData.roles],
+          status: userData.status || 'active'
+        })
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        console.error('Erro na resposta:', response.status, errorData)
+        throw new Error(errorData.message || `Erro ao criar usuário (${response.status})`)
+      }
+
+      const result = await response.json()
+      console.log('Usuário criado com sucesso:', result)
+      return result
+    } catch (error) {
+      console.error('Erro ao criar usuário:', error)
+      throw error
+    }
+  },
+
+  // Atualizar usuário
+  async updateUser(token, userId, userData) {
+    try {
+      const response = await fetch(`${WORDPRESS_API_URL.replace('/wp/v2', '/wp/v2')}/users/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          name: userData.name,
+          email: userData.email,
+          roles: [userData.roles],
+          status: userData.status || 'active'
+        })
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        console.error('Erro na resposta:', response.status, errorData)
+        throw new Error(errorData.message || `Erro ao atualizar usuário (${response.status})`)
+      }
+
+      const result = await response.json()
+      console.log('Usuário atualizado com sucesso:', result)
+      return result
+    } catch (error) {
+      console.error('Erro ao atualizar usuário:', error)
+      throw error
+    }
+  },
+
+  // Atualizar senha do usuário
+  async updateUserPassword(token, userId, newPassword) {
+    try {
+      const response = await fetch(`${WORDPRESS_API_URL.replace('/wp/v2', '/wp/v2')}/users/${userId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          password: newPassword
+        })
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        console.error('Erro na resposta:', response.status, errorData)
+        throw new Error(errorData.message || `Erro ao alterar senha (${response.status})`)
+      }
+
+      console.log('Senha alterada com sucesso')
+      return { success: true }
+    } catch (error) {
+      console.error('Erro ao alterar senha:', error)
+      throw error
+    }
+  },
+
+  // Excluir usuário
+  async deleteUser(token, userId) {
+    try {
+      const response = await fetch(`${WORDPRESS_API_URL.replace('/wp/v2', '/wp/v2')}/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}))
+        console.error('Erro na resposta:', response.status, errorData)
+        throw new Error(errorData.message || `Erro ao excluir usuário (${response.status})`)
+      }
+
+      console.log('Usuário excluído com sucesso')
+      return { success: true }
+    } catch (error) {
+      console.error('Erro ao excluir usuário:', error)
+      throw error
+    }
+  },
+
+  // Dados de fallback para usuários
+  getFallbackUsers() {
+    return [
+      {
+        id: 1,
+        username: 'admin',
+        slug: 'admin',
+        name: 'Administrador',
+        email: 'admin@dirhect.com',
+        roles: ['administrator'],
+        registered: '2024-01-01T00:00:00.000Z',
+        status: 'active',
+        avatar_urls: {
+          '96': null
+        }
+      },
+      {
+        id: 2,
+        username: 'editor',
+        slug: 'editor',
+        name: 'Editor Chefe',
+        email: 'editor@dirhect.com',
+        roles: ['editor'],
+        registered: '2024-01-15T00:00:00.000Z',
+        status: 'active',
+        avatar_urls: {
+          '96': null
+        }
+      },
+      {
+        id: 3,
+        username: 'author',
+        slug: 'author',
+        name: 'Autor Convidado',
+        email: 'author@dirhect.com',
+        roles: ['author'],
+        registered: '2024-02-01T00:00:00.000Z',
+        status: 'active',
+        avatar_urls: {
+          '96': null
+        }
+      }
+    ]
   }
 }

@@ -1129,6 +1129,126 @@
     height: 32px;
   }
 
+  /* Estilos para a aba de usuários */
+  .user-avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-right: 1rem;
+    flex-shrink: 0;
+  }
+
+  .user-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    background: var(--gradient);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 700;
+    font-size: 1.2rem;
+  }
+
+  .user-details {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .user-details h4 {
+    margin: 0 0 0.25rem 0;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 600;
+  }
+
+  .username {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .email {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .user-roles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .role-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .role-administrator {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    color: white;
+  }
+
+  .role-editor {
+    background: linear-gradient(135deg, #7c3aed, #5b21b6);
+    color: white;
+  }
+
+  .role-author {
+    background: linear-gradient(135deg, #059669, #047857);
+    color: white;
+  }
+
+  .role-subscriber {
+    background: linear-gradient(135deg, #6b7280, #4b5563);
+    color: white;
+  }
+
+  .status {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 8px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .status.active {
+    background: rgba(16, 185, 129, 0.1);
+    color: #059669;
+  }
+
+  .status.inactive {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+  }
+
+  .registered {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+    margin-top: 0.25rem;
+  }
+
   .pagination-btn {
     min-width: 32px;
     height: 32px;
@@ -1138,5 +1258,100 @@
 
   .pagination-info {
     font-size: 0.8rem;
+  }
+
+  /* Responsivo para usuários */
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    margin-right: 0.75rem;
+  }
+
+  .user-details h4 {
+    font-size: 1rem;
+  }
+
+  .username,
+  .email {
+    font-size: 0.8rem;
+  }
+
+  .role-badge {
+    font-size: 0.7rem;
+    padding: 0.2rem 0.4rem;
+  }
+
+  .registered {
+    font-size: 0.75rem;
+  }
+
+  /* Estilos para acesso negado */
+  .permission-denied {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    border: 2px dashed rgba(239, 68, 68, 0.3);
+  }
+
+  .permission-denied svg {
+    color: #dc2626;
+    margin-bottom: 1rem;
+  }
+
+  .permission-denied h3 {
+    color: #dc2626;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 0 0 0.5rem 0;
+  }
+
+  .permission-denied p {
+    color: var(--text-secondary);
+    font-size: 1rem;
+    margin: 0;
+    max-width: 400px;
+  }
+
+  /* Estilos para botão de senha */
+  .action-btn.password {
+    color: #f59e0b;
+    border-color: #f59e0b;
+  }
+
+  .action-btn.password:hover {
+    background: rgba(245, 158, 11, 0.1);
+    color: #d97706;
+  }
+
+  .action-btn.password:active {
+    background: rgba(245, 158, 11, 0.2);
+  }
+
+  /* Estilos para modal de senha */
+  .password-modal {
+    max-width: 500px;
+  }
+
+  .password-user-info {
+    background: rgba(245, 158, 11, 0.1);
+    border: 1px solid rgba(245, 158, 11, 0.2);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .password-user-info p {
+    margin: 0;
+    color: var(--text-primary);
+    font-size: 0.9rem;
+  }
+
+  .password-user-info strong {
+    color: #f59e0b;
   }
 } 
