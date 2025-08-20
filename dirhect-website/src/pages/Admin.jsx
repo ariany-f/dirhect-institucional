@@ -345,6 +345,23 @@ const Admin = () => {
     }
   }
 
+  const handleView = (type, item) => {
+    // Abrir o artigo em uma nova aba
+    const baseUrl = window.location.origin
+    
+    switch (type) {
+      case 'post':
+        window.open(`${baseUrl}/blog/${item.id}`, '_blank')
+        break
+      case 'roadmap':
+        window.open(`${baseUrl}/roadmap`, '_blank')
+        break
+      case 'knowledge':
+        window.open(`${baseUrl}/conhecimento/${item.id}`, '_blank')
+        break
+    }
+  }
+
   const handleDelete = async (type, id) => {
     if (!window.confirm('Tem certeza que deseja excluir este item?')) return
     
@@ -933,6 +950,9 @@ const Admin = () => {
                 <span className="date">{new Date(post.date).toLocaleDateString('pt-BR')}</span>
               </div>
               <div className="item-actions">
+                <button className="action-btn view" onClick={() => handleView('post', post)}>
+                  <Eye size={14} />
+                </button>
                 <button className="action-btn edit" onClick={() => handleEdit('post', post)}>
                   <Edit size={14} />
                 </button>
@@ -976,6 +996,9 @@ const Admin = () => {
                 <span className="votes">{item.votes || 0} votos</span>
               </div>
               <div className="item-actions">
+                <button className="action-btn view" onClick={() => handleView('roadmap', item)}>
+                  <Eye size={14} />
+                </button>
                 <button className="action-btn edit" onClick={() => handleEdit('roadmap', item)}>
                   <Edit size={14} />
                 </button>
@@ -1018,7 +1041,7 @@ const Admin = () => {
                 {item.featured && <span className="featured-badge">Destaque</span>}
               </div>
               <div className="item-actions">
-                <button className="action-btn view">
+                <button className="action-btn view" onClick={() => handleView('knowledge', item)}>
                   <Eye size={14} />
                 </button>
                 <button className="action-btn edit" onClick={() => handleEdit('knowledge', item)}>
