@@ -1443,42 +1443,42 @@ const Admin = () => {
         ) : (
           getCurrentPageItems(users).map(user => (
             <div key={user.id} className="content-item">
-              <div className="item-info">
-                <div className="user-avatar">
-                  {user.avatar ? (
-                    <img src={user.avatar} alt={user.name} />
-                  ) : (
-                    <div className="avatar-placeholder">
-                      {user.name?.charAt(0)?.toUpperCase() || user.username?.charAt(0)?.toUpperCase() || 'U'}
-                    </div>
-                  )}
-                </div>
-                <div className="user-details">
-                  <h4>{user.name}</h4>
-                  <span className="username">@{user.username}</span>
-                  <span className="email">{user.email}</span>
-                  <div className="user-roles">
-                    {user.roles?.map(role => (
-                      <span key={role} className={`role-badge role-${role}`}>
-                        {role === 'administrator' && <Crown size={12} />}
-                        {role === 'editor' && <Shield size={12} />}
-                        {role === 'author' && <PenTool size={12} />}
-                        {role === 'subscriber' && <User size={12} />}
-                        {role === 'administrator' ? 'Admin' :
-                         role === 'editor' ? 'Editor' :
-                         role === 'author' ? 'Autor' :
-                         role === 'subscriber' ? 'Assinante' : role}
-                      </span>
-                    ))}
+              <div className="user-avatar">
+                {user.avatar ? (
+                  <img src={user.avatar} alt={user.name} />
+                ) : (
+                  <div className="avatar-placeholder">
+                    {user.name?.charAt(0)?.toUpperCase() || user.username?.charAt(0)?.toUpperCase() || 'U'}
                   </div>
-                  <span className={`status ${user.status}`}>{user.status === 'active' ? 'Ativo' : 'Inativo'}</span>
-                  <span className="registered">
-                    {user.registered && !isNaN(new Date(user.registered).getTime()) 
-                      ? new Date(user.registered).toLocaleDateString('pt-BR')
-                      : 'Data não disponível'
-                    }
-                  </span>
+                )}
+              </div>
+              <div className="user-details">
+                <h4>{user.name}</h4>
+                <span className="username">@{user.username}</span>
+                <br/>
+                <span className="email">{user.email}</span>
+                <div className="user-roles">
+                  {user.roles?.map(role => (
+                    <span key={role} className={`role-badge role-${role}`}>
+                      {role === 'administrator' && <Crown size={12} />}
+                      {role === 'editor' && <Shield size={12} />}
+                      {role === 'author' && <PenTool size={12} />}
+                      {role === 'subscriber' && <User size={12} />}
+                      {role === 'administrator' ? 'Admin' :
+                       role === 'editor' ? 'Editor' :
+                       role === 'author' ? 'Autor' :
+                       role === 'subscriber' ? 'Assinante' : role}
+                    </span>
+                  ))}
                 </div>
+                <span className={`status ${user.status}`}>{user.status === 'active' ? 'Ativo' : 'Inativo'}</span>
+                <br/>
+                <span className="registered">
+                  {user.registered && !isNaN(new Date(user.registered).getTime()) 
+                    ? new Date(user.registered).toLocaleDateString('pt-BR')
+                    : 'Data não disponível'
+                  }
+                </span>
               </div>
               <div className="item-actions">
                 {canManageUsers() && (

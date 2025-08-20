@@ -411,13 +411,15 @@
 .content-item {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding: 2rem 1.5rem;
+  align-items: flex-start;
+  padding: 2.5rem 2rem;
   border: 2px solid rgba(12, 0, 76, 0.1);
   border-radius: 20px;
-  background: rgba(245, 245, 245, 0.85);
+  background: rgba(255, 255, 255, 0.9);
   box-shadow: 0 4px 24px rgba(12, 0, 76, 0.07);
   transition: all 0.3s;
+  margin-bottom: 1rem;
+  gap: 2rem;
 }
 .content-item:hover {
   border-color: var(--primary-color);
@@ -428,6 +430,9 @@
 
 .item-info {
   flex: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: 1.25rem;
 }
 
 .item-info h4 {
@@ -534,21 +539,23 @@
 
 .item-actions {
   display: flex;
-  gap: 0.7rem;
+  gap: 0.75rem;
+  align-items: flex-start;
+  flex-shrink: 0;
 }
 
 .action-btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
   border: none;
-  border-radius: 12px;
+  border-radius: 14px;
   cursor: pointer;
   transition: all 0.3s;
   font-size: 1.1rem;
-  box-shadow: 0 2px 8px rgba(12, 0, 76, 0.08);
+  box-shadow: 0 3px 12px rgba(12, 0, 76, 0.1);
 }
 .action-btn.view {
   background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(12, 0, 76, 0.1));
@@ -1131,12 +1138,14 @@
 
   /* Estilos para a aba de usuários */
   .user-avatar {
-    width: 48px;
-    height: 48px;
+    width: 56px;
+    height: 56px;
     border-radius: 50%;
     overflow: hidden;
-    margin-right: 1rem;
+    margin-right: 1.25rem;
     flex-shrink: 0;
+    border: 3px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 
   .user-avatar img {
@@ -1154,52 +1163,59 @@
     justify-content: center;
     color: white;
     font-weight: 700;
-    font-size: 1.2rem;
+    font-size: 1.4rem;
   }
 
   .user-details {
     flex: 1;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
   .user-details h4 {
-    margin: 0 0 0.25rem 0;
+    margin: 0;
     color: var(--text-primary);
-    font-size: 1.1rem;
-    font-weight: 600;
+    font-size: 1.2rem;
+    font-weight: 700;
+    line-height: 1.2;
   }
 
   .username {
     display: block;
     color: var(--text-secondary);
-    font-size: 0.9rem;
-    margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    margin: 0;
   }
 
   .email {
     display: block;
     color: var(--text-secondary);
     font-size: 0.9rem;
-    margin-bottom: 0.5rem;
+    margin: 0;
+    word-break: break-word;
   }
 
   .user-roles {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-bottom: 0.5rem;
+    margin: 0;
   }
 
   .role-badge {
     display: inline-flex;
     align-items: center;
     gap: 0.25rem;
-    padding: 0.25rem 0.5rem;
-    border-radius: 12px;
+    padding: 0.35rem 0.75rem;
+    border-radius: 16px;
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
   }
 
   .role-administrator {
@@ -1223,30 +1239,37 @@
   }
 
   .status {
-    display: inline-block;
-    padding: 0.25rem 0.5rem;
-    border-radius: 8px;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.35rem 0.75rem;
+    border-radius: 16px;
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.5px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   }
 
   .status.active {
-    background: rgba(16, 185, 129, 0.1);
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(16, 185, 129, 0.25));
     color: #059669;
+    border: 1px solid rgba(16, 185, 129, 0.3);
   }
 
   .status.inactive {
-    background: rgba(239, 68, 68, 0.1);
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.15), rgba(239, 68, 68, 0.25));
     color: #dc2626;
+    border: 1px solid rgba(239, 68, 68, 0.3);
   }
 
   .registered {
     display: block;
     color: var(--text-secondary);
     font-size: 0.8rem;
-    margin-top: 0.25rem;
+    font-weight: 500;
+    margin: 0;
+    opacity: 0.8;
   }
 
   .pagination-btn {
@@ -1262,23 +1285,28 @@
 
   /* Responsivo para usuários */
   .user-avatar {
-    width: 40px;
-    height: 40px;
-    margin-right: 0.75rem;
+    width: 48px;
+    height: 48px;
+    margin-right: 1rem;
   }
 
   .user-details h4 {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
 
   .username,
   .email {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 
   .role-badge {
     font-size: 0.7rem;
-    padding: 0.2rem 0.4rem;
+    padding: 0.3rem 0.6rem;
+  }
+
+  .status {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
   }
 
   .registered {
@@ -1319,17 +1347,19 @@
 
   /* Estilos para botão de senha */
   .action-btn.password {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.2));
     color: #f59e0b;
-    border-color: #f59e0b;
+    border: 1px solid rgba(245, 158, 11, 0.3);
   }
 
   .action-btn.password:hover {
-    background: rgba(245, 158, 11, 0.1);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.3));
     color: #d97706;
+    transform: scale(1.08);
   }
 
   .action-btn.password:active {
-    background: rgba(245, 158, 11, 0.2);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.3), rgba(245, 158, 11, 0.4));
   }
 
   /* Estilos para modal de senha */
