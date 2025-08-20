@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && cp public/.htaccess dist/.htaccess",
-    "build:hostinger": "vite build && cp public/.htaccess dist/.htaccess",
+    "build": "vite build && copy public\\.htaccess dist\\.htaccess",
+    "build:hostinger": "vite build && copy public\\.htaccess dist\\.htaccess",
     "lint": "eslint .",
     "preview": "vite preview"
   },
