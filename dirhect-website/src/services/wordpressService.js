@@ -636,6 +636,252 @@ export const wordpressService = {
     }
   },
 
+  // Buscar um post específico do banco de conhecimento por ID
+  async getKnowledgePost(id) {
+    try {
+      const response = await fetch(`${WORDPRESS_API_URL}/posts/${id}?_embed=true`)
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const post = await response.json()
+      
+      // Verificar se o post pertence à categoria banco-conhecimento
+      const knowledgeId = await this.getKnowledgeCategoryId()
+      if (knowledgeId && !post.categories.includes(knowledgeId)) {
+        throw new Error('Post não pertence ao banco de conhecimento')
+      }
+      
+      // Extrair campos específicos do conhecimento
+      const category = this.extractCustomField(post, 'knowledge_category') || 'Tutorial'
+      const featured = this.extractCustomField(post, 'knowledge_featured') === '1' || false
+      const views = parseInt(this.extractCustomField(post, 'knowledge_views')) || 0
+      const tags = this.extractCustomField(post, 'knowledge_tags')
+      const tagsArray = tags ? tags.split(',').map(tag => tag.trim()).filter(tag => tag) : []
+
+      return {
+        id: post.id,
+        title: post.title.rendered,
+        excerpt: this.stripHtml(post.excerpt.rendered) || this.stripHtml(post.content.rendered).substring(0, 200) + '...',
+        content: post.content.rendered,
+        date: post.date,
+        modified: post.modified,
+        author: this.getAuthorName(post),
+        featured_media: this.getFeaturedImage(post),
+        categories: this.getCategories(post),
+        categoryIds: this.getCategoryIds(post),
+        tags: this.getTags(post),
+        slug: post.slug,
+        link: post.link,
+        // Campos específicos do conhecimento
+        category: category,
+        featured: featured,
+        views: views,
+        tags: tagsArray
+      }
+    } catch (error) {
+      console.error('Erro ao buscar post do banco de conhecimento:', error)
+      throw error
+    }
+  },
+
+  // Buscar um post específico do banco de conhecimento por slug
+  async getKnowledgePostBySlug(slug) {
+    try {
+      const knowledgeId = await this.getKnowledgeCategoryId()
+      
+      if (!knowledgeId) {
+        throw new Error('Categoria banco-conhecimento não encontrada')
+      }
+
+      const searchParams = new URLSearchParams({
+        slug: slug,
+        categories: knowledgeId,
+        _embed: true
+      })
+
+      const response = await fetch(`${WORDPRESS_API_URL}/posts?${searchParams}`)
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const posts = await response.json()
+      
+      if (posts.length === 0) {
+        throw new Error('Post não encontrado')
+      }
+
+      const post = posts[0]
+      
+      // Extrair campos específicos do conhecimento
+      const category = this.extractCustomField(post, 'knowledge_category') || 'Tutorial'
+      const featured = this.extractCustomField(post, 'knowledge_featured') === '1' || false
+      const views = parseInt(this.extractCustomField(post, 'knowledge_views')) || 0
+      const tags = this.extractCustomField(post, 'knowledge_tags')
+      const tagsArray = tags ? tags.split(',').map(tag => tag.trim()).filter(tag => tag) : []
+
+      return {
+        id: post.id,
+        title: post.title.rendered,
+        excerpt: this.stripHtml(post.excerpt.rendered) || this.stripHtml(post.content.rendered).substring(0, 200) + '...',
+        content: post.content.rendered,
+        date: post.date,
+        modified: post.modified,
+        author: this.getAuthorName(post),
+        featured_media: this.getFeaturedImage(post),
+        categories: this.getCategories(post),
+        categoryIds: this.getCategoryIds(post),
+        tags: this.getTags(post),
+        slug: post.slug,
+        link: post.link,
+        // Campos específicos do conhecimento
+        category: category,
+        featured: featured,
+        views: views,
+        tags: tagsArray
+      }
+    } catch (error) {
+      console.error('Erro ao buscar post do banco de conhecimento por slug:', error)
+      throw error
+    }
+  },
+
+  // Buscar posts relacionados do banco de conhecimento
+  async getRelatedKnowledgePosts(postId, categoryIds, limit = 3) {
+    try {
+      if (!categoryIds || categoryIds.length === 0) {
+        return []
+      }
+
+      const knowledgeId = await this.getKnowledgeCategoryId()
+      if (!knowledgeId) {
+        return []
+      }
+
+      const searchParams = new URLSearchParams({
+        per_page: limit + 1, // +1 para excluir o post atual se aparecer
+        categories: knowledgeId, // Apenas posts do banco de conhecimento
+        exclude: postId,
+        _embed: true
+      })
+
+      const response = await fetch(`${WORDPRESS_API_URL}/posts?${searchParams}`)
+      
+      if (!response.ok) {
+        console.warn('Erro ao buscar posts relacionados, usando fallback')
+        return []
+      }
+
+      const posts = await response.json()
+      
+      // Transformar os dados e filtrar o post atual
+      const relatedPosts = posts
+        .filter(post => post.id !== postId)
+        .slice(0, limit)
+        .map(post => {
+          // Extrair campos específicos do conhecimento
+          const category = this.extractCustomField(post, 'knowledge_category') || 'Tutorial'
+          const featured = this.extractCustomField(post, 'knowledge_featured') === '1' || false
+          const views = parseInt(this.extractCustomField(post, 'knowledge_views')) || 0
+          const tags = this.extractCustomField(post, 'knowledge_tags')
+          const tagsArray = tags ? tags.split(',').map(tag => tag.trim()).filter(tag => tag) : []
+
+          return {
+            id: post.id,
+            title: post.title.rendered,
+            excerpt: this.stripHtml(post.excerpt.rendered) || this.stripHtml(post.content.rendered).substring(0, 200) + '...',
+            content: post.content.rendered,
+            date: post.date,
+            modified: post.modified,
+            author: this.getAuthorName(post),
+            featured_media: this.getFeaturedImage(post),
+            categories: this.getCategories(post),
+            categoryIds: this.getCategoryIds(post),
+            tags: this.getTags(post),
+            slug: post.slug,
+            link: post.link,
+            // Campos específicos do conhecimento
+            category: category,
+            featured: featured,
+            views: views,
+            tags: tagsArray
+          }
+        })
+
+      return relatedPosts
+    } catch (error) {
+      console.error('Erro ao buscar posts relacionados do banco de conhecimento:', error)
+      return []
+    }
+  },
+
+  // Buscar posts APENAS da categoria banco-conhecimento (para a página de conhecimento)
+  async getKnowledgePosts(params = {}) {
+    try {
+      // Buscar ID da categoria banco-conhecimento
+      const knowledgeId = await this.getKnowledgeCategoryId()
+      
+      if (!knowledgeId) {
+        console.warn('Categoria banco-conhecimento não encontrada')
+        return this.getFallbackKnowledgePosts()
+      }
+
+      const searchParams = new URLSearchParams({
+        per_page: params.per_page || 50,
+        page: params.page || 1,
+        categories: knowledgeId, // INCLUIR apenas posts da categoria banco-conhecimento
+        _embed: true,
+        orderby: 'date',
+        order: 'desc',
+        ...params
+      })
+
+      const response = await fetch(`${WORDPRESS_API_URL}/posts?${searchParams}`)
+      
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`)
+      }
+
+      const posts = await response.json()
+      
+      // Transformar os dados para o formato esperado pelo conhecimento
+      return posts.map(post => {
+        // Extrair campos específicos do conhecimento
+        const category = this.extractCustomField(post, 'knowledge_category') || 'Tutorial'
+        const featured = this.extractCustomField(post, 'knowledge_featured') === '1' || false
+        const views = parseInt(this.extractCustomField(post, 'knowledge_views')) || 0
+        const tags = this.extractCustomField(post, 'knowledge_tags')
+        const tagsArray = tags ? tags.split(',').map(tag => tag.trim()).filter(tag => tag) : []
+
+        return {
+          id: post.id,
+          title: post.title.rendered,
+          excerpt: this.stripHtml(post.excerpt.rendered) || this.stripHtml(post.content.rendered).substring(0, 200) + '...',
+          content: post.content.rendered,
+          date: post.date,
+          modified: post.modified,
+          author: this.getAuthorName(post),
+          featured_media: this.getFeaturedImage(post),
+          categories: this.getCategories(post),
+          categoryIds: this.getCategoryIds(post),
+          tags: this.getTags(post),
+          slug: post.slug,
+          link: post.link,
+          // Campos específicos do conhecimento
+          category: category,
+          featured: featured,
+          views: views,
+          tags: tagsArray
+        }
+      })
+    } catch (error) {
+      console.error('Erro ao buscar posts do banco de conhecimento:', error)
+      return this.getFallbackKnowledgePosts()
+    }
+  },
+
   // Extrair custom fields do WordPress
   extractCustomField(post, fieldName) {
     // Tentar extrair de meta fields
@@ -757,6 +1003,77 @@ export const wordpressService = {
           "Compartilhamento de documentos",
           "Chatbot integrado"
         ]
+      }
+    ]
+  },
+
+  // Posts de banco de conhecimento como fallback
+  getFallbackKnowledgePosts() {
+    return [
+      {
+        id: 1,
+        title: "Como configurar a Admissão Digital",
+        excerpt: "Guia completo para configurar e personalizar o processo de admissão digital na plataforma Dirhect, incluindo templates e fluxos de trabalho.",
+        content: "Este guia detalhado mostra como configurar a funcionalidade de Admissão Digital na plataforma Dirhect. Você aprenderá a criar templates personalizados, configurar fluxos de aprovação e integrar com sistemas externos. O processo inclui configuração de documentos obrigatórios, validação automática e notificações personalizadas.",
+        date: "2024-12-15T10:00:00",
+        category: "Tutorial",
+        featured: true,
+        views: 1250,
+        tags: ["admissão", "configuração", "tutorial", "onboarding"],
+        slug: "como-configurar-admissao-digital",
+        author: "Equipe Dirhect"
+      },
+      {
+        id: 2,
+        title: "Melhores práticas para gestão de benefícios",
+        excerpt: "Descubra as estratégias mais eficientes para gerenciar benefícios corporativos e aumentar a satisfação dos colaboradores.",
+        content: "Este artigo apresenta as melhores práticas para gestão de benefícios corporativos, incluindo estratégias de comunicação, análise de custos-benefícios e implementação de programas flexíveis. Abordamos temas como saúde, alimentação, transporte e benefícios educacionais.",
+        date: "2024-12-10T14:30:00",
+        category: "Melhores Práticas",
+        featured: false,
+        views: 890,
+        tags: ["benefícios", "gestão", "colaboradores", "satisfação"],
+        slug: "melhores-praticas-gestao-beneficios",
+        author: "Ana Costa"
+      },
+      {
+        id: 3,
+        title: "FAQ: Problemas comuns na integração de sistemas",
+        excerpt: "Respostas para as dúvidas mais frequentes sobre integração de sistemas ERP e RH com a plataforma Dirhect.",
+        content: "Este FAQ aborda os problemas mais comuns encontrados durante a integração de sistemas ERP e RH com a plataforma Dirhect. Inclui soluções para problemas de sincronização, mapeamento de dados e configuração de APIs.",
+        date: "2024-12-05T09:15:00",
+        category: "FAQ",
+        featured: false,
+        views: 567,
+        tags: ["integração", "ERP", "API", "sincronização"],
+        slug: "faq-problemas-integracao-sistemas",
+        author: "Carlos Ferreira"
+      },
+      {
+        id: 4,
+        title: "Dicas para otimizar o Portal RH",
+        excerpt: "Dicas práticas para melhorar a experiência dos usuários no Portal RH e aumentar o engajamento dos colaboradores.",
+        content: "Este artigo oferece dicas práticas para otimizar o Portal RH, incluindo personalização da interface, configuração de notificações, criação de conteúdo relevante e estratégias para aumentar o engajamento dos colaboradores.",
+        date: "2024-12-01T16:20:00",
+        category: "Dicas",
+        featured: true,
+        views: 1100,
+        tags: ["portal", "UX", "engajamento", "colaboradores"],
+        slug: "dicas-otimizar-portal-rh",
+        author: "Equipe Dirhect"
+      },
+      {
+        id: 5,
+        title: "Troubleshooting: Erros de autenticação",
+        excerpt: "Guia para resolver problemas comuns de autenticação e login na plataforma Dirhect.",
+        content: "Este guia de troubleshooting aborda os problemas mais comuns de autenticação na plataforma Dirhect, incluindo reset de senhas, problemas de SSO, bloqueios de conta e configurações de segurança.",
+        date: "2024-11-28T11:45:00",
+        category: "Troubleshooting",
+        featured: false,
+        views: 445,
+        tags: ["autenticação", "login", "segurança", "SSO"],
+        slug: "troubleshooting-erros-autenticacao",
+        author: "Ana Costa"
       }
     ]
   },

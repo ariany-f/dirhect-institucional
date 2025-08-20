@@ -13,6 +13,8 @@ import Admin from './pages/Admin'
 import CriarPost from './pages/CriarPost'
 import CriarRoadmap from './pages/CriarRoadmap'
 import CriarConhecimento from './pages/CriarConhecimento'
+import Conhecimento from './pages/Conhecimento'
+import ConhecimentoDetalhe from './pages/ConhecimentoDetalhe'
 import './App.css'
 import Hero from './components/Hero'
 import WhyChoose from './components/WhyChoose'
@@ -70,6 +72,8 @@ function App() {
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:id" element={<BlogPost />} />
           <Route path="/roadmap" element={<Roadmap />} />
+          <Route path="/conhecimento" element={<Conhecimento />} />
+          <Route path="/conhecimento/:id" element={<ConhecimentoDetalhe />} />
           <Route path="/demo" element={<Demo />} />
           <Route path="/docs" element={<TechnicalDocumentation />} />
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />

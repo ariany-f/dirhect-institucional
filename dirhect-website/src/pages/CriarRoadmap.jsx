@@ -12,7 +12,10 @@ import {
   X,
   Target,
   Clock,
-  Star
+  Star,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
@@ -26,6 +29,7 @@ const CriarRoadmap = () => {
   const [saving, setSaving] = useState(false)
   const [notification, setNotification] = useState(null)
   const [features, setFeatures] = useState([''])
+  const [fontSize, setFontSize] = useState(14) // Tamanho da fonte em pixels
 
   const [formData, setFormData] = useState({
     title: '',
@@ -68,6 +72,19 @@ const CriarRoadmap = () => {
 
   const updateFeature = (index, value) => {
     setFeatures(prev => prev.map((feature, i) => i === index ? value : feature))
+  }
+
+  // Funções para controlar o tamanho da fonte
+  const increaseFontSize = () => {
+    setFontSize(prev => Math.min(prev + 2, 24)) // Máximo 24px
+  }
+
+  const decreaseFontSize = () => {
+    setFontSize(prev => Math.max(prev - 2, 10)) // Mínimo 10px
+  }
+
+  const resetFontSize = () => {
+    setFontSize(14) // Voltar ao tamanho padrão
   }
 
   const handleSave = async (status = 'planned') => {
@@ -168,6 +185,41 @@ const CriarRoadmap = () => {
             {/* Conteúdo Detalhado */}
             <div className="form-group">
               <label htmlFor="content">Conteúdo Detalhado</label>
+              
+              {/* Controles de Fonte */}
+              <div className="font-controls">
+                <div className="font-controls-left">
+                  <span className="font-size-label">Tamanho da fonte:</span>
+                  <span className="font-size-value">{fontSize}px</span>
+                </div>
+                <div className="font-controls-right">
+                  <button
+                    type="button"
+                    onClick={decreaseFontSize}
+                    className="font-control-btn"
+                    title="Diminuir fonte"
+                  >
+                    <ZoomOut size={16} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={resetFontSize}
+                    className="font-control-btn"
+                    title="Tamanho padrão"
+                  >
+                    <RotateCcw size={16} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={increaseFontSize}
+                    className="font-control-btn"
+                    title="Aumentar fonte"
+                  >
+                    <ZoomIn size={16} />
+                  </button>
+                </div>
+              </div>
+              
               <textarea
                 id="content"
                 value={formData.content}
@@ -175,6 +227,7 @@ const CriarRoadmap = () => {
                 placeholder="Digite detalhes técnicos, benefícios, etc..."
                 rows={8}
                 className="content-input"
+                style={{ fontSize: `${fontSize}px` }}
               />
               <small className="help-text">
                 Informações técnicas, benefícios para o usuário, requisitos, etc.

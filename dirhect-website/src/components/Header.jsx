@@ -195,6 +195,11 @@ const Header = () => {
               </Link>
             </li>
             <li>
+              <Link to="/conhecimento" onClick={() => setIsMobileMenuOpen(false)}>
+                Conhecimento
+              </Link>
+            </li>
+            <li>
               <a 
                 href="/#contato" 
                 onClick={(e) => {

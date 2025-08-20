@@ -11,7 +11,11 @@ import {
   Plus,
   X,
   Search,
-  TrendingUp
+  TrendingUp,
+  Type,
+  ZoomIn,
+  ZoomOut,
+  RotateCcw
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import Header from '../components/Header'
@@ -26,6 +30,7 @@ const CriarConhecimento = () => {
   const [notification, setNotification] = useState(null)
   const [tags, setTags] = useState([])
   const [currentTag, setCurrentTag] = useState('')
+  const [fontSize, setFontSize] = useState(14) // Tamanho da fonte em pixels
 
   const [formData, setFormData] = useState({
     title: '',
@@ -71,6 +76,19 @@ const CriarConhecimento = () => {
       e.preventDefault()
       addTag()
     }
+  }
+
+  // Funções para controlar o tamanho da fonte
+  const increaseFontSize = () => {
+    setFontSize(prev => Math.min(prev + 2, 24)) // Máximo 24px
+  }
+
+  const decreaseFontSize = () => {
+    setFontSize(prev => Math.max(prev - 2, 10)) // Mínimo 10px
+  }
+
+  const resetFontSize = () => {
+    setFontSize(14) // Voltar ao tamanho padrão
   }
 
   const handleSave = async (status = 'draft') => {
@@ -174,6 +192,41 @@ const CriarConhecimento = () => {
             {/* Conteúdo */}
             <div className="form-group">
               <label htmlFor="content">Conteúdo *</label>
+              
+              {/* Controles de Fonte */}
+              <div className="font-controls">
+                <div className="font-controls-left">
+                  <span className="font-size-label">Tamanho da fonte:</span>
+                  <span className="font-size-value">{fontSize}px</span>
+                </div>
+                <div className="font-controls-right">
+                  <button
+                    type="button"
+                    onClick={decreaseFontSize}
+                    className="font-control-btn"
+                    title="Diminuir fonte"
+                  >
+                    <ZoomOut size={16} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={resetFontSize}
+                    className="font-control-btn"
+                    title="Tamanho padrão"
+                  >
+                    <RotateCcw size={16} />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={increaseFontSize}
+                    className="font-control-btn"
+                    title="Aumentar fonte"
+                  >
+                    <ZoomIn size={16} />
+                  </button>
+                </div>
+              </div>
+              
               <textarea
                 id="content"
                 value={formData.content}
@@ -181,6 +234,7 @@ const CriarConhecimento = () => {
                 placeholder="Digite o conteúdo do artigo..."
                 rows={15}
                 className="content-input"
+                style={{ fontSize: `${fontSize}px` }}
               />
               <small className="help-text">
                 Dica: Use quebras de linha para separar parágrafos. O texto será formatado automaticamente.
