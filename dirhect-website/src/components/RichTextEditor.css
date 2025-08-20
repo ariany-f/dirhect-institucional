@@ -5,6 +5,7 @@
   box-shadow: 0 4px 24px rgba(12, 0, 76, 0.07);
   margin-bottom: 1.5rem;
   width: 100%;
+  position: relative;
 }
 
 .rte-toolbar {
@@ -15,6 +16,138 @@
   border-bottom: 1px solid #e0e7ff;
   background: linear-gradient(90deg, #f5f5fa 80%, #e5e5f7 100%);
   border-radius: 12px 12px 0 0;
+  align-items: center;
+}
+
+/* Controles de Fonte */
+.rte-font-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 6px;
+  border: 1px solid #e0e7ff;
+  margin-right: 0.5rem;
+}
+
+.rte-font-size-label {
+  font-size: 0.8rem;
+  color: #5d0b62;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.rte-font-size-value {
+  font-size: 0.8rem;
+  color: #0c004c;
+  font-weight: 700;
+  background: #f3e8ff;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  min-width: 35px;
+  text-align: center;
+  border: 1px solid #e0e7ff;
+}
+
+.rte-font-control-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border: 1px solid #e0e7ff;
+  background: white;
+  color: #5d0b62;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.7rem;
+  position: relative;
+  overflow: visible;
+}
+
+.rte-font-control-btn * {
+  color: #5d0b62 !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2 !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Estilos específicos para ícones Lucide */
+.rte-font-control-btn svg[data-lucide] {
+  color: #5d0b62 !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2 !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Garantir que todos os SVGs sejam visíveis */
+.rte-font-control-btn svg,
+.rte-font-control-btn svg * {
+  color: #5d0b62 !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2 !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  max-width: none !important;
+  max-height: none !important;
+}
+
+.rte-font-control-btn svg {
+  color: #5d0b62 !important;
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 2 !important;
+  width: 32px !important;
+  height: 32px !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+.rte-font-control-btn:hover {
+  background: #f3e8ff;
+  color: #0c004c;
+  border-color: #c7d2fe;
+  transform: translateY(-1px);
+}
+
+.rte-font-control-btn:hover svg,
+.rte-font-control-btn:hover svg * {
+  color: #0c004c !important;
+}
+
+.rte-font-control-btn:active {
+  transform: translateY(0);
+  background: #e0e7ff;
+}
+
+.rte-font-control-btn:active svg,
+.rte-font-control-btn:active svg * {
+  color: #0c004c !important;
+}
+
+/* Separador */
+.rte-toolbar-separator {
+  width: 1px;
+  height: 24px;
+  background: #e0e7ff;
+  margin: 0 0.5rem;
 }
 
 .rte-toolbar button {
@@ -23,7 +156,7 @@
   color: #5d0b62;
   font-size: 1rem;
   font-weight: 600;
-  padding: 0.4rem 0.7rem;
+  padding: 0.1rem;
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s, color 0.2s;
@@ -48,6 +181,7 @@
   border: none;
   width: 100%;
   box-sizing: border-box;
+  transition: font-size 0.2s ease;
 }
 
 .rte-editor:focus {
@@ -82,6 +216,34 @@
     font-size: 0.9rem;
     padding: 0.3rem 0.5rem;
   }
+  
+  /* Controles de fonte responsivos */
+  .rte-font-controls {
+    padding: 0.2rem 0.3rem;
+    gap: 0.3rem;
+    margin-right: 0.3rem;
+  }
+  
+  .rte-font-size-label {
+    font-size: 0.75rem;
+  }
+  
+  .rte-font-size-value {
+    font-size: 0.75rem;
+    min-width: 30px;
+    padding: 0.15rem 0.3rem;
+  }
+  
+  .rte-font-control-btn {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .rte-toolbar-separator {
+    height: 20px;
+    margin: 0 0.3rem;
+  }
+  
   .rte-editor {
     border-radius: 0 0 8px 8px;
     padding: 0.7rem 0.5rem;
@@ -98,10 +260,44 @@
   .rte-toolbar {
     border-radius: 8px 8px 0 0;
     padding: 0.5rem 0.5rem 0.3rem 0.5rem;
+    flex-direction: column;
+    align-items: stretch;
   }
+  
+  /* Controles de fonte em coluna para telas pequenas */
+  .rte-font-controls {
+    justify-content: center;
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .rte-toolbar-separator {
+    display: none;
+  }
+  
   .rte-editor {
     border-radius: 0 0 8px 8px;
     padding: 0.7rem 0.5rem;
     font-size: 1rem;
   }
+}
+
+/* Notificação */
+.rte-notification {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  z-index: 1000;
+  animation: fadeInOut 2s ease-in-out;
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0; }
+  20%, 80% { opacity: 1; }
 } 
