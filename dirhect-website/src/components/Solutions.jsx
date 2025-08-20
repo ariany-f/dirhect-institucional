@@ -34,7 +34,7 @@ const Solutions = () => {
         "Experiência do candidato - Facilidade no envio das informações",
         "Segurança jurídica e LGPD - coleta e armazenamento seguros dos dados"
       ],
-      image: "/images/pilares/admissao-digital.webp"
+      image: "/images/pilares/admissao-digital.jpg"
     },
     {
       icon: <Users size={32} />,
@@ -47,7 +47,7 @@ const Solutions = () => {
         "Atualização cadastral online - sem papéis, sem retrabalho",
         "Menos chamados ao RH - menos e-mails e atendimentos manuais"
       ],
-      image: "/images/pilares/portal-rh.webp"
+      image: "/images/pilares/portal-rh.jpg"
     },
     {
       icon: <Activity size={32} />,
@@ -60,7 +60,7 @@ const Solutions = () => {
         "Delegação eficiente - RH, cliente e fornecedor sabem o que fazer e quando",
         "Alertas e lembretes - evita atrasos e esquecimentos"
       ],
-      image: "/images/pilares/gestao-tarefas.webp"
+      image: "/images/pilares/gestao-tarefas.png"
     },
     {
       icon: <Database size={32} />,
@@ -73,7 +73,7 @@ const Solutions = () => {
         "Atualização com sistemas de RH e operadoras",
         "Controle de acesso e rastreabilidade - conforme a LGPD"
       ],
-      image: "/images/pilares/integracao.webp"
+      image: "/images/pilares/integracao.png"
     },
     {
       icon: <Shield size={32} />,
@@ -86,7 +86,7 @@ const Solutions = () => {
         "Integração inteligente - com sistemas de RH e operadoras, via API ou arquivos",
         "Soluções pensadas para facilitar sua operação e valorizar sua equipe"
       ],
-      image: "/images/pilares/gestao-beneficios.webp"
+      image: "/images/pilares/gestao-beneficios.jpg"
     }
   ]
 
