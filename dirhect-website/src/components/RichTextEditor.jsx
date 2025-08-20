@@ -3,6 +3,7 @@ import StarterKit from '@tiptap/starter-kit'
 import Link from '@tiptap/extension-link'
 import Image from '@tiptap/extension-image'
 import TextAlign from '@tiptap/extension-text-align'
+import { TextStyle } from '@tiptap/extension-text-style'
 import { ZoomIn, ZoomOut, RotateCcw } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { Extension } from '@tiptap/core'
@@ -48,49 +49,25 @@ const FontSizeExtension = Extension.create({
 
 
 
-const MenuBar = ({ editor, fontSize, onFontSizeChange }) => {
+const MenuBar = ({ editor, fontSize, onFontSizeChange, onFontSizeAction }) => {
   if (!editor) return null
 
-  // Funções para controlar o tamanho da fonte apenas no texto selecionado
-  const applyFontSizeToSelection = (newSize) => {
-    if (!editor) {
-      showFontNotification('Editor não está pronto')
-      return
-    }
-
-    const { state } = editor.view
-    const { selection } = state
-    
-    // Verificar se há texto selecionado
-    if (selection.empty) {
-      showFontNotification('Selecione um texto para alterar o tamanho da fonte')
-      return
-    }
-
-    // Aplicar o tamanho da fonte usando a extensão customizada
-    editor.chain()
-      .focus()
-      .setFontSize(`${newSize}px`)
-      .run()
-  }
-
   const increaseFontSize = () => {
-    const currentSize = getCurrentFontSize()
-    const newSize = Math.min(currentSize + 2, 24)
-    onFontSizeChange(newSize)
-    applyFontSizeToSelection(newSize)
+    // Incremento maior para fontes grandes
+    const increment = fontSize >= 20 ? 4 : 2
+    const newSize = Math.min(fontSize + increment, 48)
+    onFontSizeAction('increase', newSize)
   }
 
   const decreaseFontSize = () => {
-    const currentSize = getCurrentFontSize()
-    const newSize = Math.max(currentSize - 2, 10)
-    onFontSizeChange(newSize)
-    applyFontSizeToSelection(newSize)
+    // Decremento maior para fontes grandes
+    const decrement = fontSize >= 20 ? 4 : 2
+    const newSize = Math.max(fontSize - decrement, 10)
+    onFontSizeAction('decrease', newSize)
   }
 
   const resetFontSize = () => {
-    onFontSizeChange(14)
-    applyFontSizeToSelection(14)
+    onFontSizeAction('reset', 14)
   }
 
   return (
@@ -160,6 +137,7 @@ export default function RichTextEditor({ value, onChange, disabled }) {
       Link,
       Image,
       TextAlign.configure({ types: ['heading', 'paragraph'] }),
+      TextStyle,
       FontSizeExtension
     ],
     content: value || '',
@@ -174,26 +152,44 @@ export default function RichTextEditor({ value, onChange, disabled }) {
     editor.commands.setContent(value || '', false)
   }
 
-  // Listener para atualizar o indicador de tamanho da fonte quando a seleção mudar
-  useEffect(() => {
-    if (editor) {
-      const updateFontSizeIndicator = () => {
-        const currentSize = getCurrentFontSize()
-        setFontSize(currentSize)
-      }
 
-      editor.on('selectionUpdate', updateFontSizeIndicator)
-      
-      return () => {
-        editor.off('selectionUpdate', updateFontSizeIndicator)
-      }
-    }
-  }, [editor])
 
 
 
   // Função para atualizar o tamanho da fonte (apenas para o indicador)
   const handleFontSizeChange = (newSize) => {
+    setFontSize(newSize)
+  }
+
+  // Função para lidar com ações de tamanho de fonte
+  const handleFontSizeAction = (action, newSize) => {
+    if (!editor) {
+      showFontNotification('Editor não está pronto')
+      return
+    }
+
+    const { state } = editor.view
+    const { selection } = state
+    
+    // Verificar se há texto selecionado
+    if (selection.empty) {
+      showFontNotification('Selecione um texto para alterar o tamanho da fonte')
+      return
+    }
+
+    // Aplicar o tamanho da fonte usando uma abordagem mais direta
+    const { from, to } = selection
+    
+    // Criar uma transação para aplicar o estilo
+    const tr = state.tr.addMark(
+      from,
+      to,
+      state.schema.marks.textStyle.create({ fontSize: `${newSize}px` })
+    )
+    
+    editor.view.dispatch(tr)
+
+    // Atualizar o indicador
     setFontSize(newSize)
   }
 
@@ -203,26 +199,7 @@ export default function RichTextEditor({ value, onChange, disabled }) {
     setTimeout(() => setShowNotification(false), 2000)
   }
 
-  // Função para detectar o tamanho da fonte atual do texto selecionado
-  const getCurrentFontSize = () => {
-    if (!editor) return 14
 
-    const { state } = editor.view
-    const { selection } = state
-    
-    if (selection.empty) return fontSize
-
-    // Tentar obter o tamanho da fonte do texto selecionado
-    const marks = state.storedMarks || state.selection.$from.marks()
-    const fontSizeMark = marks.find(mark => mark.type.name === 'textStyle' && mark.attrs.fontSize)
-    
-    if (fontSizeMark) {
-      const size = parseInt(fontSizeMark.attrs.fontSize)
-      return isNaN(size) ? 14 : size
-    }
-    
-    return fontSize
-  }
 
   return (
     <div className="rte-container">
@@ -230,6 +207,7 @@ export default function RichTextEditor({ value, onChange, disabled }) {
         editor={editor} 
         fontSize={fontSize}
         onFontSizeChange={handleFontSizeChange}
+        onFontSizeAction={handleFontSizeAction}
       />
       <EditorContent 
         editor={editor} 
