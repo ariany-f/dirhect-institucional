@@ -225,7 +225,7 @@ const TermosUso = () => {
               </p>
               <div className="contact-info">
                 <p><strong>E-mail:</strong> legal@dirhect.com</p>
-                <p><strong>Telefone:</strong> (11) 9999-9999</p>
+                <p><strong>Telefone:</strong> (11) 96898-9211</p>
                 <p><strong>Endereço:</strong> São Paulo, SP</p>
               </div>
             </section>

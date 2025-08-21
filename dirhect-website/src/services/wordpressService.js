@@ -1,5 +1,5 @@
 // Usar import.meta.env para Vite em vez de process.env
-const WORDPRESS_API_URL = import.meta.env.VITE_WORDPRESS_API_URL || 'https://dirhect-institucional.thunderbold.com.br/wp-json/wp/v2'
+const WORDPRESS_API_URL = import.meta.env.VITE_WORDPRESS_API_URL || 'https://wp-api.dirhect.com.br/wp-json/wp/v2'
 
 // Cache para o ID da categoria roadmap
 let roadmapCategoryId = null

@@ -452,7 +452,7 @@ const Demo = () => {
                 <div className="contact-methods">
                   <div className="contact-method">
                     <Phone size={20} />
-                    <span>(11) 9999-9999</span>
+                    <span>(11) 96898-9211</span>
                   </div>
                   <div className="contact-method">
                     <Mail size={20} />

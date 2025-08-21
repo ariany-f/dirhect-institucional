@@ -51,11 +51,11 @@ const Footer = () => {
             <div className="contact-info">
               <div className="contact-item">
                 <Mail size={16} />
-                <span>contato@dirhect.com</span>
+                <span>contato@dirhect.com.br</span>
               </div>
               <div className="contact-item">
                 <Phone size={16} />
-                <span>(11) 9999-9999</span>
+                <span>(11) 96898-9211</span>
               </div>
             </div>
           </div>

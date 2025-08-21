@@ -146,7 +146,7 @@ Este projeto está sob a licença MIT. Veja o arquivo `LICENSE` para mais detalh
 ## 📞 Suporte
 
 Para suporte e dúvidas:
-- Email: contato@dirhect.com
+- Email: contato@dirhect.com.br
 - Website: [https://dirhect.com](https://dirhect.com)
 
 ---
