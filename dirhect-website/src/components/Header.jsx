@@ -194,6 +194,11 @@ const Header = () => {
                     Gestão de Tarefas
                   </Link>
                 </li>
+                <li>
+                  <Link to="/portal-rh" onClick={() => setIsMobileMenuOpen(false)}>
+                    Portal RH
+                  </Link>
+                </li>
               </ul>
             </li>
             <li>

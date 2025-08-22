@@ -19,6 +19,7 @@ import IndiqueGanhe from './pages/IndiqueGanhe'
 import AdmissaoDigital from './pages/AdmissaoDigital'
 import GestaoBeneficios from './pages/GestaoBeneficios'
 import GestaoTarefas from './pages/GestaoTarefas'
+import PortalRH from './pages/PortalRH'
 import './App.css'
 import Hero from './components/Hero'
 import WhyChoose from './components/WhyChoose'
@@ -83,6 +84,7 @@ function App() {
           <Route path="/admissao-digital" element={<AdmissaoDigital />} />
         <Route path="/gestao-beneficios" element={<GestaoBeneficios />} />
         <Route path="/gestao-tarefas" element={<GestaoTarefas />} />
+        <Route path="/portal-rh" element={<PortalRH />} />
           <Route path="/docs" element={<TechnicalDocumentation />} />
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/termos-uso" element={<TermosUso />} />

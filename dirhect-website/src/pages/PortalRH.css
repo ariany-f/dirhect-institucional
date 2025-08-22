@@ -1,21 +1,21 @@
-/* Gestão de Tarefas - Design Moderno e Profissional */
+/* Portal RH - Design Moderno e Profissional */
 
 /* Variáveis de cores */
 :root {
-  --tarefas-primary-color: #f59e0b;
-  --tarefas-secondary-color: #d97706;
-  --tarefas-accent-color: #fbbf24;
-  --tarefas-text-dark: #1e293b;
-  --tarefas-text-light: #64748b;
-  --tarefas-text-muted: #94a3b8;
-  --tarefas-bg-white: #ffffff;
-  --tarefas-bg-light: #f8fafc;
-  --tarefas-bg-gray: #f1f5f9;
-  --tarefas-border-color: #e2e8f0;
-  --tarefas-shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
-  --tarefas-shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.12);
-  --tarefas-border-radius: 12px;
-  --tarefas-border-radius-lg: 16px;
+  --portal-primary-color: #f59e0b;
+  --portal-secondary-color: #d97706;
+  --portal-accent-color: #fbbf24;
+  --portal-text-dark: #1e293b;
+  --portal-text-light: #64748b;
+  --portal-text-muted: #94a3b8;
+  --portal-bg-white: #ffffff;
+  --portal-bg-light: #f8fafc;
+  --portal-bg-gray: #f1f5f9;
+  --portal-border-color: #e2e8f0;
+  --portal-shadow-soft: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --portal-shadow-medium: 0 4px 16px rgba(0, 0, 0, 0.12);
+  --portal-border-radius: 12px;
+  --portal-border-radius-lg: 16px;
 }
 
 /* Container principal */
@@ -26,8 +26,8 @@
 }
 
 /* Hero Section */
-.tarefas-hero {
-  color: var(--tarefas-text-dark);
+.portal-hero {
+  color: var(--portal-text-dark);
   padding: 0;
   position: relative;
   overflow: hidden;
@@ -37,7 +37,7 @@
   align-items: center;
 }
 
-.tarefas-hero-background {
+.portal-hero-background {
   position: absolute;
   top: 0;
   left: 0;
@@ -46,30 +46,19 @@
   z-index: 1;
 }
 
-.tarefas-hero-background::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.4);
-  z-index: 2;
-}
-
-.tarefas-hero-bg-image {
+.portal-hero-bg-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
 }
 
-.tarefas-professional-badge {
+.portal-professional-badge {
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   background: rgba(255, 255, 255, 0.95);
-  color: var(--tarefas-text-dark);
+  color: var(--portal-text-dark);
   padding: 0.4rem 0.8rem;
   border-radius: 8px;
   font-size: 0.75rem;
@@ -79,36 +68,36 @@
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
   position: relative;
-  z-index: 4;
+  z-index: 3;
 }
 
-.tarefas-hero-content {
+.portal-hero-content {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   position: relative;
-  z-index: 3;
+  z-index: 2;
   width: 100%;
   padding-left: 0;
 }
 
-.tarefas-hero-text {
+.portal-hero-text {
   width: 70%;
   margin-left: 0;
 }
 
-.tarefas-hero-text h1 {
+.portal-hero-text h1 {
   font-size: clamp(1.8rem, 3.5vw, 2.2rem);
   font-weight: 800;
   line-height: 1.2;
   margin-bottom: 1.2rem;
   color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   position: relative;
-  z-index: 4;
+  z-index: 3;
 }
 
-.tarefas-hero-text .tarefas-gradient-text {
+.portal-hero-text .portal-gradient-text {
   background: linear-gradient(135deg, #f59e0b, #d97706);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -116,7 +105,7 @@
   font-weight: 700;
 }
 
-.tarefas-hero-text .tarefas-highlight {
+.portal-hero-text .portal-highlight {
   background: linear-gradient(135deg, #f59e0b, #d97706);
   color: white;
   padding: 0.5rem 1rem;
@@ -127,7 +116,7 @@
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.tarefas-hero-text p {
+.portal-hero-text p {
   font-size: 1rem;
   line-height: 1.4;
   margin-bottom: 1.8rem;
@@ -135,11 +124,11 @@
   font-weight: 500;
   opacity: 0.95;
   position: relative;
-  z-index: 4;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  z-index: 3;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
 }
 
-.tarefas-hero-stats {
+.portal-hero-stats {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 1rem;
@@ -147,11 +136,11 @@
   margin-bottom: 1.5rem;
   max-width: 450px;
   position: relative;
-  z-index: 4;
+  z-index: 3;
   width: 100%;
 }
 
-.tarefas-stat-item {
+.portal-stat-item {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -168,7 +157,7 @@
   overflow: hidden;
 }
 
-.tarefas-stat-item::before {
+.portal-stat-item::before {
   content: '';
   position: absolute;
   top: 0;
@@ -180,38 +169,38 @@
   transition: transform 0.4s ease;
 }
 
-.tarefas-stat-item:hover::before {
+.portal-stat-item:hover::before {
   transform: scaleX(1);
 }
 
-.tarefas-stat-item:hover {
+.portal-stat-item:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
-.tarefas-stat-item svg {
+.portal-stat-item svg {
   color: #f59e0b;
   flex-shrink: 0;
   width: 28px;
   height: 28px;
 }
 
-.tarefas-stat-item strong {
+.portal-stat-item strong {
   display: block;
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--tarefas-text-dark);
+  color: var(--portal-text-dark);
   line-height: 1.2;
 }
 
-.tarefas-stat-item span {
+.portal-stat-item span {
   font-size: 0.8rem;
-  color: var(--tarefas-text-dark);
+  color: var(--portal-text-dark);
   font-weight: 500;
   line-height: 1.3;
 }
 
-.tarefas-cta-button {
+.portal-cta-button {
   background: linear-gradient(135deg, #f59e0b, #d97706);
   color: white;
   border: none;
@@ -228,10 +217,10 @@
   gap: 0.6rem;
   position: relative;
   overflow: hidden;
-  z-index: 4;
+  z-index: 3;
 }
 
-.tarefas-cta-button::before {
+.portal-cta-button::before {
   content: '';
   position: absolute;
   top: 0;
@@ -242,38 +231,38 @@
   transition: left 0.6s ease;
 }
 
-.tarefas-cta-button:hover::before {
+.portal-cta-button:hover::before {
   left: 100%;
 }
 
-.tarefas-cta-button:hover {
+.portal-cta-button:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(245, 158, 11, 0.3);
   background: linear-gradient(135deg, #d97706, #f59e0b);
 }
 
 /* Benefícios */
-.tarefas-beneficios {
+.portal-beneficios {
   padding: 80px 0;
-  background: var(--tarefas-bg-white);
+  background: var(--portal-bg-white);
   position: relative;
   overflow: hidden;
 }
 
-.tarefas-beneficios h2 {
+.portal-beneficios h2 {
   text-align: center;
   font-size: clamp(1.8rem, 3.5vw, 2.2rem);
   font-weight: 700;
   margin-bottom: 1rem;
-  color: var(--tarefas-text-dark);
+  color: var(--portal-text-dark);
   position: relative;
   z-index: 2;
 }
 
-.tarefas-subtitle {
+.portal-subtitle {
   text-align: center;
   font-size: 1rem;
-  color: var(--tarefas-text-light);
+  color: var(--portal-text-light);
   margin-bottom: 3rem;
   max-width: 600px;
   margin-left: auto;
@@ -284,7 +273,7 @@
   font-weight: 400;
 }
 
-.tarefas-beneficios-grid {
+.portal-beneficios-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
   gap: 2rem;
@@ -295,10 +284,10 @@
   z-index: 2;
 }
 
-.tarefas-beneficio-item {
+.portal-beneficio-item {
   text-align: center;
   padding: 2rem 1.5rem;
-  background: var(--tarefas-bg-white);
+  background: var(--portal-bg-white);
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
   position: relative;
@@ -307,20 +296,20 @@
   overflow: visible;
 }
 
-.tarefas-beneficio-item:hover {
+.portal-beneficio-item:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   border-color: rgba(245, 158, 11, 0.3);
 }
 
-.tarefas-beneficio-icon {
+.portal-beneficio-icon {
   margin: 1.5rem 0 1rem;
   display: flex;
   justify-content: center;
   position: relative;
 }
 
-.tarefas-beneficio-icon::before {
+.portal-beneficio-icon::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -333,25 +322,25 @@
   z-index: -1;
 }
 
-.tarefas-beneficio-icon svg {
+.portal-beneficio-icon svg {
   color: #f59e0b;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
   transition: transform 0.3s ease;
 }
 
-.tarefas-beneficio-item:hover .tarefas-beneficio-icon svg {
+.portal-beneficio-item:hover .portal-beneficio-icon svg {
   transform: scale(1.1);
 }
 
-.tarefas-beneficio-item h3 {
+.portal-beneficio-item h3 {
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 0.8rem;
-  color: var(--tarefas-text-dark);
+  color: var(--portal-text-dark);
   position: relative;
 }
 
-.tarefas-beneficio-item h3::after {
+.portal-beneficio-item h3::after {
   content: '';
   position: absolute;
   bottom: -6px;
@@ -363,22 +352,22 @@
   border-radius: 1px;
 }
 
-.tarefas-beneficio-item p {
-  color: var(--tarefas-text-light);
+.portal-beneficio-item p {
+  color: var(--portal-text-light);
   line-height: 1.5;
   font-size: 0.9rem;
   margin-top: 1rem;
 }
 
 /* Como Funciona */
-.tarefas-como-funciona {
+.portal-como-funciona {
   padding: 80px 0;
-  background: var(--tarefas-bg-light);
+  background: var(--portal-bg-light);
   position: relative;
   overflow: hidden;
 }
 
-.tarefas-steps-grid {
+.portal-steps-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
@@ -389,10 +378,10 @@
   z-index: 2;
 }
 
-.tarefas-step-item {
+.portal-step-item {
   text-align: center;
   padding: 2rem 1.5rem;
-  background: var(--tarefas-bg-white);
+  background: var(--portal-bg-white);
   border-radius: 16px;
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
   position: relative;
@@ -401,13 +390,13 @@
   overflow: visible;
 }
 
-.tarefas-step-item:hover {
+.portal-step-item:hover {
   transform: translateY(-3px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   border-color: rgba(245, 158, 11, 0.3);
 }
 
-.tarefas-step-number {
+.portal-step-number {
   position: absolute;
   top: -20px;
   left: 50%;
@@ -427,19 +416,19 @@
   z-index: 10;
 }
 
-.tarefas-step-item:hover .tarefas-step-number {
+.portal-step-item:hover .portal-step-number {
   transform: translateX(-50%) scale(1.05);
   box-shadow: 0 6px 18px rgba(245, 158, 11, 0.3);
 }
 
-.tarefas-step-icon {
+.portal-step-icon {
   margin: 1.5rem 0 1rem;
   display: flex;
   justify-content: center;
   position: relative;
 }
 
-.tarefas-step-icon::before {
+.portal-step-icon::before {
   content: '';
   position: absolute;
   top: 50%;
@@ -452,25 +441,25 @@
   z-index: -1;
 }
 
-.tarefas-step-icon svg {
+.portal-step-icon svg {
   color: #f59e0b;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
   transition: transform 0.3s ease;
 }
 
-.tarefas-step-item:hover .tarefas-step-icon svg {
+.portal-step-item:hover .portal-step-icon svg {
   transform: scale(1.1);
 }
 
-.tarefas-step-item h3 {
+.portal-step-item h3 {
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 0.8rem;
-  color: var(--tarefas-text-dark);
+  color: var(--portal-text-dark);
   position: relative;
 }
 
-.tarefas-step-item h3::after {
+.portal-step-item h3::after {
   content: '';
   position: absolute;
   bottom: -6px;
@@ -482,28 +471,28 @@
   border-radius: 1px;
 }
 
-.tarefas-step-item p {
-  color: var(--tarefas-text-light);
+.portal-step-item p {
+  color: var(--portal-text-light);
   line-height: 1.5;
   font-size: 0.9rem;
   margin-top: 1rem;
 }
 
 /* Recursos */
-.tarefas-recursos {
+.portal-recursos {
   padding: 80px 0;
-  background: var(--tarefas-bg-white);
+  background: var(--portal-bg-white);
 }
 
-.tarefas-recursos h2 {
+.portal-recursos h2 {
   text-align: center;
   font-size: clamp(1.8rem, 3.5vw, 2.2rem);
   font-weight: 700;
   margin-bottom: 3rem;
-  color: var(--tarefas-text-dark);
+  color: var(--portal-text-dark);
 }
 
-.tarefas-recursos-grid {
+.portal-recursos-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
@@ -512,10 +501,10 @@
   padding: 0;
 }
 
-.tarefas-recurso-item {
+.portal-recurso-item {
   text-align: center;
   padding: 1.5rem 1rem;
-  background: var(--tarefas-bg-white);
+  background: var(--portal-bg-white);
   border-radius: 16px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
@@ -523,46 +512,46 @@
   position: relative;
 }
 
-.tarefas-recurso-item:hover {
+.portal-recurso-item:hover {
   transform: translateY(-3px);
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
   border-color: rgba(245, 158, 11, 0.1);
 }
 
-.tarefas-recurso-icon {
+.portal-recurso-icon {
   margin-bottom: 1rem;
   display: flex;
   justify-content: center;
 }
 
-.tarefas-recurso-icon svg {
+.portal-recurso-icon svg {
   color: #f59e0b;
   width: 24px;
   height: 24px;
 }
 
-.tarefas-recurso-item h4 {
+.portal-recurso-item h4 {
   font-size: 1rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: var(--tarefas-text-dark);
+  color: var(--portal-text-dark);
 }
 
-.tarefas-recurso-item p {
-  color: var(--tarefas-text-light);
+.portal-recurso-item p {
+  color: var(--portal-text-light);
   line-height: 1.5;
   font-size: 0.85rem;
 }
 
 /* CTA */
-.tarefas-cta {
+.portal-cta {
   padding: 80px 0;
   background: linear-gradient(135deg, #f59e0b, #d97706);
   color: white;
   text-align: center;
 }
 
-.tarefas-cta-content h2 {
+.portal-cta-content h2 {
   font-size: clamp(1.8rem, 3vw, 2.5rem);
   font-weight: 700;
   margin-bottom: 1.5rem;
@@ -570,7 +559,7 @@
   color: white;
 }
 
-.tarefas-cta-content p {
+.portal-cta-content p {
   font-size: 1.1rem;
   margin-bottom: 2rem;
   opacity: 0.9;
@@ -579,7 +568,7 @@
   margin-right: auto;
 }
 
-.tarefas-cta-btn {
+.portal-cta-btn {
   background: white;
   color: #f59e0b;
   border: 1px solid white;
@@ -595,7 +584,7 @@
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.2);
 }
 
-.tarefas-cta-btn:hover {
+.portal-cta-btn:hover {
   background: transparent;
   color: white;
   transform: translateY(-2px);
@@ -603,37 +592,37 @@
 }
 
 /* Formulário */
-.tarefas-formulario-section {
+.portal-formulario-section {
   padding: 80px 0;
-  background: var(--tarefas-bg-light);
+  background: var(--portal-bg-light);
 }
 
-.tarefas-form-content {
+.portal-form-content {
   max-width: 900px;
   margin: 0 auto;
   padding: 0 2rem;
 }
 
-.tarefas-form-header {
+.portal-form-header {
   text-align: center;
   margin-bottom: 3rem;
 }
 
-.tarefas-form-header h2 {
+.portal-form-header h2 {
   font-size: clamp(1.8rem, 3vw, 2.5rem);
   font-weight: 700;
   margin-bottom: 1rem;
-  color: var(--tarefas-text-dark);
+  color: var(--portal-text-dark);
 }
 
-.tarefas-form-header p {
+.portal-form-header p {
   font-size: 1.1rem;
-  color: var(--tarefas-text-light);
+  color: var(--portal-text-light);
   font-weight: 400;
 }
 
-.tarefas-form {
-  background: var(--tarefas-bg-white);
+.portal-form {
+  background: var(--portal-bg-white);
   padding: 3rem;
   border-radius: 24px;
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
@@ -642,7 +631,7 @@
   overflow: hidden;
 }
 
-.tarefas-form::before {
+.portal-form::before {
   content: '';
   position: absolute;
   top: 0;
@@ -652,66 +641,66 @@
   background: #f59e0b;
 }
 
-.tarefas-form-grid {
+.portal-form-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 1.5rem;
 }
 
-.tarefas-form-group {
+.portal-form-group {
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
-.tarefas-form-group.tarefas-form-group-full {
+.portal-form-group.portal-form-group-full {
   grid-column: 1 / -1;
 }
 
-.tarefas-form-group label {
+.portal-form-group label {
   font-weight: 600;
   margin-bottom: 0.5rem;
-  color: var(--tarefas-text-dark);
+  color: var(--portal-text-dark);
   font-size: 0.9rem;
 }
 
-.tarefas-form-group input,
-.tarefas-form-group select,
-.tarefas-form-group textarea {
+.portal-form-group input,
+.portal-form-group select,
+.portal-form-group textarea {
   padding: 1rem;
   border: 2px solid #e2e8f0;
   border-radius: 10px;
   font-size: 1rem;
   transition: all 0.3s ease;
-  background: var(--tarefas-bg-white);
+  background: var(--portal-bg-white);
   font-weight: 400;
-  color: var(--tarefas-text-dark);
+  color: var(--portal-text-dark);
 }
 
-.tarefas-form-group input::placeholder,
-.tarefas-form-group textarea::placeholder {
-  color: var(--tarefas-text-light);
+.portal-form-group input::placeholder,
+.portal-form-group textarea::placeholder {
+  color: var(--portal-text-light);
 }
 
-.tarefas-form-group input:focus,
-.tarefas-form-group select:focus,
-.tarefas-form-group textarea:focus {
+.portal-form-group input:focus,
+.portal-form-group select:focus,
+.portal-form-group textarea:focus {
   outline: none;
   border-color: #f59e0b;
   box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
 }
 
-.tarefas-form-group textarea {
+.portal-form-group textarea {
   resize: vertical;
   min-height: 100px;
 }
 
-.tarefas-form-group select option {
-  color: var(--tarefas-text-dark);
-  background: var(--tarefas-bg-white);
+.portal-form-group select option {
+  color: var(--portal-text-dark);
+  background: var(--portal-bg-white);
 }
 
-.tarefas-submit-btn {
+.portal-submit-btn {
   width: 100%;
   padding: 1.5rem;
   font-size: 1.1rem;
@@ -727,24 +716,24 @@
   cursor: pointer;
   transition: all 0.3s ease;
   margin-top: 2rem;
-  box-shadow: var(--tarefas-shadow-soft);
+  box-shadow: var(--portal-shadow-soft);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-.tarefas-submit-btn:hover {
+.portal-submit-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4);
   background: linear-gradient(135deg, #d97706, #f59e0b);
 }
 
-.tarefas-submit-btn:disabled {
+.portal-submit-btn:disabled {
   opacity: 0.7;
   cursor: not-allowed;
   transform: none;
 }
 
-.tarefas-submit-spinner {
+.portal-submit-spinner {
   width: 20px;
   height: 20px;
   border: 2px solid rgba(255, 255, 255, 0.3);
@@ -758,7 +747,7 @@
   100% { transform: rotate(360deg); }
 }
 
-.tarefas-error-message {
+.portal-error-message {
   background: #fed7d7;
   color: #c53030;
   padding: 1rem;
@@ -769,7 +758,7 @@
 }
 
 /* Sucesso */
-.tarefas-success {
+.portal-success {
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -778,69 +767,69 @@
   margin-top: 80px;
 }
 
-.tarefas-success-content {
+.portal-success-content {
   text-align: center;
   margin: 0 auto;
   padding: 3rem;
-  background: var(--tarefas-bg-white);
+  background: var(--portal-bg-white);
   border-radius: 20px;
-  box-shadow: var(--tarefas-shadow-medium);
+  box-shadow: var(--portal-shadow-medium);
   position: relative;
   z-index: 2;
 }
 
-.tarefas-success-icon {
+.portal-success-icon {
   margin-bottom: 2rem;
 }
 
-.tarefas-success-icon svg {
+.portal-success-icon svg {
   color: #48bb78;
 }
 
-.tarefas-success-content h1 {
+.portal-success-content h1 {
   font-size: clamp(1.8rem, 3vw, 2.5rem);
   font-weight: 700;
   margin-bottom: 1rem;
-  color: var(--tarefas-text-dark);
+  color: var(--portal-text-dark);
 }
 
-.tarefas-success-content p {
+.portal-success-content p {
   font-size: 1.1rem;
-  color: var(--tarefas-text-light);
+  color: var(--portal-text-light);
   margin-bottom: 2rem;
   line-height: 1.6;
   font-weight: 400;
 }
 
-.tarefas-success-info {
+.portal-success-info {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
 }
 
-.tarefas-info-item {
+.portal-info-item {
   display: flex;
   align-items: center;
   gap: 0.5rem;
   padding: 1rem;
-  background: var(--tarefas-bg-light);
+  background: var(--portal-bg-light);
   border-radius: 10px;
   transition: all 0.3s ease;
 }
 
-.tarefas-info-item:hover {
+.portal-info-item:hover {
   transform: translateY(-2px);
-  box-shadow: var(--tarefas-shadow-soft);
+  box-shadow: var(--portal-shadow-soft);
 }
 
-.tarefas-info-item svg {
+.portal-info-item svg {
   color: #48bb78;
 }
 
-.tarefas-info-item span {
+.portal-info-item span {
   font-weight: 600;
-  color: var(--tarefas-text-dark);
+  color: var(--portal-text-dark);
   font-size: 0.9rem;
 }
 
@@ -850,33 +839,33 @@
     padding: 0 1.5rem;
   }
   
-  .tarefas-hero-text {
+  .portal-hero-text {
     width: 100%;
   }
   
-  .tarefas-beneficios-grid,
-  .tarefas-steps-grid,
-  .tarefas-recursos-grid {
+  .portal-beneficios-grid,
+  .portal-steps-grid,
+  .portal-recursos-grid {
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   }
   
-  .tarefas-hero-text h1 {
+  .portal-hero-text h1 {
     font-size: clamp(1.6rem, 3vw, 2rem);
   }
   
-  .tarefas-hero-stats {
+  .portal-hero-stats {
     gap: 0.8rem;
   }
   
-  .tarefas-stat-item {
+  .portal-stat-item {
     padding: 1rem 0.6rem;
   }
   
-  .tarefas-stat-item strong {
+  .portal-stat-item strong {
     font-size: 1rem;
   }
   
-  .tarefas-stat-item span {
+  .portal-stat-item span {
     font-size: 0.75rem;
   }
 }
@@ -886,66 +875,66 @@
     padding: 0 1rem;
   }
   
-  .tarefas-hero {
+  .portal-hero {
     height: calc(100vh - 60px);
     margin-top: 60px;
   }
   
-  .tarefas-hero-content {
+  .portal-hero-content {
     text-align: center;
     padding-left: 0;
   }
   
-  .tarefas-hero-text {
+  .portal-hero-text {
     max-width: 100%;
     margin-left: 0;
     padding: 0 1rem;
     width: 100%;
   }
   
-  .tarefas-hero-text h1 {
+  .portal-hero-text h1 {
     font-size: clamp(1.4rem, 4vw, 1.8rem);
   }
   
-  .tarefas-hero-text p {
+  .portal-hero-text p {
     font-size: 0.9rem;
   }
   
-  .tarefas-hero-stats {
+  .portal-hero-stats {
     grid-template-columns: repeat(3, 1fr);
     max-width: 100%;
     margin: 1.5rem auto 0;
     gap: 0.8rem;
   }
   
-  .tarefas-stat-item {
+  .portal-stat-item {
     padding: 0.8rem 0.4rem;
   }
   
-  .tarefas-stat-item svg {
+  .portal-stat-item svg {
     width: 20px;
     height: 20px;
   }
   
-  .tarefas-stat-item strong {
+  .portal-stat-item strong {
     font-size: 0.9rem;
   }
   
-  .tarefas-stat-item span {
+  .portal-stat-item span {
     font-size: 0.65rem;
   }
   
-  .tarefas-professional-badge {
+  .portal-professional-badge {
     font-size: 0.7rem;
     padding: 0.3rem 0.6rem;
   }
   
-  .tarefas-professional-badge svg {
+  .portal-professional-badge svg {
     width: 14px;
     height: 14px;
   }
   
-  .tarefas-cta-button {
+  .portal-cta-button {
     padding: 0.8rem 1.5rem;
     font-size: 0.9rem;
     width: 100%;
@@ -954,128 +943,128 @@
     display: block;
   }
   
-  .tarefas-cta-button svg {
+  .portal-cta-button svg {
     width: 16px;
     height: 16px;
   }
   
-  .tarefas-beneficios-grid {
+  .portal-beneficios-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
   
-  .tarefas-beneficio-item {
+  .portal-beneficio-item {
     padding: 1.8rem 1.2rem;
   }
   
-  .tarefas-beneficio-icon svg {
+  .portal-beneficio-icon svg {
     width: 28px;
     height: 28px;
   }
   
-  .tarefas-beneficio-item h3 {
+  .portal-beneficio-item h3 {
     font-size: 1.1rem;
   }
   
-  .tarefas-beneficio-item p {
+  .portal-beneficio-item p {
     font-size: 0.85rem;
   }
   
-  .tarefas-steps-grid {
+  .portal-steps-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
   
-  .tarefas-step-item {
+  .portal-step-item {
     padding: 1.8rem 1.2rem;
   }
   
-  .tarefas-step-number {
+  .portal-step-number {
     width: 35px;
     height: 35px;
     font-size: 1rem;
   }
   
-  .tarefas-step-icon svg {
+  .portal-step-icon svg {
     width: 32px;
     height: 32px;
   }
   
-  .tarefas-step-item h3 {
+  .portal-step-item h3 {
     font-size: 1.1rem;
   }
   
-  .tarefas-step-item p {
+  .portal-step-item p {
     font-size: 0.85rem;
   }
   
-  .tarefas-recursos-grid {
+  .portal-recursos-grid {
     grid-template-columns: 1fr;
   }
   
-  .tarefas-recurso-item {
+  .portal-recurso-item {
     padding: 1.2rem 1rem;
   }
   
-  .tarefas-recurso-icon svg {
+  .portal-recurso-icon svg {
     width: 20px;
     height: 20px;
   }
   
-  .tarefas-recurso-item h4 {
+  .portal-recurso-item h4 {
     font-size: 0.9rem;
   }
   
-  .tarefas-recurso-item p {
+  .portal-recurso-item p {
     font-size: 0.8rem;
   }
   
-  .tarefas-cta h2 {
+  .portal-cta h2 {
     font-size: clamp(1.4rem, 4vw, 1.6rem);
   }
   
-  .tarefas-cta-btn {
+  .portal-cta-btn {
     padding: 0.8rem 1.5rem;
     font-size: 0.9rem;
   }
   
-  .tarefas-form {
+  .portal-form {
     padding: 2rem 1.5rem;
   }
   
-  .tarefas-form-header h2 {
+  .portal-form-header h2 {
     font-size: clamp(1.5rem, 4vw, 1.8rem);
   }
   
-  .tarefas-form-header p {
+  .portal-form-header p {
     font-size: 1rem;
   }
   
-  .tarefas-form-grid {
+  .portal-form-grid {
     grid-template-columns: 1fr;
   }
   
-  .tarefas-form-group label {
+  .portal-form-group label {
     font-size: 0.85rem;
   }
   
-  .tarefas-form-group input,
-  .tarefas-form-group select,
-  .tarefas-form-group textarea {
+  .portal-form-group input,
+  .portal-form-group select,
+  .portal-form-group textarea {
     padding: 0.8rem;
     font-size: 0.9rem;
   }
   
-  .tarefas-submit-btn {
+  .portal-submit-btn {
     padding: 1.2rem;
     font-size: 1rem;
   }
   
-  .tarefas-beneficios,
-  .tarefas-como-funciona,
-  .tarefas-recursos,
-  .tarefas-cta,
-  .tarefas-formulario-section {
+  .portal-beneficios,
+  .portal-como-funciona,
+  .portal-recursos,
+  .portal-cta,
+  .portal-formulario-section {
     padding: 40px 0;
   }
 }
@@ -1085,52 +1074,52 @@
     padding: 0 0.75rem;
   }
   
-  .tarefas-hero {
+  .portal-hero {
     height: calc(100vh - 50px);
     margin-top: 50px;
   }
   
-  .tarefas-hero-text h1 {
+  .portal-hero-text h1 {
     font-size: clamp(1.2rem, 5vw, 1.5rem);
   }
   
-  .tarefas-hero-text p {
+  .portal-hero-text p {
     font-size: 0.85rem;
   }
   
-  .tarefas-hero-stats {
+  .portal-hero-stats {
     gap: 0.6rem;
     margin: 1rem auto 0;
   }
   
-  .tarefas-stat-item {
+  .portal-stat-item {
     padding: 0.6rem 0.3rem;
   }
   
-  .tarefas-stat-item svg {
+  .portal-stat-item svg {
     width: 18px;
     height: 18px;
   }
   
-  .tarefas-stat-item strong {
+  .portal-stat-item strong {
     font-size: 0.8rem;
   }
   
-  .tarefas-stat-item span {
+  .portal-stat-item span {
     font-size: 0.6rem;
   }
   
-  .tarefas-professional-badge {
+  .portal-professional-badge {
     font-size: 0.65rem;
     padding: 0.25rem 0.5rem;
   }
   
-  .tarefas-professional-badge svg {
+  .portal-professional-badge svg {
     width: 12px;
     height: 12px;
   }
   
-  .tarefas-cta-button {
+  .portal-cta-button {
     padding: 0.7rem 1.2rem;
     font-size: 0.85rem;
     width: 100%;
@@ -1139,118 +1128,118 @@
     display: block;
   }
   
-  .tarefas-cta-button svg {
+  .portal-cta-button svg {
     width: 14px;
     height: 14px;
   }
   
-  .tarefas-beneficio-item {
+  .portal-beneficio-item {
     padding: 1.5rem 1rem;
   }
   
-  .tarefas-beneficio-icon svg {
+  .portal-beneficio-icon svg {
     width: 24px;
     height: 24px;
   }
   
-  .tarefas-beneficio-item h3 {
+  .portal-beneficio-item h3 {
     font-size: 1rem;
   }
   
-  .tarefas-beneficio-item p {
+  .portal-beneficio-item p {
     font-size: 0.8rem;
   }
   
-  .tarefas-step-item {
+  .portal-step-item {
     padding: 1.5rem 1rem;
   }
   
-  .tarefas-step-number {
+  .portal-step-number {
     width: 30px;
     height: 30px;
     font-size: 0.9rem;
   }
   
-  .tarefas-step-icon svg {
+  .portal-step-icon svg {
     width: 28px;
     height: 28px;
   }
   
-  .tarefas-step-item h3 {
+  .portal-step-item h3 {
     font-size: 1rem;
   }
   
-  .tarefas-step-item p {
+  .portal-step-item p {
     font-size: 0.8rem;
   }
   
-  .tarefas-recurso-item {
+  .portal-recurso-item {
     padding: 1rem 0.8rem;
   }
   
-  .tarefas-recurso-icon svg {
+  .portal-recurso-icon svg {
     width: 18px;
     height: 18px;
   }
   
-  .tarefas-recurso-item h4 {
+  .portal-recurso-item h4 {
     font-size: 0.85rem;
   }
   
-  .tarefas-recurso-item p {
+  .portal-recurso-item p {
     font-size: 0.75rem;
   }
   
-  .tarefas-cta h2 {
+  .portal-cta h2 {
     font-size: clamp(1.2rem, 5vw, 1.4rem);
   }
   
-  .tarefas-cta-btn {
+  .portal-cta-btn {
     padding: 0.7rem 1.2rem;
     font-size: 0.85rem;
   }
   
-  .tarefas-form {
+  .portal-form {
     padding: 1.5rem 1rem;
   }
   
-  .tarefas-form-header h2 {
+  .portal-form-header h2 {
     font-size: clamp(1.3rem, 5vw, 1.5rem);
   }
   
-  .tarefas-form-header p {
+  .portal-form-header p {
     font-size: 0.9rem;
   }
   
-  .tarefas-form-group label {
+  .portal-form-group label {
     font-size: 0.8rem;
   }
   
-  .tarefas-form-group input,
-  .tarefas-form-group select,
-  .tarefas-form-group textarea {
+  .portal-form-group input,
+  .portal-form-group select,
+  .portal-form-group textarea {
     padding: 0.7rem;
     font-size: 0.85rem;
   }
   
-  .tarefas-submit-btn {
+  .portal-submit-btn {
     padding: 1rem;
     font-size: 0.9rem;
   }
   
-  .tarefas-success-content {
+  .portal-success-content {
     padding: 2rem 1.5rem;
   }
   
-  .tarefas-success-info {
+  .portal-success-info {
     grid-template-columns: 1fr;
   }
   
-  .tarefas-success-content h1 {
+  .portal-success-content h1 {
     font-size: clamp(1.3rem, 5vw, 1.5rem);
   }
   
-  .tarefas-success-content p {
+  .portal-success-content p {
     font-size: 0.9rem;
   }
 } 
