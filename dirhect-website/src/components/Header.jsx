@@ -179,17 +179,6 @@ const Header = () => {
               </a>
             </li>
             <li>
-              <a 
-                href="/#sobre" 
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleAnchorClick('#sobre')
-                }}
-              >
-                Sobre
-              </a>
-            </li>
-            <li>
               <Link to="/parceiros" onClick={() => setIsMobileMenuOpen(false)}>
                 Parceiros
               </Link>
