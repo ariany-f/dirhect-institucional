@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, User, LogOut } from 'lucide-react'
+import { Menu, X, User, LogOut, ChevronDown } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { wordpressService } from '../services/wordpressService'
 import './Header.css'
@@ -167,7 +167,7 @@ const Header = () => {
                 Início
               </a>
             </li>
-            <li>
+            <li className="nav-item-with-dropdown">
               <a 
                 href="/#solucoes" 
                 onClick={(e) => {
@@ -176,7 +176,15 @@ const Header = () => {
                 }}
               >
                 Soluções
+                <ChevronDown size={16} className="dropdown-chevron" />
               </a>
+              <ul className="dropdown-menu">
+                <li>
+                  <Link to="/admissao-digital" onClick={() => setIsMobileMenuOpen(false)}>
+                    Admissão Digital
+                  </Link>
+                </li>
+              </ul>
             </li>
             <li>
               <Link to="/parceiros" onClick={() => setIsMobileMenuOpen(false)}>
@@ -188,6 +196,7 @@ const Header = () => {
                 Conhecimento
               </Link>
             </li>
+
             <li>
               <Link to="/indique-ganhe" onClick={() => setIsMobileMenuOpen(false)}>
                 Indique e Ganhe

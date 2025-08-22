@@ -16,6 +16,7 @@ import CriarConhecimento from './pages/CriarConhecimento'
 import Conhecimento from './pages/Conhecimento'
 import ConhecimentoDetalhe from './pages/ConhecimentoDetalhe'
 import IndiqueGanhe from './pages/IndiqueGanhe'
+import AdmissaoDigital from './pages/AdmissaoDigital'
 import './App.css'
 import Hero from './components/Hero'
 import WhyChoose from './components/WhyChoose'
@@ -77,6 +78,7 @@ function App() {
           <Route path="/conhecimento/:id" element={<ConhecimentoDetalhe />} />
           <Route path="/demo" element={<Demo />} />
           <Route path="/indique-ganhe" element={<IndiqueGanhe />} />
+          <Route path="/admissao-digital" element={<AdmissaoDigital />} />
           <Route path="/docs" element={<TechnicalDocumentation />} />
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/termos-uso" element={<TermosUso />} />
