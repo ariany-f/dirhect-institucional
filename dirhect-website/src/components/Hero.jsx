@@ -54,6 +54,10 @@ const Hero = () => {
 
   return (
     <section id="inicio" className="hero">
+      {/* Elementos flutuantes animados */}
+      <div className="hero-floating-element-1"></div>
+      <div className="hero-floating-element-2"></div>
+      
       <div className="hero-container">
         <div className="hero-layout">
           {/* Seção principal à esquerda */}
