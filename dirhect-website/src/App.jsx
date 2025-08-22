@@ -17,6 +17,7 @@ import Conhecimento from './pages/Conhecimento'
 import ConhecimentoDetalhe from './pages/ConhecimentoDetalhe'
 import IndiqueGanhe from './pages/IndiqueGanhe'
 import AdmissaoDigital from './pages/AdmissaoDigital'
+import GestaoBeneficios from './pages/GestaoBeneficios'
 import './App.css'
 import Hero from './components/Hero'
 import WhyChoose from './components/WhyChoose'
@@ -79,6 +80,7 @@ function App() {
           <Route path="/demo" element={<Demo />} />
           <Route path="/indique-ganhe" element={<IndiqueGanhe />} />
           <Route path="/admissao-digital" element={<AdmissaoDigital />} />
+        <Route path="/gestao-beneficios" element={<GestaoBeneficios />} />
           <Route path="/docs" element={<TechnicalDocumentation />} />
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/termos-uso" element={<TermosUso />} />

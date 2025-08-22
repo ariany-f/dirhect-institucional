@@ -184,6 +184,11 @@ const Header = () => {
                     Admissão Digital
                   </Link>
                 </li>
+                <li>
+                  <Link to="/gestao-beneficios" onClick={() => setIsMobileMenuOpen(false)}>
+                    Gestão de Benefícios
+                  </Link>
+                </li>
               </ul>
             </li>
             <li>
