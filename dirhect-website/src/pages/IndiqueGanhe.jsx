@@ -265,15 +265,15 @@ const IndiqueGanhe = () => {
                 </div>
               </div>
               <p>
-                *Válido para empresas com mais de 10 colaboradores.
+                *Válido para empresas com mais de 10 colaboradores
               </p>
               <button 
                 onClick={scrollToForm}
                 className="indique-cta-button"
               >
-                <UserCheck size={18} />
+                <UserCheck size={20} />
                 Participar do Programa
-                <ArrowRight size={18} />
+                <ArrowRight size={20} />
               </button>
             </div>
           </div>
