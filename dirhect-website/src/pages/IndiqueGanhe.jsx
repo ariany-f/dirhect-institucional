@@ -24,7 +24,10 @@ import {
   Calendar,
   FileText,
   UserCheck,
-  Building
+  Building,
+  ClipboardList,
+  Handshake,
+  Trophy
 } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
@@ -54,7 +57,6 @@ const IndiqueGanhe = () => {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [submitError, setSubmitError] = useState(null)
-  const [isVisible, setIsVisible] = useState({})
   const formRef = useRef(null)
 
   // Função para aplicar máscara de CNPJ
@@ -84,26 +86,8 @@ const IndiqueGanhe = () => {
     return cleanValue
   }
 
-  // Função para detectar elementos visíveis na tela
-  const handleScroll = () => {
-    const sections = document.querySelectorAll('.indique-como-funciona, .indique-regras-section, .indique-formulario-section, .indique-beneficios-section, .indique-vantagens-section')
-    
-    sections.forEach(section => {
-      const rect = section.getBoundingClientRect()
-      const isVisible = rect.top < window.innerHeight * 0.8 && rect.bottom > 0
-      
-      if (isVisible) {
-        setIsVisible(prev => ({ ...prev, [section.className]: true }))
-      }
-    })
-  }
-
   useEffect(() => {
     window.scrollTo(0, 0)
-    window.addEventListener('scroll', handleScroll)
-    handleScroll() // Verificar elementos visíveis inicialmente
-    
-    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const segmentosOptions = [
@@ -237,108 +221,111 @@ const IndiqueGanhe = () => {
     <div>
       <Header />
       
-      {/* Hero Section - Inspirado no iFood */}
+      {/* Hero Section */}
       <section className="indique-hero">
-        <div className="indique-hero-content">
-          <div className="indique-hero-text">
-            <div className="indique-celebration-badge">
-              <Star size={20} />
-              <span>Celebre o sucesso da Dirhect</span>
-            </div>
-            <h1>
-              Indique a <span className="indique-gradient-text">Dirhect</span> e 
-              <br />ganhe <span className="indique-highlight">R$ 1.000</span> na conta!
-            </h1>
-            <p className="indique-hero-subtitle">
-              Válido para empresas com mais de 10 colaboradores. 
-              Empresas com menos de 10 colaboradores, o prêmio continua R$ 1.000.
-            </p>
-            <div className="indique-hero-stats">
-              <div className="indique-stat-item">
-                <TrendingUp size={24} />
-                <div>
-                  <strong>500+</strong>
-                  <span>Empresas indicadas</span>
+        <div className="indique-hero-background">
+          <img 
+            src="/images/hero_desktop.png" 
+            alt="Background hero" 
+            className="indique-hero-bg-image"
+          />
+        </div>
+        <div className="container">
+          <div className="indique-hero-content">
+            <div className="indique-hero-text">
+              <div className="indique-professional-badge">
+                <Award size={16} />
+                <span>Programa de Indicação Dirhect</span>
+              </div>
+              <h1>
+                Indique a <span className="indique-gradient-text">Dirhect</span> e 
+                <br />receba <span className="indique-highlight">R$ 1.000</span> por indicação aprovada
+              </h1>
+              <div className="indique-hero-stats">
+                <div className="indique-stat-item">
+                  <DollarSign size={20} />
+                  <div>
+                    <strong>R$ 1.000</strong>
+                    <span>Por indicação</span>
+                  </div>
+                </div>
+                <div className="indique-stat-item">
+                  <Clock size={20} />
+                  <div>
+                    <strong>24h</strong>
+                    <span>Prazo de contato</span>
+                  </div>
+                </div>
+                <div className="indique-stat-item">
+                  <Shield size={20} />
+                  <div>
+                    <strong>100%</strong>
+                    <span>Seguro e confiável</span>
+                  </div>
                 </div>
               </div>
-              <div className="indique-stat-item">
-                <Award size={24} />
-                <div>
-                  <strong>R$ 50k+</strong>
-                  <span>Em recompensas</span>
-                </div>
-              </div>
-              <div className="indique-stat-item">
-                <Heart size={24} />
-                <div>
-                  <strong>98%</strong>
-                  <span>Satisfação</span>
-                </div>
-              </div>
-            </div>
-            <button 
-              onClick={scrollToForm}
-              className="indique-cta-button"
-            >
-              <Sparkles size={20} />
-              Indique Agora
-              <ArrowRight size={20} />
-            </button>
-          </div>
-          <div className="indique-hero-image">
-            <div className="indique-reward-card">
-              <Gem size={48} />
-              <h3>R$ 1.000</h3>
-              <p>Por indicação aprovada</p>
+              <p>
+                *Válido para empresas com mais de 10 colaboradores.
+              </p>
+              <button 
+                onClick={scrollToForm}
+                className="indique-cta-button"
+              >
+                <UserCheck size={18} />
+                Participar do Programa
+                <ArrowRight size={18} />
+              </button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Como Funciona - Inspirado no iFood */}
-      <section className={`indique-como-funciona ${isVisible['indique-como-funciona'] ? 'visible' : ''}`}>
+      {/* Como Funciona */}
+      <section className="indique-como-funciona">
         <div className="container">
           <h2>Como indicar a Dirhect?</h2>
+          <p className="indique-subtitle">
+            Processo simples e rápido para você ganhar R$ 1.000 por indicação aprovada
+          </p>
           <div className="indique-steps-grid">
             <div className="indique-step-item">
               <div className="indique-step-number">1</div>
               <div className="indique-step-icon">
-                <FileText size={32} />
+                <ClipboardList size={40} />
               </div>
               <h3>Preencha o formulário</h3>
               <p>
                 Preencha o formulário de indicação corretamente com seus dados 
-                e da empresa indicada.
+                e da empresa indicada. Informações completas garantem melhor resultado.
               </p>
             </div>
             <div className="indique-step-item">
               <div className="indique-step-number">2</div>
               <div className="indique-step-icon">
-                <Building size={32} />
+                <Handshake size={40} />
               </div>
-              <h3>Indique quantas empresas quiser</h3>
+              <h3>Nossa equipe entra em contato</h3>
               <p>
-                Indique quantas empresas quiser. Quanto mais indicar, 
-                mais chances de ganhar.
+                Nossa equipe comercial entra em contato com a empresa indicada 
+                em até 24 horas para apresentar nossas soluções.
               </p>
             </div>
             <div className="indique-step-item">
               <div className="indique-step-number">3</div>
               <div className="indique-step-icon">
-                <Crown size={32} />
+                <Trophy size={40} />
               </div>
               <h3>Receba sua recompensa</h3>
               <p>
                 Se a empresa indicada contratar e recarregar com a Dirhect, 
-                você recebe a recompensa até o 10º dia útil do mês subsequente.
+                você recebe R$ 1.000 até o 10º dia útil do mês subsequente.
               </p>
             </div>
           </div>
         </div>
       </section>
-
-      {/* Regras - Inspirado no iFood */}
-      <section className={`indique-regras-section ${isVisible['indique-regras-section'] ? 'visible' : ''}`}>
+      {/* Regras */}
+      <section className="indique-regras-section">
         <div className="container">
           <h2>Atenção às regras da premiação</h2>
           <div className="indique-regras-grid">
@@ -372,7 +359,10 @@ const IndiqueGanhe = () => {
             </div>
           </div>
           <div className="indique-regulamento-link">
-            <button className="indique-regulamento-btn">
+            <button 
+              className="indique-regulamento-btn"
+              onClick={() => window.open('/regulamento-indique-ganhe.html', '_blank')}
+            >
               <FileText size={20} />
               Quero conferir o regulamento
             </button>
@@ -381,43 +371,47 @@ const IndiqueGanhe = () => {
       </section>
 
       {/* Vantagens - Inspirado no iFood */}
-      <section className={`indique-vantagens-section ${isVisible['indique-vantagens-section'] ? 'visible' : ''}`}>
+      <section className="indique-vantagens-section">
         <div className="container">
-          <h2>A Dirhect é a solução completa de RH, que vale muito mais que só gestão, ainda vem com vantagens</h2>
-          <p className="indique-vantagens-subtitle">
-            Portal do RH, gestão de benefícios, admissão digital, relatórios e muito mais. 
-            É liberdade para o colaborador, sem taxas para empresa. 
-            <strong>Agora ficou fácil de convencer o RH né?</strong>
-          </p>
-          
-          <div className="indique-vantagens-grid">
-            <div className="indique-vantagem-item">
-              <div className="indique-vantagem-icon">
-                <Zap size={32} />
-              </div>
-              <h3>Portal do RH completo</h3>
-              <p>Gestão completa de colaboradores, benefícios, férias e muito mais em uma única plataforma.</p>
+          <div className="indique-vantagens-layout">
+            <div className="indique-vantagens-text">
+              <h2>A Dirhect é a solução completa de RH, que vale muito mais que só gestão, ainda vem com vantagens</h2>
+              <p className="indique-vantagens-subtitle">
+                Portal do RH, gestão de benefícios, admissão digital, relatórios e muito mais. 
+                É liberdade para o colaborador, sem taxas para empresa. 
+                <strong>Agora ficou fácil de convencer o RH né?</strong>
+              </p>
             </div>
-            <div className="indique-vantagem-item">
-              <div className="indique-vantagem-icon">
-                <Shield size={32} />
+            
+            <div className="indique-vantagens-grid">
+              <div className="indique-vantagem-item">
+                <div className="indique-vantagem-icon">
+                  <Zap size={24} />
+                </div>
+                <h3>Portal do RH completo</h3>
+                <p>Gestão completa de colaboradores, benefícios, férias e muito mais em uma única plataforma.</p>
               </div>
-              <h3>Segurança e Taxa Zero</h3>
-              <p>A empresa que contrata tem a gestão de RH de acordo com a legislação e sem custos adicionais.</p>
-            </div>
-            <div className="indique-vantagem-item">
-              <div className="indique-vantagem-icon">
-                <TrendingUp size={32} />
+              <div className="indique-vantagem-item">
+                <div className="indique-vantagem-icon">
+                  <Shield size={24} />
+                </div>
+                <h3>Segurança e Taxa Zero</h3>
+                <p>A empresa que contrata tem a gestão de RH de acordo com a legislação e sem custos adicionais.</p>
               </div>
-              <h3>Mais economia com parceiros</h3>
-              <p>Descontos exclusivos com parceiros para aproveitar e economizar em benefícios.</p>
-            </div>
-            <div className="indique-vantagem-item">
-              <div className="indique-vantagem-icon">
-                <CheckCircle2 size={32} />
+              <div className="indique-vantagem-item">
+                <div className="indique-vantagem-icon">
+                  <TrendingUp size={24} />
+                </div>
+                <h3>Mais economia com parceiros</h3>
+                <p>Descontos exclusivos com parceiros para aproveitar e economizar em benefícios.</p>
               </div>
-              <h3>Tudo em uma plataforma única</h3>
-              <p>Todos os recursos são integrados em uma única plataforma, facilitando a gestão.</p>
+              <div className="indique-vantagem-item">
+                <div className="indique-vantagem-icon">
+                  <CheckCircle2 size={24} />
+                </div>
+                <h3>Tudo em uma plataforma única</h3>
+                <p>Todos os recursos são integrados em uma única plataforma, facilitando a gestão.</p>
+              </div>
             </div>
           </div>
         </div>
@@ -429,7 +423,7 @@ const IndiqueGanhe = () => {
           <div className="indique-cta-content">
             <h2>Se você for <strong>RH ou tomador de decisão</strong> sobre a contratação de benefícios da empresa acesse o site para entender e contratar</h2>
             <button className="indique-cta-rh-btn">
-              <ArrowRight size={20} />
+              <ArrowRight size={18} />
               Acessar o site
             </button>
           </div>
@@ -437,7 +431,7 @@ const IndiqueGanhe = () => {
       </section>
 
       {/* Formulário */}
-      <section ref={formRef} className={`indique-formulario-section ${isVisible['indique-formulario-section'] ? 'visible' : ''}`}>
+      <section ref={formRef} className="indique-formulario-section">
         <div className="container">
           <div className="indique-form-content">
             <div className="indique-form-header">
