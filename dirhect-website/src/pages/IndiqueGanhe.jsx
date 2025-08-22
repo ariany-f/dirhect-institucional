@@ -225,7 +225,7 @@ const IndiqueGanhe = () => {
       <section className="indique-hero">
         <div className="indique-hero-background">
           <img 
-            src="/images/hero_desktop_11f701c266.png" 
+            src="/images/hero_desktop.png" 
             alt="Background hero" 
             className="indique-hero-bg-image"
           />
