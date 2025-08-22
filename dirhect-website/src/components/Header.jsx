@@ -189,6 +189,11 @@ const Header = () => {
                     Gestão de Benefícios
                   </Link>
                 </li>
+                <li>
+                  <Link to="/gestao-tarefas" onClick={() => setIsMobileMenuOpen(false)}>
+                    Gestão de Tarefas
+                  </Link>
+                </li>
               </ul>
             </li>
             <li>
