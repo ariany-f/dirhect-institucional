@@ -92,7 +92,7 @@ const Hero = () => {
                     <input
                       type="text"
                       className="hero-input"
-                      placeholder="Digite seu CNPJ (XX.XXX.XXX/XXXX-XX)"
+                      placeholder="Digite seu CNPJ"
                       value={cnpj}
                       onChange={handleCNPJChange}
                       maxLength="18"

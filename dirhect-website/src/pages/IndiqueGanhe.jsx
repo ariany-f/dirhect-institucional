@@ -225,7 +225,7 @@ const IndiqueGanhe = () => {
       <section className="indique-hero">
         <div className="indique-hero-background">
           <img 
-            src="/images/hero_desktop.png" 
+            src="/images/hero_desktop_11f701c266.png" 
             alt="Background hero" 
             className="indique-hero-bg-image"
           />
@@ -239,7 +239,7 @@ const IndiqueGanhe = () => {
               </div>
               <h1>
                 Indique a <span className="indique-gradient-text">Dirhect</span> e 
-                <br />receba <span className="indique-highlight">R$ 1.000</span> por indicação aprovada
+                receba <span className="indique-highlight">R$ 1.000</span> por indicação aprovada
               </h1>
               <div className="indique-hero-stats">
                 <div className="indique-stat-item">

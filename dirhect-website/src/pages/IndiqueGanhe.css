@@ -26,7 +26,6 @@
 /* Container principal */
 .container {
   max-width: 1200px;
-  min-width: 1150px;
   margin: 0 auto;
   padding: 0 2rem;
 }
@@ -95,7 +94,7 @@
 .indique-hero-text h1 {
   font-size: clamp(1.8rem, 3.5vw, 2.2rem);
   font-weight: 800;
-  line-height: 1.1;
+  line-height: 1.2;
   margin-bottom: 1rem;
   color: white;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
@@ -176,6 +175,7 @@
   max-width: 450px;
   position: relative;
   z-index: 3;
+  width: 100%;
 }
 
 .indique-stat-item {
@@ -321,7 +321,7 @@
 
 .indique-steps-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
   max-width: 1000px;
   margin: 0 auto;
@@ -938,7 +938,7 @@
 
 .indique-duvidas-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: 2rem;
   max-width: 1200px;
   margin: 0 auto;
@@ -1050,6 +1050,10 @@
 
 /* Responsividade */
 @media (max-width: 1024px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+  
   .indique-hero-content {
     gap: 40px;
   }
@@ -1058,6 +1062,26 @@
   .indique-regras-grid,
   .indique-vantagens-grid {
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+  
+  .indique-hero-text h1 {
+    font-size: clamp(1.6rem, 3vw, 2rem);
+  }
+  
+  .indique-hero-stats {
+    gap: 0.8rem;
+  }
+  
+  .indique-stat-item {
+    padding: 1rem 0.6rem;
+  }
+  
+  .indique-stat-item strong {
+    font-size: 1rem;
+  }
+  
+  .indique-stat-item span {
+    font-size: 0.75rem;
   }
 }
 
@@ -1071,8 +1095,6 @@
     margin-top: 60px;
   }
   
-
-  
   .indique-hero-content {
     text-align: center;
     padding-left: 0;
@@ -1084,23 +1106,56 @@
     padding: 0 1rem;
   }
   
+  .indique-hero-text h1 {
+    font-size: clamp(1.4rem, 4vw, 1.8rem);
+  }
+  
+  .indique-hero-text p {
+    font-size: 0.9rem;
+  }
+  
   .indique-hero-stats {
     grid-template-columns: repeat(3, 1fr);
     max-width: 100%;
-    margin: 2rem auto 0;
-    gap: 1rem;
+    margin: 1.5rem auto 0;
+    gap: 0.8rem;
   }
   
   .indique-stat-item {
-    padding: 1rem 0.5rem;
+    padding: 0.8rem 0.4rem;
+  }
+  
+  .indique-stat-item svg {
+    width: 20px;
+    height: 20px;
   }
   
   .indique-stat-item strong {
-    font-size: 1.1rem;
+    font-size: 0.9rem;
   }
   
   .indique-stat-item span {
+    font-size: 0.65rem;
+  }
+  
+  .indique-professional-badge {
     font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+  }
+  
+  .indique-professional-badge svg {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .indique-cta-button {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .indique-cta-button svg {
+    width: 16px;
+    height: 16px;
   }
   
   .indique-steps-grid {
@@ -1108,9 +1163,54 @@
     gap: 1.5rem;
   }
   
+  .indique-step-item {
+    padding: 1.8rem 1.2rem;
+  }
+  
+  .indique-step-number {
+    width: 35px;
+    height: 35px;
+    font-size: 1rem;
+  }
+  
+  .indique-step-icon svg {
+    width: 32px;
+    height: 32px;
+  }
+  
+  .indique-step-item h3 {
+    font-size: 1.1rem;
+  }
+  
+  .indique-step-item p {
+    font-size: 0.85rem;
+  }
+  
   .indique-regras-grid {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+  
+  .indique-regra-item {
+    padding: 1.2rem;
+  }
+  
+  .indique-regra-item svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .indique-regra-item h4 {
+    font-size: 0.9rem;
+  }
+  
+  .indique-regra-item p {
+    font-size: 0.8rem;
+  }
+  
+  .indique-regulamento-btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.85rem;
   }
   
   .indique-form-grid {
@@ -1128,14 +1228,43 @@
   
   .indique-vantagens-section h2 {
     text-align: center;
+    font-size: clamp(1.5rem, 4vw, 1.8rem);
   }
   
   .indique-vantagens-subtitle {
     text-align: center;
+    font-size: 0.9rem;
   }
   
   .indique-vantagens-grid {
     grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .indique-vantagem-item {
+    padding: 1.2rem 1rem;
+  }
+  
+  .indique-vantagem-icon svg {
+    width: 20px;
+    height: 20px;
+  }
+  
+  .indique-vantagem-item h3 {
+    font-size: 0.9rem;
+  }
+  
+  .indique-vantagem-item p {
+    font-size: 0.8rem;
+  }
+  
+  .indique-cta-rh h2 {
+    font-size: clamp(1.4rem, 4vw, 1.6rem);
+  }
+  
+  .indique-cta-rh-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.9rem;
   }
   
   .indique-success-info {
@@ -1144,10 +1273,51 @@
   
   .indique-duvidas-grid {
     grid-template-columns: 1fr;
+    padding: 0 1rem;
+  }
+  
+  .indique-duvida-item {
+    padding: 1.5rem;
+  }
+  
+  .indique-duvida-item h3 {
+    font-size: 1.1rem;
+  }
+  
+  .indique-duvida-item p {
+    font-size: 0.85rem;
   }
   
   .indique-form {
     padding: 2rem 1.5rem;
+  }
+  
+  .indique-form-header h2 {
+    font-size: clamp(1.5rem, 4vw, 1.8rem);
+  }
+  
+  .indique-form-header p {
+    font-size: 1rem;
+  }
+  
+  .indique-form-section h3 {
+    font-size: 1.2rem;
+  }
+  
+  .indique-form-group label {
+    font-size: 0.85rem;
+  }
+  
+  .indique-form-group input,
+  .indique-form-group select,
+  .indique-form-group textarea {
+    padding: 0.8rem;
+    font-size: 0.9rem;
+  }
+  
+  .indique-submit-btn {
+    padding: 1.2rem;
+    font-size: 1rem;
   }
   
   .indique-como-funciona,
@@ -1160,27 +1330,178 @@
 }
 
 @media (max-width: 480px) {
+  .container {
+    padding: 0 0.75rem;
+  }
+  
   .indique-hero {
     height: calc(100vh - 50px);
     margin-top: 50px;
   }
   
-
-  
   .indique-hero-text h1 {
-    font-size: 2rem;
+    font-size: clamp(1.2rem, 5vw, 1.5rem);
   }
   
-  .indique-reward-card {
-    padding: 2rem 1.5rem;
+  .indique-hero-text p {
+    font-size: 0.85rem;
   }
   
-  .indique-reward-card h3 {
-    font-size: 2rem;
+  .indique-hero-stats {
+    gap: 0.6rem;
+    margin: 1rem auto 0;
+  }
+  
+  .indique-stat-item {
+    padding: 0.6rem 0.3rem;
+  }
+  
+  .indique-stat-item svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .indique-stat-item strong {
+    font-size: 0.8rem;
+  }
+  
+  .indique-stat-item span {
+    font-size: 0.6rem;
+  }
+  
+  .indique-professional-badge {
+    font-size: 0.65rem;
+    padding: 0.25rem 0.5rem;
+  }
+  
+  .indique-professional-badge svg {
+    width: 12px;
+    height: 12px;
+  }
+  
+  .indique-cta-button {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.85rem;
+  }
+  
+  .indique-cta-button svg {
+    width: 14px;
+    height: 14px;
+  }
+  
+  .indique-step-item {
+    padding: 1.5rem 1rem;
+  }
+  
+  .indique-step-number {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+  }
+  
+  .indique-step-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .indique-step-item h3 {
+    font-size: 1rem;
+  }
+  
+  .indique-step-item p {
+    font-size: 0.8rem;
+  }
+  
+  .indique-regra-item {
+    padding: 1rem;
+  }
+  
+  .indique-regra-item svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  .indique-regra-item h4 {
+    font-size: 0.85rem;
+  }
+  
+  .indique-regra-item p {
+    font-size: 0.75rem;
+  }
+  
+  .indique-regulamento-btn {
+    padding: 0.6rem 1rem;
+    font-size: 0.8rem;
+  }
+  
+  .indique-vantagem-item {
+    padding: 1rem 0.8rem;
+  }
+  
+  .indique-vantagem-icon svg {
+    width: 18px;
+    height: 18px;
+  }
+  
+  .indique-vantagem-item h3 {
+    font-size: 0.85rem;
+  }
+  
+  .indique-vantagem-item p {
+    font-size: 0.75rem;
+  }
+  
+  .indique-cta-rh h2 {
+    font-size: clamp(1.2rem, 5vw, 1.4rem);
+  }
+  
+  .indique-cta-rh-btn {
+    padding: 0.7rem 1.2rem;
+    font-size: 0.85rem;
   }
   
   .indique-form {
     padding: 1.5rem 1rem;
+  }
+  
+  .indique-form-header h2 {
+    font-size: clamp(1.3rem, 5vw, 1.5rem);
+  }
+  
+  .indique-form-header p {
+    font-size: 0.9rem;
+  }
+  
+  .indique-form-section h3 {
+    font-size: 1.1rem;
+  }
+  
+  .indique-form-group label {
+    font-size: 0.8rem;
+  }
+  
+  .indique-form-group input,
+  .indique-form-group select,
+  .indique-form-group textarea {
+    padding: 0.7rem;
+    font-size: 0.85rem;
+  }
+  
+  .indique-submit-btn {
+    padding: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .indique-duvida-item {
+    padding: 1.2rem;
+  }
+  
+  .indique-duvida-item h3 {
+    font-size: 1rem;
+  }
+  
+  .indique-duvida-item p {
+    font-size: 0.8rem;
   }
   
   .indique-success-content {
@@ -1189,5 +1510,13 @@
   
   .indique-success-info {
     grid-template-columns: 1fr;
+  }
+  
+  .indique-success-content h1 {
+    font-size: clamp(1.3rem, 5vw, 1.5rem);
+  }
+  
+  .indique-success-content p {
+    font-size: 0.9rem;
   }
 } 
