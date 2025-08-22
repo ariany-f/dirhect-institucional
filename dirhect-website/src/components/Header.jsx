@@ -200,6 +200,11 @@ const Header = () => {
               </Link>
             </li>
             <li>
+              <Link to="/indique-ganhe" onClick={() => setIsMobileMenuOpen(false)}>
+                Indique e Ganhe
+              </Link>
+            </li>
+            <li>
               <a 
                 href="/#contato" 
                 onClick={(e) => {

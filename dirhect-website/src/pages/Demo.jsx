@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
 import { Building2, Users, Mail, Phone, MapPin, Calendar, CheckCircle2 } from 'lucide-react'
-import { wordpressService } from '../services/wordpressService'
+import { sendDemoEmail } from '../services/emailService'
 import './Demo.css'
 
 const Demo = () => {
@@ -134,18 +134,23 @@ const Demo = () => {
         throw new Error('É necessário aceitar os termos e condições.')
       }
 
-      // Enviar solicitação para WordPress
-      const result = await wordpressService.submitDemoRequest(formData)
-
-      if (result.success) {
-        setSubmitSuccess(true)
+      // Enviar email para a equipe comercial (auto-reply será enviado automaticamente)
+      try {
+        const emailResult = await sendDemoEmail(formData)
+        console.log('Email enviado:', emailResult)
         
-        // Se foi salvo localmente (fallback), mostrar mensagem apropriada
-        if (result.isLocal) {
-          console.log('Solicitação salva localmente para sincronização posterior')
+        if (!emailResult.success) {
+          console.warn('Erro no email principal:', emailResult.message)
+          // Mostrar erro específico do email
+          setSubmitError(`Erro no envio do email: ${emailResult.message}`)
+          return
         }
-      } else {
-        throw new Error(result.message || 'Erro ao enviar solicitação')
+        
+        setSubmitSuccess(true)
+      } catch (emailError) {
+        console.error('Erro ao enviar emails:', emailError)
+        setSubmitError(`Erro inesperado: ${emailError.message}`)
+        return
       }
 
     } catch (error) {
@@ -265,7 +270,7 @@ const Demo = () => {
                       </div>
                     </div>
 
-                    <div className="form-group form-group-full">
+                    <div className="form-group">
                       <label>Número de Funcionários *</label>
                       <div className="input-wrapper">
                         <Users size={20} />

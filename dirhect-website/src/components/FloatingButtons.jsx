@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { ChevronUp, MessageCircle, X, Send } from 'lucide-react'
+import { sendSupportEmail } from '../services/emailService'
 import './FloatingButtons.css'
 
 const FloatingButtons = () => {
@@ -11,14 +12,51 @@ const FloatingButtons = () => {
     subject: '',
     message: ''
   })
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const handleSupportSubmit = (e) => {
+  const handleSupportSubmit = async (e) => {
     e.preventDefault()
-    // Simula envio do formulário
-    console.log('Formulário de suporte enviado:', supportForm)
-    setSupportForm({ name: '', email: '', subject: '', message: '' })
-    setShowSupportForm(false)
-    alert('Sua mensagem foi enviada! Nossa equipe entrará em contato em breve.')
+    setIsSubmitting(true)
+    
+    try {
+      // Validar campos obrigatórios
+      const requiredFields = ['name', 'email', 'subject', 'message']
+      const missingFields = requiredFields.filter(field => !supportForm[field] || supportForm[field].trim() === '')
+      
+      if (missingFields.length > 0) {
+        alert('Por favor, preencha todos os campos obrigatórios.')
+        return
+      }
+
+      // Enviar email para a equipe de suporte (auto-reply será enviado automaticamente)
+      const emailResult = await sendSupportEmail(supportForm)
+      console.log('Email de suporte enviado:', emailResult)
+      
+      if (!emailResult.success) {
+        console.warn('Erro no email principal:', emailResult.message)
+        alert(`Erro no envio do email: ${emailResult.message}`)
+        return
+      }
+      
+      // Limpar formulário e fechar modal
+      setSupportForm({ name: '', email: '', subject: '', message: '' })
+      setShowSupportForm(false)
+      
+      // Mostrar mensagem de sucesso melhorada
+      alert(`
+✅ Mensagem enviada com sucesso!
+
+📧 Você receberá uma confirmação por email em instantes.
+⏰ Nossa equipe de suporte entrará em contato em até 4 horas.
+📞 Contato direto: (11) 96898-9211
+      `)
+      
+    } catch (error) {
+      console.error('Erro ao enviar mensagem de suporte:', error)
+      alert(`Erro inesperado: ${error.message}`)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const handleInputChange = (e) => {
@@ -128,9 +166,22 @@ const FloatingButtons = () => {
                 ></textarea>
               </div>
 
-              <button type="submit" className="support-submit-btn">
-                <Send size={16} />
-                <span>Enviar Mensagem</span>
+              <button 
+                type="submit" 
+                className="support-submit-btn"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  <>
+                    <div className="support-submit-spinner"></div>
+                    <span>Enviando...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send size={16} />
+                    <span>Enviar Mensagem</span>
+                  </>
+                )}
               </button>
             </form>
           </div>

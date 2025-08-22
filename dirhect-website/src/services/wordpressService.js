@@ -2144,5 +2144,41 @@ export const wordpressService = {
         }
       }
     ]
+  },
+
+  // Função para enviar solicitação de demonstração
+  async submitDemoRequest(formData) {
+    try {
+      // Simular envio para WordPress (fallback local)
+      console.log('Enviando solicitação de demonstração:', formData)
+      
+      // Simular delay de rede
+      await new Promise(resolve => setTimeout(resolve, 1000))
+      
+      // Salvar localmente como fallback
+      const demoRequests = JSON.parse(localStorage.getItem('demoRequests') || '[]')
+      const newRequest = {
+        id: Date.now(),
+        ...formData,
+        createdAt: new Date().toISOString(),
+        status: 'pending'
+      }
+      demoRequests.push(newRequest)
+      localStorage.setItem('demoRequests', JSON.stringify(demoRequests))
+      
+      return {
+        success: true,
+        message: 'Solicitação enviada com sucesso!',
+        isLocal: true,
+        data: newRequest
+      }
+    } catch (error) {
+      console.error('Erro ao enviar solicitação de demonstração:', error)
+      return {
+        success: false,
+        message: 'Erro ao enviar solicitação. Tente novamente.',
+        error: error.message
+      }
+    }
   }
 }

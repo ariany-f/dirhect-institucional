@@ -1,0 +1,1416 @@
+/* Indique e Ganhe - Design Moderno e Atraente */
+
+/* Variáveis de cores - Paleta Vibrante */
+:root {
+  --indique-primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --indique-secondary-gradient: linear-gradient(135deg, #a855f7 0%, #8b5cf6 100%);
+  --indique-accent-gradient: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  --indique-gold-gradient: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  --indique-purple-gradient: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+  --indique-blue-gradient: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+  --indique-primary-color: #667eea;
+  --indique-secondary-color: #764ba2;
+  --indique-accent-color: #fbbf24;
+  --indique-gold-color: #fbbf24;
+  --indique-purple-color: #8b5cf6;
+  --indique-text-dark: #1f2937;
+  --indique-text-light: #6b7280;
+  --indique-bg-light: #f8fafc;
+  --indique-bg-white: #ffffff;
+  --indique-shadow-soft: 0 4px 6px rgba(0, 0, 0, 0.05);
+  --indique-shadow-medium: 0 10px 25px rgba(0, 0, 0, 0.1);
+  --indique-shadow-strong: 0 20px 40px rgba(0, 0, 0, 0.15);
+  --indique-shadow-gold: 0 8px 32px rgba(251, 191, 36, 0.3);
+  --indique-shadow-purple: 0 8px 32px rgba(139, 92, 246, 0.3);
+}
+
+/* Reset e Base */
+* {
+  box-sizing: border-box;
+}
+
+/* Garantir contraste de texto */
+.indique-como-funciona,
+.indique-vantagens-section,
+.indique-formulario-section,
+.indique-duvidas-section {
+  color: var(--indique-text-dark);
+}
+
+.indique-regras-section,
+.indique-cta-rh {
+  color: white;
+}
+
+/* Hero Section - Design Vibrante */
+.indique-hero {
+  background: var(--indique-primary-gradient);
+  color: white;
+  padding: 120px 0;
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.indique-celebration-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  animation: slideInLeft 1s ease-out 0.1s both;
+}
+
+.indique-hero-subtitle {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+  font-weight: 400;
+  animation: slideInLeft 1s ease-out 0.3s both;
+}
+
+.indique-cta-button {
+  background: var(--indique-gold-gradient);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 2rem;
+  box-shadow: var(--indique-shadow-gold);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: slideInLeft 1s ease-out 0.5s both;
+}
+
+.indique-cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(251, 191, 36, 0.4);
+  background: var(--indique-primary-gradient);
+}
+
+.indique-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%),
+    url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="dots" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23dots)"/></svg>');
+  opacity: 0.6;
+  animation: backgroundFloat 30s ease-in-out infinite;
+}
+
+@keyframes backgroundFloat {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  33% { transform: translate(-10px, -5px) rotate(1deg); }
+  66% { transform: translate(10px, 5px) rotate(-1deg); }
+}
+
+.indique-hero::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 80%;
+  height: 200%;
+  background: var(--indique-secondary-gradient);
+  border-radius: 50%;
+  opacity: 0.15;
+  animation: indique-float 25s ease-in-out infinite;
+}
+
+.indique-hero-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.indique-hero-text h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 2rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  animation: slideInLeft 1s ease-out;
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.indique-hero-text .indique-gradient-text {
+  background: var(--indique-gold-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 900;
+  position: relative;
+}
+
+.indique-hero-text .indique-gradient-text::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--indique-gold-gradient);
+  border-radius: 2px;
+  animation: underlineGrow 1.5s ease-out 0.5s forwards;
+  width: 0;
+}
+
+@keyframes underlineGrow {
+  to { width: 100%; }
+}
+
+.indique-hero-text .indique-highlight {
+  background: var(--indique-gold-gradient);
+  padding: 0.5rem 1.5rem;
+  border-radius: 50px;
+  font-weight: 900;
+  box-shadow: var(--indique-shadow-gold);
+  display: inline-block;
+  transform: rotate(-2deg);
+  animation: bounce 2s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: rotate(-2deg) translateY(0); }
+  50% { transform: rotate(-2deg) translateY(-5px); }
+}
+
+.indique-hero-text p {
+  font-size: clamp(1.1rem, 2vw, 1.3rem);
+  line-height: 1.7;
+  margin-bottom: 3rem;
+  opacity: 0.95;
+  font-weight: 300;
+  animation: slideInLeft 1s ease-out 0.2s both;
+}
+
+.indique-hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+  animation: slideInUp 1s ease-out 0.4s both;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.indique-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+.indique-stat-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.indique-stat-item:hover::before {
+  left: 100%;
+}
+
+.indique-stat-item:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--indique-shadow-medium);
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.indique-stat-item svg {
+  color: var(--indique-gold-color);
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.indique-stat-item:hover svg {
+  transform: scale(1.1);
+}
+
+.indique-stat-item strong {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.indique-stat-item span {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  font-weight: 300;
+}
+
+.indique-hero-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: slideInRight 1s ease-out 0.6s both;
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.indique-reward-card {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(30px);
+  border: 2px solid rgba(251, 191, 36, 0.3);
+  border-radius: 30px;
+  padding: 4rem 3rem;
+  text-align: center;
+  transform: rotate(3deg);
+  animation: indique-float 6s ease-in-out infinite;
+  box-shadow: var(--indique-shadow-gold);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.4s ease;
+}
+
+.indique-reward-card:hover {
+  transform: rotate(3deg) scale(1.05);
+  box-shadow: 0 25px 60px rgba(251, 191, 36, 0.4);
+}
+
+.indique-reward-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: var(--indique-gold-gradient);
+  opacity: 0.1;
+  border-radius: 50%;
+  animation: indique-rotate 20s linear infinite;
+}
+
+.indique-reward-card svg {
+  color: var(--indique-gold-color);
+  margin-bottom: 1.5rem;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+  position: relative;
+  z-index: 2;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.indique-reward-card h3 {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  color: var(--indique-gold-color);
+  margin-bottom: 0.5rem;
+  text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  z-index: 2;
+}
+
+.indique-reward-card p {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  font-weight: 300;
+  position: relative;
+  z-index: 2;
+}
+
+@keyframes indique-float {
+  0%, 100% { transform: rotate(3deg) translateY(0px); }
+  50% { transform: rotate(3deg) translateY(-20px); }
+}
+
+@keyframes indique-rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Como Funciona - Design Colorido */
+.indique-como-funciona {
+  padding: 120px 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  position: relative;
+}
+
+.indique-como-funciona h2,
+.indique-como-funciona h3,
+.indique-como-funciona p {
+  color: var(--indique-text-dark) !important;
+}
+
+.indique-como-funciona::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, transparent, #f8fafc);
+}
+
+.indique-como-funciona h2 {
+  text-align: center;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 4rem;
+  color: var(--indique-text-dark);
+  position: relative;
+}
+
+.indique-como-funciona h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--indique-gold-gradient);
+  border-radius: 2px;
+  animation: expandWidth 1.5s ease-out 0.5s forwards;
+  width: 0;
+}
+
+@keyframes expandWidth {
+  to { width: 80px; }
+}
+
+.indique-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.indique-step-item {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--indique-bg-white);
+  border-radius: 25px;
+  box-shadow: var(--indique-shadow-soft);
+  position: relative;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.indique-step-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--indique-gold-gradient);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.indique-step-item:hover::before {
+  transform: scaleX(1);
+}
+
+.indique-step-item:hover {
+  transform: translateY(-15px);
+  box-shadow: var(--indique-shadow-medium);
+}
+
+.indique-step-number {
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50px;
+  height: 50px;
+  background: var(--indique-gold-gradient);
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.4rem;
+  box-shadow: var(--indique-shadow-medium);
+  transition: transform 0.3s ease;
+}
+
+.indique-step-item:hover .indique-step-number {
+  transform: translateX(-50%) scale(1.1);
+}
+
+.indique-step-icon {
+  margin: 2rem 0 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.indique-step-icon svg {
+  color: var(--indique-primary-color);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.indique-step-item:hover .indique-step-icon svg {
+  transform: scale(1.1);
+}
+
+.indique-step-item h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--indique-text-dark);
+}
+
+.indique-step-item p {
+  color: var(--indique-text-light);
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+/* Regras - Design Colorido */
+.indique-regras-section {
+  padding: 120px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  position: relative;
+}
+
+.indique-regras-section h2,
+.indique-regras-section h4,
+.indique-regras-section p {
+  color: white !important;
+}
+
+.indique-regulamento-link {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.indique-regulamento-btn {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  backdrop-filter: blur(10px);
+}
+
+.indique-regulamento-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+}
+
+.indique-regras-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, #f8fafc, #667eea);
+}
+
+.indique-regras-section h2 {
+  text-align: center;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 4rem;
+  color: white;
+  position: relative;
+}
+
+.indique-regras-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--indique-gold-gradient);
+  border-radius: 2px;
+  animation: expandWidth 1.5s ease-out 0.5s forwards;
+  width: 0;
+}
+
+.indique-regras-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.indique-regra-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  border-left: 5px solid var(--indique-gold-color);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: var(--indique-shadow-soft);
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+}
+
+.indique-regra-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--indique-gold-gradient);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.indique-regra-item:hover::before {
+  opacity: 0.1;
+}
+
+.indique-regra-item:hover {
+  transform: translateX(8px);
+  box-shadow: var(--indique-shadow-medium);
+}
+
+.indique-regra-item svg {
+  color: var(--indique-gold-color);
+  flex-shrink: 0;
+  margin-top: 0.2rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.indique-regra-item:hover svg {
+  transform: scale(1.1);
+}
+
+.indique-regra-item h4 {
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: white;
+  font-size: 1.2rem;
+}
+
+.indique-regra-item p {
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.6;
+}
+
+/* Formulário - Design Colorido */
+.indique-formulario-section {
+  padding: 120px 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  position: relative;
+}
+
+.indique-formulario-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100px;
+  background: linear-gradient(to bottom, #764ba2, #f8fafc);
+}
+
+.indique-formulario-section h2,
+.indique-formulario-section h3,
+.indique-formulario-section p,
+.indique-formulario-section label {
+  color: var(--indique-text-dark) !important;
+}
+
+.indique-form-content {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.indique-form-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.indique-form-header h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: var(--indique-text-dark);
+  position: relative;
+}
+
+.indique-form-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--indique-gold-gradient);
+  border-radius: 2px;
+  animation: expandWidth 1.5s ease-out 0.5s forwards;
+  width: 0;
+}
+
+.indique-form-header p {
+  font-size: 1.2rem;
+  color: var(--indique-text-light);
+  font-weight: 300;
+}
+
+.indique-form {
+  background: var(--indique-bg-white);
+  padding: 4rem;
+  border-radius: 30px;
+  box-shadow: var(--indique-shadow-medium);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.indique-form::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--indique-gold-gradient);
+}
+
+.indique-form-section {
+  margin-bottom: 3rem;
+}
+
+.indique-form-section h3 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  color: var(--indique-text-dark);
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--indique-bg-light);
+  position: relative;
+}
+
+.indique-form-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  width: 50px;
+  height: 2px;
+  background: var(--indique-gold-gradient);
+  border-radius: 1px;
+}
+
+.indique-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.indique-form-group {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.indique-form-group label {
+  font-weight: 600;
+  margin-bottom: 0.8rem;
+  color: var(--indique-text-dark);
+  font-size: 0.95rem;
+  transition: color 0.3s ease;
+}
+
+.indique-form-group:focus-within label {
+  color: var(--indique-primary-color);
+}
+
+.indique-form-group input,
+.indique-form-group select,
+.indique-form-group textarea {
+  padding: 1.2rem;
+  border: 2px solid #e2e8f0;
+  border-radius: 15px;
+  font-size: 1rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--indique-bg-white);
+  font-weight: 400;
+  position: relative;
+  color: var(--indique-text-dark);
+}
+
+.indique-form-group input::placeholder,
+.indique-form-group textarea::placeholder {
+  color: var(--indique-text-light);
+}
+
+.indique-form-group input:focus,
+.indique-form-group select:focus,
+.indique-form-group textarea:focus {
+  outline: none;
+  border-color: var(--indique-primary-color);
+  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+  transform: translateY(-2px);
+  color: var(--indique-text-dark);
+}
+
+.indique-form-group textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+.indique-form-group select option {
+  color: var(--indique-text-dark);
+  background: var(--indique-bg-white);
+}
+
+.indique-submit-btn {
+  width: 100%;
+  padding: 1.8rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  background: var(--indique-gold-gradient);
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-top: 3rem;
+  box-shadow: var(--indique-shadow-gold);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
+.indique-submit-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s ease;
+}
+
+.indique-submit-btn:hover::before {
+  left: 100%;
+}
+
+.indique-submit-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(251, 191, 36, 0.4);
+  background: var(--indique-primary-gradient);
+}
+
+.indique-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.indique-submit-spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  animation: indique-spin 1s linear infinite;
+}
+
+@keyframes indique-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.indique-error-message {
+  background: #fed7d7;
+  color: #c53030;
+  padding: 1.5rem;
+  border-radius: 15px;
+  border: 1px solid #feb2b2;
+  margin-bottom: 2rem;
+  font-weight: 500;
+  animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Vantagens - Design Colorido */
+.indique-vantagens-section {
+  padding: 120px 0;
+  background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+  position: relative;
+}
+
+.indique-vantagens-section h2,
+.indique-vantagens-section h3,
+.indique-vantagens-section p {
+  color: var(--indique-text-dark) !important;
+}
+
+.indique-vantagens-section h2 {
+  text-align: center;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 2rem;
+  color: var(--indique-text-dark);
+  position: relative;
+}
+
+.indique-vantagens-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--indique-gold-gradient);
+  border-radius: 2px;
+  animation: expandWidth 1.5s ease-out 0.5s forwards;
+  width: 0;
+}
+
+.indique-vantagens-subtitle {
+  text-align: center;
+  font-size: 1.2rem;
+  color: var(--indique-text-light);
+  margin-bottom: 4rem;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.7;
+}
+
+.indique-vantagens-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 3rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.indique-vantagem-item {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--indique-bg-white);
+  border-radius: 25px;
+  box-shadow: var(--indique-shadow-soft);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+}
+
+.indique-vantagem-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--indique-gold-gradient);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.indique-vantagem-item:hover::before {
+  transform: scaleX(1);
+}
+
+.indique-vantagem-item:hover {
+  transform: translateY(-15px);
+  box-shadow: var(--indique-shadow-medium);
+}
+
+.indique-vantagem-icon {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.indique-vantagem-icon svg {
+  color: var(--indique-primary-color);
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.indique-vantagem-item:hover .indique-vantagem-icon svg {
+  transform: scale(1.1);
+}
+
+.indique-vantagem-item h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--indique-text-dark);
+}
+
+.indique-vantagem-item p {
+  color: var(--indique-text-light);
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+/* CTA para RH */
+.indique-cta-rh {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
+}
+
+.indique-cta-rh h2,
+.indique-cta-rh p {
+  color: white !important;
+}
+
+.indique-cta-content h2 {
+  font-size: clamp(1.8rem, 3vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 2rem;
+  line-height: 1.3;
+}
+
+.indique-cta-rh-btn {
+  background: var(--indique-gold-gradient);
+  color: white;
+  border: none;
+  padding: 1.2rem 2.5rem;
+  border-radius: 50px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: var(--indique-shadow-gold);
+}
+
+.indique-cta-rh-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(251, 191, 36, 0.4);
+  background: var(--indique-primary-gradient);
+}
+
+/* Dúvidas Frequentes */
+.indique-duvidas-section {
+  padding: 120px 0;
+  background: var(--indique-bg-light);
+}
+
+.indique-duvidas-section h2,
+.indique-duvidas-section h3,
+.indique-duvidas-section p {
+  color: var(--indique-text-dark) !important;
+}
+
+.indique-duvidas-section h2 {
+  text-align: center;
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 4rem;
+  color: var(--indique-text-dark);
+  position: relative;
+}
+
+.indique-duvidas-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: var(--indique-gold-gradient);
+  border-radius: 2px;
+  animation: expandWidth 1.5s ease-out 0.5s forwards;
+  width: 0;
+}
+
+.indique-duvidas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+.indique-duvida-item {
+  background: var(--indique-bg-white);
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: var(--indique-shadow-soft);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.indique-duvida-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--indique-shadow-medium);
+}
+
+.indique-duvida-item h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  color: var(--indique-text-dark);
+}
+
+.indique-duvida-item p {
+  color: var(--indique-text-light);
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+
+
+/* Sucesso - Design Colorido */
+.indique-success {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  position: relative;
+}
+
+.indique-success::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: 
+    radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.15) 0%, transparent 50%);
+  opacity: 0.6;
+  animation: backgroundFloat 30s ease-in-out infinite;
+}
+
+.indique-success-content {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 4rem;
+  background: var(--indique-bg-white);
+  border-radius: 30px;
+  box-shadow: var(--indique-shadow-medium);
+  position: relative;
+  z-index: 2;
+  animation: slideInUp 1s ease-out;
+}
+
+.indique-success-icon {
+  margin-bottom: 3rem;
+  animation: bounce 2s ease-in-out infinite;
+}
+
+.indique-success-icon svg {
+  color: #48bb78;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+}
+
+.indique-success-content h1 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  margin-bottom: 1.5rem;
+  color: var(--indique-text-dark);
+}
+
+.indique-success-content p {
+  font-size: 1.2rem;
+  color: var(--indique-text-light);
+  margin-bottom: 3rem;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.indique-success-info {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+}
+
+.indique-info-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: var(--indique-bg-light);
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  animation: slideInUp 1s ease-out 0.2s both;
+}
+
+.indique-info-item:nth-child(2) { animation-delay: 0.4s; }
+.indique-info-item:nth-child(3) { animation-delay: 0.6s; }
+.indique-info-item:nth-child(4) { animation-delay: 0.8s; }
+
+.indique-info-item:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--indique-shadow-soft);
+}
+
+.indique-info-item svg {
+  color: #48bb78;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+  transition: transform 0.3s ease;
+}
+
+.indique-info-item:hover svg {
+  transform: scale(1.1);
+}
+
+.indique-info-item span {
+  font-weight: 600;
+  color: var(--indique-text-dark);
+}
+
+/* Animações de Scroll */
+.indique-como-funciona,
+.indique-regras-section,
+.indique-formulario-section,
+.indique-vantagens-section {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.indique-como-funciona.visible,
+.indique-regras-section.visible,
+.indique-formulario-section.visible,
+.indique-vantagens-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsividade - Melhorada */
+@media (max-width: 1024px) {
+  .indique-hero-content {
+    gap: 60px;
+  }
+  
+  .indique-hero-text h1 {
+    font-size: 3.5rem;
+  }
+  
+  .indique-reward-card h3 {
+    font-size: 3.5rem;
+  }
+  
+  .indique-steps-grid,
+  .indique-regras-grid,
+  .indique-vantagens-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .indique-hero {
+    padding: 100px 0;
+  }
+  
+  .indique-hero-content {
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    text-align: center;
+  }
+  
+  .indique-hero-text h1 {
+    font-size: 3rem;
+  }
+  
+  .indique-hero-stats {
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 3rem auto 0;
+  }
+  
+  .indique-steps-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  
+  .indique-regras-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .indique-form-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .indique-vantagens-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .indique-success-info {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .indique-duvidas-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .indique-form {
+    padding: 3rem 2rem;
+  }
+  
+  .indique-como-funciona h2,
+  .indique-regras-section h2,
+  .indique-formulario-section h2,
+  .indique-beneficios-section h2 {
+    font-size: 2.5rem;
+  }
+  
+  .indique-hero-text .indique-highlight {
+    transform: none;
+  }
+  
+  .indique-reward-card {
+    transform: none;
+    animation: indique-float 6s ease-in-out infinite;
+  }
+  
+  @keyframes indique-float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-15px); }
+  }
+}
+
+@media (max-width: 480px) {
+  .indique-hero {
+    padding: 80px 0;
+  }
+  
+  .indique-hero-text h1 {
+    font-size: 2.5rem;
+  }
+  
+  .indique-reward-card {
+    padding: 3rem 2rem;
+  }
+  
+  .indique-reward-card h3 {
+    font-size: 3rem;
+  }
+  
+  .indique-form {
+    padding: 2rem 1.5rem;
+  }
+  
+  .indique-success-content {
+    padding: 3rem 2rem;
+  }
+  
+  .indique-como-funciona,
+  .indique-regras-section,
+  .indique-formulario-section,
+  .indique-vantagens-section,
+  .indique-duvidas-section {
+    padding: 80px 0;
+  }
+  
+  .indique-success-info {
+    grid-template-columns: 1fr;
+  }
+} 

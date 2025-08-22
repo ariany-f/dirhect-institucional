@@ -151,6 +151,9 @@ body {
   left: 1rem;
   color: #64748b;
   z-index: 2;
+  pointer-events: none;
+  width: 20px;
+  height: 20px;
 }
 
 .form-group input,
@@ -159,7 +162,7 @@ body {
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding: 1rem 1rem 1rem 3rem;
+  padding: 1rem;
   border: 2px solid #e2e8f0;
   border-radius: 12px;
   font-size: 1rem;
@@ -168,8 +171,9 @@ body {
   background: white;
 }
 
-.form-group input:not(.input-wrapper input) {
-  padding: 1rem;
+.input-wrapper input,
+.input-wrapper select {
+  padding-left: 3rem !important;
 }
 
 .form-group input:focus,
@@ -658,8 +662,9 @@ body {
     font-size: 16px; /* Previne zoom no iOS */
   }
 
-  .form-group input:not(.input-wrapper input) {
-    padding: 1rem;
+  .input-wrapper input,
+  .input-wrapper select {
+    padding-left: 3rem;
   }
 
   .input-wrapper svg {

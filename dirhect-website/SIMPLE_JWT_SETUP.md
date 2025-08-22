@@ -39,13 +39,13 @@ Crie um arquivo `.env` na raiz do projeto React com as seguintes variáveis:
 
 ```env
 # Configurações do WordPress
-VITE_WORDPRESS_API_URL=https://dirhect-institucional.thunderbold.com.br/wp-json/wp/v2
+VITE_WORDPRESS_API_URL=https://wp-api.dirhect.com.br/wp-json/wp/v2
 
 # Chave JWT de descriptografia (Simple JWT Login)
 VITE_JWT_DECRYPTION_KEY=9e2f0b6d8d7a4f21a70d8711c909a532873adea9cf10273c64c4d2c7c9a8f8f2
 
 # Outras configurações
-VITE_SITE_URL=https://dirhect-institucional.thunderbold.com.br
+VITE_SITE_URL=https://wp-api.dirhect.com.br
 ```
 
 **Importante**: 
@@ -148,7 +148,7 @@ curl -X POST https://seu-site.com/wp-json/simple-jwt-login/v1/auth/validate \
 O código React já está configurado para usar estes endpoints. O serviço `wordpressService.js` agora usa as variáveis de ambiente do Vite:
 
 ```javascript
-const WORDPRESS_API_URL = import.meta.env.VITE_WORDPRESS_API_URL || 'https://dirhect-institucional.thunderbold.com.br/wp-json/wp/v2'
+const WORDPRESS_API_URL = import.meta.env.VITE_WORDPRESS_API_URL || 'https://wp-api.dirhect.com.br/wp-json/wp/v2'
 
 // Chave JWT de descriptografia (do .env)
 get JWT_DECRYPTION_KEY() {
