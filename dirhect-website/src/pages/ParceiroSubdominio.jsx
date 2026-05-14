@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
 /** Bump ao alterar `public/parceiro-template.html` para forçar novo pedido (query string). */
-const PARTNER_TEMPLATE_VERSION = 'partner-page-r140-stack-diagram-artboard'
+const PARTNER_TEMPLATE_VERSION = 'partner-page-r142-link-5191'
 
 function partnerTemplateUrl() {
   const base = import.meta.env.BASE_URL || '/'

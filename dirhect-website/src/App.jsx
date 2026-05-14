@@ -38,7 +38,7 @@ import Parceiros from './pages/Parceiros'
 import CookieConsent from './components/CookieConsent'
 import ColaboradorLogin from './pages/ColaboradorLogin'
 import ColaboradorPainel from './pages/ColaboradorPainel'
-import ParceiroSubdominio from './pages/ParceiroSubdominio.jsx?v=partner-page-r140-stack-diagram-artboard'
+import ParceiroSubdominio from './pages/ParceiroSubdominio.jsx?v=partner-page-r142-link-5191'
 
 const GRADIENT = 'linear-gradient(to left, #0c004c, #5d0b62)';
 
