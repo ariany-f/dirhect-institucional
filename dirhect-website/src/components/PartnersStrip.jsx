@@ -17,7 +17,7 @@ const PartnersStrip = () => {
   const duplicatedPartners = [...partners, ...partners, ...partners]
 
   const handleClick = () => {
-    navigate('/parceiros')
+    navigate('/parceiro')
   }
 
   return (

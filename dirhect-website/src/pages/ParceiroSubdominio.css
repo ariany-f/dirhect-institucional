@@ -1,0 +1,127 @@
+.partner-subdomain-page {
+  min-height: 100vh;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.partner-subdomain-container {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.partner-subdomain-hero {
+  padding: 7rem 0 4rem;
+  background: linear-gradient(160deg, #0c004c 0%, #431170 55%, #5d0b62 100%);
+  color: #fff;
+}
+
+.partner-subdomain-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  border-radius: 999px;
+  padding: 0.45rem 0.9rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+}
+
+.partner-subdomain-hero h1 {
+  margin: 0;
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.1;
+}
+
+.partner-subdomain-hero h1 span {
+  color: #ffcb4f;
+}
+
+.partner-subdomain-hero p {
+  margin: 1rem 0 0;
+  max-width: 720px;
+  font-size: 1.08rem;
+  line-height: 1.6;
+  opacity: 0.96;
+}
+
+.partner-subdomain-actions {
+  margin-top: 1.75rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.partner-subdomain-actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  text-decoration: none;
+  padding: 0.75rem 1rem;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.partner-subdomain-actions .primary {
+  background: #ffcb4f;
+  color: #2a1c00;
+}
+
+.partner-subdomain-actions .secondary {
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #fff;
+}
+
+.partner-subdomain-benefits {
+  padding: 3rem 0 4rem;
+}
+
+.partner-subdomain-benefits h2 {
+  margin: 0 0 1.25rem;
+  font-size: 1.9rem;
+}
+
+.partner-subdomain-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.partner-subdomain-grid article {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 1.1rem;
+}
+
+.partner-subdomain-grid article h3 {
+  margin: 0.65rem 0 0.45rem;
+  font-size: 1.1rem;
+}
+
+.partner-subdomain-grid article p {
+  margin: 0;
+  color: #475569;
+  line-height: 1.55;
+}
+
+.partner-subdomain-list {
+  margin: 1.4rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.partner-subdomain-list li {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+@media (max-width: 840px) {
+  .partner-subdomain-grid {
+    grid-template-columns: 1fr;
+  }
+}

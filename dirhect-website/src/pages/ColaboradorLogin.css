@@ -1,0 +1,191 @@
+.colab-login-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
+}
+
+.colab-login-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 1.25rem 3.5rem;
+  min-height: calc(100vh - 120px);
+}
+
+.colab-login-card {
+  width: 100%;
+  max-width: 440px;
+  background: rgba(255, 255, 255, 0.97);
+  border-radius: 20px;
+  padding: 2.5rem 2rem;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  position: relative;
+}
+
+.colab-login-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  border-radius: 20px 20px 0 0;
+  background: var(--gradient);
+}
+
+.colab-login-badge {
+  display: flex;
+  justify-content: center;
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.colab-login-title {
+  margin: 0 0 0.5rem;
+  font-size: 1.65rem;
+  font-weight: 800;
+  text-align: center;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.colab-login-subtitle {
+  margin: 0 0 1.75rem;
+  text-align: center;
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.colab-login-tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.colab-login-tabs button {
+  padding: 0.7rem 1rem;
+  border: 2px solid var(--gray-200);
+  border-radius: 12px;
+  background: #f8fafc;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, color 0.2s;
+}
+
+.colab-login-tabs button.active {
+  background: white;
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.colab-login-error {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.22);
+  color: var(--error-color, #b91c1c);
+  font-size: 0.875rem;
+  margin-bottom: 1.25rem;
+}
+
+.colab-login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.colab-login-field {
+  margin-bottom: 1.1rem;
+}
+
+.colab-login-field label {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 600;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+}
+
+.colab-login-field input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--gray-200);
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.colab-login-field input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(12, 0, 76, 0.08);
+}
+
+.colab-login-submit {
+  margin-top: 0.35rem;
+  width: 100%;
+  padding: 0.9rem 1.25rem;
+  border: none;
+  border-radius: 12px;
+  background: var(--gradient);
+  color: white;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.colab-login-submit:hover:not(:disabled) {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.colab-login-submit:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.colab-login-switch {
+  margin: 1.25rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.colab-login-link-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  font-weight: 700;
+  color: var(--primary-color);
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.colab-login-link-btn:hover {
+  opacity: 0.9;
+}
+
+.colab-login-back {
+  margin: 1.5rem 0 0;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.colab-login-back a {
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.colab-login-back a:hover {
+  color: var(--primary-color);
+}

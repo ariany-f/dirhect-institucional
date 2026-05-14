@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Links rápidos — Dirhect (dev)</title>
+  <style>
+    :root { font-family: system-ui, sans-serif; color: #1b2232; background: #f6f7fb; }
+    body { max-width: 44rem; margin: 0 auto; padding: 2rem 1.25rem 3rem; line-height: 1.5; }
+    h1 { font-size: 1.35rem; margin: 0 0 0.5rem; }
+    h2 { font-size: 1rem; margin: 1.75rem 0 0.65rem; color: #374151; font-weight: 700; }
+    .hint { color: #5c6578; font-size: 0.9rem; margin: 0 0 1.25rem; }
+    ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; }
+    a {
+      display: block; padding: 0.65rem 1rem; background: #fff; border-radius: 10px;
+      border: 1px solid #e2e6ee; color: #0c004c; text-decoration: none; font-weight: 600;
+    }
+    a:hover { border-color: #c4c9d4; background: #fafbff; }
+    .partner-cta a {
+      display: block; padding: 0.85rem 1.1rem; background: linear-gradient(135deg, #0c004c 0%, #5d0b62 100%);
+      color: #fff !important; border: none; border-radius: 12px; font-weight: 700; text-align: center;
+    }
+    .partner-cta a:hover { filter: brightness(1.08); }
+    code { font-size: 0.85em; background: #eef0f5; padding: 0.15em 0.4em; border-radius: 4px; }
+    .nav-other { margin-top: 2rem; padding-top: 1.25rem; border-top: 1px solid #e2e6ee; font-size: 0.9rem; color: #5c6578; }
+    .nav-other a { display: inline; padding: 0; border: none; background: none; font-weight: 600; color: #D98A00; }
+    .nav-other a:hover { text-decoration: underline; background: none; }
+  </style>
+</head>
+<body>
+  <h1>Links rápidos</h1>
+  <p class="partner-cta" style="margin:0 0 1rem;">
+    <a href="/parceiro">Ir para a página do parceiro (<code>/parceiro</code>)</a>
+  </p>
+  <p class="hint" style="margin-bottom:0.75rem;">
+    Atalho fixo porta <strong>5191</strong>:
+    <a href="/parceiro-5191.html"><code>/parceiro-5191.html</code></a>
+    ou <a href="http://127.0.0.1:5191/parceiro-5191.html">http://127.0.0.1:5191/parceiro-5191.html</a>
+  </p>
+  <p class="hint" style="margin-bottom:1rem;">
+    <strong>Não abre nada?</strong> Segue o passo a passo:
+    <a href="/ajuda-visualizar-local.html">ajuda-visualizar-local.html</a>
+  </p>
+  <p class="hint">
+    Vite na porta <strong>5191</strong>. URLs absolutas com o host que estás a usar (troca
+    <code>127.0.0.1</code> ↔ <code>localhost</code> se precisares).
+  </p>
+
+  <h2>Parceiros</h2>
+  <ul>
+    <li><a href="/parceiro">Programa de parceiros (<code>/parceiro</code>)</a></li>
+    <li><a href="/parceiros">Integrações e ecossistema (<code>/parceiros</code>)</a></li>
+    <li><a href="http://parceiro.localhost:5191/">Subdomínio <code>parceiro.localhost:5191</code></a></li>
+    <li><a href="/parceiro-template.html" target="_blank" rel="noopener">HTML bruto do iframe (<code>/parceiro-template.html</code>)</a></li>
+  </ul>
+
+  <h2>Site</h2>
+  <ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/demo">Demonstração</a></li>
+    <li><a href="/indique-ganhe">Indique e Ganhe</a></li>
+    <li><a href="/area-colaborador">Área do colaborador</a></li>
+    <li><a href="/conhecimento">Banco de conhecimento</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/docs">Documentação</a></li>
+  </ul>
+
+  <div class="nav-other">
+    Outras páginas de atalhos:
+    <a href="/links-locais.html">links-locais.html</a> (127.0.0.1) ·
+    <a href="/links-localhost.html">links-localhost.html</a> (localhost)
+  </div>
+</body>
+</html>

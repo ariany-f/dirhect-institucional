@@ -36,10 +36,30 @@ import FloatingButtons from './components/FloatingButtons'
 import PartnersStrip from './components/PartnersStrip'
 import Parceiros from './pages/Parceiros'
 import CookieConsent from './components/CookieConsent'
+import ColaboradorLogin from './pages/ColaboradorLogin'
+import ColaboradorPainel from './pages/ColaboradorPainel'
+import ParceiroSubdominio from './pages/ParceiroSubdominio.jsx?v=partner-page-r140-stack-diagram-artboard'
 
 const GRADIENT = 'linear-gradient(to left, #0c004c, #5d0b62)';
 
 function App() {
+  const hostname = window.location.hostname.toLowerCase()
+  const isPartnerRoute = window.location.pathname === '/parceiro'
+  const isPartnerSubdomain =
+    hostname === 'parceiro.localhost' ||
+    hostname === 'parceiro.127.0.0.1' ||
+    hostname.startsWith('parceiro.')
+
+  if (isPartnerSubdomain) {
+    return (
+      <Router>
+        <Routes>
+          <Route path="*" element={<ParceiroSubdominio />} />
+        </Routes>
+      </Router>
+    )
+  }
+
   // Lida com navegação por âncora quando a página carrega
   useEffect(() => {
     const hash = window.location.hash
@@ -56,7 +76,7 @@ function App() {
   return (
     <Router>
       <div className="app">
-        <Header />
+        {!isPartnerRoute && <Header />}
         <Routes>
           <Route path="/" element={
             <>
@@ -89,6 +109,9 @@ function App() {
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/termos-uso" element={<TermosUso />} />
           <Route path="/parceiros" element={<Parceiros />} />
+          <Route path="/parceiro" element={<ParceiroSubdominio />} />
+          <Route path="/area-colaborador" element={<ColaboradorLogin />} />
+          <Route path="/area-colaborador/painel" element={<ColaboradorPainel />} />
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/criar-post" element={<CriarPost />} />
           <Route path="/admin/criar-roadmap" element={<CriarRoadmap />} />

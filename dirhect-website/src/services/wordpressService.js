@@ -1,6 +1,33 @@
 // Usar import.meta.env para Vite em vez de process.env
 const WORDPRESS_API_URL = import.meta.env.VITE_WORDPRESS_API_URL || 'https://wp-api.dirhect.com.br/wp-json/wp/v2'
 
+/**
+ * Base REST até /wp-json (sem barra no final).
+ * Use VITE_WORDPRESS_REST_BASE se a URL da API não seguir o padrão .../wp-json/wp/v2
+ */
+function getWordpressRestBase() {
+  const explicit = import.meta.env.VITE_WORDPRESS_REST_BASE
+  if (explicit != null && String(explicit).trim() !== '') {
+    return String(explicit).trim().replace(/\/+$/, '')
+  }
+  const api = String(WORDPRESS_API_URL || '').trim().replace(/\/+$/, '')
+  if (!api) return ''
+  if (/\/wp\/v2\/?$/i.test(api)) {
+    return api.replace(/\/wp\/v2\/?$/i, '')
+  }
+  const idx = api.toLowerCase().indexOf('/wp-json')
+  if (idx !== -1) {
+    return api.slice(0, idx + '/wp-json'.length)
+  }
+  try {
+    const href = /^https?:\/\//i.test(api) ? api : `https://${api}`
+    const u = new URL(href)
+    return `${u.origin}/wp-json`
+  } catch {
+    return api
+  }
+}
+
 // Cache para o ID da categoria roadmap
 let roadmapCategoryId = null
 // Cache para o ID da categoria banco-conhecimento
@@ -21,7 +48,7 @@ export const wordpressService = {
 
   // URL base para endpoints JWT (sempre Simple JWT Login)
   async getJWT_API_URL() {
-    return WORDPRESS_API_URL.replace('/wp/v2', '/simple-jwt-login/v1')
+    return `${getWordpressRestBase()}/simple-jwt-login/v1`
   },
 
   // Chave JWT de descriptografia (do .env)
@@ -2180,5 +2207,172 @@ export const wordpressService = {
         error: error.message
       }
     }
+  },
+
+  getDirhectRestBase() {
+    return getWordpressRestBase()
+  },
+
+  isCollaboratorTokenExpired() {
+    const expiry = localStorage.getItem('collaboratorTokenExpiry')
+    if (!expiry) return true
+    return Date.now() > parseInt(expiry, 10)
+  },
+
+  isCollaboratorAuthenticated() {
+    const token = localStorage.getItem('collaboratorToken')
+    if (!token) return false
+    if (this.isCollaboratorTokenExpired()) {
+      this.collaboratorLogout()
+      return false
+    }
+    if (!localStorage.getItem('collaboratorUser')) {
+      this.collaboratorLogout()
+      return false
+    }
+    return true
+  },
+
+  getCollaboratorToken() {
+    if (!this.isCollaboratorAuthenticated()) return null
+    return localStorage.getItem('collaboratorToken')
+  },
+
+  getCollaboratorUser() {
+    if (!this.isCollaboratorAuthenticated()) return null
+    const raw = localStorage.getItem('collaboratorUser')
+    try {
+      return raw ? JSON.parse(raw) : null
+    } catch {
+      return null
+    }
+  },
+
+  collaboratorLogout() {
+    localStorage.removeItem('collaboratorToken')
+    localStorage.removeItem('collaboratorUser')
+    localStorage.removeItem('collaboratorTokenExpiry')
+    window.dispatchEvent(
+      new CustomEvent('collaboratorAuthChanged', {
+        detail: { isAuthenticated: false, user: null },
+      })
+    )
+    return { success: true }
+  },
+
+  async collaboratorLogin(username, password) {
+    const jwtApiUrl = await this.getJWT_API_URL()
+    let response
+    let data
+
+    if (username.includes('@')) {
+      response = await fetch(`${jwtApiUrl}/auth`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: username, password }),
+      })
+      data = await response.json().catch(() => ({}))
+    } else {
+      response = await fetch(`${jwtApiUrl}/auth`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, password }),
+      })
+      if (!response.ok) {
+        response = await fetch(`${jwtApiUrl}/auth`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ login: username, password }),
+        })
+      }
+      data = await response.json().catch(() => ({}))
+    }
+
+    if (!response.ok || !data.success || !data.data?.jwt) {
+      throw new Error(data?.message || data?.data?.message || 'Credenciais inválidas')
+    }
+
+    const token = data.data.jwt
+    const userInfo = await this.getCurrentUserInfo(token)
+
+    localStorage.setItem('collaboratorToken', token)
+    localStorage.setItem(
+      'collaboratorUser',
+      JSON.stringify({
+        id: userInfo.id,
+        email: userInfo.email,
+        name: userInfo.name,
+        roles: userInfo.roles || [],
+      })
+    )
+    localStorage.setItem(
+      'collaboratorTokenExpiry',
+      String(Date.now() + 7 * 24 * 60 * 60 * 1000)
+    )
+
+    const user = {
+      id: userInfo.id,
+      email: userInfo.email,
+      name: userInfo.name,
+      roles: userInfo.roles || [],
+    }
+
+    window.dispatchEvent(
+      new CustomEvent('collaboratorAuthChanged', {
+        detail: { isAuthenticated: true, user },
+      })
+    )
+
+    return { success: true, token, user }
+  },
+
+  _isRestNoRouteResponse(response, data) {
+    return (
+      response.status === 404 ||
+      data?.code === 'rest_no_route' ||
+      (typeof data?.message === 'string' && data.message.includes('Nenhuma rota foi encontrada'))
+    )
+  },
+
+  async collaboratorRegister({ name, email, password }) {
+    const base = this.getDirhectRestBase()
+    const body = JSON.stringify({ name, email, password })
+    const headers = { 'Content-Type': 'application/json' }
+
+    const primaryUrl = `${base}/dirhect/v1/colaborador/register`
+    const homeUrl = base.replace(/\/wp-json$/i, '')
+    const plainPermalinkUrl = `${homeUrl}/index.php?rest_route=/dirhect/v1/colaborador/register`
+
+    const postRegister = async (url) => {
+      const response = await fetch(url, { method: 'POST', headers, body })
+      const data = await response.json().catch(() => ({}))
+      return { response, data }
+    }
+
+    let { response, data } = await postRegister(primaryUrl)
+
+    if (!response.ok && this._isRestNoRouteResponse(response, data) && plainPermalinkUrl !== primaryUrl) {
+      const second = await postRegister(plainPermalinkUrl)
+      response = second.response
+      data = second.data
+    }
+
+    if (!response.ok) {
+      if (this._isRestNoRouteResponse(response, data)) {
+        throw new Error(
+          'Cadastro: o WordPress ainda não tem a rota dirhect/v1/colaborador/register. ' +
+            '1) Copie o arquivo mu-plugins/dirhect-colaborador-endpoint.php do projeto para wp-content/mu-plugins/ no servidor (pasta mu-plugins ao lado de plugins). ' +
+            '2) Ou ative o plugin Dirhect Custom JWT Endpoints (wordpress-custom-endpoints.php). ' +
+            '3) Confirme VITE_WORDPRESS_API_URL apontando para ESTE WordPress (ex.: https://seu-dominio/wp-json/wp/v2). ' +
+            '4) Opcional: VITE_WORDPRESS_REST_BASE=https://seu-dominio/wp-json'
+        )
+      }
+      const msg =
+        data?.message ||
+        (typeof data?.code === 'string' ? data.code : null) ||
+        'Não foi possível concluir o cadastro'
+      throw new Error(msg)
+    }
+    return data
   }
 }

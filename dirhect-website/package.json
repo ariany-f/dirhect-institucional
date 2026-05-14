@@ -5,11 +5,16 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:open": "vite --open",
+    "dev:parceiro": "vite --open /parceiro",
     "build": "vite build",
     "build:hostinger": "vite build",
     "postbuild": "node -e \"const fs=require('fs');const path=require('path');if(fs.existsSync('public/.htaccess')){fs.copyFileSync('public/.htaccess','dist/.htaccess');console.log('.htaccess copiado para dist/');}\"",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "ports:clear-below-5209": "bash scripts/clear-ports-through-5208.sh",
+    "ports:clear-below-5191": "bash scripts/clear-ports-through-5208.sh",
+    "ports:clear-vite-fallbacks": "START_PORT=5173 END_PORT=5208 bash scripts/clear-ports-through-5208.sh"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

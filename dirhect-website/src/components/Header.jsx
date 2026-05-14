@@ -9,6 +9,8 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState(null)
+  const [collaboratorAuth, setCollaboratorAuth] = useState(false)
+  const [collaboratorUser, setCollaboratorUser] = useState(null)
 
   // Verificar autenticação ao carregar e periodicamente
   useEffect(() => {
@@ -57,17 +59,35 @@ const Header = () => {
         isChecking = false
       }
     }
+
+    const syncCollaborator = () => {
+      const ok = wordpressService.isCollaboratorAuthenticated()
+      setCollaboratorAuth(ok)
+      setCollaboratorUser(ok ? wordpressService.getCollaboratorUser() : null)
+    }
     
     // Verificar imediatamente
     checkAuth()
+    syncCollaborator()
     
     // Verificar a cada 5 minutos (300 segundos) em vez de 30 segundos
-    const interval = setInterval(checkAuth, 300000)
+    const interval = setInterval(() => {
+      checkAuth()
+      syncCollaborator()
+    }, 300000)
     
     // Verificar mudanças no localStorage
     const handleStorageChange = (e) => {
-      if (e.key === 'adminToken' || e.key === 'adminUser' || e.key === 'adminTokenExpiry') {
+      if (
+        e.key === 'adminToken' ||
+        e.key === 'adminUser' ||
+        e.key === 'adminTokenExpiry' ||
+        e.key === 'collaboratorToken' ||
+        e.key === 'collaboratorUser' ||
+        e.key === 'collaboratorTokenExpiry'
+      ) {
         checkAuth()
+        syncCollaborator()
       }
     }
     
@@ -83,16 +103,23 @@ const Header = () => {
       setIsAuthenticated(e.detail.isAuthenticated)
       setUser(e.detail.user)
     }
+
+    const handleCollaboratorAuthChange = (e) => {
+      setCollaboratorAuth(!!e.detail?.isAuthenticated)
+      setCollaboratorUser(e.detail?.user || null)
+    }
     
     window.addEventListener('storage', handleStorageChange)
     window.addEventListener('focus', handleFocus)
     window.addEventListener('authStateChanged', handleAuthStateChange)
+    window.addEventListener('collaboratorAuthChanged', handleCollaboratorAuthChange)
     
     return () => {
       clearInterval(interval)
       window.removeEventListener('storage', handleStorageChange)
       window.removeEventListener('focus', handleFocus)
       window.removeEventListener('authStateChanged', handleAuthStateChange)
+      window.removeEventListener('collaboratorAuthChanged', handleCollaboratorAuthChange)
     }
   }, [isAuthenticated]) // Adicionar isAuthenticated como dependência
 
@@ -137,6 +164,14 @@ const Header = () => {
     setUser(null)
     setIsMobileMenuOpen(false)
     // Redirecionar para a página inicial
+    window.location.href = '/'
+  }
+
+  const handleCollaboratorLogout = () => {
+    wordpressService.collaboratorLogout()
+    setCollaboratorAuth(false)
+    setCollaboratorUser(null)
+    setIsMobileMenuOpen(false)
     window.location.href = '/'
   }
 
@@ -201,10 +236,18 @@ const Header = () => {
                 </li>
               </ul>
             </li>
-            <li>
-              <Link to="/parceiros" onClick={() => setIsMobileMenuOpen(false)}>
+            <li className="nav-item-with-dropdown">
+              <Link to="/parceiro" onClick={() => setIsMobileMenuOpen(false)}>
                 Parceiros
+                <ChevronDown size={16} className="dropdown-chevron" />
               </Link>
+              <ul className="dropdown-menu">
+                <li>
+                  <Link to="/parceiros" onClick={() => setIsMobileMenuOpen(false)}>
+                    Integrações e ecossistema
+                  </Link>
+                </li>
+              </ul>
             </li>
             <li>
               <Link to="/conhecimento" onClick={() => setIsMobileMenuOpen(false)}>
@@ -215,6 +258,11 @@ const Header = () => {
             <li>
               <Link to="/indique-ganhe" onClick={() => setIsMobileMenuOpen(false)}>
                 Indique e Ganhe
+              </Link>
+            </li>
+            <li>
+              <Link to="/area-colaborador" onClick={() => setIsMobileMenuOpen(false)}>
+                Área do colaborador
               </Link>
             </li>
             <li>
@@ -230,7 +278,7 @@ const Header = () => {
             </li>
           </ul>
           
-          {/* Área do usuário logado */}
+          {/* Área do usuário logado (admin) */}
           {isAuthenticated && user && (
             <div className="user-area">
               <div className="user-info">
@@ -246,9 +294,31 @@ const Header = () => {
               </button>
             </div>
           )}
+
+          {!isAuthenticated && collaboratorAuth && collaboratorUser && (
+            <div className="user-area">
+              <Link
+                to="/area-colaborador/painel"
+                className="user-info"
+                style={{ textDecoration: 'none', color: 'inherit' }}
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                <User size={16} />
+                <span className="user-name">{collaboratorUser.name}</span>
+              </Link>
+              <button
+                type="button"
+                className="logout-btn"
+                onClick={handleCollaboratorLogout}
+                title="Sair"
+              >
+                <LogOut size={16} />
+              </button>
+            </div>
+          )}
           
           {/* Botão de demonstração apenas para usuários não logados */}
-          {!isAuthenticated && (
+          {!isAuthenticated && !collaboratorAuth && (
             <Link 
               to="/demo" 
               className="cta-button"

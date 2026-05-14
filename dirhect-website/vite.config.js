@@ -17,6 +17,15 @@ export default defineConfig({
     }
   },
   server: {
-    historyApiFallback: true
-  }
+    historyApiFallback: true,
+    /** 127.0.0.1 evita falhas ao enumerar interfaces (ex.: alguns VPNs / ambientes restritos). */
+    host: '127.0.0.1',
+    port: 5191,
+    /** Se 5191 estiver ocupada, o Vite usa a seguinte e mostra o URL no terminal. */
+    strictPort: false,
+    allowedHosts: ['parceiro.localhost', 'localhost', '127.0.0.1', 'parceiro.127.0.0.1'],
+    headers: {
+      'Cache-Control': 'no-store',
+    },
+  },
 })

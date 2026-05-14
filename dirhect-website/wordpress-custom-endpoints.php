@@ -2,7 +2,7 @@
 /**
  * Plugin Name: Dirhect Custom JWT Endpoints
  * Description: Endpoints customizados para autenticação JWT e criação de posts
- * Version: 1.0.1
+ * Version: 1.0.3
  * Author: Dirhect
  */
 
@@ -54,6 +54,73 @@ class DirhectCustomJWTEndpoints {
             'callback' => array($this, 'validate_jwt'),
             'permission_callback' => '__return_true'
         ));
+
+        // Cadastro público de colaborador (subscriber)
+        register_rest_route('dirhect/v1', '/colaborador/register', array(
+            'methods' => 'POST',
+            'callback' => array($this, 'colaborador_register'),
+            'permission_callback' => '__return_true',
+            'args' => array(
+                'name' => array(
+                    'required' => true,
+                    'sanitize_callback' => 'sanitize_text_field'
+                ),
+                'email' => array(
+                    'required' => true,
+                    'sanitize_callback' => 'sanitize_email'
+                ),
+                'password' => array(
+                    'required' => true,
+                    'type' => 'string'
+                )
+            )
+        ));
+    }
+
+    public function colaborador_register($request) {
+        $email = $request->get_param('email');
+        $password = $request->get_param('password');
+        $name = $request->get_param('name');
+
+        if (strlen((string) $password) < 8) {
+            return new WP_Error('weak_password', 'A senha deve ter no mínimo 8 caracteres.', array('status' => 400));
+        }
+
+        if (email_exists($email)) {
+            return new WP_Error('email_exists', 'Este e-mail já está cadastrado.', array('status' => 400));
+        }
+
+        $email_local = strstr($email, '@', true);
+        $base = sanitize_user($email_local ? $email_local : 'colaborador', true);
+        if ($base === '') {
+            $base = 'colaborador';
+        }
+
+        $username = $base;
+        $i = 0;
+        while (username_exists($username)) {
+            $i++;
+            $username = $base . $i;
+        }
+
+        $user_id = wp_create_user($username, $password, $email);
+        if (is_wp_error($user_id)) {
+            return $user_id;
+        }
+
+        wp_update_user(array(
+            'ID' => $user_id,
+            'display_name' => $name,
+            'first_name' => $name,
+            'role' => 'subscriber'
+        ));
+
+        return array(
+            'success' => true,
+            'message' => 'Conta criada. Faça login com seu e-mail e senha.',
+            'user_id' => (int) $user_id,
+            'username' => $username
+        );
     }
     
     public function check_jwt_permission($request) {

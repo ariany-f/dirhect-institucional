@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Ajuda — ver o site no computador</title>
+  <style>
+    body { font-family: system-ui, sans-serif; max-width: 40rem; margin: 0 auto; padding: 1.5rem; line-height: 1.55; color: #1b2232; background: #fafafa; }
+    h1 { font-size: 1.25rem; margin-top: 0; }
+    ol { padding-left: 1.2rem; }
+    li { margin-bottom: 0.6rem; }
+    code { background: #eee; padding: 0.1em 0.35em; border-radius: 4px; font-size: 0.9em; }
+    .box { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 1rem 1.1rem; margin: 1rem 0; }
+    a { color: #D98A00; font-weight: 600; }
+  </style>
+</head>
+<body>
+  <h1>Como visualizar o site (desenvolvimento local)</h1>
+
+  <div class="box">
+    <ol>
+      <li>Abre o terminal na pasta do projeto: <code>dirhect-website</code> (não na raiz <code>ProjetoDirhect</code> só, a menos que o <code>package.json</code> esteja lá).</li>
+      <li>Instala dependências uma vez: <code>npm install</code></li>
+      <li>Inicia o servidor: <code>npm run dev</code> — ou já abre no programa de parceiros: <code>npm run dev:parceiro</code></li>
+      <li>No terminal, o Vite mostra o endereço (porta <strong>5191</strong> se estiver livre; se aparecer 5192, 5193, etc., usa <strong>esse</strong> URL). Abre no browser:
+        <ul>
+          <li><a href="http://127.0.0.1:5191/parceiro">http://127.0.0.1:5191/parceiro</a> (página do parceiro)</li>
+          <li><a href="http://127.0.0.1:5191/">http://127.0.0.1:5191/</a> (home)</li>
+        </ul>
+      </li>
+      <li>Se a porta 5191 estiver ocupada, o Vite escolhe outra (ex. 5192) — usa <strong>exatamente</strong> o URL que aparecer no terminal.</li>
+      <li>Para abrir o browser automaticamente: <code>npm run dev:open</code> (home) ou <code>npm run dev:parceiro</code> (abre <code>/parceiro</code>).</li>
+    </ol>
+  </div>
+
+  <p><strong>Página em branco em <code>/parceiro</code>?</strong> A app carrega o ficheiro estático <code>/parceiro-template.html</code>. Abre
+    <a href="/parceiro-template.html">/parceiro-template.html</a> — se der 404, o ficheiro não está em <code>public/parceiro-template.html</code> ou o servidor não é o deste projeto.</p>
+
+  <p><a href="/links-rapidos.html">← Voltar aos links rápidos</a></p>
+</body>
+</html>
