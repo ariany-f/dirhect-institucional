@@ -21,7 +21,7 @@ import {
   Heart,
   Gift
 } from 'lucide-react'
-import Header from '../components/Header'
+import Header from '../components/Header.jsx?v=menu-nav-20260521'
 import Footer from '../components/Footer'
 import { sendDemoEmail } from '../services/emailService'
 import './AdmissaoDigital.css'

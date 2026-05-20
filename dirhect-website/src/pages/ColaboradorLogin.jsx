@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import Header from '../components/Header'
+import Header from '../components/Header.jsx?v=menu-nav-20260521'
 import Footer from '../components/Footer'
 import { wordpressService } from '../services/wordpressService'
 import { LogIn, UserPlus, AlertCircle } from 'lucide-react'

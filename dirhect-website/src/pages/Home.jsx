@@ -1,4 +1,4 @@
-import Header from '../components/Header'
+import Header from '../components/Header.jsx?v=menu-nav-20260521'
 import Hero from '../components/Hero'
 import ProductShowcase from '../components/ProductShowcase'
 import AppFeatures from '../components/AppFeatures'

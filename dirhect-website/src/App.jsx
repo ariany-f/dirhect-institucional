@@ -29,7 +29,7 @@ import AppFeatures from './components/AppFeatures'
 import News from './components/News'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
-import Header from './components/Header'
+import Header from './components/Header.jsx?v=menu-nav-20260521'
 import SecuritySection from './components/SecuritySection'
 import Integrations from './components/Integrations'
 import FloatingButtons from './components/FloatingButtons'
@@ -38,13 +38,12 @@ import Parceiros from './pages/Parceiros'
 import CookieConsent from './components/CookieConsent'
 import ColaboradorLogin from './pages/ColaboradorLogin'
 import ColaboradorPainel from './pages/ColaboradorPainel'
-import ParceiroSubdominio from './pages/ParceiroSubdominio.jsx?v=partner-page-r142-link-5191'
+import ParceiroSubdominio from './pages/ParceiroSubdominio.jsx?v=section-full-bleed-5210'
 
 const GRADIENT = 'linear-gradient(to left, #0c004c, #5d0b62)';
 
 function App() {
   const hostname = window.location.hostname.toLowerCase()
-  const isPartnerRoute = window.location.pathname === '/parceiro'
   const isPartnerSubdomain =
     hostname === 'parceiro.localhost' ||
     hostname === 'parceiro.127.0.0.1' ||
@@ -53,9 +52,12 @@ function App() {
   if (isPartnerSubdomain) {
     return (
       <Router>
-        <Routes>
-          <Route path="*" element={<ParceiroSubdominio />} />
-        </Routes>
+        <div className="app">
+          <Header />
+          <Routes>
+            <Route path="*" element={<ParceiroSubdominio />} />
+          </Routes>
+        </div>
       </Router>
     )
   }
@@ -76,7 +78,7 @@ function App() {
   return (
     <Router>
       <div className="app">
-        {!isPartnerRoute && <Header />}
+        <Header />
         <Routes>
           <Route path="/" element={
             <>

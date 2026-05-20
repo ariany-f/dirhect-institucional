@@ -21,7 +21,7 @@ import {
   Key
 } from 'lucide-react'
 import { createPortal } from 'react-dom'
-import Header from '../components/Header'
+import Header from '../components/Header.jsx?v=menu-nav-20260521'
 import Footer from '../components/Footer'
 import { wordpressService } from '../services/wordpressService'
 import RichTextEditor from '../components/RichTextEditor'

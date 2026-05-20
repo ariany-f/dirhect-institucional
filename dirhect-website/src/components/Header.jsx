@@ -2,7 +2,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, User, LogOut, ChevronDown } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { wordpressService } from '../services/wordpressService'
-import './Header.css'
+import './Header.css?v=home-align-20260521'
 
 const Header = () => {
   const location = useLocation()
@@ -234,14 +234,6 @@ const Header = () => {
                     Portal RH
                   </Link>
                 </li>
-              </ul>
-            </li>
-            <li className="nav-item-with-dropdown">
-              <Link to="/parceiro" onClick={() => setIsMobileMenuOpen(false)}>
-                Parceiros
-                <ChevronDown size={16} className="dropdown-chevron" />
-              </Link>
-              <ul className="dropdown-menu">
                 <li>
                   <Link to="/parceiros" onClick={() => setIsMobileMenuOpen(false)}>
                     Integrações e ecossistema
@@ -250,14 +242,13 @@ const Header = () => {
               </ul>
             </li>
             <li>
-              <Link to="/conhecimento" onClick={() => setIsMobileMenuOpen(false)}>
-                Conhecimento
+              <Link to="/parceiro" onClick={() => setIsMobileMenuOpen(false)}>
+                Parceiros
               </Link>
             </li>
-
             <li>
-              <Link to="/indique-ganhe" onClick={() => setIsMobileMenuOpen(false)}>
-                Indique e Ganhe
+              <Link to="/conhecimento" onClick={() => setIsMobileMenuOpen(false)}>
+                Conhecimento
               </Link>
             </li>
             <li>

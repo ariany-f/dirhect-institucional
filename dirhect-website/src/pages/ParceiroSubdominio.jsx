@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
+import './ParceiroSubdominio.css'
 
 /** Bump ao alterar `public/parceiro-template.html` para forçar novo pedido (query string). */
-const PARTNER_TEMPLATE_VERSION = 'partner-page-r142-link-5191'
+const PARTNER_TEMPLATE_VERSION = 'section-full-bleed-5210'
 
 function partnerTemplateUrl() {
   const base = import.meta.env.BASE_URL || '/'
@@ -46,18 +47,14 @@ const ParceiroSubdominio = () => {
   }
 
   return (
-    <iframe
-      key={iframeSrc}
-      title="Programa de Parceiros Dirhect"
-      src={iframeSrc}
-      style={{
-        border: 'none',
-        width: '100%',
-        minHeight: '100vh',
-        display: 'block',
-        background: '#fff',
-      }}
-    />
+    <div className="parceiro-page-wrap">
+      <iframe
+        key={iframeSrc}
+        title="Programa de Parceiros Dirhect"
+        src={iframeSrc}
+        className="parceiro-page-iframe"
+      />
+    </div>
   )
 }
 
