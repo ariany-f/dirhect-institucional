@@ -39,15 +39,20 @@ const sendWordPressEmail = async (formData, type) => {
       result = {}
     }
 
-    if (response.ok && result.success) {
+    const sent = result?.sent ?? result?.data?.sent
+    const userMailSent = sent?.user !== false
+
+    if (response.ok && result.success && userMailSent) {
       console.log('Email enviado com sucesso via WordPress:', {
         type,
-        result
+        result,
+        sent
       })
       return {
         success: true,
         message: result.message || 'Email enviado com sucesso!',
         isLocal: false,
+        sent,
         result
       }
     }
@@ -55,6 +60,9 @@ const sendWordPressEmail = async (formData, type) => {
     const errorMessage =
       result?.message ||
       result?.data?.message ||
+      (sent && sent.user === false
+        ? 'Não foi possível enviar a confirmação ao seu e-mail. Verifique o endereço ou tente novamente.'
+        : null) ||
       (typeof result?.error === 'string' ? result.error : null) ||
       `Erro ao enviar email (${response.status})`
     throw new Error(errorMessage)

@@ -1,59 +1,174 @@
 <?php
 /**
- * Snippet WordPress para Envio de Emails com Confirmação + Detalhes de Erro
- * Adicione este código no functions.php do seu tema ou em um plugin
+ * Snippet WordPress — Envio de e-mails (API REST dirhect/v1)
+ * Cole no functions.php do tema ou em um plugin (sem repetir <?php se já estiver no functions.php).
  */
 
-// Capturar erros do wp_mail
+if (!defined('ABSPATH')) {
+    exit;
+}
+
+/** CC em notificações internas (equipe Dirhect), não em confirmações ao visitante */
+if (!defined('DIRHECT_TEAM_CC')) {
+    define('DIRHECT_TEAM_CC', 'Sylvio.luiz@dirhect.com.br');
+}
+
+if (!defined('DIRHECT_MAIL_FROM')) {
+    define('DIRHECT_MAIL_FROM', 'contato@dirhect.com.br');
+}
+
+if (!defined('DIRHECT_MAIL_FROM_NAME')) {
+    define('DIRHECT_MAIL_FROM_NAME', 'Dirhect');
+}
+
+/** Garante remetente alinhado ao SMTP (evita "Sender address rejected") */
+add_action('phpmailer_init', function ($phpmailer) {
+    $phpmailer->From = DIRHECT_MAIL_FROM;
+    $phpmailer->FromName = DIRHECT_MAIL_FROM_NAME;
+    $phpmailer->Sender = DIRHECT_MAIL_FROM;
+});
+
 add_action('wp_mail_failed', function ($wp_error) {
-    error_log('Erro no envio de e-mail: ' . $wp_error->get_error_message());
+    $GLOBALS['dirhect_last_mail_error'] = $wp_error->get_error_message();
+    error_log('Dirhect wp_mail_failed: ' . $wp_error->get_error_message());
 });
 
 /**
- * Helper para detalhar erros do wp_mail
+ * Lê JSON (fetch) ou form-urlencoded — get_params() sozinho falha com application/json.
  */
-function dirhect_get_mail_error() {
-    $mail_errors = $GLOBALS['phpmailer'] ?? null;
-    if ($mail_errors && isset($mail_errors->ErrorInfo)) {
-        return $mail_errors->ErrorInfo;
+function dirhect_get_request_params($request) {
+    $json = $request->get_json_params();
+    if (is_array($json) && !empty($json)) {
+        return $json;
     }
-    return 'Erro desconhecido';
+    $body = $request->get_body();
+    if (is_string($body) && $body !== '') {
+        $decoded = json_decode($body, true);
+        if (is_array($decoded) && !empty($decoded)) {
+            return $decoded;
+        }
+    }
+    return $request->get_params();
 }
 
-// Adicionar endpoints personalizados
+function dirhect_get_mail_error() {
+    if (!empty($GLOBALS['dirhect_last_mail_error'])) {
+        return $GLOBALS['dirhect_last_mail_error'];
+    }
+    $mail_errors = $GLOBALS['phpmailer'] ?? null;
+    if ($mail_errors && !empty($mail_errors->ErrorInfo)) {
+        return $mail_errors->ErrorInfo;
+    }
+    return 'Erro desconhecido no envio';
+}
+
+function dirhect_team_notification_headers($reply_to = null) {
+    $headers = array(
+        'Content-Type: text/html; charset=UTF-8',
+        'From: ' . DIRHECT_MAIL_FROM_NAME . ' <' . DIRHECT_MAIL_FROM . '>',
+        'Cc: ' . DIRHECT_TEAM_CC,
+    );
+    if ($reply_to && is_email($reply_to)) {
+        $headers[] = 'Reply-To: ' . $reply_to;
+    }
+    return $headers;
+}
+
+function dirhect_user_confirmation_headers() {
+    return array(
+        'Content-Type: text/html; charset=UTF-8',
+        'From: ' . DIRHECT_MAIL_FROM_NAME . ' <' . DIRHECT_MAIL_FROM . '>',
+    );
+}
+
+/**
+ * @return bool
+ */
+function dirhect_send_mail($to, $subject, $message, $headers) {
+    $GLOBALS['dirhect_last_mail_error'] = null;
+
+    if (empty($to) || !is_email($to)) {
+        $GLOBALS['dirhect_last_mail_error'] = 'E-mail de destino inválido: ' . $to;
+        return false;
+    }
+
+    if (isset($GLOBALS['phpmailer']) && is_object($GLOBALS['phpmailer'])) {
+        $GLOBALS['phpmailer']->clearAllRecipients();
+        $GLOBALS['phpmailer']->clearAttachments();
+        $GLOBALS['phpmailer']->clearCustomHeaders();
+        $GLOBALS['phpmailer']->clearReplyTos();
+    }
+
+    $sent = wp_mail($to, $subject, $message, $headers);
+
+    if (!$sent || !empty($GLOBALS['dirhect_last_mail_error'])) {
+        return false;
+    }
+
+    if (isset($GLOBALS['phpmailer']) && !empty($GLOBALS['phpmailer']->ErrorInfo)) {
+        $GLOBALS['dirhect_last_mail_error'] = $GLOBALS['phpmailer']->ErrorInfo;
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * Resposta da API: sucesso só se a confirmação ao visitante foi enviada.
+ */
+function dirhect_mail_endpoint_response($sent_team, $sent_user) {
+    $sent = array(
+        'team' => (bool) $sent_team,
+        'user' => (bool) $sent_user,
+    );
+
+    if ($sent_user) {
+        return array(
+            'success' => true,
+            'message' => $sent_team
+                ? 'Emails enviados com sucesso!'
+                : 'Confirmação enviada ao seu e-mail. (Falha ao notificar a equipe interna.)',
+            'sent' => $sent,
+        );
+    }
+
+    return new WP_Error(
+        'email_error',
+        'Não foi possível enviar a confirmação ao seu e-mail: ' . dirhect_get_mail_error(),
+        array('status' => 500, 'sent' => $sent)
+    );
+}
+
 add_action('rest_api_init', function () {
     register_rest_route('dirhect/v1', '/send-demo', array(
         'methods' => 'POST',
         'callback' => 'dirhect_send_demo_email',
-        'permission_callback' => '__return_true'
+        'permission_callback' => '__return_true',
     ));
 
     register_rest_route('dirhect/v1', '/send-support', array(
         'methods' => 'POST',
         'callback' => 'dirhect_send_support_email',
-        'permission_callback' => '__return_true'
+        'permission_callback' => '__return_true',
     ));
 
     register_rest_route('dirhect/v1', '/send-indication', array(
         'methods' => 'POST',
         'callback' => 'dirhect_send_indication_email',
-        'permission_callback' => '__return_true'
+        'permission_callback' => '__return_true',
     ));
 
     register_rest_route('dirhect/v1', '/send-partnership', array(
         'methods' => 'POST',
         'callback' => 'dirhect_send_partnership_email',
-        'permission_callback' => '__return_true'
+        'permission_callback' => '__return_true',
     ));
 });
 
-/**
- * Enviar email de demonstração
- */
 function dirhect_send_demo_email($request) {
-    $params = $request->get_params();
+    $params = dirhect_get_request_params($request);
 
-    $required_fields = ['nomeEmpresa', 'cnpj', 'nomeContato', 'email', 'telefone', 'cargo', 'numeroFuncionarios', 'segmento'];
+    $required_fields = array('nomeEmpresa', 'cnpj', 'nomeContato', 'email', 'telefone', 'cargo', 'numeroFuncionarios', 'segmento');
     foreach ($required_fields as $field) {
         if (empty($params[$field])) {
             return new WP_Error('missing_field', "Campo obrigatório: $field", array('status' => 400));
@@ -68,10 +183,14 @@ function dirhect_send_demo_email($request) {
     $cargo = sanitize_text_field($params['cargo']);
     $funcionarios = sanitize_text_field($params['numeroFuncionarios']);
     $segmento = sanitize_text_field($params['segmento']);
-    $necessidades = isset($params['necessidades']) ? $params['necessidades'] : [];
+    $necessidades = isset($params['necessidades']) ? $params['necessidades'] : array();
     $mensagem = isset($params['mensagem']) ? sanitize_textarea_field($params['mensagem']) : '';
 
-    $to_comercial = 'contato@dirhect.com.br';
+    if (!is_email($email)) {
+        return new WP_Error('invalid_email', 'E-mail do contato inválido', array('status' => 400));
+    }
+
+    $to_comercial = 'comercial@dirhect.com.br';
     $subject_comercial = "🎯 Nova Solicitação de Demonstração - $empresa";
 
     $message_comercial = "
@@ -97,13 +216,7 @@ function dirhect_send_demo_email($request) {
 
     $message_comercial .= "<p><strong>Data/Hora:</strong> " . date('d/m/Y H:i:s') . "</p></body></html>";
 
-    $headers = array(
-        'Content-Type: text/html; charset=UTF-8',
-        'From: Dirhect <contato@dirhect.com.br>',
-        'Reply-To: ' . $email
-    );
-
-    $sent_comercial = wp_mail($to_comercial, $subject_comercial, $message_comercial, $headers);
+    $sent_comercial = dirhect_send_mail($to_comercial, $subject_comercial, $message_comercial, dirhect_team_notification_headers($email));
 
     $subject_confirmacao = "✅ Confirmação - Demonstração Dirhect";
     $message_confirmacao = "
@@ -113,27 +226,15 @@ function dirhect_send_demo_email($request) {
     <p>Data/Hora: " . date('d/m/Y H:i:s') . "</p>
     </body></html>";
 
-    $headers_confirmacao = array(
-        'Content-Type: text/html; charset=UTF-8',
-        'From: Dirhect <contato@dirhect.com.br>'
-    );
+    $sent_confirmacao = dirhect_send_mail($email, $subject_confirmacao, $message_confirmacao, dirhect_user_confirmation_headers());
 
-    $sent_confirmacao = wp_mail($email, $subject_confirmacao, $message_confirmacao, $headers_confirmacao);
-
-    if ($sent_comercial && $sent_confirmacao) {
-        return array('success' => true, 'message' => 'Emails enviados com sucesso!');
-    }
-
-    return new WP_Error('email_error', 'Erro ao enviar emails: ' . dirhect_get_mail_error(), array('status' => 500));
+    return dirhect_mail_endpoint_response($sent_comercial, $sent_confirmacao);
 }
 
-/**
- * Enviar email de suporte
- */
 function dirhect_send_support_email($request) {
-    $params = $request->get_params();
+    $params = dirhect_get_request_params($request);
 
-    $required_fields = ['name', 'email', 'subject', 'message'];
+    $required_fields = array('name', 'email', 'subject', 'message');
     foreach ($required_fields as $field) {
         if (empty($params[$field])) {
             return new WP_Error('missing_field', "Campo obrigatório: $field", array('status' => 400));
@@ -145,12 +246,16 @@ function dirhect_send_support_email($request) {
     $assunto = sanitize_text_field($params['subject']);
     $mensagem = sanitize_textarea_field($params['message']);
 
+    if (!is_email($email)) {
+        return new WP_Error('invalid_email', 'E-mail inválido', array('status' => 400));
+    }
+
     $assuntos = array(
         'duvida' => 'Dúvida sobre funcionalidade',
         'problema' => 'Problema técnico',
         'sugestao' => 'Sugestão de melhoria',
         'comercial' => 'Questão comercial',
-        'outro' => 'Outro'
+        'outro' => 'Outro',
     );
     $assunto_traduzido = isset($assuntos[$assunto]) ? $assuntos[$assunto] : $assunto;
 
@@ -167,13 +272,7 @@ function dirhect_send_support_email($request) {
     <p><strong>Data/Hora:</strong> " . date('d/m/Y H:i:s') . "</p>
     </body></html>";
 
-    $headers = array(
-        'Content-Type: text/html; charset=UTF-8',
-        'From: Dirhect <contato@dirhect.com.br>',
-        'Reply-To: ' . $email
-    );
-
-    $sent_suporte = wp_mail($to_suporte, $subject_suporte, $message_suporte, $headers);
+    $sent_suporte = dirhect_send_mail($to_suporte, $subject_suporte, $message_suporte, dirhect_team_notification_headers($email));
 
     $subject_confirmacao = "✅ Confirmação - Suporte Dirhect";
     $message_confirmacao = "
@@ -183,27 +282,15 @@ function dirhect_send_support_email($request) {
     <p>Data/Hora: " . date('d/m/Y H:i:s') . "</p>
     </body></html>";
 
-    $headers_confirmacao = array(
-        'Content-Type: text/html; charset=UTF-8',
-        'From: Dirhect <contato@dirhect.com.br>'
-    );
+    $sent_confirmacao = dirhect_send_mail($email, $subject_confirmacao, $message_confirmacao, dirhect_user_confirmation_headers());
 
-    $sent_confirmacao = wp_mail($email, $subject_confirmacao, $message_confirmacao, $headers_confirmacao);
-
-    if ($sent_suporte && $sent_confirmacao) {
-        return array('success' => true, 'message' => 'Emails enviados com sucesso!');
-    }
-
-    return new WP_Error('email_error', 'Erro ao enviar emails: ' . dirhect_get_mail_error(), array('status' => 500));
+    return dirhect_mail_endpoint_response($sent_suporte, $sent_confirmacao);
 }
 
-/**
- * Enviar email de indicação
- */
 function dirhect_send_indication_email($request) {
-    $params = $request->get_params();
+    $params = dirhect_get_request_params($request);
 
-    $required_fields = ['nomeIndicador', 'emailIndicador', 'nomeEmpresa', 'cnpj', 'nomeContato', 'emailContato'];
+    $required_fields = array('nomeIndicador', 'emailIndicador', 'nomeEmpresa', 'cnpj', 'nomeContato', 'emailContato');
     foreach ($required_fields as $field) {
         if (empty($params[$field])) {
             return new WP_Error('missing_field', "Campo obrigatório: $field", array('status' => 400));
@@ -217,6 +304,10 @@ function dirhect_send_indication_email($request) {
     $contato = sanitize_text_field($params['nomeContato']);
     $email_contato = sanitize_email($params['emailContato']);
     $mensagem = isset($params['mensagem']) ? sanitize_textarea_field($params['mensagem']) : '';
+
+    if (!is_email($email_indicador)) {
+        return new WP_Error('invalid_email', 'E-mail do indicador inválido', array('status' => 400));
+    }
 
     $to_comercial = 'contato@dirhect.com.br';
     $subject_comercial = "🎁 Nova Indicação - $empresa - $indicador";
@@ -235,13 +326,7 @@ function dirhect_send_indication_email($request) {
 
     $message_comercial .= "<p><strong>Data/Hora:</strong> " . date('d/m/Y H:i:s') . "</p></body></html>";
 
-    $headers = array(
-        'Content-Type: text/html; charset=UTF-8',
-        'From: Dirhect <contato@dirhect.com.br>',
-        'Reply-To: ' . $email_indicador
-    );
-
-    $sent_comercial = wp_mail($to_comercial, $subject_comercial, $message_comercial, $headers);
+    $sent_comercial = dirhect_send_mail($to_comercial, $subject_comercial, $message_comercial, dirhect_team_notification_headers($email_indicador));
 
     $subject_confirmacao = "✅ Confirmação - Indicação Dirhect";
     $message_confirmacao = "
@@ -251,27 +336,15 @@ function dirhect_send_indication_email($request) {
     <p>Data/Hora: " . date('d/m/Y H:i:s') . "</p>
     </body></html>";
 
-    $headers_confirmacao = array(
-        'Content-Type: text/html; charset=UTF-8',
-        'From: Dirhect <contato@dirhect.com.br>'
-    );
+    $sent_confirmacao = dirhect_send_mail($email_indicador, $subject_confirmacao, $message_confirmacao, dirhect_user_confirmation_headers());
 
-    $sent_confirmacao = wp_mail($email_indicador, $subject_confirmacao, $message_confirmacao, $headers_confirmacao);
-
-    if ($sent_comercial && $sent_confirmacao) {
-        return array('success' => true, 'message' => 'Emails enviados com sucesso!');
-    }
-
-    return new WP_Error('email_error', 'Erro ao enviar emails: ' . dirhect_get_mail_error(), array('status' => 500));
+    return dirhect_mail_endpoint_response($sent_comercial, $sent_confirmacao);
 }
 
-/**
- * Enviar email de parceria (página Parceiros)
- */
 function dirhect_send_partnership_email($request) {
-    $params = $request->get_params();
+    $params = dirhect_get_request_params($request);
 
-    $required_fields = ['companyName', 'contactName', 'email', 'phone', 'businessArea'];
+    $required_fields = array('companyName', 'contactName', 'email', 'phone', 'businessArea');
     foreach ($required_fields as $field) {
         if (empty($params[$field])) {
             return new WP_Error('missing_field', "Campo obrigatório: $field", array('status' => 400));
@@ -284,6 +357,10 @@ function dirhect_send_partnership_email($request) {
     $telefone = sanitize_text_field($params['phone']);
     $area = sanitize_text_field($params['businessArea']);
     $mensagem = isset($params['message']) ? sanitize_textarea_field($params['message']) : '';
+
+    if (!is_email($email)) {
+        return new WP_Error('invalid_email', 'E-mail inválido', array('status' => 400));
+    }
 
     $areas = array(
         'erp' => 'ERP / Sistemas Empresariais',
@@ -315,13 +392,7 @@ function dirhect_send_partnership_email($request) {
 
     $message_comercial .= "<p><strong>Data/Hora:</strong> " . date('d/m/Y H:i:s') . "</p></body></html>";
 
-    $headers = array(
-        'Content-Type: text/html; charset=UTF-8',
-        'From: Dirhect <contato@dirhect.com.br>',
-        'Reply-To: ' . $email
-    );
-
-    $sent_comercial = wp_mail($to_comercial, $subject_comercial, $message_comercial, $headers);
+    $sent_comercial = dirhect_send_mail($to_comercial, $subject_comercial, $message_comercial, dirhect_team_notification_headers($email));
 
     $subject_confirmacao = "✅ Confirmação - Parceria Dirhect";
     $message_confirmacao = "
@@ -333,16 +404,7 @@ function dirhect_send_partnership_email($request) {
     <p>Data/Hora: " . date('d/m/Y H:i:s') . "</p>
     </body></html>";
 
-    $headers_confirmacao = array(
-        'Content-Type: text/html; charset=UTF-8',
-        'From: Dirhect <contato@dirhect.com.br>'
-    );
+    $sent_confirmacao = dirhect_send_mail($email, $subject_confirmacao, $message_confirmacao, dirhect_user_confirmation_headers());
 
-    $sent_confirmacao = wp_mail($email, $subject_confirmacao, $message_confirmacao, $headers_confirmacao);
-
-    if ($sent_comercial && $sent_confirmacao) {
-        return array('success' => true, 'message' => 'Emails enviados com sucesso!');
-    }
-
-    return new WP_Error('email_error', 'Erro ao enviar emails: ' . dirhect_get_mail_error(), array('status' => 500));
+    return dirhect_mail_endpoint_response($sent_comercial, $sent_confirmacao);
 }

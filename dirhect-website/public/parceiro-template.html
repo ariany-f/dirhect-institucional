@@ -1752,7 +1752,10 @@ document.addEventListener('click', function (e) {
         result = {};
       }
 
-      if (response.ok && result.success) {
+      const sent = result.sent || (result.data && result.data.sent);
+      const userMailSent = !sent || sent.user !== false;
+
+      if (response.ok && result.success && userMailSent) {
         showStatus('Candidatura enviada! Nossa equipe comercial entrará em contato em até 24 horas.', 'success');
         submitBtn.textContent = '✓ Candidatura Enviada!';
         submitBtn.style.background = '#059669';
@@ -1765,7 +1768,10 @@ document.addEventListener('click', function (e) {
         return;
       }
 
-      const errMsg = result.message || result.error || 'Não foi possível enviar. Tente novamente.';
+      const errMsg = result.message || result.error
+        || (sent && sent.user === false
+          ? 'Não foi possível enviar a confirmação ao seu e-mail. Verifique o endereço.'
+          : 'Não foi possível enviar. Tente novamente.');
       throw new Error(errMsg);
     } catch (error) {
       console.error('Erro ao enviar parceria:', error);
