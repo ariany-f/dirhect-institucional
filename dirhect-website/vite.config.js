@@ -1,36 +1,9 @@
-import fs from 'node:fs'
-import path from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-/** Em dev, espelha o .htaccess: GET /parceiro → conteúdo de parceiro-template.html */
-function parceiroDevRoute() {
-  return {
-    name: 'parceiro-dev-route',
-    enforce: 'pre',
-    configureServer(server) {
-      server.middlewares.use((req, res, next) => {
-        const pathname = (req.url ?? '').split('?')[0]
-        if (pathname !== '/parceiro' && pathname !== '/parceiro/') {
-          next()
-          return
-        }
-        const file = path.join(server.config.publicDir, 'parceiro-template.html')
-        if (!fs.existsSync(file)) {
-          next()
-          return
-        }
-        res.statusCode = 200
-        res.setHeader('Content-Type', 'text/html; charset=utf-8')
-        res.end(fs.readFileSync(file))
-      })
-    },
-  }
-}
-
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [parceiroDevRoute(), react()],
+  plugins: [react()],
   build: {
     outDir: 'dist',
     assetsDir: 'assets',

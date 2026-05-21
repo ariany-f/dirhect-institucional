@@ -1,8 +1,5 @@
 RewriteEngine On
 
-# Programa de parceiros: HTML estático em /parceiro (antes do fallback SPA)
-RewriteRule ^parceiro/?$ parceiro-template.html [L]
-
 # Handle Angular and React Router
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

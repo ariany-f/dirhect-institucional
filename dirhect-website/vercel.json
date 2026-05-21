@@ -1,11 +1,7 @@
 {
   "rewrites": [
     {
-      "source": "/parceiro",
-      "destination": "/parceiro-template.html"
-    },
-    {
-      "source": "/((?!parceiro-template\\.html$|assets/).*)",
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ],

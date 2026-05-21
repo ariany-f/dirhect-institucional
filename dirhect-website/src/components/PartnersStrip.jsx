@@ -1,6 +1,8 @@
+import { useNavigate } from 'react-router-dom'
 import './PartnersStrip.css'
 
 const PartnersStrip = () => {
+  const navigate = useNavigate()
 
   const partners = [
     { name: 'SAP', logo: '/images/logos/sap-logo-white.png' },
@@ -15,7 +17,7 @@ const PartnersStrip = () => {
   const duplicatedPartners = [...partners, ...partners, ...partners]
 
   const handleClick = () => {
-    window.location.href = '/parceiro'
+    navigate('/parceiro')
   }
 
   return (
