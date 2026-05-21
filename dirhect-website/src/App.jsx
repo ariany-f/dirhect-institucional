@@ -38,7 +38,7 @@ import Parceiros from './pages/Parceiros'
 import CookieConsent from './components/CookieConsent'
 import ColaboradorLogin from './pages/ColaboradorLogin'
 import ColaboradorPainel from './pages/ColaboradorPainel'
-import ParceiroSubdominio from './pages/ParceiroSubdominio.jsx?v=partner-page-r142-link-5191'
+import ParceiroSubdominio from './pages/ParceiroSubdominio'
 
 const GRADIENT = 'linear-gradient(to left, #0c004c, #5d0b62)';
 
@@ -49,16 +49,6 @@ function App() {
     hostname === 'parceiro.localhost' ||
     hostname === 'parceiro.127.0.0.1' ||
     hostname.startsWith('parceiro.')
-
-  if (isPartnerSubdomain) {
-    return (
-      <Router>
-        <Routes>
-          <Route path="*" element={<ParceiroSubdominio />} />
-        </Routes>
-      </Router>
-    )
-  }
 
   // Lida com navegação por âncora quando a página carrega
   useEffect(() => {
@@ -72,6 +62,16 @@ function App() {
       }, 100)
     }
   }, [])
+
+  if (isPartnerSubdomain) {
+    return (
+      <Router>
+        <Routes>
+          <Route path="*" element={<ParceiroSubdominio />} />
+        </Routes>
+      </Router>
+    )
+  }
 
   return (
     <Router>

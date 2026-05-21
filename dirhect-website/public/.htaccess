@@ -1,16 +1,23 @@
 RewriteEngine On
 
+# Programa de parceiros: HTML estático em /parceiro (antes do fallback SPA)
+RewriteRule ^parceiro/?$ parceiro-template.html [L]
+
 # Handle Angular and React Router
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . /index.html [L]
 
-# Security headers
+# Security headers (padrão: não permitir iframe do site principal)
 <IfModule mod_headers.c>
     Header always set X-Content-Type-Options nosniff
     Header always set X-Frame-Options DENY
     Header always set X-XSS-Protection "1; mode=block"
     Header always set Referrer-Policy "strict-origin-when-cross-origin"
+    # Template de parceiros pode ser embutido no mesmo domínio, se necessário
+    <Files "parceiro-template.html">
+        Header set X-Frame-Options "SAMEORIGIN"
+    </Files>
 </IfModule>
 
 # Cache static assets
@@ -37,4 +44,4 @@ RewriteRule . /index.html [L]
     AddOutputFilterByType DEFLATE application/rss+xml
     AddOutputFilterByType DEFLATE application/javascript
     AddOutputFilterByType DEFLATE application/x-javascript
-</IfModule> 
+</IfModule>

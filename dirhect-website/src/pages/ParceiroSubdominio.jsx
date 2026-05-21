@@ -1,63 +1,33 @@
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
-/** Bump ao alterar `public/parceiro-template.html` para forçar novo pedido (query string). */
-const PARTNER_TEMPLATE_VERSION = 'partner-page-r142-link-5191'
-
-function partnerTemplateUrl() {
-  const base = import.meta.env.BASE_URL || '/'
-  const path = `${base}parceiro-template.html`.replace(/\/{2,}/g, '/')
-  return `${path}?v=${encodeURIComponent(PARTNER_TEMPLATE_VERSION)}`
-}
-
-/** URL absoluta do template (iframe com `src` evita bugs de atualização com `srcDoc`). */
-function resolveTemplateHref(pathAndQuery) {
-  if (typeof window === 'undefined') return pathAndQuery
-  try {
-    return new URL(pathAndQuery, window.location.href).href
-  } catch {
-    return pathAndQuery
-  }
-}
-
+/**
+ * Só é montado em navegação client-side (React Router), quando o SPA já está aberto.
+ * Em GET /parceiro o servidor entrega o template direto (.htaccess ou middleware do Vite).
+ * Aqui forçamos um reload em /parceiro para o servidor aplicar o mesmo rewrite.
+ */
 const ParceiroSubdominio = () => {
-  const [iframeSrc, setIframeSrc] = useState('')
-
   useEffect(() => {
-    const bust = import.meta.env.DEV ? `&_dev=${Date.now()}` : ''
-    setIframeSrc(resolveTemplateHref(`${partnerTemplateUrl()}${bust}`))
-  }, [PARTNER_TEMPLATE_VERSION])
-
-  if (!iframeSrc) {
-    return (
-      <div
-        style={{
-          minHeight: '100vh',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          fontFamily: 'system-ui, sans-serif',
-          color: '#4a5568',
-          background: '#fff',
-        }}
-      >
-        A carregar…
-      </div>
-    )
-  }
+    const url = new URL('/parceiro', window.location.origin)
+    if (import.meta.env.DEV) {
+      url.searchParams.set('_dev', String(Date.now()))
+    }
+    window.location.replace(url.href)
+  }, [])
 
   return (
-    <iframe
-      key={iframeSrc}
-      title="Programa de Parceiros Dirhect"
-      src={iframeSrc}
+    <div
       style={{
-        border: 'none',
-        width: '100%',
         minHeight: '100vh',
-        display: 'block',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontFamily: 'system-ui, sans-serif',
+        color: '#4a5568',
         background: '#fff',
       }}
-    />
+    >
+      A carregar…
+    </div>
   )
 }
 

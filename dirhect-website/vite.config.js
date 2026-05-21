@@ -1,9 +1,26 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+/** Em dev, espelha o .htaccess: GET /parceiro → parceiro-template.html (URL permanece /parceiro). */
+function parceiroDevRoute() {
+  return {
+    name: 'parceiro-dev-route',
+    configureServer(server) {
+      server.middlewares.use((req, _res, next) => {
+        const pathname = (req.url ?? '').split('?')[0]
+        if (pathname === '/parceiro' || pathname === '/parceiro/') {
+          const qs = (req.url ?? '').includes('?') ? '?' + req.url.split('?').slice(1).join('?') : ''
+          req.url = `/parceiro-template.html${qs}`
+        }
+        next()
+      })
+    },
+  }
+}
+
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [parceiroDevRoute(), react()],
   build: {
     outDir: 'dist',
     assetsDir: 'assets',

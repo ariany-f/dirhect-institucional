@@ -1,11 +1,24 @@
 {
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/parceiro",
+      "destination": "/parceiro-template.html"
+    },
+    {
+      "source": "/((?!parceiro-template\\.html$|assets/).*)",
       "destination": "/index.html"
     }
   ],
   "headers": [
+    {
+      "source": "/parceiro-template.html",
+      "headers": [
+        {
+          "key": "X-Frame-Options",
+          "value": "SAMEORIGIN"
+        }
+      ]
+    },
     {
       "source": "/(.*)",
       "headers": [
@@ -33,4 +46,4 @@
       ]
     }
   ]
-} 
+}

@@ -237,10 +237,10 @@ const Header = () => {
               </ul>
             </li>
             <li className="nav-item-with-dropdown">
-              <Link to="/parceiro" onClick={() => setIsMobileMenuOpen(false)}>
+              <a href="/parceiro" onClick={() => setIsMobileMenuOpen(false)}>
                 Parceiros
                 <ChevronDown size={16} className="dropdown-chevron" />
-              </Link>
+              </a>
               <ul className="dropdown-menu">
                 <li>
                   <Link to="/parceiros" onClick={() => setIsMobileMenuOpen(false)}>
