@@ -969,6 +969,28 @@ section.ben-section::after {
   background: var(--orange-dark); transform: translateY(-1px);
   box-shadow: 0 8px 24px rgba(245,154,0,.45);
 }
+.f-submit:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+.partner-form-status {
+  font-size: 0.88rem;
+  line-height: 1.45;
+  margin-bottom: 14px;
+  padding: 10px 12px;
+  border-radius: 8px;
+}
+.partner-form-status.is-error {
+  background: #fef2f2;
+  color: #991b1b;
+  border: 1px solid #fecaca;
+}
+.partner-form-status.is-success {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 1px solid #a7f3d0;
+}
 .final-cta {
   background: var(--navy);
   text-align: center; padding: 100px 6vw;
@@ -1582,25 +1604,26 @@ footer .logo .h-letter { color: var(--white); }
     <div class="form-card fi d2">
       <div class="form-title">Seja um Parceiro</div>
       <div class="form-sub">Preencha o formulário e nossa equipe entrará em contato em até 24 horas.</div>
+      <p id="partner-form-status" class="partner-form-status" hidden role="status"></p>
       <div class="f-row">
-        <div class="f-group"><label>Nome</label><input type="text" placeholder="João"></div>
-        <div class="f-group"><label>Sobrenome</label><input type="text" placeholder="Silva"></div>
+        <div class="f-group"><label for="partner-first-name">Nome *</label><input type="text" id="partner-first-name" required placeholder="João"></div>
+        <div class="f-group"><label for="partner-last-name">Sobrenome *</label><input type="text" id="partner-last-name" required placeholder="Silva"></div>
       </div>
-      <div class="f-group"><label>Empresa</label><input type="text" placeholder="Nome da sua empresa"></div>
-      <div class="f-group"><label>E-mail Corporativo</label><input type="email" placeholder="voce@empresa.com.br"></div>
-      <div class="f-group"><label>Telefone / WhatsApp</label><input type="tel" placeholder="+55 (11) 9 0000-0000"></div>
+      <div class="f-group"><label for="partner-company">Empresa *</label><input type="text" id="partner-company" required placeholder="Nome da sua empresa"></div>
+      <div class="f-group"><label for="partner-email">E-mail Corporativo *</label><input type="email" id="partner-email" required placeholder="voce@empresa.com.br"></div>
+      <div class="f-group"><label for="partner-phone">Telefone / WhatsApp *</label><input type="tel" id="partner-phone" required placeholder="+55 (11) 9 0000-0000"></div>
       <div class="f-group">
-        <label>Perfil de Parceiro</label>
-        <select>
+        <label for="partner-profile">Perfil de Parceiro *</label>
+        <select id="partner-profile" required>
           <option value="" disabled selected>Selecione seu perfil</option>
-          <option>Consultor / Advisor de RH</option>
-          <option>BPO de Folha de Pagamento</option>
-          <option>Revendedor de Tecnologia</option>
-          <option>Broker de Benefícios</option>
-          <option>Outro</option>
+          <option value="rh">Consultor / Advisor de RH</option>
+          <option value="folha">BPO de Folha de Pagamento</option>
+          <option value="erp">Revendedor de Tecnologia</option>
+          <option value="beneficios">Broker de Benefícios</option>
+          <option value="outros">Outro</option>
         </select>
       </div>
-      <button class="f-submit" type="button">Quero ser Parceiro →</button>
+      <button class="f-submit" type="button" id="partner-form-submit">Quero ser Parceiro →</button>
     </div>
   </div>
 </section>
@@ -1645,21 +1668,119 @@ document.addEventListener('click', function (e) {
   el.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }, true);
 
-document.querySelector('.f-submit').addEventListener('click', function() {
-  const fields = document.querySelectorAll('.f-group input, .f-group select');
-  const ok = [...fields].every(f => f.value.trim());
-  if(ok){
-    this.textContent = '✓ Candidatura Enviada!';
-    this.style.background = '#059669';
-  } else {
-    this.textContent = 'Preencha todos os campos';
-    this.style.background = '#DC2626';
-    setTimeout(() => {
-      this.textContent = 'Quero ser Parceiro →';
-      this.style.background = '';
-    }, 2200);
+(function () {
+  const params = new URLSearchParams(window.location.search);
+  const apiBase = (params.get('api') || 'https://wp-api.dirhect.com.br').replace(/\/$/, '');
+  const partnershipEndpoint = apiBase + '/wp-json/dirhect/v1/send-partnership';
+  const submitBtn = document.getElementById('partner-form-submit');
+  const statusEl = document.getElementById('partner-form-status');
+  const defaultLabel = 'Quero ser Parceiro →';
+
+  function showStatus(message, type) {
+    if (!statusEl) return;
+    statusEl.hidden = false;
+    statusEl.textContent = message;
+    statusEl.className = 'partner-form-status ' + (type === 'success' ? 'is-success' : 'is-error');
   }
-});
+
+  function clearStatus() {
+    if (!statusEl) return;
+    statusEl.hidden = true;
+    statusEl.textContent = '';
+    statusEl.className = 'partner-form-status';
+  }
+
+  function getPayload() {
+    const firstName = document.getElementById('partner-first-name')?.value.trim() || '';
+    const lastName = document.getElementById('partner-last-name')?.value.trim() || '';
+    const companyName = document.getElementById('partner-company')?.value.trim() || '';
+    const email = document.getElementById('partner-email')?.value.trim() || '';
+    const phone = document.getElementById('partner-phone')?.value.trim() || '';
+    const businessArea = document.getElementById('partner-profile')?.value.trim() || '';
+    return {
+      companyName,
+      contactName: (firstName + ' ' + lastName).trim(),
+      email,
+      phone,
+      businessArea,
+      message: '',
+    };
+  }
+
+  function validatePayload(payload) {
+    const required = ['companyName', 'contactName', 'email', 'phone', 'businessArea'];
+    return required.every(function (key) {
+      return payload[key] && String(payload[key]).trim() !== '';
+    });
+  }
+
+  if (!submitBtn) return;
+
+  submitBtn.addEventListener('click', async function () {
+    clearStatus();
+    const payload = getPayload();
+
+    if (!validatePayload(payload)) {
+      showStatus('Preencha todos os campos obrigatórios.', 'error');
+      submitBtn.textContent = 'Preencha todos os campos';
+      submitBtn.style.background = '#DC2626';
+      setTimeout(function () {
+        submitBtn.textContent = defaultLabel;
+        submitBtn.style.background = '';
+      }, 2200);
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando...';
+    submitBtn.style.background = '';
+
+    try {
+      const response = await fetch(partnershipEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      let result = {};
+      try {
+        result = await response.json();
+      } catch (parseErr) {
+        result = {};
+      }
+
+      if (response.ok && result.success) {
+        showStatus('Candidatura enviada! Nossa equipe comercial entrará em contato em até 24 horas.', 'success');
+        submitBtn.textContent = '✓ Candidatura Enviada!';
+        submitBtn.style.background = '#059669';
+        document.getElementById('partner-first-name').value = '';
+        document.getElementById('partner-last-name').value = '';
+        document.getElementById('partner-company').value = '';
+        document.getElementById('partner-email').value = '';
+        document.getElementById('partner-phone').value = '';
+        document.getElementById('partner-profile').value = '';
+        return;
+      }
+
+      const errMsg = result.message || result.error || 'Não foi possível enviar. Tente novamente.';
+      throw new Error(errMsg);
+    } catch (error) {
+      console.error('Erro ao enviar parceria:', error);
+      showStatus(error.message || 'Erro ao enviar solicitação.', 'error');
+      submitBtn.textContent = 'Erro ao enviar';
+      submitBtn.style.background = '#DC2626';
+      setTimeout(function () {
+        submitBtn.textContent = defaultLabel;
+        submitBtn.style.background = '';
+      }, 2800);
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+})();
 </script>
 </body>
 </html>

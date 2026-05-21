@@ -27,11 +27,23 @@ import {
 import Header from '../components/Header.jsx?v=menu-nav-20260521'
 import Footer from '../components/Footer'
 import FloatingButtons from '../components/FloatingButtons'
+import { sendPartnershipEmail } from '../services/emailService'
 import './Parceiros.css'
 
 const Parceiros = () => {
   const [activeSlide, setActiveSlide] = useState(0)
   const [isPlaying, setIsPlaying] = useState(true)
+  const [formData, setFormData] = useState({
+    companyName: '',
+    contactName: '',
+    email: '',
+    phone: '',
+    businessArea: '',
+    message: '',
+  })
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState(null)
 
   // Rolar para o topo quando a página carregar
   useEffect(() => {
@@ -84,6 +96,58 @@ const Parceiros = () => {
     const formSection = document.querySelector('.partnership-form-section')
     if (formSection) {
       formSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
+  const formatPhone = (value) => {
+    const cleanValue = value.replace(/\D/g, '')
+    if (cleanValue.length <= 11) {
+      return cleanValue.replace(/(\d{2})(\d{0,5})(\d{0,4})/, '($1) $2-$3').trim()
+    }
+    return value
+  }
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    const formattedValue = name === 'phone' ? formatPhone(value) : value
+    setFormData((prev) => ({ ...prev, [name]: formattedValue }))
+  }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setIsSubmitting(true)
+    setSubmitError(null)
+
+    try {
+      const requiredFields = ['companyName', 'contactName', 'email', 'phone', 'businessArea']
+      const missingFields = requiredFields.filter(
+        (field) => !formData[field] || String(formData[field]).trim() === ''
+      )
+
+      if (missingFields.length > 0) {
+        throw new Error('Por favor, preencha todos os campos obrigatórios.')
+      }
+
+      const result = await sendPartnershipEmail(formData)
+
+      if (result.success) {
+        setSubmitSuccess(true)
+        setFormData({
+          companyName: '',
+          contactName: '',
+          email: '',
+          phone: '',
+          businessArea: '',
+          message: '',
+        })
+      } else {
+        throw new Error(result.message || 'Erro ao enviar solicitação')
+      }
+    } catch (error) {
+      console.error('Erro ao enviar parceria:', error)
+      setSubmitError(error.message || 'Erro ao enviar solicitação. Tente novamente.')
+    } finally {
+      setIsSubmitting(false)
     }
   }
 
@@ -443,7 +507,20 @@ const Parceiros = () => {
               <p>Preencha o formulário abaixo e nossa equipe entrará em contato em até 24 horas</p>
             </div>
 
-            <form className="partnership-form">
+            {submitSuccess && (
+              <div className="partnership-form-alert partnership-form-alert--success" role="status">
+                <CheckCircle size={20} />
+                <span>Solicitação enviada! Nossa equipe comercial entrará em contato em até 24 horas.</span>
+              </div>
+            )}
+
+            {submitError && (
+              <div className="partnership-form-alert partnership-form-alert--error" role="alert">
+                <span>{submitError}</span>
+              </div>
+            )}
+
+            <form className="partnership-form" onSubmit={handleSubmit} noValidate>
               <div className="form-row">
                 <div className="form-group">
                   <label htmlFor="company-name">Nome da Empresa *</label>
@@ -452,6 +529,8 @@ const Parceiros = () => {
                     id="company-name" 
                     name="companyName" 
                     required 
+                    value={formData.companyName}
+                    onChange={handleInputChange}
                     placeholder="Digite o nome da sua empresa"
                   />
                 </div>
@@ -462,6 +541,8 @@ const Parceiros = () => {
                     id="contact-name" 
                     name="contactName" 
                     required 
+                    value={formData.contactName}
+                    onChange={handleInputChange}
                     placeholder="Seu nome completo"
                   />
                 </div>
@@ -475,6 +556,8 @@ const Parceiros = () => {
                     id="email" 
                     name="email" 
                     required 
+                    value={formData.email}
+                    onChange={handleInputChange}
                     placeholder="seu@email.com"
                   />
                 </div>
@@ -485,6 +568,8 @@ const Parceiros = () => {
                     id="phone" 
                     name="phone" 
                     required 
+                    value={formData.phone}
+                    onChange={handleInputChange}
                     placeholder="(11) 99999-9999"
                   />
                 </div>
@@ -492,7 +577,13 @@ const Parceiros = () => {
 
               <div className="form-group">
                 <label htmlFor="business-area">Área de Atuação *</label>
-                <select id="business-area" name="businessArea" required>
+                <select
+                  id="business-area"
+                  name="businessArea"
+                  required
+                  value={formData.businessArea}
+                  onChange={handleInputChange}
+                >
                   <option value="">Selecione uma área</option>
                   <option value="erp">ERP / Sistemas Empresariais</option>
                   <option value="rh">Recursos Humanos</option>
@@ -511,13 +602,15 @@ const Parceiros = () => {
                   id="message" 
                   name="message" 
                   rows="3"
+                  value={formData.message}
+                  onChange={handleInputChange}
                   placeholder="Conte-nos brevemente sobre sua empresa e como podemos criar uma parceria..."
                 ></textarea>
               </div>
 
               <div className="form-actions">
-                <button type="submit" className="submit-button">
-                  <span>Enviar Solicitação</span>
+                <button type="submit" className="submit-button" disabled={isSubmitting}>
+                  <span>{isSubmitting ? 'Enviando...' : 'Enviar Solicitação'}</span>
                   <ArrowRight size={16} />
                 </button>
               </div>

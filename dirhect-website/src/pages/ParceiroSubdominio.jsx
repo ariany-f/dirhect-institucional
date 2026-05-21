@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './ParceiroSubdominio.css'
 
 /** Bump ao alterar `public/parceiro-template.html` (cache bust na query string). */
-const PARTNER_TEMPLATE_VERSION = 'section-full-bleed-5210'
+const PARTNER_TEMPLATE_VERSION = 'partnership-form-api-5211'
 
 function partnerTemplateUrl() {
   const base = import.meta.env.BASE_URL || '/'
@@ -24,8 +24,11 @@ const ParceiroSubdominio = () => {
   const [iframeSrc, setIframeSrc] = useState('')
 
   useEffect(() => {
+    const apiBase = encodeURIComponent(
+      import.meta.env.VITE_WORDPRESS_URL || 'https://wp-api.dirhect.com.br'
+    )
     const bust = import.meta.env.DEV ? `&_dev=${Date.now()}` : ''
-    setIframeSrc(resolveTemplateHref(`${partnerTemplateUrl()}${bust}`))
+    setIframeSrc(resolveTemplateHref(`${partnerTemplateUrl()}&api=${apiBase}${bust}`))
   }, [])
 
   if (!iframeSrc) {

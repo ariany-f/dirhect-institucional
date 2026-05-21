@@ -4,7 +4,8 @@ const WORDPRESS_CONFIG = {
   endpoints: {
     demo: '/wp-json/dirhect/v1/send-demo',
     support: '/wp-json/dirhect/v1/send-support',
-    indication: '/wp-json/dirhect/v1/send-indication'
+    indication: '/wp-json/dirhect/v1/send-indication',
+    partnership: '/wp-json/dirhect/v1/send-partnership'
   }
 }
 
@@ -31,7 +32,12 @@ const sendWordPressEmail = async (formData, type) => {
       body: JSON.stringify(formData)
     })
 
-    const result = await response.json()
+    let result = {}
+    try {
+      result = await response.json()
+    } catch {
+      result = {}
+    }
 
     if (response.ok && result.success) {
       console.log('Email enviado com sucesso via WordPress:', {
@@ -44,9 +50,14 @@ const sendWordPressEmail = async (formData, type) => {
         isLocal: false,
         result
       }
-    } else {
-      throw new Error(result.message || result.error || 'Erro ao enviar email')
     }
+
+    const errorMessage =
+      result?.message ||
+      result?.data?.message ||
+      (typeof result?.error === 'string' ? result.error : null) ||
+      `Erro ao enviar email (${response.status})`
+    throw new Error(errorMessage)
 
   } catch (error) {
     console.error('Erro ao enviar email via WordPress:', error)
@@ -76,10 +87,14 @@ export const sendIndicationEmail = async (formData) => {
   return await sendWordPressEmail(formData, 'indication')
 }
 
-
+// Função para enviar solicitação de parceria (página Parceiros)
+export const sendPartnershipEmail = async (formData) => {
+  return await sendWordPressEmail(formData, 'partnership')
+}
 
 export default {
   sendDemoEmail,
   sendSupportEmail,
-  sendIndicationEmail
+  sendIndicationEmail,
+  sendPartnershipEmail
 } 
