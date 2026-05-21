@@ -70,6 +70,11 @@ h1 {
   letter-spacing: -0.03em;
 }
 
+/* Home: título principal do hero em regular */
+h1.hero-title {
+  font-weight: 400;
+}
+
 h2 {
   font-size: 2.5rem;
   font-weight: 700;
