@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Calendar, Eye, BookOpen, ArrowRight, Users, Book, Tag, Star, Clock, TrendingUp, AlertCircle, CheckCircle, Code, Settings, Shield, Zap, AlertTriangle } from 'lucide-react'
-import Header from '../components/Header'
+import Header from '../components/Header.jsx?v=menu-nav-20260521'
 import Footer from '../components/Footer'
 import { wordpressService } from '../services/wordpressService'
 import './Conhecimento.css'

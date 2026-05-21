@@ -1,32 +1,56 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import './ParceiroSubdominio.css'
+
+/** Bump ao alterar `public/parceiro-template.html` (cache bust na query string). */
+const PARTNER_TEMPLATE_VERSION = 'section-full-bleed-5210'
+
+function partnerTemplateUrl() {
+  const base = import.meta.env.BASE_URL || '/'
+  const path = `${base}parceiro-template.html`.replace(/\/{2,}/g, '/')
+  return `${path}?v=${encodeURIComponent(PARTNER_TEMPLATE_VERSION)}`
+}
+
+function resolveTemplateHref(pathAndQuery) {
+  if (typeof window === 'undefined') return pathAndQuery
+  try {
+    return new URL(pathAndQuery, window.location.href).href
+  } catch {
+    return pathAndQuery
+  }
+}
 
 /**
- * Só é montado em navegação client-side (React Router), quando o SPA já está aberto.
- * Em GET /parceiro o servidor entrega o template direto (.htaccess ou middleware do Vite).
- * Aqui forçamos um reload em /parceiro para o servidor aplicar o mesmo rewrite.
+ * Dev: iframe do template (sem X-Frame-Options no Vite).
+ * Produção + navegação client-side: reload em /parceiro (.htaccess serve o HTML estático).
  */
 const ParceiroSubdominio = () => {
+  const [iframeSrc, setIframeSrc] = useState('')
+
   useEffect(() => {
-    const url = new URL('/parceiro', window.location.origin)
-    if (import.meta.env.DEV) {
-      url.searchParams.set('_dev', String(Date.now()))
+    if (import.meta.env.PROD) {
+      window.location.replace(new URL('/parceiro', window.location.origin).href)
+      return
     }
-    window.location.replace(url.href)
+    const bust = `&_dev=${Date.now()}`
+    setIframeSrc(resolveTemplateHref(`${partnerTemplateUrl()}${bust}`))
   }, [])
 
+  if (import.meta.env.PROD) {
+    return <div className="parceiro-page-wrap parceiro-page-loading">A carregar…</div>
+  }
+
+  if (!iframeSrc) {
+    return <div className="parceiro-page-wrap parceiro-page-loading">A carregar…</div>
+  }
+
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        fontFamily: 'system-ui, sans-serif',
-        color: '#4a5568',
-        background: '#fff',
-      }}
-    >
-      A carregar…
+    <div className="parceiro-page-wrap">
+      <iframe
+        key={iframeSrc}
+        title="Programa de Parceiros Dirhect"
+        src={iframeSrc}
+        className="parceiro-page-iframe"
+      />
     </div>
   )
 }

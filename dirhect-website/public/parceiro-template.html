@@ -46,13 +46,9 @@ body {
 }
 a { text-decoration: none; color: inherit; }
 img { display: block; max-width: 100%; }
+/* Nav interno desativado — menu do site fica no Header React (fora do iframe) */
 nav {
-  position: sticky; top: 0; z-index: 100;
-  background: var(--white);
-  border-bottom: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 6vw; height: 72px;
+  display: none !important;
 }
 .logo { display: flex; align-items: center; line-height: 1; }
 .logo svg { display: block; }
@@ -158,7 +154,7 @@ section { padding: 96px 6vw; }
 .btn-outline:hover { border-color: var(--orange); color: var(--orange); }
 .partner-hero {
   background: var(--white);
-  margin-top: -25px;
+  margin-top: 0;
   padding: 26px 6vw 96px;
   display: grid;
   grid-template-columns: minmax(0, 640px) minmax(280px, 1fr);
@@ -411,6 +407,9 @@ section { padding: 96px 6vw; }
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
+.partner-fold2-img--mobile {
+  display: none;
+}
 .partner-fold2-overlay {
   position: absolute;
   inset: 0;
@@ -644,17 +643,22 @@ section.ben-section::after {
   width: 100%;
   max-width: 1120px;
   margin: clamp(20px, 4vw, 44px) auto 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: block;
   padding-inline: 8px;
 }
 .stack-modulos-diagram img {
   width: 100%;
   max-width: min(1024px, 100%);
   height: auto;
-  display: block;
   border-radius: var(--radius-md);
+}
+.stack-modulos-diagram-img--desktop {
+  display: block;
+  margin: 0 auto;
+}
+.stack-modulos-diagram-img--mobile {
+  display: none;
+  margin: 0 auto;
 }
 .stack-intro-row .stack-modulos-diagram {
   margin: 0;
@@ -794,7 +798,7 @@ section.ben-section::after {
     margin-right: auto;
   }
   .stack-intro-row .stack-top-title {
-    white-space: nowrap;
+    white-space: normal;
     font-size: clamp(1rem, 2.4vw + 0.72rem, 2.8rem);
     line-height: 1.15;
   }
@@ -810,6 +814,17 @@ section.ben-section::after {
   .stack-cta-btn { width: 100%; justify-content: center; }
 }
 @media (max-width: 768px) {
+  .stack-intro-row .stack-top {
+    padding-top: 28px;
+  }
+  .stack-modulos-diagram-img--desktop {
+    display: none !important;
+  }
+  .stack-modulos-diagram-img--mobile {
+    display: block !important;
+    width: 100%;
+    max-width: 100%;
+  }
   .stack-highlights { grid-template-columns: 1fr; }
   .stack-hi { flex-direction: row; }
 }
@@ -840,17 +855,21 @@ section.ben-section::after {
   box-shadow: var(--shadow-sm);
   padding: 0;
   line-height: 0;
+  isolation: isolate;
 }
 .proof-strip-link {
   display: block;
   text-decoration: none;
   color: inherit;
   outline: none;
+  border-radius: inherit;
+  overflow: hidden;
 }
 .proof-strip {
   background: var(--white);
   padding: 18px 0;
   overflow: hidden;
+  border-radius: inherit;
   transition: background-color 0.25s ease;
 }
 .proof-strip-link:hover .proof-strip,
@@ -1089,6 +1108,79 @@ footer .logo .h-letter { color: var(--white); }
     margin-right: auto !important;
   }
 }
+/* Tablet e mobile: sem faixa lateral no body — cada seção ocupa 100% com seu fundo */
+@media (max-width: 1100px) {
+  :root {
+    --page-pad-x: 1.5rem;
+  }
+  html {
+    overflow-x: hidden;
+    background: transparent;
+  }
+  body {
+    background: transparent !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+  }
+  .partner-hero {
+    overflow: visible;
+  }
+  .partner-hero-copy,
+  .partner-hero-sub,
+  .partner-value-fold-copy,
+  .stack-top-copy,
+  .stack-top,
+  .s-sub {
+    min-width: 0;
+    max-width: 100%;
+  }
+  .partner-hero-title,
+  .partner-hero-title-line,
+  .partner-hero-title-line:first-of-type,
+  .partner-hero-title .accent,
+  .partner-value-fold-title,
+  .partner-value-fold-title-line,
+  .partner-value-fold-title-line:first-of-type,
+  .stack-top-title,
+  .stack-intro-row .stack-top-title,
+  .ben-hd .s-title,
+  .s-title {
+    white-space: normal !important;
+    overflow-wrap: break-word;
+    word-break: normal;
+    hyphens: auto;
+  }
+  .partner-hero-title-line {
+    display: block !important;
+  }
+  .partner-hero-sub {
+    max-width: 100% !important;
+  }
+  section,
+  .partner-hero,
+  .partner-value-fold,
+  .partner-fold2,
+  footer,
+  section.ben-section {
+    padding-left: var(--page-pad-x) !important;
+    padding-right: var(--page-pad-x) !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    box-sizing: border-box;
+  }
+  section:not(.partner-hero) > *,
+  .divider {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+}
 @media(min-width:1101px){
   .partner-hero {
     grid-template-columns: minmax(0, 640px) minmax(280px, 1fr);
@@ -1115,26 +1207,108 @@ footer .logo .h-letter { color: var(--white); }
   }
 }
 @media(max-width:768px){
-  .partner-hero { padding-top: max(8px, calc(56px - 50px)); }
+  section {
+    padding-top: 64px;
+    padding-bottom: 64px;
+  }
+  .divider {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+  }
+  .partner-hero {
+    padding-top: max(8px, calc(56px - 50px));
+    padding-bottom: 64px;
+  }
   .partner-hero::before { opacity: 0.45; right: -30%; }
-  .partner-hero-title { font-size: clamp(1.817rem, 8.917vw, 2.367rem); }
+  .partner-hero-title { font-size: clamp(1.65rem, 7vw, 2.1rem); }
+  .partner-hero-stats {
+    gap: 20px 24px;
+    justify-content: center;
+  }
+  .stat-lbl {
+    max-width: 9rem;
+    text-align: center;
+    line-height: 1.35;
+  }
   nav ul { display: none; }
   .partner-value-fold {
     margin-top: calc(clamp(-52px, -6.5vw, -24px) - 50px);
-    padding: max(16px, calc(48px + clamp(34px, 6.5vw, 52px) + 50px - 100px)) 5vw 52px;
+    padding-top: max(16px, calc(48px + clamp(34px, 6.5vw, 52px) + 50px - 100px));
+    padding-bottom: 52px;
   }
   .partner-value-fold-title { font-size: clamp(1.55rem, 6.2vw, 2rem); }
   .partner-fold2-banner { border-radius: var(--radius-lg); }
+  .partner-fold2-img--desktop {
+    display: none;
+  }
+  .partner-fold2-img--mobile {
+    display: block;
+  }
   .partner-fold2-overlay {
     justify-content: center;
     align-items: flex-end;
-    padding: 14px 14px 22px;
-    background: linear-gradient(to top, rgba(0,0,0,.42) 0%, transparent 56%);
+    padding: 12px 16px calc(11px + min(15vw, 95px));
+    background: none;
   }
   .partner-fold2-copy { max-width: 100%; text-align: center; align-items: center; }
-  .partner-fold2-cta { align-self: center; }
-  .proof-strip-seq { gap: 2rem; padding: 0 1rem; }
-  .proof-strip-item { width: 108px; height: 46px; }
+  .partner-fold2-cta {
+    align-self: center;
+    margin-top: 32px;
+  }
+  .partner-value-fold {
+    overflow: visible;
+  }
+  .partner-value-fold-strip {
+    margin-left: 0;
+    margin-right: 0;
+    padding-inline: 0 !important;
+    box-sizing: border-box;
+    width: 100%;
+  }
+  .partner-value-fold-strip .logo-strip {
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+  .partner-value-fold-strip .proof-strip-link,
+  .partner-value-fold-strip .proof-strip,
+  .partner-value-fold-strip .proof-strip-mask {
+    border-radius: inherit;
+    overflow: hidden;
+  }
+  .proof-strip {
+    padding: 12px 0;
+  }
+  .proof-strip-track {
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 0;
+    padding: 10px 8px;
+  }
+  .proof-strip-seq {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(4px, 1.5vw, 10px);
+    width: 100%;
+    max-width: 100%;
+    padding: 0;
+  }
+  .proof-strip-item {
+    flex: 1 1 0;
+    min-width: 0;
+    width: auto;
+    max-width: none;
+    height: 28px;
+    padding: 2px 1px;
+  }
+  .proof-strip-logo {
+    width: 100%;
+    max-width: 100%;
+    max-height: 22px;
+    height: auto;
+    object-fit: contain;
+  }
   .vp-inner, .contact-inner { grid-template-columns: 1fr; gap: 40px; }
   .ben-grid, .f-row { grid-template-columns: 1fr; }
   .vp-cards { grid-template-columns: 1fr 1fr; }
@@ -1144,20 +1318,11 @@ footer .logo .h-letter { color: var(--white); }
     margin-top: -16px;
     padding-top: clamp(22px, 5.5vw, 40px);
     padding-bottom: clamp(28px, 5vw, 40px);
-    padding-left: 5vw;
-    padding-right: 5vw;
   }
-  section { padding: 64px 5vw; }
 }
 </style>
 </head>
 <body>
-<nav>
-  <a href="#hero" class="logo">
-    <img src="https://dirhect.com.br/images/dirhect_color.svg" alt="dirhect" style="height:42px;width:auto;display:block;">
-  </a>
-  <a href="#contato" class="nav-demo">Demonstração</a>
-</nav>
 
 <section class="partner-hero" id="hero">
   <div class="partner-hero-copy fi d1">
@@ -1284,7 +1449,8 @@ footer .logo .h-letter { color: var(--white); }
 <section class="partner-fold2" id="solucao">
   <div class="partner-fold2-shell fi">
     <div class="partner-fold2-banner">
-      <img class="partner-fold2-img" src="/images/parceiro-fold2-banner-v06300-65dc5487.png?v=r39-20260514" width="1024" height="375" alt="Notebook com o painel Dirhect sobre faixa laranja listrada" decoding="async">
+      <img class="partner-fold2-img partner-fold2-img--desktop" src="/images/parceiro-fold2-banner-v06300-65dc5487.png?v=r39-20260514" width="1024" height="375" alt="Notebook com o painel Dirhect sobre faixa laranja listrada" decoding="async">
+      <img class="partner-fold2-img partner-fold2-img--mobile" src="/images/parceiro-fold2-banner-mobile.png?v=20260521c" width="656" height="1024" alt="Notebook com o painel Dirhect sobre fundo laranja" decoding="async">
       <div class="partner-fold2-overlay">
         <div class="partner-fold2-copy">
           <h2 class="partner-fold2-title">Uma plataforma! <br class="partner-fold2-title-br">Todo o RH.</h2>
@@ -1316,7 +1482,8 @@ footer .logo .h-letter { color: var(--white); }
   </div>
 
   <div class="stack-modulos-diagram fi d1">
-    <img src="/images/parceiro-stack-modulos-diagrama.png?v=r140-20260514" width="1024" height="825" alt="Diagrama do stack Dirhect: sete módulos em torno do hub central — admissão digital, gestão de benefícios, portal de RH, tarefas, formulários, workflow BPMN e integration hub." decoding="async" loading="lazy">
+    <img class="stack-modulos-diagram-img--desktop" src="/images/parceiro-stack-modulos-diagrama.png?v=r140-20260514" width="1024" height="825" alt="Diagrama do stack Dirhect: sete módulos em torno do hub central — admissão digital, gestão de benefícios, portal de RH, tarefas, formulários, workflow BPMN e integration hub." decoding="async" loading="lazy">
+    <img class="stack-modulos-diagram-img--mobile" src="/images/parceiro-stack-modulos-diagrama-mobile.png?v=20260521d" width="1024" height="825" alt="Diagrama mobile do stack Dirhect com sete módulos integrados ao redor do hub central." decoding="async" loading="lazy">
   </div>
   </div>
 

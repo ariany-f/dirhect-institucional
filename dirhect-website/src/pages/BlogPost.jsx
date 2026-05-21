@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Calendar, Clock, ArrowLeft, ArrowRight, User, Tag, Share2, Facebook, Twitter, Linkedin } from 'lucide-react'
-import Header from '../components/Header'
+import Header from '../components/Header.jsx?v=menu-nav-20260521'
 import Footer from '../components/Footer'
 import FloatingButtons from '../components/FloatingButtons'
 import { wordpressService } from '../services/wordpressService'

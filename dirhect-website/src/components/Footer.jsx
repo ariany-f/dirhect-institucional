@@ -29,7 +29,7 @@ const Footer = () => {
               <li><a href="#solucoes">Gestão de Tarefas</a></li>
               <li><a href="#solucoes">Gestão de Benefícios</a></li>
               <li><a href="#solucoes">Admissão Digital</a></li>
-              <li><a href="#solucoes">Integrações</a></li>
+              <li><Link to="/parceiros">Integrações e ecossistema</Link></li>
             </ul>
           </div>
 
@@ -38,8 +38,7 @@ const Footer = () => {
             <ul className="footer-links">
               <li><Link to="/">Sobre Nós</Link></li>
               <li><Link to="/blog">Blog</Link></li>
-              <li><a href="/parceiro">Programa de parceiros</a></li>
-              <li><Link to="/parceiros">Integrações e ecossistema</Link></li>
+              <li><Link to="/parceiro">Programa de parceiros</Link></li>
               <li><a href="#contato">Contato</a></li>
               <li><Link to="/docs">Documentação</Link></li>
               <li><Link to="/roadmap">Roadmap</Link></li>
