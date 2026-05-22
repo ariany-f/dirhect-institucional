@@ -1611,7 +1611,7 @@ footer .logo .h-letter { color: var(--white); }
       </div>
       <div class="f-group"><label for="partner-company">Empresa *</label><input type="text" id="partner-company" required placeholder="Nome da sua empresa"></div>
       <div class="f-group"><label for="partner-email">E-mail Corporativo *</label><input type="email" id="partner-email" required placeholder="voce@empresa.com.br"></div>
-      <div class="f-group"><label for="partner-phone">Telefone / WhatsApp *</label><input type="tel" id="partner-phone" required placeholder="+55 (11) 9 0000-0000"></div>
+      <div class="f-group"><label for="partner-phone">Telefone / WhatsApp *</label><input type="tel" id="partner-phone" required maxlength="15" placeholder="(11) 99999-9999" inputmode="numeric" autocomplete="tel"></div>
       <div class="f-group">
         <label for="partner-profile">Perfil de Parceiro *</label>
         <select id="partner-profile" required>
@@ -1688,6 +1688,22 @@ document.addEventListener('click', function (e) {
     statusEl.hidden = true;
     statusEl.textContent = '';
     statusEl.className = 'partner-form-status';
+  }
+
+  /** Máscara de telefone BR — igual IndiqueGanhe / Parceiros: (11) 99999-9999 */
+  function formatPhone(value) {
+    const cleanValue = String(value || '').replace(/\D/g, '').slice(0, 11);
+    return cleanValue.replace(/(\d{2})(\d{0,5})(\d{0,4})/, '($1) $2-$3').replace(/[ -]$/, '');
+  }
+
+  const phoneInput = document.getElementById('partner-phone');
+  if (phoneInput) {
+    phoneInput.addEventListener('input', function () {
+      this.value = formatPhone(this.value);
+    });
+    phoneInput.addEventListener('blur', function () {
+      this.value = formatPhone(this.value);
+    });
   }
 
   function getPayload() {

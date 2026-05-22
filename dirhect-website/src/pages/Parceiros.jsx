@@ -100,11 +100,8 @@ const Parceiros = () => {
   }
 
   const formatPhone = (value) => {
-    const cleanValue = value.replace(/\D/g, '')
-    if (cleanValue.length <= 11) {
-      return cleanValue.replace(/(\d{2})(\d{0,5})(\d{0,4})/, '($1) $2-$3').trim()
-    }
-    return value
+    const cleanValue = value.replace(/\D/g, '').slice(0, 11)
+    return cleanValue.replace(/(\d{2})(\d{0,5})(\d{0,4})/, '($1) $2-$3').replace(/[ -]$/, '')
   }
 
   const handleInputChange = (e) => {
@@ -568,6 +565,9 @@ const Parceiros = () => {
                     id="phone" 
                     name="phone" 
                     required 
+                    maxLength={15}
+                    inputMode="numeric"
+                    autoComplete="tel"
                     value={formData.phone}
                     onChange={handleInputChange}
                     placeholder="(11) 99999-9999"
