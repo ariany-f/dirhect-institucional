@@ -31,6 +31,7 @@ import {
 } from 'lucide-react'
 import Header from '../components/Header.jsx?v=menu-nav-20260521'
 import Footer from '../components/Footer'
+import PhoneInput from '../components/PhoneInput'
 import { sendIndicationEmail } from '../services/emailService'
 import './IndiqueGanhe.css'
 
@@ -76,16 +77,6 @@ const IndiqueGanhe = () => {
     }
   }
 
-  // Função para aplicar máscara de telefone
-  const formatPhone = (value) => {
-    const cleanValue = value.replace(/\D/g, '')
-    
-    if (cleanValue.length <= 11) {
-      return cleanValue.replace(/(\d{2})(\d{0,5})(\d{0,4})/, '($1) $2-$3')
-    }
-    return cleanValue
-  }
-
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
@@ -119,8 +110,6 @@ const IndiqueGanhe = () => {
     let formattedValue = value
     if (name.includes('cnpj')) {
       formattedValue = formatCNPJ(value)
-    } else if (name.includes('telefone')) {
-      formattedValue = formatPhone(value)
     }
     
     setFormData(prev => ({
@@ -466,17 +455,15 @@ const IndiqueGanhe = () => {
                       required
                     />
                   </div>
-                  <div className="indique-form-group">
-                    <label>Telefone *</label>
-                    <input
-                      type="tel"
-                      name="telefoneIndicador"
-                      value={formData.telefoneIndicador}
-                      onChange={handleInputChange}
-                      placeholder="(11) 99999-9999"
-                      required
-                    />
-                  </div>
+                  <PhoneInput
+                    className="indique-form-group"
+                    id="telefoneIndicador"
+                    name="telefoneIndicador"
+                    label="Telefone *"
+                    value={formData.telefoneIndicador}
+                    onChange={handleInputChange}
+                    required
+                  />
                   <div className="indique-form-group">
                     <label>Sua Empresa *</label>
                     <input
@@ -586,17 +573,15 @@ const IndiqueGanhe = () => {
                       required
                     />
                   </div>
-                  <div className="indique-form-group">
-                    <label>Telefone do Contato *</label>
-                    <input
-                      type="tel"
-                      name="telefoneContato"
-                      value={formData.telefoneContato}
-                      onChange={handleInputChange}
-                      placeholder="(11) 99999-9999"
-                      required
-                    />
-                  </div>
+                  <PhoneInput
+                    className="indique-form-group"
+                    id="telefoneContato"
+                    name="telefoneContato"
+                    label="Telefone do Contato *"
+                    value={formData.telefoneContato}
+                    onChange={handleInputChange}
+                    required
+                  />
                 </div>
               </div>
 

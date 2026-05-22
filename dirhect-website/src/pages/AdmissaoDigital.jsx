@@ -23,6 +23,7 @@ import {
 } from 'lucide-react'
 import Header from '../components/Header.jsx?v=menu-nav-20260521'
 import Footer from '../components/Footer'
+import PhoneInput from '../components/PhoneInput'
 import { sendDemoEmail } from '../services/emailService'
 import './AdmissaoDigital.css'
 
@@ -432,13 +433,12 @@ const AdmissaoDigital = () => {
                   />
                 </div>
                 <div className="admissao-form-group">
-                  <label>Telefone *</label>
-                  <input
-                    type="tel"
+                  <PhoneInput
+                    id="telefone"
                     name="telefone"
+                    label="Telefone *"
                     value={formData.telefone}
                     onChange={handleInputChange}
-                    placeholder="(11) 99999-9999"
                     required
                   />
                 </div>

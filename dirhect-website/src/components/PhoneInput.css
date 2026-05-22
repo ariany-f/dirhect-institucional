@@ -1,0 +1,120 @@
+.phone-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+.phone-input__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: inherit;
+}
+
+.phone-input__row {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  width: 100%;
+}
+
+.phone-input__country {
+  flex: 0 0 auto;
+  min-width: 118px;
+  max-width: 140px;
+  padding: 0 10px 0 8px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fff;
+  font-family: inherit;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1b2232;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234A5568' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 28px;
+}
+
+.phone-input__country:focus {
+  border-color: #ff8c00;
+  box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.15);
+}
+
+.phone-input__number {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 14px;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 0.93rem;
+  color: #1b2232;
+  background: #fff;
+  outline: none;
+}
+
+.phone-input__number::placeholder {
+  color: #8a96a8;
+}
+
+.phone-input__number:focus {
+  border-color: #ff8c00;
+  box-shadow: 0 0 0 3px rgba(255, 140, 0, 0.15);
+}
+
+/* Variante com ícone à esquerda (Demo) */
+.phone-input--icon-left .phone-input__row {
+  position: relative;
+}
+
+.phone-input--icon-left .phone-input__icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #64748b;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.phone-input--icon-left .phone-input__country {
+  margin-left: 2.5rem;
+}
+
+.phone-input--icon-left .phone-input__number {
+  padding-left: 14px;
+}
+
+/* Parceiros / formulários escuros */
+.partnership-form-section .phone-input__country,
+.partnership-form-section .phone-input__number {
+  background: #f8fafc;
+}
+
+/* Indique ganhe */
+.indique-form-group .phone-input__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+.indique-form-group .phone-input__country,
+.indique-form-group .phone-input__number {
+  background: #fff;
+  border-color: #e2e8f0;
+}
+
+@media (max-width: 480px) {
+  .phone-input__row {
+    flex-direction: column;
+  }
+
+  .phone-input__country {
+    max-width: none;
+    width: 100%;
+  }
+}

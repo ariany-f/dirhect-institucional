@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import Header from '../components/Header.jsx?v=menu-nav-20260521'
 import Footer from '../components/Footer'
 import { Building2, Users, Mail, Phone, MapPin, Calendar, CheckCircle2 } from 'lucide-react'
+import PhoneInput from '../components/PhoneInput'
 import { sendDemoEmail } from '../services/emailService'
 import './Demo.css'
 
@@ -336,18 +337,15 @@ const Demo = () => {
                     </div>
 
                     <div className="form-group">
-                      <label>Telefone *</label>
-                      <div className="input-wrapper">
-                        <Phone size={20} />
-                        <input
-                          type="tel"
-                          name="telefone"
-                          value={formData.telefone}
-                          onChange={handleInputChange}
-                          placeholder="(11) 99999-9999"
-                          required
-                        />
-                      </div>
+                      <PhoneInput
+                        id="telefone"
+                        name="telefone"
+                        label="Telefone *"
+                        value={formData.telefone}
+                        onChange={handleInputChange}
+                        required
+                        icon={<Phone size={20} />}
+                      />
                     </div>
                   </div>
                 </div>

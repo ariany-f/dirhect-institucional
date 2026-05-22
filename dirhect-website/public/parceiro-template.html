@@ -957,6 +957,50 @@ section.ben-section::after {
   box-shadow: 0 0 0 3px rgba(245,154,0,.15);
 }
 .f-group select { appearance: none; cursor: pointer; }
+.phone-intl-row {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+.phone-intl-row .phone-intl-country {
+  flex: 0 0 auto;
+  min-width: 118px;
+  max-width: 140px;
+  padding: 12px 28px 12px 10px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  font-family: var(--font);
+  font-size: .88rem;
+  font-weight: 700;
+  color: var(--navy);
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%234A5568' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+}
+.phone-intl-row .phone-intl-number {
+  flex: 1;
+  min-width: 0;
+  padding: 12px 15px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  font-family: var(--font);
+  font-size: .93rem;
+  color: var(--text);
+  outline: none;
+}
+.phone-intl-row .phone-intl-country:focus,
+.phone-intl-row .phone-intl-number:focus {
+  border-color: var(--orange);
+  box-shadow: 0 0 0 3px rgba(245,154,0,.15);
+}
+@media (max-width: 480px) {
+  .phone-intl-row { flex-direction: column; }
+  .phone-intl-row .phone-intl-country { max-width: none; width: 100%; }
+}
 .f-submit {
   width: 100%; padding: 15px;
   background: var(--orange); color: var(--white);
@@ -1611,7 +1655,7 @@ footer .logo .h-letter { color: var(--white); }
       </div>
       <div class="f-group"><label for="partner-company">Empresa *</label><input type="text" id="partner-company" required placeholder="Nome da sua empresa"></div>
       <div class="f-group"><label for="partner-email">E-mail Corporativo *</label><input type="email" id="partner-email" required placeholder="voce@empresa.com.br"></div>
-      <div class="f-group"><label for="partner-phone">Telefone / WhatsApp *</label><input type="tel" id="partner-phone" required maxlength="15" placeholder="(11) 99999-9999" inputmode="numeric" autocomplete="tel"></div>
+      <div class="f-group"><label for="partner-phone">Telefone / WhatsApp *</label><div id="partner-phone-wrap" class="phone-intl-row"></div></div>
       <div class="f-group">
         <label for="partner-profile">Perfil de Parceiro *</label>
         <select id="partner-profile" required>
@@ -1650,6 +1694,7 @@ footer .logo .h-letter { color: var(--white); }
   <span class="foot-copy">© 2025 Dirhect. Todos os direitos reservados.</span>
 </footer>
 
+<script src="/scripts/dirhect-phone-intl.js"></script>
 <script>
 const io = new IntersectionObserver(entries => {
   entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in'); });
@@ -1690,20 +1735,16 @@ document.addEventListener('click', function (e) {
     statusEl.className = 'partner-form-status';
   }
 
-  /** Máscara de telefone BR — igual IndiqueGanhe / Parceiros: (11) 99999-9999 */
-  function formatPhone(value) {
-    const cleanValue = String(value || '').replace(/\D/g, '').slice(0, 11);
-    return cleanValue.replace(/(\d{2})(\d{0,5})(\d{0,4})/, '($1) $2-$3').replace(/[ -]$/, '');
-  }
+  var partnerPhoneWidget = window.DirhectPhoneIntl
+    ? window.DirhectPhoneIntl.mount('#partner-phone-wrap', { inputId: 'partner-phone', defaultCountry: 'BR' })
+    : null;
 
-  const phoneInput = document.getElementById('partner-phone');
-  if (phoneInput) {
-    phoneInput.addEventListener('input', function () {
-      this.value = formatPhone(this.value);
-    });
-    phoneInput.addEventListener('blur', function () {
-      this.value = formatPhone(this.value);
-    });
+  function getPartnerPhone() {
+    if (partnerPhoneWidget && partnerPhoneWidget.getValue) {
+      return partnerPhoneWidget.getValue();
+    }
+    var el = document.getElementById('partner-phone');
+    return el ? el.value.trim() : '';
   }
 
   function getPayload() {
@@ -1711,7 +1752,7 @@ document.addEventListener('click', function (e) {
     const lastName = document.getElementById('partner-last-name')?.value.trim() || '';
     const companyName = document.getElementById('partner-company')?.value.trim() || '';
     const email = document.getElementById('partner-email')?.value.trim() || '';
-    const phone = document.getElementById('partner-phone')?.value.trim() || '';
+    const phone = getPartnerPhone();
     const businessArea = document.getElementById('partner-profile')?.value.trim() || '';
     return {
       companyName,
@@ -1779,7 +1820,11 @@ document.addEventListener('click', function (e) {
         document.getElementById('partner-last-name').value = '';
         document.getElementById('partner-company').value = '';
         document.getElementById('partner-email').value = '';
-        document.getElementById('partner-phone').value = '';
+        if (partnerPhoneWidget && partnerPhoneWidget.sel && partnerPhoneWidget.inp) {
+          partnerPhoneWidget.sel.value = 'BR';
+          partnerPhoneWidget.inp.value = '';
+          partnerPhoneWidget.inp.dataset.fullPhone = '';
+        }
         document.getElementById('partner-profile').value = '';
         return;
       }

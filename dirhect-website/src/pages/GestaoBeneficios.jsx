@@ -17,6 +17,7 @@ import {
   Heart,
   Zap
 } from 'lucide-react';
+import PhoneInput from '../components/PhoneInput';
 import { sendDemoEmail } from '../services/emailService';
 import './GestaoBeneficios.css';
 import Footer from '../components/Footer';
@@ -402,15 +403,13 @@ const GestaoBeneficios = () => {
                   />
                 </div>
                 <div className="gestao-form-group">
-                  <label htmlFor="telefone">Telefone *</label>
-                  <input
-                    type="tel"
+                  <PhoneInput
                     id="telefone"
                     name="telefone"
+                    label="Telefone *"
                     value={formData.telefone}
                     onChange={handleInputChange}
                     required
-                    placeholder="(11) 99999-9999"
                   />
                 </div>
                 <div className="gestao-form-group">

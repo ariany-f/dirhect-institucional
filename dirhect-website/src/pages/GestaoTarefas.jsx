@@ -19,6 +19,7 @@ import {
   AlertCircle,
   Star
 } from 'lucide-react';
+import PhoneInput from '../components/PhoneInput';
 import { sendDemoEmail } from '../services/emailService';
 import './GestaoTarefas.css';
 import Footer from '../components/Footer';
@@ -404,15 +405,13 @@ const GestaoTarefas = () => {
                   />
                 </div>
                 <div className="tarefas-form-group">
-                  <label htmlFor="telefone">Telefone *</label>
-                  <input
-                    type="tel"
+                  <PhoneInput
                     id="telefone"
                     name="telefone"
+                    label="Telefone *"
                     value={formData.telefone}
                     onChange={handleInputChange}
                     required
-                    placeholder="(11) 99999-9999"
                   />
                 </div>
                 <div className="tarefas-form-group">

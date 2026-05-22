@@ -12,6 +12,7 @@ import {
 } from 'lucide-react'
 import Button from './Button'
 import Input from './Input'
+import PhoneInput from './PhoneInput'
 import './CTA.css'
 
 const CTA = () => {
@@ -178,10 +179,9 @@ const CTA = () => {
                     required
                   />
                   
-                  <Input
+                  <PhoneInput
+                    id="phone"
                     name="phone"
-                    type="tel"
-                    placeholder="(11) 99999-9999"
                     value={formData.phone}
                     onChange={handleInputChange}
                     icon={<Phone size={20} />}

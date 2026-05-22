@@ -27,6 +27,7 @@ import {
 import Header from '../components/Header.jsx?v=menu-nav-20260521'
 import Footer from '../components/Footer'
 import FloatingButtons from '../components/FloatingButtons'
+import PhoneInput from '../components/PhoneInput'
 import { sendPartnershipEmail } from '../services/emailService'
 import './Parceiros.css'
 
@@ -99,15 +100,9 @@ const Parceiros = () => {
     }
   }
 
-  const formatPhone = (value) => {
-    const cleanValue = value.replace(/\D/g, '').slice(0, 11)
-    return cleanValue.replace(/(\d{2})(\d{0,5})(\d{0,4})/, '($1) $2-$3').replace(/[ -]$/, '')
-  }
-
   const handleInputChange = (e) => {
     const { name, value } = e.target
-    const formattedValue = name === 'phone' ? formatPhone(value) : value
-    setFormData((prev) => ({ ...prev, [name]: formattedValue }))
+    setFormData((prev) => ({ ...prev, [name]: value }))
   }
 
   const handleSubmit = async (e) => {
@@ -559,18 +554,13 @@ const Parceiros = () => {
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="phone">Telefone *</label>
-                  <input 
-                    type="tel" 
-                    id="phone" 
-                    name="phone" 
-                    required 
-                    maxLength={15}
-                    inputMode="numeric"
-                    autoComplete="tel"
+                  <PhoneInput
+                    id="phone"
+                    name="phone"
+                    label="Telefone *"
                     value={formData.phone}
                     onChange={handleInputChange}
-                    placeholder="(11) 99999-9999"
+                    required
                   />
                 </div>
               </div>
