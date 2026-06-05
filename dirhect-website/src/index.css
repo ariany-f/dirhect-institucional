@@ -33,6 +33,21 @@
   --warning-color: #ffaa00;
   --error-color: #ef4444;
   --info-color: #3b82f6;
+
+  /* Alinhamento horizontal das dobras da home */
+  --home-fold-content-max: 1240px;
+  --home-fold-side-padding: clamp(1.25rem, 3vw, 2.5rem);
+  /* Esquerda padronizada em todas as dobras */
+  --home-fold-inset-left: max(
+    var(--home-fold-side-padding),
+    calc((100vw - var(--home-fold-content-max)) / 2 + var(--home-fold-side-padding))
+  );
+  --home-fold-inset-right: max(
+    var(--home-fold-side-padding),
+    calc((100vw - var(--home-fold-content-max)) / 2 + var(--home-fold-side-padding))
+  );
+  /* Direita simétrica (dobras 2, 3, 5, 6, 7): usar max-width + padding igual nos dois lados */
+  /* Direita assimétrica (dobras 1, 4, 8): usar só --home-fold-side-padding à direita */
 }
 
 * {

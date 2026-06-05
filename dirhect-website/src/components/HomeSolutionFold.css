@@ -1,0 +1,54 @@
+/* Dobra 3: A solução — introdução */
+
+.home-solution-fold {
+  --solution-navy: #0f172a;
+  --solution-orange: #ff8c00;
+  --solution-muted: #4b5563;
+  --solution-bg: #f3f4f6;
+  background: var(--solution-bg);
+  padding: clamp(2.25rem, 4.5vh, 3.25rem) 0;
+}
+
+.home-solution-fold-container {
+  text-align: center;
+}
+
+.home-solution-fold-eyebrow {
+  margin: 0 0 0.55rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--solution-orange);
+  line-height: 1.3;
+}
+
+.home-solution-fold-title {
+  margin: 0 auto 0.75rem;
+  max-width: 980px;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(1.15rem, 1.1vw + 0.95rem, 2.35rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  color: var(--solution-navy);
+}
+
+.home-solution-fold-accent {
+  color: var(--solution-orange);
+}
+
+.home-solution-fold-description {
+  margin: 0 auto;
+  max-width: 900px;
+  font-size: clamp(0.85rem, 1vw, 0.92rem);
+  line-height: 1.65;
+  color: var(--solution-muted);
+  font-weight: 400;
+}
+
+@media (max-width: 640px) {
+  .home-solution-fold {
+    padding: 2rem 0;
+  }
+}

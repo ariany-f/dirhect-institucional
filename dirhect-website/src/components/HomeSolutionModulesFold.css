@@ -1,0 +1,234 @@
+/* Dobra 6: Principais pilares da solução */
+
+.home-solution-modules {
+  --modules-navy: #0f172a;
+  --modules-orange: #ff8c00;
+  --modules-orange-hover: #e67e00;
+  --modules-orange-dark: #e67e00;
+  --modules-muted: #4b5563;
+  --modules-text-mid: #374151;
+  --modules-border: #e5e7eb;
+  --modules-white: #ffffff;
+  --modules-shadow-sm: 0 1px 3px rgba(15, 23, 42, 0.08);
+  background: #ffffff;
+  padding: clamp(2.5rem, 5vh, 3.5rem) 0 clamp(3rem, 6vh, 4rem);
+  overflow-x: clip;
+}
+
+.home-solution-modules-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 0.46fr) minmax(0, 0.54fr);
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: stretch;
+  margin-bottom: 0;
+}
+
+.home-solution-modules-top {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  text-align: left;
+  min-width: 0;
+  height: 100%;
+}
+
+.home-solution-modules-eyebrow {
+  flex-shrink: 0;
+  margin: 0 0 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--modules-orange);
+  line-height: 1.3;
+}
+
+.home-solution-modules-copy {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 0;
+}
+
+.home-solution-modules-title {
+  margin: 0 0 1rem;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(1.15rem, 1.1vw + 0.95rem, 2.35rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: var(--modules-navy);
+}
+
+.home-solution-modules-accent {
+  color: var(--modules-orange);
+}
+
+.home-solution-modules-sub {
+  margin: 0 0 1.35rem;
+  font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+  line-height: 1.75;
+  color: var(--modules-text-mid);
+  font-weight: 400;
+  position: relative;
+  z-index: 0;
+}
+
+.home-solution-modules-pills {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: flex-start;
+  gap: 8px 10px;
+  margin: 0 0 1.15rem;
+  padding: 10px 14px;
+  background: var(--modules-white);
+  border: 1px solid var(--modules-border);
+  border-radius: 999px;
+  font-size: clamp(0.68rem, 0.45vw + 0.62rem, 0.78rem);
+  font-weight: 600;
+  color: var(--modules-text-mid);
+  box-shadow: var(--modules-shadow-sm);
+  width: fit-content;
+  white-space: nowrap;
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+}
+
+.home-solution-modules-pills > * {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.home-solution-modules-dot-pill {
+  color: var(--modules-orange);
+  font-weight: 800;
+  opacity: 0.85;
+}
+
+.home-solution-modules-pill-ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--modules-orange);
+  margin-right: 4px;
+}
+
+.home-solution-modules-pill-ic svg {
+  width: 17px;
+  height: 17px;
+  display: block;
+}
+
+.home-solution-modules-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  align-self: flex-start;
+  margin: 1.5rem 0 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: none;
+  box-shadow: none;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(0.88rem, 1vw, 0.95rem);
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--modules-orange);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, gap 0.2s ease;
+}
+
+.home-solution-modules-link:hover {
+  color: var(--modules-orange-hover);
+  gap: 0.5rem;
+}
+
+.home-solution-modules-visual {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  align-self: stretch;
+  line-height: 0;
+  min-width: 0;
+}
+
+.home-solution-modules-diagram {
+  display: block;
+  width: 100%;
+  max-width: clamp(300px, 48vw, 540px);
+  height: auto;
+  margin: 0 0 0 auto;
+  object-fit: contain;
+}
+
+@media (max-width: 1100px) {
+  .home-solution-modules-intro {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+    margin-bottom: 0;
+  }
+
+  .home-solution-modules-top {
+    text-align: center;
+    padding-inline: 4px;
+    height: auto;
+  }
+
+  .home-solution-modules-copy {
+    flex: none;
+    justify-content: flex-start;
+  }
+
+  .home-solution-modules-sub {
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .home-solution-modules-pills {
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .home-solution-modules-link {
+    align-self: center;
+  }
+
+  .home-solution-modules-visual {
+    justify-content: center;
+  }
+
+  .home-solution-modules-diagram {
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-solution-modules-top {
+    padding-top: 0.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-solution-modules {
+    padding: 2rem 0 2.5rem;
+  }
+
+  .home-solution-modules-pills {
+    gap: 6px 8px;
+    padding: 9px 12px;
+    font-size: 0.66rem;
+  }
+
+  .home-solution-modules-pill-ic svg {
+    width: 15px;
+    height: 15px;
+  }
+}

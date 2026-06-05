@@ -1,14 +1,32 @@
 import { useState, useEffect, useRef } from 'react'
-import { 
-  Monitor, 
-  Users, 
-  BarChart3,
-  ArrowRight,
-  Play,
-  ChevronLeft,
-  ChevronRight
-} from 'lucide-react'
 import './AppFeatures.css'
+
+const APP_DEMOS = [
+  {
+    id: 'atividades-dashboard',
+    title: 'Atividades',
+    description: 'Gerenciamento completo de tarefas e processos de RH',
+    image: '/images/showcase/SITE - GESTAO TAREFAS.png',
+  },
+  {
+    id: 'contratos-beneficios',
+    title: 'Contratos',
+    description: 'Gestão de contratos e benefícios corporativos',
+    image: '/images/showcase/SITE - BENEFICIOS.png',
+  },
+  {
+    id: 'elegibilidade-grupos',
+    title: 'Elegibilidade',
+    description: 'Configuração de grupos elegíveis para benefícios',
+    image: '/images/showcase/SITE - BENEFICIOS.png',
+  },
+  {
+    id: 'admissao-digital',
+    title: 'Admissão\u00A0Digital',
+    description: 'Criação de processos de admissão digital',
+    image: '/images/showcase/SITE - PORTAL RH.png',
+  },
+]
 
 const AppFeatures = () => {
   const [isVisible, setIsVisible] = useState(false)
@@ -33,53 +51,15 @@ const AppFeatures = () => {
     return () => observer.disconnect()
   }, [])
 
-  // Auto-slide functionality para os demos
   useEffect(() => {
     if (!isAutoPlaying) return
 
     const interval = setInterval(() => {
-      setCurrentDemo((prev) => (prev + 1) % appDemos.length)
+      setCurrentDemo((prev) => (prev + 1) % APP_DEMOS.length)
     }, 5000)
 
     return () => clearInterval(interval)
   }, [isAutoPlaying])
-
-  const appDemos = [
-    {
-      id: 'atividades-dashboard',
-      title: 'Atividades',
-      description: 'Gerenciamento completo de tarefas e processos de RH',
-      image: '/images/showcase/SITE - GESTAO TAREFAS.png'
-    },
-    {
-      id: 'contratos-beneficios',
-      title: 'Contratos',
-      description: 'Gestão de contratos e benefícios corporativos para sua empresa',
-      image: '/images/showcase/SITE - BENEFICIOS.png'
-    },
-    {
-      id: 'elegibilidade-grupos',
-      title: 'Elegibilidade',
-      description: 'Configuração de grupos elegíveis para benefícios',
-      image: '/images/showcase/SITE - BENEFICIOS.png'
-    },
-    {
-      id: 'admissao-digital',
-      title: 'Admissão Digital',
-      description: 'Criação de processos de admissão digital',
-      image: '/images/showcase/SITE - PORTAL RH.png'
-    }
-  ]
-
-  const nextDemo = () => {
-    setCurrentDemo((prev) => (prev + 1) % appDemos.length)
-    setIsAutoPlaying(false)
-  }
-
-  const prevDemo = () => {
-    setCurrentDemo((prev) => (prev - 1 + appDemos.length) % appDemos.length)
-    setIsAutoPlaying(false)
-  }
 
   const selectDemo = (index) => {
     setCurrentDemo(index)
@@ -91,17 +71,13 @@ const AppFeatures = () => {
       <div className="container">
         <div className="features-content">
           <div className="features-header">
-            <div className="features-badge">
-              <Monitor size={16} />
-              <span>Plataforma Desktop</span>
-            </div>
             <h2 className="features-title">
-              Tenha o controle total do seu RH <span className="gradient-text">em uma plataforma completa</span>
+              Tenha o controle total do seu RH{' '}
+              <span className="gradient-text">em uma plataforma completa</span>
             </h2>
             <p className="features-subtitle">
-              Nossa plataforma desktop oferece todas as funcionalidades essenciais 
-              para gestão de RH, com interface intuitiva e recursos avançados 
-              para máxima produtividade.
+              Nossa plataforma desktop oferece todas as funcionalidades essenciais para gestão de RH,
+              com interface intuitiva e recursos avançados para máxima produtividade.
             </p>
           </div>
 
@@ -111,9 +87,9 @@ const AppFeatures = () => {
                 <div className="desktop-screen">
                   <div className="desktop-interface">
                     <div className="desktop-screen-content">
-                      <img 
-                        src={appDemos[currentDemo].image}
-                        alt={appDemos[currentDemo].title}
+                      <img
+                        src={APP_DEMOS[currentDemo].image}
+                        alt={APP_DEMOS[currentDemo].title}
                         className="demo-screenshot"
                       />
                     </div>
@@ -123,11 +99,11 @@ const AppFeatures = () => {
             </div>
 
             <div className="app-info">
-              <h4>{appDemos[currentDemo]?.title}</h4>
-              <p>{appDemos[currentDemo]?.description}</p>
-              
+              <h4>{APP_DEMOS[currentDemo]?.title}</h4>
+              <p>{APP_DEMOS[currentDemo]?.description}</p>
+
               <div className="demo-navigation">
-                {appDemos.map((demo, index) => (
+                {APP_DEMOS.map((demo, index) => (
                   <button
                     key={demo.id}
                     className={`nav-indicator ${index === currentDemo ? 'active' : ''}`}
@@ -138,55 +114,6 @@ const AppFeatures = () => {
                   </button>
                 ))}
               </div>
-            </div>
-          </div>
-
-          <div className="app-features-grid">
-            <div className="feature-card">
-              <div className="feature-icon">
-                <Monitor size={28} />
-              </div>
-              <div className="feature-content">
-                <h4>Interface Profissional</h4>
-                <p>Design moderno e intuitivo otimizado para produtividade máxima no ambiente corporativo</p>
-              </div>
-            </div>
-            
-            <div className="feature-card">
-              <div className="feature-icon">
-                <Users size={28} />
-              </div>
-              <div className="feature-content">
-                <h4>Gestão Completa</h4>
-                <p>Todas as funcionalidades de RH integradas em uma única plataforma poderosa</p>
-              </div>
-            </div>
-            
-            <div className="feature-card">
-              <div className="feature-icon">
-                <BarChart3 size={28} />
-              </div>
-              <div className="feature-content">
-                <h4>Analytics Avançado</h4>
-                <p>Relatórios detalhados e métricas em tempo real para decisões estratégicas inteligentes</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="demo-cta-section">
-            <div className="cta-content">
-              <div className="cta-icon">
-                <Play size={48} />
-              </div>
-              <h3>Veja o Dirhect em ação</h3>
-              <p>
-                Agende uma demonstração personalizada e descubra como nossa plataforma 
-                pode transformar a gestão de RH da sua empresa.
-              </p>
-              <button className="demo-btn">
-                <span>Agendar Demonstração</span>
-                <ArrowRight size={20} />
-              </button>
             </div>
           </div>
         </div>

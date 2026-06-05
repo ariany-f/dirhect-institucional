@@ -1,0 +1,44 @@
+/* Dobra: faixa conectora entre hero e desafios do RH */
+
+.home-connector-fold {
+  --connector-white: #ffffff;
+  --connector-orange: #ff8c00;
+  --connector-gray: #727272;
+  background: var(--connector-gray);
+  padding: clamp(1.35rem, 2.75vh, 2rem) 0;
+}
+
+.home-connector-fold-container {
+  text-align: center;
+}
+
+.home-connector-fold-text {
+  margin: 0;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(1.1rem, 1.5vw, 1.35rem);
+  font-weight: 500;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  color: var(--connector-white);
+}
+
+.home-connector-fold-accent {
+  color: var(--connector-orange);
+  font-weight: 700;
+}
+
+.home-connector-fold-strong {
+  font-weight: 800;
+  color: var(--connector-white);
+}
+
+@media (max-width: 640px) {
+  .home-connector-fold {
+    padding: 1.25rem 0 1.5rem;
+  }
+
+  .home-connector-fold-text {
+    font-size: 1.05rem;
+    line-height: 1.5;
+  }
+}

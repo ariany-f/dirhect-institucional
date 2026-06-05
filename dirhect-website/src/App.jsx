@@ -22,18 +22,18 @@ import GestaoTarefas from './pages/GestaoTarefas'
 import PortalRH from './pages/PortalRH'
 import './App.css'
 import Hero from './components/Hero'
-import WhyChoose from './components/WhyChoose'
-import Solutions from './components/Solutions'
-import About from './components/About'
+import HomeAboutFold from './components/HomeAboutFold'
+import HomeConnectorFold from './components/HomeConnectorFold'
+import HomeRhChallengesFold from './components/HomeRhChallengesFold'
+import HomeSolutionFold from './components/HomeSolutionFold'
+import HomeSolutionModulesFold from './components/HomeSolutionModulesFold'
+import HomeResultsFold from './components/HomeResultsFold'
+import HomePlatformFold from './components/HomePlatformFold'
 import AppFeatures from './components/AppFeatures'
-import News from './components/News'
-import Contact from './components/Contact'
+import HomeAppFeaturesCardsFold from './components/HomeAppFeaturesCardsFold'
 import Footer from './components/Footer'
 import Header from './components/Header'
-import SecuritySection from './components/SecuritySection'
 import Integrations from './components/Integrations'
-import FloatingButtons from './components/FloatingButtons'
-import PartnersStrip from './components/PartnersStrip'
 import Parceiros from './pages/Parceiros'
 import CookieConsent from './components/CookieConsent'
 import ColaboradorLogin from './pages/ColaboradorLogin'
@@ -80,16 +80,16 @@ function App() {
           <Route path="/" element={
             <>
               <Hero />
-              <WhyChoose />
-              <PartnersStrip />
-              <Solutions />
-              <About />
-              <Integrations />
+              <HomeAboutFold />
+              <HomeConnectorFold />
+              <HomeRhChallengesFold />
+              <HomeSolutionFold />
+              <HomeSolutionModulesFold />
+              <HomePlatformFold />
+              <HomeResultsFold />
               <AppFeatures />
-              <SecuritySection />
-              <News />
-              <Contact />
-              <FloatingButtons />
+              <HomeAppFeaturesCardsFold />
+              <Integrations />
               <Footer />
             </>
           } />

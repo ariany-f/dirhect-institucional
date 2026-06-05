@@ -1,0 +1,213 @@
+/* Dobra 7: Plataforma completa + aplicativo do colaborador */
+
+.home-platform-fold {
+  --platform-navy: #0f172a;
+  --platform-orange: #ff8c00;
+  --platform-muted: #4b5563;
+  --platform-border: #e5e7eb;
+  --platform-bg: #ffffff;
+  --platform-content-offset: -16px;
+  background: var(--platform-bg);
+  padding: clamp(1.15rem, 2.25vw, 1.65rem) 0 clamp(3rem, 6vw, 4.5rem);
+}
+
+.home-platform-fold-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1.52fr) minmax(0, 0.88fr);
+  gap: clamp(1.35rem, 3vw, 2.5rem);
+  align-items: start;
+  transform: translateY(var(--platform-content-offset));
+}
+
+.home-platform-fold-platform {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 1.08fr);
+  gap: clamp(0.75rem, 1.5vw, 1.35rem);
+  align-items: start;
+  min-width: 0;
+}
+
+.home-platform-fold-eyebrow {
+  margin: 0 0 0.85rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--platform-orange);
+  line-height: 1.2;
+}
+
+.home-platform-fold-title {
+  margin: 0 0 1.35rem;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(1.25rem, 1.65vw, 1.72rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--platform-navy);
+  max-width: 14.5em;
+}
+
+.home-platform-fold-features {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.home-platform-fold-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  font-size: clamp(0.8rem, 0.95vw, 0.88rem);
+  line-height: 1.45;
+  color: var(--platform-muted);
+  font-weight: 400;
+}
+
+.home-platform-fold-check {
+  flex-shrink: 0;
+  margin-top: 0.1rem;
+  color: var(--platform-orange);
+}
+
+.home-platform-fold-laptop-wrap {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  line-height: 0;
+  min-width: 0;
+}
+
+.home-platform-fold-laptop {
+  display: block;
+  width: 100%;
+  max-width: min(100%, 290px);
+  height: auto;
+  object-fit: contain;
+}
+
+.home-platform-fold-app {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(72px, 95px);
+  gap: clamp(0.65rem, 1.2vw, 0.85rem);
+  align-items: start;
+  min-width: 0;
+  padding-left: clamp(1rem, 2vw, 1.65rem);
+  border-left: 1px solid var(--platform-border);
+}
+
+.home-platform-fold-app-title {
+  margin: 0 0 0.75rem;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(0.98rem, 1.15vw, 1.08rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--platform-navy);
+}
+
+.home-platform-fold-app-description {
+  margin: 0 0 1rem;
+  font-size: clamp(0.78rem, 0.9vw, 0.84rem);
+  line-height: 1.55;
+  color: var(--platform-muted);
+  font-weight: 400;
+  max-width: 22em;
+}
+
+.home-platform-fold-app-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: clamp(0.82rem, 0.95vw, 0.88rem);
+  font-weight: 600;
+  color: var(--platform-orange);
+  text-decoration: none;
+  transition: gap 0.2s ease, color 0.2s ease;
+}
+
+.home-platform-fold-app-cta:hover {
+  color: #e67e00;
+  gap: 0.5rem;
+}
+
+.home-platform-fold-phone-wrap {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  line-height: 0;
+}
+
+.home-platform-fold-phone {
+  display: block;
+  width: 100%;
+  max-width: 95px;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 1024px) {
+  .home-platform-fold-inner {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    transform: none;
+  }
+
+  .home-platform-fold-platform {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .home-platform-fold-title {
+    max-width: none;
+  }
+
+  .home-platform-fold-laptop-wrap {
+    justify-content: center;
+  }
+
+  .home-platform-fold-laptop {
+    max-width: min(100%, 320px);
+  }
+
+  .home-platform-fold-app {
+    padding-left: 0;
+    border-left: none;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--platform-border);
+    grid-template-columns: minmax(0, 1fr) minmax(88px, 110px);
+    gap: 1rem;
+  }
+
+  .home-platform-fold-app-description {
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-platform-fold {
+    padding: 1.65rem 0 2rem;
+  }
+
+  .home-platform-fold-platform,
+  .home-platform-fold-app {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .home-platform-fold-features li {
+    justify-content: center;
+  }
+
+  .home-platform-fold-app-cta {
+    justify-content: center;
+  }
+
+  .home-platform-fold-phone {
+    max-width: 110px;
+    margin: 0 auto;
+  }
+}

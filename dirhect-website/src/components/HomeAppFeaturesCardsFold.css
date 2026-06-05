@@ -1,0 +1,210 @@
+/* Dobra: cards da plataforma desktop */
+
+.home-app-features-cards-fold {
+  background: #ffffff;
+  padding: clamp(2.25rem, 4.5vh, 3.25rem) 0 clamp(2.5rem, 5vh, 3.5rem);
+  overflow-x: clip;
+}
+
+.home-app-features-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+  padding-top: 1.75rem;
+}
+
+.home-app-features-card {
+  position: relative;
+  overflow: visible;
+  background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
+  border-radius: 12px;
+  padding: 2rem 1.15rem 0.85rem;
+  border: none;
+  text-align: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+}
+
+.home-app-features-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.home-app-features-card-icon {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  z-index: 1;
+  width: 52px;
+  height: 52px;
+  background: #ffffff;
+  border: none;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--primary-color);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  transform: translate(-50%, -50%);
+  transition: all 0.3s ease;
+}
+
+.home-app-features-card:hover .home-app-features-card-icon {
+  transform: translate(-50%, -50%) scale(1.08);
+  background: #ffffff;
+  color: var(--primary-color);
+}
+
+.home-app-features-card-content {
+  padding-top: 0.15rem;
+}
+
+.home-app-features-card-content h3 {
+  margin: 0 0 0.35rem;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.home-app-features-card-content p {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: #64748b;
+}
+
+.home-app-features-cta {
+  margin-top: clamp(1.75rem, 3.5vh, 2.5rem);
+}
+
+.home-app-features-cta-content {
+  display: flex;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 1.75rem);
+  width: 100%;
+  background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
+  border-radius: 16px;
+  padding: 1.1rem clamp(1.15rem, 2vw, 1.75rem);
+  border: none;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  text-align: left;
+}
+
+.home-app-features-cta-icon {
+  flex-shrink: 0;
+  width: 56px;
+  height: 56px;
+  background: var(--gradient);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  margin: 0;
+  box-shadow: 0 8px 25px rgba(255, 140, 0, 0.25);
+}
+
+.home-app-features-cta-copy {
+  flex: 1;
+  min-width: 0;
+}
+
+.home-app-features-cta-copy h3 {
+  margin: 0 0 0.25rem;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(1.05rem, 1.25vw, 1.35rem);
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1.2;
+}
+
+.home-app-features-cta-copy p {
+  margin: 0;
+  font-size: clamp(0.85rem, 0.95vw, 0.95rem);
+  line-height: 1.45;
+  color: #374151;
+}
+
+.home-app-features-cta-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--gradient);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 0.75rem 1.35rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.home-app-features-cta-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 140, 0, 0.3);
+}
+
+@media (max-width: 1024px) {
+  .home-app-features-cards-grid {
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .home-app-features-cards-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+  }
+
+  .home-app-features-card {
+    padding: 1.85rem 1.15rem 0.85rem;
+  }
+
+  .home-app-features-cta-content {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1.35rem 1.15rem;
+    text-align: center;
+  }
+
+  .home-app-features-cta-icon {
+    margin: 0 auto;
+  }
+
+  .home-app-features-cta-btn {
+    align-self: center;
+  }
+
+  .home-app-features-cta-copy h3 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-app-features-cards-grid {
+    gap: 1rem;
+    padding-top: 1.25rem;
+  }
+
+  .home-app-features-card {
+    padding: 1.75rem 1rem 0.75rem;
+  }
+
+  .home-app-features-card-icon {
+    width: 48px;
+    height: 48px;
+  }
+
+  .home-app-features-card-content h3 {
+    font-size: 0.98rem;
+  }
+
+  .home-app-features-card-content p {
+    font-size: 0.8rem;
+  }
+}

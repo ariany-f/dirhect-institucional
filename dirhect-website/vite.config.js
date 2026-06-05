@@ -17,11 +17,10 @@ export default defineConfig({
     },
   },
   server: {
-    /** 127.0.0.1 evita falhas ao enumerar interfaces (ex.: alguns VPNs / ambientes restritos). */
-    host: '127.0.0.1',
+    /** true expõe 127.0.0.1 e localhost no terminal; evita confusão com porta antiga (5173). */
+    host: true,
     port: 5191,
-    /** Se 5191 estiver ocupada, o Vite usa a seguinte e mostra o URL no terminal. */
-    strictPort: false,
+    strictPort: true,
     allowedHosts: ['parceiro.localhost', 'localhost', '127.0.0.1', 'parceiro.127.0.0.1'],
     headers: {
       'Cache-Control': 'no-store',

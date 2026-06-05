@@ -1,0 +1,177 @@
+/* Dobra: Sobre Dirhect (cópia da seção About) */
+
+.home-about-fold {
+  padding: 2.25rem 0;
+  background: #ffffff;
+}
+
+.home-about-fold-principles-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.15rem;
+  width: 100%;
+  margin: 0;
+}
+
+.home-about-fold-principle-card {
+  background: #ffffff;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  border-radius: 14px;
+  padding: 1.35rem;
+  backdrop-filter: blur(20px);
+  box-shadow:
+    0 8px 22px rgba(0, 0, 0, 0.04),
+    0 1px 2px rgba(0, 0, 0, 0.08);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: homeAboutFoldSlideUpFadeIn 0.6s ease-out calc(var(--delay, 0.4s) + var(--index, 0) * 0.1s)
+    forwards;
+  position: relative;
+  overflow: hidden;
+}
+
+.home-about-fold-principle-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--gradient);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s ease;
+}
+
+.home-about-fold-principle-card:hover::before {
+  transform: scaleX(1);
+}
+
+.home-about-fold-principle-card:hover {
+  transform: translateY(-5px);
+  box-shadow:
+    0 14px 28px rgba(0, 0, 0, 0.07),
+    0 3px 8px rgba(0, 0, 0, 0.08);
+  background: #ffffff;
+}
+
+.home-about-fold-principle-card:nth-child(1) {
+  --delay: 0.4s;
+  --index: 0;
+}
+
+.home-about-fold-principle-card:nth-child(2) {
+  --delay: 0.4s;
+  --index: 1;
+}
+
+.home-about-fold-principle-card:nth-child(3) {
+  --delay: 0.4s;
+  --index: 2;
+}
+
+.home-about-fold-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.5rem;
+}
+
+.home-about-fold-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-bottom: 0;
+  border-radius: 10px;
+  background: #fff3e0;
+  color: #ff8c00;
+  flex-shrink: 0;
+}
+
+.home-about-fold-principle-card h4 {
+  font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+    sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin: 0;
+  color: #1e293b;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+
+.home-about-fold-highlight {
+  background: var(--gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 800;
+}
+
+.home-about-fold-principle-card p {
+  font-size: 0.85rem;
+  line-height: 1.55;
+  color: #475569;
+  font-weight: 400;
+  margin: 0;
+}
+
+@keyframes homeAboutFoldSlideUpFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 1200px) {
+  .home-about-fold-principles-grid {
+    gap: 1rem;
+  }
+
+  .home-about-fold-principle-card {
+    padding: 1.2rem;
+  }
+
+  .home-about-fold-principle-card h4 {
+    font-size: 1rem;
+  }
+
+  .home-about-fold-principle-card p {
+    font-size: 0.82rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .home-about-fold {
+    padding: 1.85rem 0;
+  }
+
+  .home-about-fold-principles-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .home-about-fold-principle-card {
+    padding: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home-about-fold {
+    padding: 1.5rem 0;
+  }
+
+  .home-about-fold-principle-card {
+    padding: 1rem;
+  }
+
+  .home-about-fold-principle-card h4 {
+    font-size: 0.98rem;
+  }
+}

@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, User, LogOut, ChevronDown } from 'lucide-react'
+import { Menu, X, User, LogOut, ChevronDown, ArrowRight } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { wordpressService } from '../services/wordpressService'
 import './Header.css?v=home-align-20260521'
@@ -178,6 +178,15 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-content">
+        <button
+          type="button"
+          className="mobile-menu-button mobile-menu-button--lead"
+          onClick={toggleMobileMenu}
+          aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+        >
+          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
+
         <Link to="/" className="logo">
           <img width={140} src="/images/dirhect_color.svg" alt="Dirhect Logo" />
         </Link>
@@ -247,36 +256,79 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link to="/conhecimento" onClick={() => setIsMobileMenuOpen(false)}>
-                Conhecimento
+              <Link to="/blog" onClick={() => setIsMobileMenuOpen(false)}>
+                Blog
               </Link>
             </li>
-            <li>
-              <Link to="/area-colaborador" onClick={() => setIsMobileMenuOpen(false)}>
-                Área do colaborador
-              </Link>
-            </li>
-            <li>
-              <a 
-                href="/#contato" 
-                onClick={(e) => {
-                  e.preventDefault()
-                  handleAnchorClick('#contato')
-                }}
-              >
-                Contato
-              </a>
-            </li>
+            {!isAuthenticated && !collaboratorAuth && (
+              <li>
+                <Link to="/area-colaborador" onClick={() => setIsMobileMenuOpen(false)}>
+                  Login
+                </Link>
+              </li>
+            )}
           </ul>
-          
-          {/* Área do usuário logado (admin) */}
+
+          <div className="nav-mobile-actions">
+            {isAuthenticated && user && (
+              <div className="user-area">
+                <div className="user-info">
+                  <User size={16} />
+                  <span className="user-name">{user.name}</span>
+                </div>
+                <button
+                  className="logout-btn"
+                  onClick={handleLogout}
+                  title="Sair"
+                >
+                  <LogOut size={16} />
+                </button>
+              </div>
+            )}
+
+            {!isAuthenticated && collaboratorAuth && collaboratorUser && (
+              <div className="user-area">
+                <Link
+                  to="/area-colaborador/painel"
+                  className="user-info"
+                  style={{ textDecoration: 'none', color: 'inherit' }}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  <User size={16} />
+                  <span className="user-name">{collaboratorUser.name}</span>
+                </Link>
+                <button
+                  type="button"
+                  className="logout-btn"
+                  onClick={handleCollaboratorLogout}
+                  title="Sair"
+                >
+                  <LogOut size={16} />
+                </button>
+              </div>
+            )}
+
+            {!isAuthenticated && !collaboratorAuth && (
+              <Link
+                to="/demo"
+                className="cta-button cta-button--schedule"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Agendar demonstração
+                <ArrowRight size={16} strokeWidth={2.5} aria-hidden />
+              </Link>
+            )}
+          </div>
+        </nav>
+
+        <div className="header-end">
           {isAuthenticated && user && (
-            <div className="user-area">
+            <div className="user-area header-end-desktop">
               <div className="user-info">
                 <User size={16} />
                 <span className="user-name">{user.name}</span>
               </div>
-              <button 
+              <button
                 className="logout-btn"
                 onClick={handleLogout}
                 title="Sair"
@@ -287,7 +339,7 @@ const Header = () => {
           )}
 
           {!isAuthenticated && collaboratorAuth && collaboratorUser && (
-            <div className="user-area">
+            <div className="user-area header-end-desktop">
               <Link
                 to="/area-colaborador/painel"
                 className="user-info"
@@ -307,25 +359,18 @@ const Header = () => {
               </button>
             </div>
           )}
-          
-          {/* Botão de demonstração apenas para usuários não logados */}
+
           {!isAuthenticated && !collaboratorAuth && (
-            <Link 
-              to="/demo" 
-              className="cta-button"
+            <Link
+              to="/demo"
+              className="cta-button cta-button--schedule header-end-desktop"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Demonstração
+              Agendar demonstração
+              <ArrowRight size={16} strokeWidth={2.5} aria-hidden />
             </Link>
           )}
-        </nav>
-        
-        <button 
-          className="mobile-menu-button"
-          onClick={toggleMobileMenu}
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        </div>
       </div>
     </header>
   )
