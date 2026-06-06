@@ -96,7 +96,7 @@
   flex-shrink: 0;
 }
 
-.nav-links li {
+.nav-links > li {
   display: flex;
   align-items: center;
   height: 100%;
@@ -481,17 +481,21 @@
     padding: 2rem 2rem 1rem 2rem;
   }
 
-  .nav-links li {
+  .nav-links > li {
     width: 100%;
     opacity: 0;
     transform: translateY(20px);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
   }
 
-  .nav.nav-mobile-open .nav-links li:nth-child(1) { animation: menuItemSlideIn 0.3s ease 0.1s forwards; }
-  .nav.nav-mobile-open .nav-links li:nth-child(2) { animation: menuItemSlideIn 0.3s ease 0.2s forwards; }
-  .nav.nav-mobile-open .nav-links li:nth-child(3) { animation: menuItemSlideIn 0.3s ease 0.3s forwards; }
-  .nav.nav-mobile-open .nav-links li:nth-child(4) { animation: menuItemSlideIn 0.3s ease 0.4s forwards; }
-  .nav.nav-mobile-open .nav-links li:nth-child(5) { animation: menuItemSlideIn 0.3s ease 0.5s forwards; }
+  .nav.nav-mobile-open .nav-links > li:nth-child(1) { animation: menuItemSlideIn 0.3s ease 0.1s forwards; }
+  .nav.nav-mobile-open .nav-links > li:nth-child(2) { animation: menuItemSlideIn 0.3s ease 0.2s forwards; }
+  .nav.nav-mobile-open .nav-links > li:nth-child(3) { animation: menuItemSlideIn 0.3s ease 0.3s forwards; }
+  .nav.nav-mobile-open .nav-links > li:nth-child(4) { animation: menuItemSlideIn 0.3s ease 0.4s forwards; }
+  .nav.nav-mobile-open .nav-links > li:nth-child(5) { animation: menuItemSlideIn 0.3s ease 0.5s forwards; }
 
   @keyframes menuItemSlideIn {
     to {
@@ -532,6 +536,7 @@
     margin: 0.5rem 0;
     padding: 0.5rem 0;
     min-width: auto;
+    width: 100%;
   }
 
   .dropdown-menu::before {
@@ -566,20 +571,30 @@
   .mobile-menu-button--lead {
     display: block;
     flex-shrink: 0;
+    order: 3;
+    margin-left: auto;
   }
 
   .logo {
+    order: 1;
     margin-right: auto;
+    transform: translateY(5px);
+  }
+
+  .logo img {
+    width: 120px;
+    height: auto;
   }
 
   .header-end {
+    order: 2;
     margin-left: 0;
     flex-shrink: 0;
     height: auto;
   }
 
   .nav-links,
-  .nav-links li {
+  .nav-links > li {
     height: auto;
   }
 
@@ -668,6 +683,10 @@
   .header-content {
     padding: 0 var(--home-fold-inset-right) 0 var(--home-fold-inset-left);
     height: 60px;
+  }
+
+  .logo img {
+    width: 110px;
   }
   
   .nav {

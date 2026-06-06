@@ -294,12 +294,12 @@
   .hero-home {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
+    min-height: auto;
   }
 
   .hero-home-container {
     order: 2;
-    min-height: calc(100vh - var(--hero-header-offset));
+    min-height: auto;
     justify-content: flex-start;
   }
 
