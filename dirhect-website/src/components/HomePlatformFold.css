@@ -9,6 +9,7 @@
   --platform-content-offset: -16px;
   background: var(--platform-bg);
   padding: clamp(1.15rem, 2.25vw, 1.65rem) 0 clamp(3rem, 6vw, 4.5rem);
+  overflow-x: hidden;
 }
 
 .home-platform-fold-inner {
@@ -25,6 +26,11 @@
   gap: clamp(0.75rem, 1.5vw, 1.35rem);
   align-items: start;
   min-width: 0;
+}
+
+.home-platform-fold-platform-copy {
+  position: relative;
+  z-index: 2;
 }
 
 .home-platform-fold-eyebrow {
@@ -79,12 +85,16 @@
   justify-content: flex-end;
   line-height: 0;
   min-width: 0;
+  margin-left: -30px;
+  margin-right: -30px;
+  position: relative;
+  z-index: 1;
 }
 
 .home-platform-fold-laptop {
   display: block;
   width: 100%;
-  max-width: min(100%, 290px);
+  max-width: min(100%, 460px);
   height: auto;
   object-fit: contain;
 }
@@ -100,12 +110,12 @@
 }
 
 .home-platform-fold-app-title {
-  margin: 0 0 0.75rem;
+  margin: 1.67rem 0 0.75rem;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
-  font-size: clamp(0.98rem, 1.15vw, 1.08rem);
+  font-size: clamp(1.25rem, 1.65vw, 1.72rem);
   font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.2;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
   color: var(--platform-navy);
 }
 
@@ -137,14 +147,17 @@
 .home-platform-fold-phone-wrap {
   display: flex;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: flex-start;
   line-height: 0;
+  margin-right: -95px;
+  position: relative;
+  z-index: 1;
 }
 
 .home-platform-fold-phone {
   display: block;
   width: 100%;
-  max-width: 95px;
+  max-width: 190px;
   height: auto;
   object-fit: contain;
 }
@@ -167,10 +180,12 @@
 
   .home-platform-fold-laptop-wrap {
     justify-content: center;
+    margin-left: 0;
+    margin-right: 0;
   }
 
   .home-platform-fold-laptop {
-    max-width: min(100%, 320px);
+    max-width: min(100%, 550px);
   }
 
   .home-platform-fold-app {
@@ -184,6 +199,20 @@
 
   .home-platform-fold-app-description {
     max-width: none;
+  }
+
+  .home-platform-fold-phone-wrap {
+    margin-right: 0;
+    justify-content: center;
+  }
+
+  .home-platform-fold-phone {
+    max-width: 220px;
+    transform: translateX(40%);
+  }
+
+  .home-platform-fold-app-title {
+    margin-top: 0;
   }
 }
 
@@ -207,7 +236,8 @@
   }
 
   .home-platform-fold-phone {
-    max-width: 110px;
+    max-width: 220px;
     margin: 0 auto;
+    transform: translateX(40%);
   }
 }

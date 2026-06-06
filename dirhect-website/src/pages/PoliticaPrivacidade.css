@@ -295,7 +295,7 @@
   font-size: 1.2rem;
 }
 
-.contact-info {
+.privacy-page .contact-info {
   background: #f8fafc;
   padding: 1.5rem;
   border-radius: 12px;
@@ -303,12 +303,12 @@
   margin-top: 1rem;
 }
 
-.contact-info p {
+.privacy-page .contact-info p {
   margin-bottom: 0.5rem;
   color: #374151;
 }
 
-.contact-info p:last-child {
+.privacy-page .contact-info p:last-child {
   margin-bottom: 0;
 }
 

@@ -1,21 +1,21 @@
 import { useState, useEffect } from 'react'
 import Header from '../components/Header.jsx?v=menu-nav-20260521'
 import Footer from '../components/Footer'
-import { Building2, Users, Mail, Phone, MapPin, Calendar, CheckCircle2 } from 'lucide-react'
+import { Users, Mail, Phone, Calendar, CheckCircle2 } from 'lucide-react'
 import PhoneInput from '../components/PhoneInput'
 import { sendDemoEmail } from '../services/emailService'
 import './Demo.css'
 
 const Demo = () => {
   const [formData, setFormData] = useState({
-    nomeEmpresa: '',
+    nomeEmpresa: 'Não Informado',
     nomeContato: '',
     email: '',
     telefone: '',
     cargo: '',
-    numeroFuncionarios: '',
-    segmento: '',
-    cnpj: '',
+    numeroFuncionarios: '1-10 funcionários',
+    segmento: 'Outros',
+    cnpj: '00.000.000/0000-00',
     necessidades: [],
     mensagem: '',
     aceiteTermos: false
@@ -25,95 +25,16 @@ const Demo = () => {
   const [submitSuccess, setSubmitSuccess] = useState(false)
   const [submitError, setSubmitError] = useState(null)
 
-  // Função para aplicar máscara de CNPJ
-  const formatCNPJ = (value) => {
-    // Remove tudo que não é número
-    const cleanValue = value.replace(/\D/g, '')
-    
-    // Aplica a máscara: XX.XXX.XXX/XXXX-XX
-    if (cleanValue.length <= 2) {
-      return cleanValue
-    } else if (cleanValue.length <= 5) {
-      return cleanValue.replace(/(\d{2})(\d{0,3})/, '$1.$2')
-    } else if (cleanValue.length <= 8) {
-      return cleanValue.replace(/(\d{2})(\d{3})(\d{0,3})/, '$1.$2.$3')
-    } else if (cleanValue.length <= 12) {
-      return cleanValue.replace(/(\d{2})(\d{3})(\d{3})(\d{0,4})/, '$1.$2.$3/$4')
-    } else {
-      return cleanValue.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{0,2})/, '$1.$2.$3/$4-$5')
-    }
-  }
-
-  // Capturar CNPJ da URL quando o componente carregar
+  // Scroll para o topo quando a página carregar
   useEffect(() => {
-    // Scroll para o topo quando a página carregar
     window.scrollTo(0, 0)
-
-    // Capturar CNPJ da URL
-    const urlParams = new URLSearchParams(window.location.search)
-    const cnpjFromUrl = urlParams.get('cnpj')
-    
-    if (cnpjFromUrl) {
-      // Formatar o CNPJ e preencher o campo
-      const formattedCNPJ = formatCNPJ(cnpjFromUrl)
-      setFormData(prev => ({
-        ...prev,
-        cnpj: formattedCNPJ
-      }))
-    }
   }, [])
-
-  const necessidadesOptions = [
-    'Admissão Digital',
-    'Gestão de Benefícios e Elegibilidade',
-    'Relatórios e Analytics',
-    'Integração com Sistemas Existentes'
-  ]
-
-  const segmentosOptions = [
-    'Tecnologia',
-    'Varejo',
-    'Indústria',
-    'Serviços',
-    'Saúde',
-    'Educação',
-    'Financeiro',
-    'Outros'
-  ]
-
-  const funcionariosOptions = [
-    '1-10 funcionários',
-    '11-50 funcionários',
-    '51-200 funcionários',
-    '201-500 funcionários',
-    '501-1000 funcionários',
-    'Mais de 1000 funcionários'
-  ]
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target
-    
-    // Aplicar formatação especial para CNPJ
-    if (name === 'cnpj') {
-      const formattedValue = formatCNPJ(value)
-      setFormData(prev => ({
-        ...prev,
-        [name]: formattedValue
-      }))
-    } else {
-      setFormData(prev => ({
-        ...prev,
-        [name]: type === 'checkbox' ? checked : value
-      }))
-    }
-  }
-
-  const handleNecessidadeChange = (necessidade) => {
     setFormData(prev => ({
       ...prev,
-      necessidades: prev.necessidades.includes(necessidade)
-        ? prev.necessidades.filter(n => n !== necessidade)
-        : [...prev.necessidades, necessidade]
+      [name]: type === 'checkbox' ? checked : value
     }))
   }
 
@@ -124,7 +45,7 @@ const Demo = () => {
     
     try {
       // Validar campos obrigatórios
-      const requiredFields = ['nomeEmpresa', 'cnpj', 'nomeContato', 'email', 'telefone', 'cargo', 'numeroFuncionarios', 'segmento']
+      const requiredFields = ['nomeContato', 'email', 'telefone', 'cargo']
       const missingFields = requiredFields.filter(field => !formData[field] || formData[field].trim() === '')
       
       if (missingFields.length > 0) {
@@ -167,7 +88,7 @@ const Demo = () => {
       <div>
         <Header />
         <div className="demo-success">
-          <div className="container">
+          <div className="home-fold-container">
             <div className="success-content">
               <div className="success-icon">
                 <CheckCircle2 size={80} />
@@ -202,7 +123,7 @@ const Demo = () => {
     <div>
       <Header />
       <section className="demo-hero">
-        <div className="container">
+        <div className="home-fold-container">
           <div className="demo-header">
             <h1>Solicite uma <span className="gradient-text">Demonstração</span></h1>
             <p>
@@ -214,85 +135,12 @@ const Demo = () => {
       </section>
 
       <section className="demo-form-section">
-        <div className="container">
+        <div className="home-fold-container">
           <div className="demo-content">
             <div className="form-container">
               <form onSubmit={handleSubmit} className="demo-form">
                 <div className="form-section">
-                  <h3>Informações da Empresa</h3>
-                  <div className="form-grid">
-                    <div className="form-group">
-                      <label>Nome da Empresa *</label>
-                      <div className="input-wrapper">
-                        <Building2 size={20} />
-                        <input
-                          type="text"
-                          name="nomeEmpresa"
-                          value={formData.nomeEmpresa}
-                          onChange={handleInputChange}
-                          placeholder="Digite o nome da sua empresa"
-                          required
-                        />
-                      </div>
-                    </div>
-
-                    <div className="form-group">
-                      <label>CNPJ *</label>
-                      <div className="input-wrapper">
-                        <Building2 size={20} />
-                        <input
-                          type="text"
-                          name="cnpj"
-                          value={formData.cnpj}
-                          onChange={handleInputChange}
-                          placeholder="XX.XXX.XXX/XXXX-XX"
-                          maxLength="18"
-                          inputMode="numeric"
-                          required
-                        />
-                      </div>
-                    </div>
-
-                    <div className="form-group">
-                      <label>Segmento *</label>
-                      <div className="input-wrapper">
-                        <MapPin size={20} />
-                        <select
-                          name="segmento"
-                          value={formData.segmento}
-                          onChange={handleInputChange}
-                          required
-                        >
-                          <option value="">Selecione o segmento</option>
-                          {segmentosOptions.map(segmento => (
-                            <option key={segmento} value={segmento}>{segmento}</option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-
-                    <div className="form-group">
-                      <label>Número de Funcionários *</label>
-                      <div className="input-wrapper">
-                        <Users size={20} />
-                        <select
-                          name="numeroFuncionarios"
-                          value={formData.numeroFuncionarios}
-                          onChange={handleInputChange}
-                          required
-                        >
-                          <option value="">Selecione a quantidade</option>
-                          {funcionariosOptions.map(opcao => (
-                            <option key={opcao} value={opcao}>{opcao}</option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="form-section">
-                  <h3>Dados do Contato</h3>
+                  <h3>Deixar o meu contato</h3>
                   <div className="form-grid">
                     <div className="form-group">
                       <label>Nome Completo *</label>
@@ -307,18 +155,6 @@ const Demo = () => {
                           required
                         />
                       </div>
-                    </div>
-
-                    <div className="form-group">
-                      <label>Cargo/Função *</label>
-                      <input
-                        type="text"
-                        name="cargo"
-                        value={formData.cargo}
-                        onChange={handleInputChange}
-                        placeholder="Ex: Gerente de RH"
-                        required
-                      />
                     </div>
 
                     <div className="form-group">
@@ -337,6 +173,17 @@ const Demo = () => {
                     </div>
 
                     <div className="form-group">
+                      <label>Cargo/Função *</label>
+                      <input
+                        type="text"
+                        name="cargo"
+                        value={formData.cargo}
+                        onChange={handleInputChange}
+                        placeholder="Ex: Gerente de RH"
+                        required
+                      />
+                    </div>
+                    <div className="form-group">
                       <PhoneInput
                         id="telefone"
                         name="telefone"
@@ -344,40 +191,8 @@ const Demo = () => {
                         value={formData.telefone}
                         onChange={handleInputChange}
                         required
-                        icon={<Phone size={20} />}
                       />
                     </div>
-                  </div>
-                </div>
-
-                <div className="form-section">
-                  <h3>Necessidades e Interesse</h3>
-                  <div className="form-group">
-                    <label>Soluções de Interesse (selecione todas que se aplicam)</label>
-                    <div className="checkbox-grid">
-                      {necessidadesOptions.map(necessidade => (
-                        <label key={necessidade} className="checkbox-item">
-                          <input
-                            type="checkbox"
-                            checked={formData.necessidades.includes(necessidade)}
-                            onChange={() => handleNecessidadeChange(necessidade)}
-                          />
-                          <span className="checkmark"></span>
-                          {necessidade}
-                        </label>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="form-group">
-                    <label>Mensagem Adicional</label>
-                    <textarea
-                      name="mensagem"
-                      value={formData.mensagem}
-                      onChange={handleInputChange}
-                      placeholder="Conte-nos mais sobre suas necessidades e desafios atuais..."
-                      rows="4"
-                    />
                   </div>
                 </div>
 
@@ -425,7 +240,22 @@ const Demo = () => {
             </div>
 
             <div className="demo-benefits">
-              <h3>O que você terá na demonstração:</h3>
+              <h3>Entrar em contato</h3>
+              
+              <div className="contact-info">
+                <h4>Entre em contato diretamente:</h4>
+                <div className="contact-methods">
+                  <div className="contact-method">
+                    <Phone size={20} />
+                    <span>(11) 96898-9211</span>
+                  </div>
+                  <div className="contact-method">
+                    <Mail size={20} />
+                    <span>contato@dirhect.com.br</span>
+                  </div>
+                </div>
+              </div>
+
               <div className="benefits-list">
                 <div className="demo-benefit-item">
                   <CheckCircle2 size={24} />
@@ -446,20 +276,6 @@ const Demo = () => {
                   <div>
                     <h4>Proposta Customizada</h4>
                     <p>Plano sob medida para o seu negócio</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="contact-info">
-                <h4>Ou entre em contato diretamente:</h4>
-                <div className="contact-methods">
-                  <div className="contact-method">
-                    <Phone size={20} />
-                    <span>(11) 96898-9211</span>
-                  </div>
-                  <div className="contact-method">
-                    <Mail size={20} />
-                    <span>demo@dirhect.com</span>
                   </div>
                 </div>
               </div>

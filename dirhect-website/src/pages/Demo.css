@@ -79,12 +79,10 @@ body {
 
 .demo-content {
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 6rem;
+  grid-template-columns: 1.7fr 1.3fr;
+  gap: 3rem;
   align-items: flex-start;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 3rem;
+  width: 100%;
 }
 
 .form-container {
@@ -134,10 +132,14 @@ body {
   grid-column: 1 / -1;
 }
 
-.form-group label {
+.form-group label,
+.phone-input__label {
   font-weight: 600;
   color: #1e293b;
   font-size: 0.95rem;
+  min-height: 50px;
+  display: flex;
+  align-items: flex-end;
 }
 
 .input-wrapper {
@@ -358,18 +360,19 @@ body {
   line-height: 1.5;
 }
 
-.contact-info {
+.demo-benefits .contact-info {
   border-radius: 16px;
+  margin-bottom: 2.5rem;
 }
 
-.contact-info h4 {
+.demo-benefits .contact-info h4 {
   font-size: 1.1rem;
   margin-bottom: 1.5rem;
   color: #1e293b;
   font-weight: 600;
 }
 
-.contact-methods {
+.demo-benefits .contact-methods {
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -621,7 +624,7 @@ body {
     gap: 1.5rem;
   }
 
-  .contact-info {
+  .demo-benefits .contact-info {
     padding: 1.5rem;
   }
 }
@@ -706,20 +709,20 @@ body {
     height: 20px;
   }
 
-  .contact-info {
+  .demo-benefits .contact-info {
     padding: 1.25rem;
   }
 
-  .contact-info h4 {
+  .demo-benefits .contact-info h4 {
     font-size: 1rem;
   }
 
-  .contact-method {
+  .demo-benefits .contact-method {
     font-size: 0.9rem;
     padding: 0.5rem;
   }
 
-  .contact-method svg {
+  .demo-benefits .contact-method svg {
     width: 18px;
     height: 18px;
   }
@@ -762,4 +765,11 @@ body {
   .success-content p {
     font-size: 1.1rem;
   }
+}
+
+/* Focus overrides inside demo form for phone inputs */
+.demo-form .phone-input__country:focus,
+.demo-form .phone-input__number:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 } 

@@ -1,5 +1,4 @@
-import { ArrowRight, Check } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Check } from 'lucide-react'
 import './HomePlatformFold.css'
 
 const PLATFORM_FEATURES = [
@@ -31,7 +30,7 @@ const HomePlatformFold = () => {
           <div className="home-platform-fold-laptop-wrap">
             <img
               className="home-platform-fold-laptop"
-              src="/images/home-platform-fold-laptop.png?v=20260603"
+              src="/images/home-platform-fold-laptop.png?v=20260606b"
               alt="Painel da plataforma Dirhect em notebook"
               width={922}
               height={1024}
@@ -43,20 +42,15 @@ const HomePlatformFold = () => {
 
         <div className="home-platform-fold-app">
           <div className="home-platform-fold-app-copy">
-            <h3 className="home-platform-fold-app-title">Área do Colaborador</h3>
+            <h3 className="home-platform-fold-app-title">Área do Candidato</h3>
             <p className="home-platform-fold-app-description">
-              Autonomia para o colaborador acompanhar informações, benefícios e documentos na palma
-              da mão.
+              Acompanhe cada etapa do processo seletivo em tempo real e saiba exatamente em que fase sua candidatura está.
             </p>
-            <Link to="/area-colaborador" className="home-platform-fold-app-cta">
-              Ver aplicativo
-              <ArrowRight size={18} strokeWidth={2.5} aria-hidden />
-            </Link>
           </div>
           <div className="home-platform-fold-phone-wrap">
             <img
               className="home-platform-fold-phone"
-              src="/images/home-platform-fold-phone.png?v=20260602"
+              src="/images/home-platform-fold-phone.png?v=20260606"
               alt="Aplicativo do colaborador Dirhect em smartphone"
               width={95}
               height={185}

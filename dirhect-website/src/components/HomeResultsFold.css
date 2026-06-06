@@ -235,7 +235,39 @@
 }
 
 @media (max-width: 640px) {
+  .home-results-fold-metrics {
+    flex-wrap: nowrap;
+    gap: 12px;
+  }
+
   .home-results-fold-metric {
-    flex: 1 1 100%;
+    flex: 1 1 0px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 4px;
+  }
+
+  .home-results-fold-metric-icon {
+    width: 20px;
+    height: 20px;
+  }
+
+  .home-results-fold-metric-value {
+    font-size: 24px;
+  }
+
+  .home-results-fold-metric-label {
+    font-size: 10px;
+    max-width: none;
+    line-height: 1.25;
+  }
+
+  .home-results-fold-tagline {
+    display: none;
+  }
+
+  .home-results-fold-main {
+    padding-top: 28px;
   }
 }

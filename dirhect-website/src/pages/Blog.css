@@ -6,8 +6,8 @@
 
 /* Blog Hero */
 .blog-hero {
-  min-height: 70vh;
-  padding: 120px 0 4rem;
+  min-height: 49vh;
+  padding: 110px 0 3rem;
   background: linear-gradient(135deg, var(--gray-100) 0%, var(--gray-200) 100%);
   color: #1e293b;
   position: relative;

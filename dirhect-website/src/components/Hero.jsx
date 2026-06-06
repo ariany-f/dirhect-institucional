@@ -19,6 +19,10 @@ const Hero = () => {
 
   return (
     <section id="inicio" className="hero-home">
+      <p className="hero-home-eyebrow hero-home-eyebrow--mobile-only">
+        PLATAFORMA DE INTEGRAÇÃO PARA RH
+      </p>
+
       <div className="hero-home-media" aria-hidden="true">
         <img
           className="hero-home-image"
@@ -35,13 +39,25 @@ const Hero = () => {
         <div className="hero-home-grid">
           <div className="hero-home-copy">
             <p className="hero-home-eyebrow">PLATAFORMA DE INTEGRAÇÃO PARA RH</p>
-            <h1 className="hero-home-title">
+            <h1 className="hero-home-title hero-home-title--desktop">
               <span className="hero-home-title-line">
                 <span className="hero-home-title-em">Muito mais</span>
                 {' '}do que
               </span>
               <span className="hero-home-title-line hero-home-title-line--no-break">
                 um software de RH
+              </span>
+            </h1>
+
+            <h1 className="hero-home-title hero-home-title--mobile">
+              <span className="hero-home-title-line">
+                <span className="hero-home-title-em">Muito mais</span> do
+              </span>
+              <span className="hero-home-title-line">
+                que um software
+              </span>
+              <span className="hero-home-title-line">
+                de RH
               </span>
             </h1>
             <p className="hero-home-description">

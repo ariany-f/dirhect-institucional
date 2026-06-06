@@ -148,6 +148,7 @@
 
   .home-rh-challenges-media {
     padding: 0 var(--home-fold-side-padding);
+    margin-top: 2.25rem;
   }
 }
 
