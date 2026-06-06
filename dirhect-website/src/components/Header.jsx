@@ -260,13 +260,6 @@ const Header = () => {
                 Blog
               </Link>
             </li>
-            {!isAuthenticated && !collaboratorAuth && (
-              <li>
-                <Link to="/area-colaborador" onClick={() => setIsMobileMenuOpen(false)}>
-                  Login
-                </Link>
-              </li>
-            )}
           </ul>
 
           <div className="nav-mobile-actions">
