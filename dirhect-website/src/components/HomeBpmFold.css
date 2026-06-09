@@ -572,12 +572,18 @@
 .home-bpm-fold--standalone {
   padding-top: 2.5rem !important;
   padding-bottom: 5rem !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
 }
 
 .home-bpm-container--standalone {
-  max-width: none !important;
+  max-width: 100% !important;
   width: 100% !important;
   padding-inline: var(--home-fold-side-padding) !important;
+  box-sizing: border-box !important;
+  overflow: hidden !important;
 }
 
 .home-bpm-title--centered {
@@ -589,17 +595,21 @@
 }
 
 .home-bpm-card--standalone {
-  grid-template-columns: 1fr !important;
+  grid-template-columns: minmax(0, 1fr) !important;
   gap: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
 }
 
 .home-bpm-card--standalone .home-bpm-visual-section {
   width: 100% !important;
-  max-width: none !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
 }
 
 .home-bpm-card--standalone .home-bpm-diagram-container {
   width: 100% !important;
-  max-width: none !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
 }
 
