@@ -235,18 +235,28 @@
   background-size: 16px 16px;
   padding: 24px 16px 36px;
   box-sizing: border-box;
+  
+  /* Scrollbar styles for Firefox */
+  scrollbar-width: auto;
+  scrollbar-color: #94a3b8 #f1f5f9;
 }
 
 /* Custom scrollbar para o diagrama */
 .home-bpm-diagram-scroll-wrap::-webkit-scrollbar {
-  height: 6px;
+  height: 10px; /* Thicker, more click-friendly height */
+  display: block !important;
 }
 .home-bpm-diagram-scroll-wrap::-webkit-scrollbar-track {
-  background: #fafbfc;
+  background: #f1f5f9; /* slate-100 for better visibility */
+  border-radius: 6px;
 }
 .home-bpm-diagram-scroll-wrap::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 3px;
+  background: #94a3b8; /* slate-400 for strong contrast */
+  border-radius: 6px;
+  border: 2px solid #f1f5f9; /* breathing room */
+}
+.home-bpm-diagram-scroll-wrap::-webkit-scrollbar-thumb:hover {
+  background: #64748b; /* slate-500 on hover */
 }
 
 /* SVG do diagrama ampliado */
