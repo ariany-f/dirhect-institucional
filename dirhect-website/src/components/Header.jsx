@@ -251,6 +251,11 @@ const Header = () => {
               </ul>
             </li>
             <li>
+              <Link to="/bpmn" onClick={() => setIsMobileMenuOpen(false)}>
+                BPMN
+              </Link>
+            </li>
+            <li>
               <Link to="/parceiro" onClick={() => setIsMobileMenuOpen(false)}>
                 Parceiros
               </Link>

@@ -40,6 +40,7 @@ import CookieConsent from './components/CookieConsent'
 import ColaboradorLogin from './pages/ColaboradorLogin'
 import ColaboradorPainel from './pages/ColaboradorPainel'
 import ParceiroSubdominio from './pages/ParceiroSubdominio'
+import BPMN from './pages/BPMN'
 
 function App() {
   const hostname = window.location.hostname.toLowerCase()
@@ -123,6 +124,7 @@ function App() {
           <Route path="/gestao-beneficios" element={<GestaoBeneficios />} />
           <Route path="/gestao-tarefas" element={<GestaoTarefas />} />
           <Route path="/portal-rh" element={<PortalRH />} />
+          <Route path="/bpmn" element={<BPMN />} />
           <Route path="/docs" element={<TechnicalDocumentation />} />
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/termos-uso" element={<TermosUso />} />
