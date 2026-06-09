@@ -102,11 +102,11 @@ function App() {
               <HomeConnectorFold />
               <HomeRhChallengesFold />
               <HomeSolutionFold />
+              <HomeBpmFold />
               <HomeSolutionModulesFold />
               <HomePlatformFold />
               <HomeResultsFold />
               <AppFeatures />
-              <HomeBpmFold />
               <HomeAppFeaturesCardsFold />
               <Integrations />
               <Footer />
