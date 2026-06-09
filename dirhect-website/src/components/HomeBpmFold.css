@@ -578,6 +578,19 @@
   box-sizing: border-box !important;
 }
 
+.home-bpm-fold--standalone .home-bpm-title--centered {
+  font-size: clamp(1.4rem, 1.5vw + 1.2rem, 2.8rem) !important;
+}
+
+.home-bpm-fold--standalone .home-bpm-svg {
+  min-width: 3200px !important; /* Scale up the SVG for larger text and wider dot spacing */
+}
+
+.home-bpm-fold--standalone .home-bpm-pills {
+  font-size: 0.95rem !important; /* Larger text for bottom pills */
+  padding: 14px 24px !important;
+}
+
 .home-bpm-container--standalone {
   max-width: 100% !important;
   width: 100% !important;
