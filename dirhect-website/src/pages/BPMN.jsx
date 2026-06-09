@@ -11,7 +11,7 @@ const BPMN = () => {
   return (
     <div className="bpmn-page" style={{ paddingTop: '80px' }}>
       <Header />
-      <HomeBpmFold />
+      <HomeBpmFold isStandalone={true} />
       <Footer />
     </div>
   )

@@ -138,73 +138,81 @@ const BpmTaskCard = ({ x, y, width = 110, height = 60, textLines, type = 'grey',
   )
 }
 
-const HomeBpmFold = () => {
+const HomeBpmFold = ({ isStandalone = false }) => {
   return (
-    <section className="home-bpm-fold" aria-labelledby="home-bpm-title">
-      <div className="home-bpm-container home-fold-container">
+    <section className={`home-bpm-fold ${isStandalone ? 'home-bpm-fold--standalone' : ''}`} aria-labelledby="home-bpm-title">
+      <div className={`home-bpm-container home-fold-container ${isStandalone ? 'home-bpm-container--standalone' : ''}`}>
         
+        {isStandalone && (
+          <h2 id="home-bpm-title" className="home-bpm-title home-bpm-title--centered">
+            Transforme processos complexos <br className="home-bpm-title-br" /> em <span className="home-bpm-accent">fluxos automatizados</span>.
+          </h2>
+        )}
+
         {/* Card Principal */}
-        <div className="home-bpm-card">
+        <div className={`home-bpm-card ${isStandalone ? 'home-bpm-card--standalone' : ''}`}>
           
           {/* Lado Esquerdo - Copy e Grid de Funcionalidades */}
-          <div className="home-bpm-copy-section">
-            <h2 id="home-bpm-title" className="home-bpm-title">
-              Transforme processos complexos <br className="home-bpm-title-br" /> em <span className="home-bpm-accent">fluxos automatizados</span>.
-            </h2>
+          {!isStandalone && (
+            <div className="home-bpm-copy-section">
+              <h2 id="home-bpm-title" className="home-bpm-title">
+                Transforme processos complexos <br className="home-bpm-title-br" /> em <span className="home-bpm-accent">fluxos automatizados</span>.
+              </h2>
 
-            {/* Linha do tempo de Funcionalidades */}
-            <div className="home-bpm-features-timeline">
-              <div className="home-bpm-timeline-item">
-                <div className="home-bpm-timeline-indicator">
-                  <div className="home-bpm-timeline-dot">
-                    <Sliders size={13} />
+              {/* Linha do tempo de Funcionalidades */}
+              <div className="home-bpm-features-timeline">
+                <div className="home-bpm-timeline-item">
+                  <div className="home-bpm-timeline-indicator">
+                    <div className="home-bpm-timeline-dot">
+                      <Sliders size={13} />
+                    </div>
+                    <div className="home-bpm-timeline-line"></div>
                   </div>
-                  <div className="home-bpm-timeline-line"></div>
+                  <span className="home-bpm-timeline-label">Fluxos personalizados</span>
                 </div>
-                <span className="home-bpm-timeline-label">Fluxos personalizados</span>
-              </div>
-              
-              <div className="home-bpm-timeline-item">
-                <div className="home-bpm-timeline-indicator">
-                  <div className="home-bpm-timeline-dot">
-                    <UserCheck size={13} />
+                
+                <div className="home-bpm-timeline-item">
+                  <div className="home-bpm-timeline-indicator">
+                    <div className="home-bpm-timeline-dot">
+                      <UserCheck size={13} />
+                    </div>
+                    <div className="home-bpm-timeline-line"></div>
                   </div>
-                  <div className="home-bpm-timeline-line"></div>
+                  <span className="home-bpm-timeline-label">Aprovações automáticas</span>
                 </div>
-                <span className="home-bpm-timeline-label">Aprovações automáticas</span>
-              </div>
 
-              <div className="home-bpm-timeline-item">
-                <div className="home-bpm-timeline-indicator">
-                  <div className="home-bpm-timeline-dot">
-                    <ShieldAlert size={13} />
+                <div className="home-bpm-timeline-item">
+                  <div className="home-bpm-timeline-indicator">
+                    <div className="home-bpm-timeline-dot">
+                      <ShieldAlert size={13} />
+                    </div>
+                    <div className="home-bpm-timeline-line"></div>
                   </div>
-                  <div className="home-bpm-timeline-line"></div>
+                  <span className="home-bpm-timeline-label">Regras de negócio</span>
                 </div>
-                <span className="home-bpm-timeline-label">Regras de negócio</span>
-              </div>
 
-              <div className="home-bpm-timeline-item">
-                <div className="home-bpm-timeline-indicator">
-                  <div className="home-bpm-timeline-dot">
-                    <Network size={13} />
+                <div className="home-bpm-timeline-item">
+                  <div className="home-bpm-timeline-indicator">
+                    <div className="home-bpm-timeline-dot">
+                      <Network size={13} />
+                    </div>
+                    <div className="home-bpm-timeline-line"></div>
                   </div>
-                  <div className="home-bpm-timeline-line"></div>
+                  <span className="home-bpm-timeline-label">Integrações entre sistemas</span>
                 </div>
-                <span className="home-bpm-timeline-label">Integrações entre sistemas</span>
-              </div>
 
-              <div className="home-bpm-timeline-item">
-                <div className="home-bpm-timeline-indicator">
-                  <div className="home-bpm-timeline-dot">
-                    <ClipboardCheck size={13} />
+                <div className="home-bpm-timeline-item">
+                  <div className="home-bpm-timeline-indicator">
+                    <div className="home-bpm-timeline-dot">
+                      <ClipboardCheck size={13} />
+                    </div>
+                    <div className="home-bpm-timeline-line"></div>
                   </div>
-                  <div className="home-bpm-timeline-line"></div>
+                  <span className="home-bpm-timeline-label">Rastreabilidade completa</span>
                 </div>
-                <span className="home-bpm-timeline-label">Rastreabilidade completa</span>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Lado Direito - Mapeador BPMN Completo com as 4 Raias */}
           <div className="home-bpm-visual-section">
