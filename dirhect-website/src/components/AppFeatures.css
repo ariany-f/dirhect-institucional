@@ -984,7 +984,7 @@
 .day-bar:nth-child(5) { --delay: 0.5s; }
 
 .day-bar.active {
-  background: linear-gradient(135deg, #f59e0b, #f97316);
+  background: var(--gradient-orange);
   transform: scale(1.05);
 }
 
@@ -2906,7 +2906,7 @@
 .info-icon {
   width: 24px;
   height: 24px;
-  background: #f97316;
+  background: #ff8c00; /* Brand orange */
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -2918,7 +2918,7 @@
 .info-title {
   font-size: 16px;
   font-weight: 600;
-  color: #ea580c;
+  color: #e67e00; /* Dark brand orange for high readability */
   margin: 0;
 }
 

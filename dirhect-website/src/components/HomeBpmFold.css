@@ -1,0 +1,560 @@
+/* Dobra BPMN Process Automation — Tema Claro Premium */
+
+.home-bpm-fold {
+  --bpm-navy: #0f172a;
+  --bpm-blue: #1d4ed8;
+  --bpm-orange: #ff8c00;
+  --bpm-muted: #64748b;
+  --bpm-text-dark: #1e293b;
+  --bpm-bg: #f8fafc;
+  --bpm-card-bg: #ffffff;
+  --bpm-border-color: #e2e8f0;
+  --bpm-icon-bg: #f0fdf4;
+  --bpm-icon-color: #22c55e;
+  
+  background: var(--bpm-bg);
+  padding: clamp(4.5rem, 7.5vh, 6.5rem) 0;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Card centralizado sem fundo ou sombra (transparente) */
+.home-bpm-card {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 35fr) minmax(0, 65fr);
+  gap: clamp(1.5rem, 3.5vw, 3.5rem);
+  align-items: start;
+}
+
+/* Lado Esquerdo - Textos e Informações */
+.home-bpm-copy-section {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+/* Badge Versão 1 */
+.home-bpm-badge {
+  display: inline-block;
+  background: var(--bpm-blue);
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 4px 10px;
+  border-radius: 999px;
+  margin-bottom: 1.25rem;
+}
+
+/* Título */
+.home-bpm-title {
+  margin: 0 0 1rem;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(1.15rem, 1.1vw + 0.95rem, 2.35rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--bpm-navy);
+}
+
+.home-bpm-accent {
+  color: var(--bpm-orange);
+}
+
+.home-bpm-title-br {
+  display: none;
+}
+
+/* Subtítulo centralizado em baixo */
+.home-bpm-subtitle-bottom {
+  margin: 2rem auto 0;
+  font-size: clamp(0.95rem, 1.05vw, 1.05rem);
+  line-height: 1.6;
+  color: var(--bpm-muted);
+  text-align: center;
+  max-width: 760px;
+}
+
+/* Linha do tempo de Funcionalidades */
+.home-bpm-features-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  position: relative;
+  margin-top: 0.5rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.home-bpm-timeline-item {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  position: relative;
+}
+
+.home-bpm-timeline-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  width: 30px;
+  flex-shrink: 0;
+}
+
+.home-bpm-timeline-dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: #f1f5f9;
+  color: #475569;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--bpm-border-color);
+  z-index: 2;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.home-bpm-timeline-line {
+  position: absolute;
+  top: 30px; /* starts at bottom of dot */
+  bottom: -1.8rem; /* extends through the gap */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1.5px; /* Middle-ground line thickness matching circle borders */
+  background: #000000; /* Black timeline line */
+  z-index: 3; /* Render on top of the circle to ensure arrowhead is visible */
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.home-bpm-timeline-line::after {
+  content: '';
+  position: absolute;
+  bottom: -1.5px; /* Positioned to rest precisely on the border of the circle */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 3.5px solid transparent; /* Middle-ground arrowhead width (7px total) */
+  border-right: 3.5px solid transparent; /* Middle-ground arrowhead width (7px total) */
+  border-top: 5px solid #000000; /* Middle-ground arrowhead height */
+  transition: border-top-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.home-bpm-timeline-item:last-child .home-bpm-timeline-line {
+  display: none;
+}
+
+.home-bpm-timeline-label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--bpm-text-dark);
+  font-family: 'Inter', sans-serif;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+}
+
+/* Hover effects */
+.home-bpm-timeline-item:hover .home-bpm-timeline-dot {
+  background: var(--bpm-orange);
+  color: #ffffff;
+  border-color: var(--bpm-orange);
+  box-shadow: 0 0 12px rgba(255, 140, 0, 0.35);
+  transform: scale(1.08);
+  z-index: 4; /* Ensure hovered dot scales above the connector line */
+}
+
+.home-bpm-timeline-item:hover .home-bpm-timeline-label {
+  color: var(--bpm-orange);
+  transform: translateX(4px);
+}
+
+
+
+/* Lado Direito - Mídia & Diagrama */
+.home-bpm-visual-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  width: 100%;
+}
+
+/* Painel do Diagrama no Estilo Canvas Transparente */
+.home-bpm-diagram-container {
+  background: transparent;
+  border: 1px solid var(--bpm-border-color);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+/* Cabeçalho tipo Janela de Navegador/App */
+.home-bpm-diagram-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  background: #fafafa;
+  border-bottom: 1px solid var(--bpm-border-color);
+}
+
+.home-bpm-diagram-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.home-bpm-diagram-dot.red { background: #ff5f56; }
+.home-bpm-diagram-dot.yellow { background: #ffbd2e; }
+.home-bpm-diagram-dot.green { background: #27c93f; }
+
+.home-bpm-diagram-title {
+  margin-left: 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--bpm-muted);
+  font-family: 'Inter', sans-serif;
+}
+
+/* Scroll wrapper para telas mobile */
+.home-bpm-diagram-scroll-wrap {
+  width: 100%;
+  overflow-x: auto;
+  background-color: transparent;
+  /* Grid pattern sutil estilo canvas */
+  background-image: radial-gradient(#cbd5e1 1.2px, transparent 1.2px);
+  background-size: 16px 16px;
+  padding: 24px 16px 36px;
+  box-sizing: border-box;
+}
+
+/* Custom scrollbar para o diagrama */
+.home-bpm-diagram-scroll-wrap::-webkit-scrollbar {
+  height: 6px;
+}
+.home-bpm-diagram-scroll-wrap::-webkit-scrollbar-track {
+  background: #fafbfc;
+}
+.home-bpm-diagram-scroll-wrap::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+
+/* SVG do diagrama ampliado */
+.home-bpm-svg {
+  display: block;
+  min-width: 2400px;
+  height: auto;
+}
+
+/* Painel de destaques inferiores em formato de Pill */
+.home-bpm-pills {
+  display: inline-flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  gap: 8px 10px;
+  padding: 10px 18px;
+  background: transparent;
+  border: 1px solid var(--bpm-border-color);
+  border-radius: 999px;
+  font-size: clamp(0.68rem, 0.45vw + 0.62rem, 0.78rem);
+  font-weight: 600;
+  color: var(--bpm-text-dark);
+  box-shadow: none;
+  width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+}
+
+.home-bpm-pills > * {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.home-bpm-dot-pill {
+  color: var(--bpm-orange);
+  font-weight: 800;
+  opacity: 0.85;
+}
+
+.home-bpm-pill-ic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bpm-orange);
+  margin-right: 4px;
+}
+
+.home-bpm-pill-ic svg {
+  width: 17px;
+  height: 17px;
+  display: block;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .home-bpm-card {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .home-bpm-container {
+    padding-inline: 0 !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  .home-bpm-copy-section {
+    display: flex !important;
+    flex-direction: column !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 0 1.5rem 0 !important;
+    padding-inline: var(--home-fold-side-padding, 1.25rem) !important;
+    box-sizing: border-box !important;
+  }
+
+  .home-bpm-visual-section {
+    padding-inline: var(--home-fold-side-padding, 1.25rem) !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  .home-bpm-title {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #0f172a !important; /* Force brand navy */
+    text-align: left !important;
+    font-size: clamp(1.15rem, 1.1vw + 0.95rem, 2.35rem) !important; /* Same size as other fold titles */
+    line-height: 1.15 !important;
+    letter-spacing: -0.03em !important;
+    font-weight: 800 !important;
+    margin-bottom: 1rem !important;
+    width: 100% !important;
+  }
+
+  .home-bpm-accent {
+    color: var(--bpm-orange) !important; /* Force brand orange on mobile */
+  }
+
+  .home-bpm-title-br {
+    display: block !important;
+  }
+
+  .home-bpm-features-timeline {
+    display: flex !important;
+    flex-direction: column !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    max-width: 100% !important;
+    margin-inline: 0 !important;
+    margin-left: 0 !important;
+    margin-right: auto !important;
+    gap: 1.5rem !important;
+    width: 100% !important;
+    align-self: flex-start !important;
+  }
+
+  .home-bpm-timeline-item {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center !important;
+    gap: 0.85rem !important;
+    width: 100% !important;
+  }
+
+  .home-bpm-timeline-dot {
+    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 30px !important;
+    height: 30px !important;
+  }
+
+  .home-bpm-timeline-label {
+    display: inline-block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    font-size: 0.88rem !important; /* Slightly smaller for mobile layout */
+    color: var(--bpm-text-dark) !important;
+    font-weight: 600 !important;
+    text-align: left !important;
+  }
+
+  /* Transform the single pill container into a flex container of individual tags */
+  .home-bpm-pills {
+    border: none;
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    flex-wrap: wrap;
+    white-space: normal;
+    gap: 8px 10px;
+    justify-content: center;
+  }
+
+  /* Hide the bullet dots and the check icon on mobile layout */
+  .home-bpm-dot-pill,
+  .home-bpm-pill-ic {
+    display: none;
+  }
+
+  /* Style each benefit text span as a clean individual tag pill */
+  .home-bpm-pills span {
+    background: #f1f5f9;
+    color: var(--bpm-text-dark);
+    padding: 6px 14px;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid var(--bpm-border-color);
+  }
+}
+
+@media (max-width: 640px) {
+  .home-bpm-fold {
+    padding: 1.75rem 0;
+  }
+
+  .home-bpm-title {
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    color: #0f172a !important;
+    text-align: left !important;
+    font-size: clamp(1.15rem, 1.1vw + 0.95rem, 2.35rem) !important; /* Same size as other fold titles */
+    line-height: 1.15 !important;
+    letter-spacing: -0.03em !important;
+    font-weight: 800 !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .home-bpm-accent {
+    color: var(--bpm-orange) !important; /* Force brand orange on mobile */
+  }
+
+  .home-bpm-subtitle-bottom {
+    font-size: clamp(0.85rem, 3.5vw, 0.92rem);
+    line-height: 1.5;
+    margin-top: 1.5rem;
+    padding-inline: 0.5rem; /* Prevent text touching screen edges */
+  }
+}
+
+/* Interatividade e Efeito Hover nos Cards do Diagrama */
+.bpm-card-group {
+  --card-stroke-current: var(--card-stroke-default);
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1), filter 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.bpm-card-group:hover {
+  --card-stroke-current: var(--card-stroke-active);
+  transform: scale(1.04) translateY(-3px);
+  filter: drop-shadow(0 6px 12px rgba(15, 23, 42, 0.12));
+}
+
+.bpm-svg-card {
+  stroke: var(--card-stroke-current);
+  transition: stroke 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animação de Pulso do Card quando a Bolinha passa por ele */
+@keyframes card-pulse {
+  0% {
+    transform: scale(1) translateY(0);
+    filter: none;
+    --card-stroke-current: var(--card-stroke-default);
+  }
+  4% {
+    transform: scale(1.04) translateY(-3px);
+    filter: drop-shadow(0 6px 12px rgba(15, 23, 42, 0.12));
+    --card-stroke-current: var(--card-stroke-active);
+  }
+  12% {
+    transform: scale(1.04) translateY(-3px);
+    filter: drop-shadow(0 6px 12px rgba(15, 23, 42, 0.12));
+    --card-stroke-current: var(--card-stroke-active);
+  }
+  17% {
+    transform: scale(1) translateY(0);
+    filter: none;
+    --card-stroke-current: var(--card-stroke-default);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+    filter: none;
+    --card-stroke-current: var(--card-stroke-default);
+  }
+}
+
+/* Animação dos Pulsos de Energia (Bolinhas SVG) via CSS para perfeita sincronização com os cards */
+.bpm-moving-dot {
+  offset-path: path('M 115 135 L 150 135 L 205 135 L 205 165 L 205 350 L 215 350 L 270 350 L 325 350 L 335 350 L 335 135 L 350 135 L 470 135 L 500 135 L 610 135 L 640 135 L 670 135 L 700 135 L 810 135 L 840 135 L 965 135 L 980 135 L 980 255 L 1000 255 L 1055 255 L 1055 285 L 1055 350 L 1090 350 L 1200 350 L 1215 350 L 1215 255 L 1230 255 L 1350 255 L 1380 255 L 1490 255 L 1520 255 L 1630 255 L 1660 255 L 1775 255 L 1800 255 L 1910 255 L 1940 255 L 2060 255 L 2075 255 L 2075 135 L 2090 135 L 2200 135 L 2230 135 L 2345 135 L 2370 135 L 2480 135 L 2510 135 L 2630 135 L 2660 135 L 2770 135 L 2800 135 L 2830 135 L 2880 135 L 2995 135 L 3020 135 L 3130 135 L 3160 135');
+  animation: bpm-move-main-path 28s infinite linear;
+}
+
+.bpm-dot-1 {
+  animation-delay: 0s;
+}
+
+.bpm-dot-2 {
+  animation-delay: -7s;
+}
+
+.bpm-dot-3 {
+  animation-delay: -14s;
+}
+
+.bpm-dot-4 {
+  animation-delay: -21s;
+}
+
+.bpm-moving-loop-yellow {
+  offset-path: path('M 655 120 L 655 85 L 2145 85 L 2145 105');
+  animation: bpm-move-loop-path 8s infinite linear;
+}
+
+.bpm-moving-loop-red {
+  offset-path: path('M 2815 150 L 2815 285 L 2570 285 L 2570 165');
+  animation: bpm-move-loop-path 8s infinite linear;
+}
+
+@keyframes bpm-move-main-path {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+@keyframes bpm-move-loop-path {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+

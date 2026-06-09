@@ -30,6 +30,7 @@ import HomeSolutionModulesFold from './components/HomeSolutionModulesFold'
 import HomeResultsFold from './components/HomeResultsFold'
 import HomePlatformFold from './components/HomePlatformFold'
 import AppFeatures from './components/AppFeatures'
+import HomeBpmFold from './components/HomeBpmFold'
 import HomeAppFeaturesCardsFold from './components/HomeAppFeaturesCardsFold'
 import Footer from './components/Footer'
 import Header from './components/Header'
@@ -56,6 +57,23 @@ function App() {
           element.scrollIntoView({ behavior: 'smooth' })
         }
       }, 100)
+    }
+  }, [])
+
+  useEffect(() => {
+    const handleResize = () => {
+      const width = window.innerWidth
+      if (width > 1440) {
+        document.body.style.zoom = width / 1440
+      } else {
+        document.body.style.zoom = 1
+      }
+    }
+    window.addEventListener('resize', handleResize)
+    handleResize()
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      document.body.style.zoom = 1
     }
   }, [])
 
@@ -88,6 +106,7 @@ function App() {
               <HomePlatformFold />
               <HomeResultsFold />
               <AppFeatures />
+              <HomeBpmFold />
               <HomeAppFeaturesCardsFold />
               <Integrations />
               <Footer />

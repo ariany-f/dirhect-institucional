@@ -10,6 +10,7 @@ import HomePlatformFold from '../components/HomePlatformFold'
 import ProductShowcase from '../components/ProductShowcase'
 import AppFeatures from '../components/AppFeatures'
 import Solutions from '../components/Solutions'
+import HomeBpmFold from '../components/HomeBpmFold'
 import SecuritySection from '../components/SecuritySection'
 import Footer from '../components/Footer'
 import FloatingButtons from '../components/FloatingButtons'
@@ -28,6 +29,7 @@ const Home = () => {
       <HomeResultsFold />
       <ProductShowcase />
       <AppFeatures />
+      <HomeBpmFold />
       <Solutions />
       <SecuritySection />
       <FloatingButtons />

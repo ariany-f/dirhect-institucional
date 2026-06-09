@@ -24,9 +24,9 @@ const Integrations = () => {
       gradient: 'linear-gradient(135deg, #0FAAFF 0%, #003366 100%)'
     },
     {
-      name: 'TOTVS RM',
+      name: 'TOTVS',
       logo: '/images/logos/totvs-logo.png',
-      description: 'Conexão direta com TOTVS RM para gestão integrada de recursos humanos, benefícios e controle de ponto.',
+      description: 'Conexão direta com TOTVS para gestão integrada de recursos humanos, benefícios e controle de ponto.',
       features: [
         'Gestão de recursos humanos',
         'Controle de benefícios',

@@ -30,7 +30,8 @@
 .home-solution-fold-container.home-fold-container,
 .home-solution-modules-container.home-fold-container,
 .home-platform-fold-inner.home-fold-container,
-.home-app-features-cards-fold-container.home-fold-container {
+.home-app-features-cards-fold-container.home-fold-container,
+.home-bpm-container.home-fold-container {
   max-width: var(--home-fold-content-max);
   margin-inline: auto;
   padding-inline: var(--home-fold-side-padding);
