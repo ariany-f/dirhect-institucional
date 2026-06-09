@@ -145,7 +145,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
         
         {isStandalone && (
           <h2 id="home-bpm-title" className="home-bpm-title home-bpm-title--centered">
-            Transforme processos complexos <br className="home-bpm-title-br" /> em <span className="home-bpm-accent">fluxos automatizados</span>.
+            Transforme processos complexos de <span className="home-bpm-accent">RH</span> <br className="home-bpm-title-br" /> em <span className="home-bpm-accent">fluxos automatizados</span>.
           </h2>
         )}
 

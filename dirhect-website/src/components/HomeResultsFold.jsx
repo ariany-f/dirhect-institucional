@@ -7,7 +7,7 @@ const METRICS = [
     id: 'hours',
     Icon: Clock,
     value: '40h',
-    label: 'economizadas por mês',
+    label: 'economizadas por semana',
   },
   {
     id: 'automation',
