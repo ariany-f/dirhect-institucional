@@ -9,9 +9,9 @@
   /* igual à altura do Header (.header-content height) */
   --hero-header-offset: 80px;
   /* respiro mínimo abaixo do menu */
-  --hero-content-top-gap: clamp(2.5rem, 5vh, 4rem);
+  --hero-content-top-gap: 3rem;
   /* respiro na base da hero (ancoragem de baixo para cima) */
-  --hero-content-bottom-gap: clamp(2.5rem, 6vh, 4.5rem);
+  --hero-content-bottom-gap: 3.5rem;
   /* largura da barra de rolagem (100vw inclui scrollbar, 100% não) */
   --hero-scrollbar-inset: calc(100vw - 100%);
   /* só desconta a scrollbar; sem folga extra na lateral direita */
@@ -150,7 +150,7 @@
 
 .hero-home-title-line {
   display: block;
-  font-size: clamp(2.65rem, 5vw, 4rem);
+  font-size: 3.8rem;
 }
 
 .hero-home-title-line--no-break {
@@ -172,7 +172,7 @@
 .hero-home-description {
   margin: 0 0 1.5rem 0;
   max-width: 100%;
-  font-size: clamp(0.98rem, 1.35vw, 1.08rem);
+  font-size: 1.05rem;
   line-height: 1.65;
   color: var(--hero-text-muted);
   font-weight: 400;
@@ -465,5 +465,13 @@
   .hero-home-logos img {
     height: 14px;
     max-width: 48px;
+  }
+}
+
+/* Fix for high resolution screens and zoom levels (e.g. 60%) */
+@media (min-width: 1440.1px) {
+  .hero-home {
+    height: 760px !important;
+    --hero-scrollbar-inset: 0px !important;
   }
 }

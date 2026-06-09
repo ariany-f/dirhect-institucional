@@ -317,3 +317,17 @@ button {
     padding: 0 16px;
   }
 }
+
+/* Fix for high resolution screens and zoom levels (e.g. 60%) */
+@media (min-width: 1440.1px) {
+  :root {
+    --home-fold-inset-left: max(
+      var(--home-fold-side-padding),
+      calc((1440px - var(--home-fold-content-max)) / 2 + var(--home-fold-side-padding))
+    );
+    --home-fold-inset-right: max(
+      var(--home-fold-side-padding),
+      calc((1440px - var(--home-fold-content-max)) / 2 + var(--home-fold-side-padding))
+    );
+  }
+}
