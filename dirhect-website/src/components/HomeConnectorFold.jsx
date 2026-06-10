@@ -10,7 +10,7 @@ const HomeConnectorFold = () => {
         </p>
         <span className="home-connector-fold-divider" aria-hidden="true">•</span>
         <p className="home-connector-fold-text">
-          Independente dos seus sistemas de <span className="home-connector-fold-accent">RH</span> e <span className="home-connector-fold-accent">DP</span>
+          Independente do seu sistema de <span className="home-connector-fold-accent">RH</span> e <span className="home-connector-fold-accent">DP</span>
         </p>
       </div>
     </section>
