@@ -628,7 +628,7 @@
 
 /* Standalone BPMN page download button styling */
 .home-bpm-download-container {
-  display: flex;
+  display: none; /* Botões ocultos temporariamente */
   justify-content: center;
   align-items: center;
   gap: 0.75rem;
