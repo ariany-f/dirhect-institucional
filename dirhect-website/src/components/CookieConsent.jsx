@@ -3,6 +3,8 @@ import { X, Cookie, Shield } from 'lucide-react'
 import './CookieConsent.css'
 
 const CookieConsent = () => {
+  return null // Deactivated to prevent overlaying the BPMN page content and captures
+  
   const [showConsent, setShowConsent] = useState(false)
   const [hasConsented, setHasConsented] = useState(false)
   const [userChoice, setUserChoice] = useState(null)
