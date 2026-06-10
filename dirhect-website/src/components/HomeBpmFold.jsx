@@ -176,6 +176,9 @@ const HomeBpmFold = ({ isStandalone = false }) => {
             <h2 id="home-bpm-title" className="home-bpm-title home-bpm-title--centered">
               Transforme processos complexos de <span className="home-bpm-accent">RH</span> <br className="home-bpm-title-br" /> em <span className="home-bpm-accent">fluxos automatizados</span>.
             </h2>
+            <p className="home-bpm-subtitle-bottom home-bpm-subtitle-standalone">
+              Com o <strong>Dirhect</strong> você tem todas as informações em um só lugar, independente do seu sistema de RH e DP
+            </p>
             <div className="home-bpm-download-container">
               <a 
                 href="/images/bpmn_animation.gif" 

@@ -83,6 +83,12 @@
   max-width: 760px;
 }
 
+/* Subtitle modifier for the standalone /bpmn page — sits right below the h2 */
+.home-bpm-subtitle-standalone {
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+}
+
 /* Linha do tempo de Funcionalidades */
 .home-bpm-features-timeline {
   display: flex;
