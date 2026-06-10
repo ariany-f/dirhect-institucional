@@ -139,6 +139,34 @@ const BpmTaskCard = ({ x, y, width = 110, height = 60, textLines, type = 'grey',
 }
 
 const HomeBpmFold = ({ isStandalone = false }) => {
+  const handleDownloadSvg = () => {
+    // Grab the full SVG element from the DOM (the entire diagram, not just the visible portion)
+    const svgEl = document.querySelector('.home-bpm-svg')
+    if (!svgEl) return
+
+    // Clone so we can clean up animation attributes without affecting the live element
+    const clone = svgEl.cloneNode(true)
+
+    // Add XML namespace required for standalone SVG files
+    clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+
+    // Serialize and create downloadable blob
+    const serializer = new XMLSerializer()
+    const svgString = '<?xml version="1.0" encoding="UTF-8"?>\n' + serializer.serializeToString(clone)
+    const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+
+    // Trigger download
+    const link = document.createElement('a')
+    link.href = url
+    link.download = 'fluxo_bpmn_dirhect.svg'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <section className={`home-bpm-fold ${isStandalone ? 'home-bpm-fold--standalone' : ''}`} aria-labelledby="home-bpm-title">
       <div className={`home-bpm-container home-fold-container ${isStandalone ? 'home-bpm-container--standalone' : ''}`}>
@@ -161,6 +189,17 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                 </svg>
                 Baixar Animação (.GIF)
               </a>
+              <button
+                onClick={handleDownloadSvg}
+                className="home-bpm-download-btn home-bpm-download-btn--svg"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px' }}>
+                  <rect x="3" y="3" width="18" height="18" rx="2" />
+                  <circle cx="8.5" cy="8.5" r="1.5" />
+                  <polyline points="21 15 16 10 5 21" />
+                </svg>
+                Baixar Diagrama (.SVG)
+              </button>
             </div>
           </div>
         )}

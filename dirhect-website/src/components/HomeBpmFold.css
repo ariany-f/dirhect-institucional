@@ -630,9 +630,12 @@
 .home-bpm-download-container {
   display: flex;
   justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
   margin-top: -1.75rem;
   margin-bottom: 3rem;
   width: 100%;
+  flex-wrap: wrap;
 }
 
 .home-bpm-download-btn {
@@ -647,6 +650,7 @@
   text-decoration: none !important;
   padding: 0.68rem 1.35rem;
   border-radius: 8px;
+  border: 2px solid transparent;
   box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25);
   transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
@@ -660,5 +664,19 @@
 
 .home-bpm-download-btn:active {
   transform: translateY(0);
+}
+
+/* SVG download button — ghost/outline variant */
+.home-bpm-download-btn--svg {
+  background: transparent !important;
+  color: var(--bpm-blue) !important;
+  border: 2px solid var(--bpm-blue) !important;
+  box-shadow: none !important;
+}
+
+.home-bpm-download-btn--svg:hover {
+  background: rgba(59, 130, 246, 0.08) !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.15) !important;
 }
 
