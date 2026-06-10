@@ -312,7 +312,7 @@ const Header = () => {
                 className="cta-button cta-button--schedule"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
-                Agendar demonstração
+                Solicitar demonstração
                 <ArrowRight size={16} strokeWidth={2.5} aria-hidden />
               </Link>
             )}
@@ -364,7 +364,7 @@ const Header = () => {
               className="cta-button cta-button--schedule header-end-desktop"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              Agendar demonstração
+              Solicitar demonstração
               <ArrowRight size={16} strokeWidth={2.5} aria-hidden />
             </Link>
           )}
