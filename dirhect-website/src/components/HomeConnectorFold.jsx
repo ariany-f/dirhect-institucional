@@ -8,6 +8,11 @@ const HomeConnectorFold = () => {
           Com o <span className="home-connector-fold-accent">Dirhect</span> você tem todas as
           informações em um só lugar
         </p>
+        <span className="home-connector-fold-divider" aria-hidden="true">•</span>
+        <p className="home-connector-fold-text">
+          Com o <span className="home-connector-fold-accent">Dirhect</span> você tem todas as
+          informações em um só lugar
+        </p>
       </div>
     </section>
   )

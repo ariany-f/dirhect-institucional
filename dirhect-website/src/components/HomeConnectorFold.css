@@ -9,6 +9,12 @@
 }
 
 .home-connector-fold-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem 1.25rem;
   text-align: center;
 }
 
@@ -25,6 +31,13 @@
 .home-connector-fold-accent {
   color: var(--connector-orange);
   font-weight: 700;
+}
+
+.home-connector-fold-divider {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 1.1rem;
+  line-height: 1;
+  user-select: none;
 }
 
 .home-connector-fold-strong {
