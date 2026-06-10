@@ -626,3 +626,39 @@
   min-width: 0 !important;
 }
 
+/* Standalone BPMN page download button styling */
+.home-bpm-download-container {
+  display: flex;
+  justify-content: center;
+  margin-top: -1.75rem;
+  margin-bottom: 3rem;
+  width: 100%;
+}
+
+.home-bpm-download-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bpm-blue);
+  color: #ffffff !important;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  text-decoration: none !important;
+  padding: 0.68rem 1.35rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25);
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.home-bpm-download-btn:hover {
+  background: #1e40af !important; /* Darker blue */
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(29, 78, 216, 0.35);
+}
+
+.home-bpm-download-btn:active {
+  transform: translateY(0);
+}
+

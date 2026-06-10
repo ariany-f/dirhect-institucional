@@ -144,9 +144,25 @@ const HomeBpmFold = ({ isStandalone = false }) => {
       <div className={`home-bpm-container home-fold-container ${isStandalone ? 'home-bpm-container--standalone' : ''}`}>
         
         {isStandalone && (
-          <h2 id="home-bpm-title" className="home-bpm-title home-bpm-title--centered">
-            Transforme processos complexos de <span className="home-bpm-accent">RH</span> <br className="home-bpm-title-br" /> em <span className="home-bpm-accent">fluxos automatizados</span>.
-          </h2>
+          <div className="home-bpm-header-standalone">
+            <h2 id="home-bpm-title" className="home-bpm-title home-bpm-title--centered">
+              Transforme processos complexos de <span className="home-bpm-accent">RH</span> <br className="home-bpm-title-br" /> em <span className="home-bpm-accent">fluxos automatizados</span>.
+            </h2>
+            <div className="home-bpm-download-container">
+              <a 
+                href="/images/bpmn_animation.gif" 
+                download="fluxo_bpmn_dirhect.gif" 
+                className="home-bpm-download-btn"
+              >
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px' }}>
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" y1="15" x2="12" y2="3" />
+                </svg>
+                Baixar Animação (.GIF)
+              </a>
+            </div>
+          </div>
         )}
 
         {/* Card Principal */}
