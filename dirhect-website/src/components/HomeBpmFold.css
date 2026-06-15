@@ -1,4 +1,4 @@
-/* Dobra BPMN Process Automation — Tema Claro Premium */
+/* Dobra BPMS Process Automation — Tema Claro Premium */
 
 .home-bpm-fold {
   --bpm-navy: #0f172a;
@@ -83,7 +83,7 @@
   max-width: 760px;
 }
 
-/* Subtitle modifier for the standalone /bpmn page — sits right below the h2 */
+/* Subtitle modifier for the standalone /bpms page — sits right below the h2 */
 .home-bpm-subtitle-standalone {
   margin-top: 0.75rem;
   margin-bottom: 0;
@@ -574,7 +574,7 @@
   }
 }
 
-/* Standalone BPMN page customizations */
+/* Standalone BPMS page customizations */
 .home-bpm-fold--standalone {
   padding-top: 2.5rem !important;
   padding-bottom: 5rem !important;
@@ -632,7 +632,7 @@
   min-width: 0 !important;
 }
 
-/* Standalone BPMN page download button styling */
+/* Standalone BPMS page download button styling */
 .home-bpm-download-container {
   display: none; /* Botões ocultos temporariamente */
   justify-content: center;

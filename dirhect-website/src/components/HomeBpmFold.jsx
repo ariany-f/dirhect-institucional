@@ -160,7 +160,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
     // Trigger download
     const link = document.createElement('a')
     link.href = url
-    link.download = 'fluxo_bpmn_dirhect.svg'
+    link.download = 'fluxo_bpms_dirhect.svg'
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -181,8 +181,8 @@ const HomeBpmFold = ({ isStandalone = false }) => {
             </p>
             <div className="home-bpm-download-container">
               <a 
-                href="/images/bpmn_animation.gif" 
-                download="fluxo_bpmn_dirhect.gif" 
+                href="/images/bpms_animation.gif" 
+                download="fluxo_bpms_dirhect.gif" 
                 className="home-bpm-download-btn"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px' }}>
@@ -272,7 +272,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
             </div>
           )}
 
-          {/* Lado Direito - Mapeador BPMN Completo com as 4 Raias */}
+          {/* Lado Direito - Mapeador BPMS Completo com as 4 Raias */}
           <div className="home-bpm-visual-section">
             
             {/* Bloco do Diagrama */}
@@ -281,7 +281,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                 <div className="home-bpm-diagram-dot red"></div>
                 <div className="home-bpm-diagram-dot yellow"></div>
                 <div className="home-bpm-diagram-dot green"></div>
-                <span className="home-bpm-diagram-title">Fluxo BPMN Admissional de Ponta a Ponta</span>
+                <span className="home-bpm-diagram-title">Fluxo BPMS Admissional de Ponta a Ponta</span>
               </div>
               
               <div className="home-bpm-diagram-scroll-wrap">

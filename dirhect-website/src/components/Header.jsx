@@ -251,8 +251,8 @@ const Header = () => {
               </ul>
             </li>
             <li>
-              <Link to="/bpmn" onClick={() => setIsMobileMenuOpen(false)}>
-                BPMN
+              <Link to="/bpms" onClick={() => setIsMobileMenuOpen(false)}>
+                BPMS
               </Link>
             </li>
             <li>
