@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="11700" height="4875" viewBox="0 0 11700 4875">
+  <defs>
+    <clipPath id="clip-Canvas">
+      <rect width="11700" height="4875"/>
+    </clipPath>
+  </defs>
+  <g id="Canvas" clip-path="url(#clip-Canvas)">
+    <rect width="11700" height="4875" fill="rgba(0,0,0,0)"/>
+    <path id="Rectangle_1" data-name="Rectangle 1" d="M4804,1601H3344s-446.53-42.776-584,257c-45.258,98.693-47.7,243.671-55,399-7.445,158.462,37.316,290.946-162,447-296.28,231.972-932.935-73.544-1188,237-118.036,143.711-119.919,307.731-128,456-9.269,170.065-17.438,319.533-62,396-124,212.777-328,233-328,233l-844,3" fill="none" stroke="#b8c2cc" stroke-width="10" stroke-dasharray="70 50"/>
+    <path id="Rectangle_1_copy" data-name="Rectangle 1 copy" d="M12590.1,1840.408H9931.514s-813.108-77.888-1063.434,467.96c-82.412,179.7-86.864,443.688-100.152,726.521-13.556,288.536,67.951,529.77-294.993,813.922C8228.628,4040.081,6953.262,4075,6953.262,4075H6319s-868.846,2.305-975-.371" fill="none" stroke="#b8c2cc" stroke-width="10" stroke-dasharray="70 50"/>
+    <rect id="Rectangle_2" data-name="Rectangle 2" width="1241" height="422" rx="100" transform="translate(608 3157)" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="10"/>
+    <text id="Documentos" transform="translate(715.139 3262.459)" fill="#64748b" font-size="162.5" font-family="Inter-Bold, Inter" font-weight="700"><tspan x="62.509" y="157">Documentos</tspan></text>
+    <rect id="Rectangle_2_copy" data-name="Rectangle 2 copy" width="1241" height="422" rx="100" transform="translate(2124 2017)" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="10"/>
+    <text id="Recrutador" transform="translate(2231.139 2122.459)" fill="#64748b" font-size="162.5" font-family="Inter-Bold, Inter" font-weight="700"><tspan x="122.137" y="157">Recrutador</tspan></text>
+    <rect id="Rectangle_2_copy_2" data-name="Rectangle 2 copy 2" width="1241" height="422" rx="100" transform="translate(8174.03 2610.23)" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="10"/>
+    <text id="Funcionário" transform="translate(8281.171 2715.693)" fill="#64748b" font-size="162.5" font-family="Inter-Bold, Inter" font-weight="700"><tspan x="104.84" y="157">Funcionário</tspan></text>
+    <rect id="Rectangle_2_copy_3" data-name="Rectangle 2 copy 3" width="1241" height="422" rx="100" transform="translate(9864.03 1660.23)" fill="#f1f5f9" stroke="#cbd5e1" stroke-width="10"/>
+    <text id="Admissão" transform="translate(9971.171 1765.693)" fill="#64748b" font-size="162.5" font-family="Inter-Bold, Inter" font-weight="700"><tspan x="167.721" y="157">Admissão</tspan></text>
+  </g>
+</svg>

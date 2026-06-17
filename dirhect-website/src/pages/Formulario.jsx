@@ -26,6 +26,7 @@ import PhoneInput from '../components/PhoneInput';
 import { sendDemoEmail } from '../services/emailService';
 import './Formulario.css';
 import Footer from '../components/Footer';
+import heroDiagramBg from '../assets/hero-diagram-bg.svg';
 
 const Formulario = () => {
   const [animState, setAnimState] = useState('clean'); // clean, window1, typing, closing1, window2, fields, closing2, checkmark, phrase
@@ -264,38 +265,10 @@ const Formulario = () => {
       <section className="zeev-hero">
         <div className="zeev-hero-container">
           
-          {/* Reference Background Diagram */}
-          <div className="hero-bg-diagram">
-            <svg className="hero-bg-svg" viewBox="0 0 1200 850" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-              {/* Line for Documentos */}
-              <path d="M 105 594 L 105 630 C 105 650, 125 650, 145 650 L 550 650" className="hero-bg-path" />
-              {/* Line for Recrutador */}
-              <path d="M 260 250 L 260 190 C 260 170, 280 170, 300 170 L 550 170" className="hero-bg-path" />
-              {/* Line for Admissão */}
-              <path d="M 1085 154 L 1085 190 C 1085 210, 1105 210, 1125 210 L 1200 210" className="hero-bg-path" />
-              {/* Line for Funcionário */}
-              <path d="M 650 280 L 915 280 C 935 280, 955 290, 955 315 L 955 360" className="hero-bg-path" />
-            </svg>
-
-            {/* Documentos Card */}
-            <div className="hero-bg-card card-documentos">
-              <span>Documentos</span>
-            </div>
-
-            {/* Recrutador Card */}
-            <div className="hero-bg-card card-recrutador">
-              <span>Recrutador</span>
-            </div>
-
-            {/* Funcionário Card */}
-            <div className="hero-bg-card card-funcionario">
-              <span>Funcionário</span>
-            </div>
-
-            {/* Admissão Card */}
-            <div className="hero-bg-card card-admissao">
-              <span>Admissão</span>
-            </div>
+          <div className={`hero-bg-diagram ${
+            animState !== 'checkmark' && animState !== 'phrase' ? 'opaque' : ''
+          }`}>
+            <img src={heroDiagramBg} alt="Diagrama de fluxo de admissão" className="hero-bg-image-file" />
           </div>
           
           {/* Header Texts */}

@@ -41,6 +41,7 @@ import ColaboradorLogin from './pages/ColaboradorLogin'
 import ColaboradorPainel from './pages/ColaboradorPainel'
 import ParceiroSubdominio from './pages/ParceiroSubdominio'
 import BPMS from './pages/BPMS'
+import Formulario from './pages/Formulario'
 
 function App() {
   const hostname = window.location.hostname.toLowerCase()
@@ -124,6 +125,7 @@ function App() {
           <Route path="/gestao-beneficios" element={<GestaoBeneficios />} />
           <Route path="/gestao-tarefas" element={<GestaoTarefas />} />
           <Route path="/portal-rh" element={<PortalRH />} />
+          <Route path="/formulario" element={<Formulario />} />
           <Route path="/bpms" element={<BPMS />} />
           <Route path="/docs" element={<TechnicalDocumentation />} />
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
