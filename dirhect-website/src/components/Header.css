@@ -305,6 +305,10 @@
   text-decoration: none;
 }
 
+.header-login-btn.header-end-desktop {
+  margin-right: min(0px, calc(-1 * (var(--home-fold-inset-right) - 1.5rem)));
+}
+
 .header-login-btn:hover {
   background: rgba(255, 140, 0, 0.05);
   transform: translateY(-2px);
