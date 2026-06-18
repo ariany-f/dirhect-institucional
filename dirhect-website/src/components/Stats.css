@@ -1,6 +1,6 @@
 /* Stats Section */
 .stats-section {
-  padding: 6rem 0;
+  padding: 3.5rem 0;
   background: linear-gradient(135deg, #333333 0%, #4d4d4d 50%, #666666 100%);
   position: relative;
   overflow: hidden;
@@ -49,7 +49,7 @@
 /* Stats Header */
 .stats-header {
   text-align: center;
-  margin-bottom: 4rem;
+  margin-bottom: 2rem;
 }
 
 .stats-badge {
@@ -58,14 +58,14 @@
   gap: 0.5rem;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  padding: 0.75rem 1.5rem;
+  padding: 0.5rem 1rem;
   border-radius: 50px;
-  font-size: 0.875rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: #ffaa00;
   border: 1px solid rgba(255, 170, 0, 0.2);
-  margin-bottom: 2rem;
-  box-shadow: 0 4px 20px rgba(255, 170, 0, 0.1);
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 15px rgba(255, 170, 0, 0.1);
   animation: badgeGlow 3s ease-in-out infinite;
 }
 
@@ -81,11 +81,11 @@
 }
 
 .stats-title {
-  font-size: 3rem;
+  font-size: 2.25rem;
   font-weight: 900;
   line-height: 1.2;
   color: white;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.75rem;
   letter-spacing: -0.03em;
 }
 
@@ -97,20 +97,20 @@
 }
 
 .stats-subtitle {
-  font-size: 1.25rem;
+  font-size: 1.05rem;
   color: #b3b3b3;
   max-width: 600px;
   margin: 0 auto;
-  line-height: 1.6;
+  line-height: 1.5;
   font-weight: 400;
 }
 
 /* Stats Grid */
 .stats-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-bottom: 4rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.25rem;
+  margin-bottom: 2.5rem;
 }
 
 /* Stat Cards */
@@ -118,8 +118,8 @@
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 24px;
-  padding: 2.5rem 2rem;
+  border-radius: 18px;
+  padding: 1.5rem 1.25rem;
   position: relative;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -162,23 +162,28 @@
 }
 
 .stat-card-icon {
-  width: 64px;
-  height: 64px;
-  border-radius: 16px;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: white;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   transition: all 0.3s ease;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
   position: relative;
   z-index: 2;
 }
 
+.stat-card-icon svg {
+  width: 22px !important;
+  height: 22px !important;
+}
+
 .stat-card:hover .stat-card-icon {
-  transform: scale(1.1) rotate(5deg);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+  transform: scale(1.08) rotate(5deg);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .stat-card-content {
@@ -189,39 +194,39 @@
 .stat-value {
   display: flex;
   align-items: baseline;
-  margin-bottom: 1rem;
+  margin-bottom: 0.75rem;
   font-weight: 900;
 }
 
 .stat-prefix,
 .stat-suffix {
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   color: #b3b3b3;
   font-weight: 700;
 }
 
 .stat-number {
-  font-size: 3rem;
+  font-size: 2.25rem;
   color: white;
   line-height: 1;
-  margin: 0 0.25rem;
+  margin: 0 0.2rem;
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.02em;
 }
 
 .stat-label {
-  font-size: 1.25rem;
+  font-size: 1.05rem;
   font-weight: 700;
   color: white;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.35rem;
   letter-spacing: -0.01em;
 }
 
 .stat-description {
   color: #b3b3b3;
-  line-height: 1.5;
-  font-size: 0.95rem;
+  line-height: 1.4;
+  font-size: 0.85rem;
   font-weight: 400;
 }
 
@@ -245,24 +250,24 @@
 
 /* Stats Footer */
 .stats-footer {
-  margin-top: 4rem;
+  margin-top: 2.5rem;
 }
 
 .stats-trust-badges {
   display: flex;
   justify-content: center;
-  gap: 2rem;
+  gap: 1.25rem;
   flex-wrap: wrap;
 }
 
 .trust-badge {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
-  padding: 1.25rem 1.75rem;
-  border-radius: 16px;
+  padding: 0.75rem 1.25rem;
+  border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   transition: all 0.3s ease;
   animation: trustBadgeFloat 4s ease-in-out infinite;
@@ -278,42 +283,42 @@
 
 @keyframes trustBadgeFloat {
   0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-5px); }
+  50% { transform: translateY(-4px); }
 }
 
 .trust-badge:hover {
   background: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 
 .trust-badge-icon {
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
+  width: 36px;
+  height: 36px;
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border-radius: 8px;
   backdrop-filter: blur(10px);
 }
 
 .trust-badge-text {
   display: flex;
   flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.15rem;
 }
 
 .trust-badge-title {
-  font-size: 0.95rem;
+  font-size: 0.85rem;
   font-weight: 700;
   color: white;
   letter-spacing: -0.01em;
 }
 
 .trust-badge-subtitle {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #b3b3b3;
   font-weight: 500;
 }
@@ -321,7 +326,7 @@
 /* Responsive Design */
 @media (max-width: 1024px) {
   .stats-section {
-    padding: 4rem 0;
+    padding: 2.5rem 0;
   }
 
   .stats-container {
@@ -329,22 +334,22 @@
   }
 
   .stats-grid {
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1rem;
   }
 
   .stats-title {
-    font-size: 2.5rem;
+    font-size: 1.85rem;
   }
 
   .stat-card {
-    padding: 2rem 1.5rem;
+    padding: 1.25rem 1rem;
   }
 }
 
 @media (max-width: 768px) {
   .stats-section {
-    padding: 3rem 0;
+    padding: 2rem 0;
   }
 
   .stats-container {
@@ -352,55 +357,60 @@
   }
 
   .stats-header {
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
   }
 
   .stats-title {
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
 
   .stats-subtitle {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
   }
 
   .stats-grid {
-    grid-template-columns: 1fr;
-    gap: 1.5rem;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
   }
 
   .stat-card {
-    padding: 1.75rem 1.5rem;
+    padding: 1.25rem 1rem;
   }
 
   .stat-card-icon {
-    width: 56px;
-    height: 56px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .stat-card-icon svg {
+    width: 20px !important;
+    height: 20px !important;
   }
 
   .stat-number {
-    font-size: 2.5rem;
+    font-size: 1.85rem;
   }
 
   .stat-label {
-    font-size: 1.1rem;
+    font-size: 0.95rem;
   }
 
   .stats-trust-badges {
     flex-direction: column;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
   }
 
   .trust-badge {
     width: 100%;
-    max-width: 300px;
+    max-width: 280px;
     justify-content: center;
   }
 }
 
 @media (max-width: 480px) {
   .stats-section {
-    padding: 2rem 0;
+    padding: 1.5rem 0;
   }
 
   .stats-container {
@@ -408,38 +418,48 @@
   }
 
   .stats-title {
-    font-size: 1.75rem;
+    font-size: 1.4rem;
   }
 
   .stats-subtitle {
-    font-size: 1rem;
+    font-size: 0.9rem;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
   }
 
   .stat-card {
-    padding: 1.5rem 1.25rem;
+    padding: 1.25rem 1rem;
   }
 
   .stat-card-icon {
-    width: 48px;
-    height: 48px;
+    width: 36px;
+    height: 36px;
+  }
+
+  .stat-card-icon svg {
+    width: 18px !important;
+    height: 18px !important;
   }
 
   .stat-number {
-    font-size: 2rem;
+    font-size: 1.65rem;
   }
 
   .stat-prefix,
   .stat-suffix {
-    font-size: 1.25rem;
+    font-size: 1rem;
   }
 
   .trust-badge {
-    padding: 1rem 1.25rem;
+    padding: 0.65rem 1rem;
   }
 
   .trust-badge-icon {
-    width: 40px;
-    height: 40px;
-    font-size: 1.25rem;
+    width: 32px;
+    height: 32px;
+    font-size: 1.1rem;
   }
 } 
