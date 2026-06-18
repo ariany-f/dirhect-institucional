@@ -71,6 +71,7 @@
   height: 100%;
   gap: 0.65rem;
   flex-shrink: 0;
+  position: relative;
 }
 
 .nav-mobile-actions {
@@ -306,7 +307,13 @@
 }
 
 .header-login-btn.header-end-desktop {
-  margin-right: min(0px, calc(-1 * (var(--home-fold-inset-right) - 1.5rem)));
+  position: absolute;
+  left: calc(100% + 0.65rem);
+  top: 0;
+  bottom: 0;
+  margin-top: auto;
+  margin-bottom: auto;
+  height: fit-content;
 }
 
 .header-login-btn:hover {
