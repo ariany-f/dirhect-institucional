@@ -312,14 +312,23 @@ const Header = () => {
             )}
 
             {!isAuthenticated && !collaboratorAuth && (
-              <Link
-                to="/demo"
-                className="cta-button cta-button--schedule"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                Solicitar demonstração
-                <ArrowRight size={16} strokeWidth={2.5} aria-hidden />
-              </Link>
+              <>
+                <Link
+                  to="/demo"
+                  className="cta-button cta-button--schedule"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Solicitar demonstração
+                  <ArrowRight size={16} strokeWidth={2.5} aria-hidden />
+                </Link>
+                <a
+                  href="https://dirhect-front.vercel.app/login"
+                  className="header-login-btn header-login-btn--mobile"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Login
+                </a>
+              </>
             )}
           </div>
         </nav>
@@ -364,14 +373,23 @@ const Header = () => {
           )}
 
           {!isAuthenticated && !collaboratorAuth && (
-            <Link
-              to="/demo"
-              className="cta-button cta-button--schedule header-end-desktop"
-              onClick={() => setIsMobileMenuOpen(false)}
-            >
-              Solicitar demonstração
-              <ArrowRight size={16} strokeWidth={2.5} aria-hidden />
-            </Link>
+            <>
+              <Link
+                to="/demo"
+                className="cta-button cta-button--schedule header-end-desktop"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Solicitar demonstração
+                <ArrowRight size={16} strokeWidth={2.5} aria-hidden />
+              </Link>
+              <a
+                href="https://dirhect-front.vercel.app/login"
+                className="header-login-btn header-end-desktop"
+                onClick={() => setIsMobileMenuOpen(false)}
+              >
+                Login
+              </a>
+            </>
           )}
         </div>
       </div>
