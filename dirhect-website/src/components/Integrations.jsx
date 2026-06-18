@@ -8,6 +8,7 @@ const Integrations = () => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
+  const [isPaused, setIsPaused] = useState(false)
 
   // Atualizar quantidade de cards visíveis dinamicamente conforme a largura da janela
   useEffect(() => {
@@ -130,6 +131,20 @@ const Integrations = () => {
     setCurrentIndex((prev) => Math.min(prev, maxIndex))
   }, [maxIndex])
 
+  // Lógica de rotação automática do carrossel (Autoplay)
+  useEffect(() => {
+    const isAnyCardExpanded = Object.values(expandedCards).some(Boolean)
+    const shouldPause = isPaused || isAnyCardExpanded
+
+    if (shouldPause || maxIndex === 0) return
+
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1))
+    }, 4000) // Gira a cada 4 segundos
+
+    return () => clearInterval(interval)
+  }, [isPaused, expandedCards, maxIndex])
+
   const handlePrev = () => {
     setCurrentIndex((prev) => Math.max(0, prev - 1))
   }
@@ -164,6 +179,9 @@ const Integrations = () => {
     }
   }
 
+  // O card ativo (no meio) é o segundo na visualização de 3, ou o primeiro nas demais
+  const activeCardIndex = cardsPerView === 3 ? currentIndex + 1 : currentIndex
+
   return (
     <section className="integrations-section" id="integrations">
       <div className="integrations-container">
@@ -178,7 +196,13 @@ const Integrations = () => {
         </div>
 
         {/* Integration Carousel */}
-        <div className="integrations-carousel-wrapper">
+        <div 
+          className="integrations-carousel-wrapper"
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onFocus={() => setIsPaused(true)}
+          onBlur={() => setIsPaused(false)}
+        >
           <button
             type="button"
             className="carousel-control prev"
@@ -205,11 +229,12 @@ const Integrations = () => {
             >
               {integrations.map((integration, index) => {
                 const isExpanded = Boolean(expandedCards[integration.name])
+                const isActive = index === activeCardIndex
 
                 return (
                   <div
                     key={integration.name}
-                    className="integration-card-wrap"
+                    className={`integration-card-wrap${isActive ? ' integration-card-wrap--active' : ''}`}
                     style={{
                       '--animation-delay': `${index * 0.1}s`,
                       flex: `0 0 calc((100% - (var(--cards-per-view) - 1) * var(--carousel-gap, 2.5rem)) / var(--cards-per-view))`,
