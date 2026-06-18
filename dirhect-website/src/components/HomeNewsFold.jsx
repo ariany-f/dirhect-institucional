@@ -17,9 +17,6 @@ const HomeNewsFold = () => {
             <p>
               Foram dias de troca de experiências, novas perspectivas e conexões valiosas que reforçaram nossa crença de que a transformação acontece quando tecnologia, pessoas e propósito caminham juntos.
             </p>
-            <p className="home-news-highlight">
-              🚀 O Web Summit foi um grande passo na trajetória da Dirhect — e estamos apenas começando.
-            </p>
           </div>
         </div>
 
