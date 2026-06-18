@@ -5,7 +5,8 @@ import './Integrations.css'
 const Integrations = () => {
   const [expandedCards, setExpandedCards] = useState({})
   const [cardsPerView, setCardsPerView] = useState(3)
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useState(3) // Começa no index 3 (SAP original)
+  const [isTransitioning, setIsTransitioning] = useState(false)
   const [touchStart, setTouchStart] = useState(null)
   const [touchEnd, setTouchEnd] = useState(null)
   const [isPaused, setIsPaused] = useState(false)
@@ -124,33 +125,48 @@ const Integrations = () => {
     }
   ]
 
-  const maxIndex = Math.max(0, integrations.length - cardsPerView)
+  // Clonar os 3 últimos e os 3 primeiros para fazer o loop infinito
+  const extendedIntegrations = [
+    ...integrations.slice(-3),
+    ...integrations,
+    ...integrations.slice(0, 3)
+  ]
 
-  // Resetar índice quando a quantidade de cards por view muda para evitar posições vazias
-  useEffect(() => {
-    setCurrentIndex((prev) => Math.min(prev, maxIndex))
-  }, [maxIndex])
+  const N = integrations.length
 
   // Lógica de rotação automática do carrossel (Autoplay)
   useEffect(() => {
     const isAnyCardExpanded = Object.values(expandedCards).some(Boolean)
     const shouldPause = isPaused || isAnyCardExpanded
 
-    if (shouldPause || maxIndex === 0) return
+    if (shouldPause) return
 
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1))
+      handleNext()
     }, 4000) // Gira a cada 4 segundos
 
     return () => clearInterval(interval)
-  }, [isPaused, expandedCards, maxIndex])
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => Math.max(0, prev - 1))
-  }
+  }, [isPaused, expandedCards])
 
   const handleNext = () => {
-    setCurrentIndex((prev) => Math.min(maxIndex, prev + 1))
+    if (currentIndex >= 10) return // espera o reset da transição
+    setIsTransitioning(true)
+    setCurrentIndex((prev) => prev + 1)
+  }
+
+  const handlePrev = () => {
+    if (currentIndex <= 2) return // espera o reset da transição
+    setIsTransitioning(true)
+    setCurrentIndex((prev) => prev - 1)
+  }
+
+  const handleTransitionEnd = () => {
+    setIsTransitioning(false)
+    if (currentIndex >= 10) {
+      setCurrentIndex(3)
+    } else if (currentIndex <= 2) {
+      setCurrentIndex(9)
+    }
   }
 
   // Lógica de deslizar para dispositivos touch
@@ -181,6 +197,15 @@ const Integrations = () => {
 
   // O card ativo (no meio) é o segundo na visualização de 3, ou o primeiro nas demais
   const activeCardIndex = cardsPerView === 3 ? currentIndex + 1 : currentIndex
+  
+  // Índice original correspondente para as bolinhas indicadoras
+  const activeOriginalIndex = (activeCardIndex - 3 + N) % N
+
+  const handleDotClick = (idx) => {
+    setIsTransitioning(true)
+    const targetIndex = cardsPerView === 3 ? idx + 2 : idx + 3
+    setCurrentIndex(targetIndex)
+  }
 
   return (
     <section className="integrations-section" id="integrations">
@@ -207,7 +232,6 @@ const Integrations = () => {
             type="button"
             className="carousel-control prev"
             onClick={handlePrev}
-            disabled={currentIndex === 0}
             aria-label="Slide anterior"
           >
             <ChevronLeft size={24} />
@@ -221,22 +245,24 @@ const Integrations = () => {
           >
             <div
               className="integrations-carousel-track"
+              onTransitionEnd={handleTransitionEnd}
               style={{
                 transform: `translateX(calc(-1 * ${currentIndex} * (100% + var(--carousel-gap, 2.5rem)) / ${cardsPerView}))`,
+                transition: isTransitioning ? 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)' : 'none',
                 '--carousel-gap': '2.5rem',
                 '--cards-per-view': cardsPerView,
               }}
             >
-              {integrations.map((integration, index) => {
+              {extendedIntegrations.map((integration, index) => {
                 const isExpanded = Boolean(expandedCards[integration.name])
                 const isActive = index === activeCardIndex
 
                 return (
                   <div
-                    key={integration.name}
+                    key={`${integration.name}-${index}`}
                     className={`integration-card-wrap${isActive ? ' integration-card-wrap--active' : ''}`}
                     style={{
-                      '--animation-delay': `${index * 0.1}s`,
+                      '--animation-delay': `${(index % N) * 0.1}s`,
                       flex: `0 0 calc((100% - (var(--cards-per-view) - 1) * var(--carousel-gap, 2.5rem)) / var(--cards-per-view))`,
                     }}
                   >
@@ -293,7 +319,6 @@ const Integrations = () => {
             type="button"
             className="carousel-control next"
             onClick={handleNext}
-            disabled={currentIndex === maxIndex}
             aria-label="Próximo slide"
           >
             <ChevronRight size={24} />
@@ -301,18 +326,16 @@ const Integrations = () => {
         </div>
 
         {/* Carousel Indicators */}
-        {maxIndex > 0 && (
-          <div className="carousel-indicators">
-            {Array.from({ length: maxIndex + 1 }).map((_, idx) => (
-              <button
-                key={idx}
-                className={`carousel-dot${idx === currentIndex ? ' active' : ''}`}
-                onClick={() => setCurrentIndex(idx)}
-                aria-label={`Ir para slide ${idx + 1}`}
-              />
-            ))}
-          </div>
-        )}
+        <div className="carousel-indicators">
+          {Array.from({ length: N }).map((_, idx) => (
+            <button
+              key={idx}
+              className={`carousel-dot${idx === activeOriginalIndex ? ' active' : ''}`}
+              onClick={() => handleDotClick(idx)}
+              aria-label={`Ir para slide ${idx + 1}`}
+            />
+          ))}
+        </div>
       </div>
     </section>
   )
