@@ -28,10 +28,10 @@ const Stats = () => {
     {
       id: 2,
       icon: <Building2 size={32} />,
-      value: 500,
+      value: 200,
       suffix: '+',
-      label: 'Empresas parceiras',
-      description: 'Organizações que confiam em nossa tecnologia',
+      label: 'Clientes ativos',
+      description: 'Empresas que confiam em nossa tecnologia',
       color: '#10b981',
       prefix: ''
     },
@@ -151,7 +151,7 @@ const Stats = () => {
           </h2>
           
           <p className="stats-subtitle">
-            Mais de 500 empresas já transformaram seus processos de RH com nossa tecnologia
+            Mais de 200 empresas já transformaram seus processos de RH com nossa tecnologia
           </p>
         </div>
 

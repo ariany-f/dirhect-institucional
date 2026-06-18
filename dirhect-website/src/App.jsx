@@ -36,6 +36,7 @@ import Footer from './components/Footer'
 import Header from './components/Header'
 import Integrations from './components/Integrations'
 import HomeNewsFold from './components/HomeNewsFold'
+import Stats from './components/Stats'
 import Parceiros from './pages/Parceiros'
 import CookieConsent from './components/CookieConsent'
 import ColaboradorLogin from './pages/ColaboradorLogin'
@@ -113,6 +114,7 @@ function App() {
               <HomeAppFeaturesCardsFold />
               <Integrations />
               <HomeNewsFold />
+              <Stats />
               <Footer />
             </>
           } />
