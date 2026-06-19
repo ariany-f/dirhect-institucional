@@ -46,16 +46,6 @@ const Stats = () => {
       prefix: ''
     },
     {
-      id: 4,
-      icon: <TrendingUp size={32} />,
-      value: 99.9,
-      suffix: '%',
-      label: 'Uptime garantido',
-      description: 'Disponibilidade da plataforma 24/7',
-      color: '#f59e0b',
-      prefix: ''
-    },
-    {
       id: 5,
       icon: <Award size={32} />,
       value: 4.9,
@@ -64,16 +54,6 @@ const Stats = () => {
       description: 'Avaliação média dos nossos usuários',
       color: '#ef4444',
       prefix: ''
-    },
-    {
-      id: 6,
-      icon: <Zap size={32} />,
-      value: 5,
-      suffix: 'seg',
-      label: 'Tempo de resposta',
-      description: 'Velocidade média de processamento',
-      color: '#06b6d4',
-      prefix: '<'
     }
   ]
 
@@ -155,7 +135,7 @@ const Stats = () => {
           </p>
         </div>
 
-        <div className="stats-grid">
+        <div className="stats-cards-grid">
           {stats.map((stat, index) => (
             <div 
               key={stat.id} 
@@ -186,33 +166,6 @@ const Stats = () => {
           ))}
         </div>
 
-        <div className="stats-footer">
-          <div className="stats-trust-badges">
-            <div className="trust-badge">
-              <div className="trust-badge-icon">🏆</div>
-              <div className="trust-badge-text">
-                <div className="trust-badge-title">Certificação ISO</div>
-                <div className="trust-badge-subtitle">27001 - Segurança</div>
-              </div>
-            </div>
-            
-            <div className="trust-badge">
-              <div className="trust-badge-icon">🛡️</div>
-              <div className="trust-badge-text">
-                <div className="trust-badge-title">LGPD Compliance</div>
-                <div className="trust-badge-subtitle">100% Conformidade</div>
-              </div>
-            </div>
-            
-            <div className="trust-badge">
-              <div className="trust-badge-icon">⭐</div>
-              <div className="trust-badge-text">
-                <div className="trust-badge-title">Suporte Premium</div>
-                <div className="trust-badge-subtitle">24h por dia</div>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   )
