@@ -111,9 +111,9 @@ const Integrations = () => {
       gradient: 'linear-gradient(135deg, #00E676 0%, #007934 100%)'
     },
     {
-      name: 'Nexti RH Inteligente',
+      name: 'Nexti',
       logo: '/images/logos/nexti-logo.png',
-      description: 'Integração com a Nexti RH Inteligente para automação e otimização de processos de recursos humanos.',
+      description: 'Integração com a Nexti para automação e otimização de processos de recursos humanos.',
       features: [
         'Automação de Processos',
         'Gestão de Documentos',

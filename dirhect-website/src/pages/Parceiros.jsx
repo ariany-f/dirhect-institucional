@@ -1,7 +1,8 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { 
   CheckCircle, 
   Star,
+  ChevronDown
 } from 'lucide-react'
 import Header from '../components/Header.jsx?v=menu-nav-20260521'
 import Footer from '../components/Footer'
@@ -9,6 +10,12 @@ import FloatingButtons from '../components/FloatingButtons'
 import './Parceiros.css'
 
 const Parceiros = () => {
+  const [expandedCards, setExpandedCards] = useState({})
+
+  const toggleCard = (name) => {
+    setExpandedCards((prev) => ({ ...prev, [name]: !prev[name] }))
+  }
+
   // Rolar para o topo quando a página carregar
   useEffect(() => {
     window.scrollTo(0, 0)
@@ -71,10 +78,10 @@ const Parceiros = () => {
       color: '#00A651'
     },
     {
-      name: 'Nexti RH Inteligente',
+      name: 'Nexti',
       logo: '/images/logos/nexti-logo.png',
       category: 'Gestão de RH',
-      description: 'Integração com a Nexti RH Inteligente para automação e otimização de processos de recursos humanos.',
+      description: 'Integração com a Nexti para automação e otimização de processos de recursos humanos.',
       features: ['Automação de Processos', 'Gestão de Documentos', 'Workflow Inteligente', 'Analytics de RH'],
       status: 'Gestão de RH',
       color: '#8B5CF6'
@@ -103,46 +110,64 @@ const Parceiros = () => {
         <div className="container">
 
           <div className="partners-grid">
-            {allPartners.map((partner, index) => (
-              <div 
-                key={partner.name} 
-                className="partner-card"
-                style={{ 
-                  '--animation-delay': `${index * 0.1}s`,
-                  '--partner-color': partner.color
-                }}
-              >
-                <div className="partner-card-header">
-                  <div className="partner-logo">
-                    <img src={partner.logo} alt={`${partner.name} Logo`} />
-                  </div>
-                  <div className="partner-status">
-                    <Star size={16} />
-                    <span>{partner.status}</span>
-                  </div>
-                </div>
-                
-                <div className="partner-card-content">
-                  <div className="partner-info">
-                    <h3 className="partner-name">{partner.name}</h3>
+            {allPartners.map((partner, index) => {
+              const isExpanded = Boolean(expandedCards[partner.name])
+              
+              return (
+                <div 
+                  key={partner.name} 
+                  className={`partner-card ${isExpanded ? 'partner-card--expanded' : ''}`}
+                  style={{ 
+                    '--animation-delay': `${index * 0.1}s`,
+                    '--partner-color': partner.color
+                  }}
+                >
+                  <div className="partner-card-header">
+                    <div className="partner-logo">
+                      <img src={partner.logo} alt={`${partner.name} Logo`} />
+                    </div>
+                    <div className="partner-status">
+                      <Star size={16} />
+                      <span>{partner.status}</span>
+                    </div>
                   </div>
                   
-                  <p className="partner-description">{partner.description}</p>
-                  
-                  <div className="partner-features">
-                    <h4>Soluções:</h4>
-                    <ul>
-                      {partner.features.map((feature, idx) => (
-                        <li key={idx}>
-                          <CheckCircle size={16} />
-                          <span>{feature}</span>
-                        </li>
-                      ))}
-                    </ul>
+                  <div className="partner-card-content">
+                    <div className="partner-info">
+                      <h3 className="partner-name">{partner.name}</h3>
+                    </div>
+                    
+                    <p className="partner-description">{partner.description}</p>
+                    
+                    <button
+                      type="button"
+                      className="partner-ver-mais"
+                      aria-expanded={isExpanded}
+                      onClick={() => toggleCard(partner.name)}
+                    >
+                      <span>{isExpanded ? 'Ver menos' : 'Ver mais'}</span>
+                      <ChevronDown className="partner-ver-mais-icon" size={16} aria-hidden="true" />
+                    </button>
+
+                    <div className={`partner-accordion${isExpanded ? ' is-open' : ''}`}>
+                      <div className="partner-accordion-inner">
+                        <div className="partner-features">
+                          <h4>Soluções:</h4>
+                          <ul>
+                            {partner.features.map((feature, idx) => (
+                              <li key={idx}>
+                                <CheckCircle size={16} />
+                                <span>{feature}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              )
+            })}
           </div>
         </div>
       </section>

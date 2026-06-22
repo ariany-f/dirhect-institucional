@@ -6,6 +6,7 @@ import './Header.css?v=home-align-20260521'
 
 const Header = () => {
   const location = useLocation()
+  const isApresentacao = location.pathname.replace(/\/$/, '') === '/apresentacao'
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const [user, setUser] = useState(null)
@@ -178,20 +179,23 @@ const Header = () => {
   return (
     <header className="header">
       <div className="header-content">
-        <button
-          type="button"
-          className="mobile-menu-button mobile-menu-button--lead"
-          onClick={toggleMobileMenu}
-          aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
-        >
-          {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {!isApresentacao && (
+          <button
+            type="button"
+            className="mobile-menu-button mobile-menu-button--lead"
+            onClick={toggleMobileMenu}
+            aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        )}
 
         <Link to="/" className="logo">
           <img width={140} src="/images/dirhect_color.svg" alt="Dirhect Logo" />
         </Link>
         
-        <nav className={`nav ${isMobileMenuOpen ? 'nav-mobile-open' : ''}`}>
+        {!isApresentacao && (
+          <nav className={`nav ${isMobileMenuOpen ? 'nav-mobile-open' : ''}`}>
           <div className="mobile-menu-header">
             <img width={160} src="/images/dirhect_color.svg" alt="Dirhect Logo" className="mobile-menu-logo" />
             <button className="mobile-menu-close" onClick={() => setIsMobileMenuOpen(false)}>
@@ -322,8 +326,10 @@ const Header = () => {
                   <ArrowRight size={16} strokeWidth={2.5} aria-hidden />
                 </Link>
                 <a
-                  href="https://dirhect-front.vercel.app/login"
+                  href="https://dirhect.com"
                   className="header-login-btn header-login-btn--mobile"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Login
@@ -331,9 +337,11 @@ const Header = () => {
               </>
             )}
           </div>
-        </nav>
+          </nav>
+        )}
 
-        <div className="header-end">
+        {!isApresentacao && (
+          <div className="header-end">
           {isAuthenticated && user && (
             <div className="user-area header-end-desktop">
               <div className="user-info">
@@ -383,15 +391,18 @@ const Header = () => {
                 <ArrowRight size={16} strokeWidth={2.5} aria-hidden />
               </Link>
               <a
-                href="https://dirhect-front.vercel.app/login"
+                href="https://dirhect.com"
                 className="header-login-btn header-end-desktop"
+                target="_blank"
+                rel="noopener noreferrer"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Login
               </a>
             </>
           )}
-        </div>
+          </div>
+        )}
       </div>
     </header>
   )

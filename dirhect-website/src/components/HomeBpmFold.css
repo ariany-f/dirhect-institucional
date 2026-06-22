@@ -235,6 +235,8 @@
 .home-bpm-diagram-scroll-wrap {
   width: 100%;
   overflow-x: auto;
+  overflow-y: auto;
+  max-height: 450px;
   background-color: transparent;
   /* Grid pattern sutil estilo canvas */
   background-image: radial-gradient(#cbd5e1 1.2px, transparent 1.2px);
@@ -484,7 +486,8 @@
   animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.bpm-card-group:hover {
+.bpm-card-group:hover,
+.bpm-card-group.bpm-card-group--active {
   --card-stroke-current: var(--card-stroke-active);
   transform: scale(1.04) translateY(-3px);
   filter: drop-shadow(0 6px 12px rgba(15, 23, 42, 0.12));
@@ -588,8 +591,10 @@
   font-size: clamp(1.4rem, 1.5vw + 1.2rem, 2.8rem) !important;
 }
 
-.home-bpm-fold--standalone .home-bpm-svg {
-  min-width: 3200px !important; /* Scale up the SVG for larger text and wider dot spacing */
+.home-bpm-svg--adiantamento {
+  height: 380px !important;
+  width: auto !important;
+  min-width: unset !important;
 }
 
 .home-bpm-fold--standalone .home-bpm-pills {
@@ -614,8 +619,10 @@
 }
 
 .home-bpm-card--standalone {
-  grid-template-columns: minmax(0, 1fr) !important;
-  gap: 0 !important;
+  display: grid;
+  grid-template-columns: minmax(0, 30fr) minmax(0, 70fr) !important;
+  gap: clamp(1.5rem, 3.5vw, 3.5rem) !important;
+  align-items: start !important;
   width: 100% !important;
   max-width: 100% !important;
 }
@@ -648,7 +655,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: var(--bpm-blue);
+  background: #475569;
   color: #ffffff !important;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
   font-size: 0.88rem;
@@ -657,15 +664,15 @@
   padding: 0.68rem 1.35rem;
   border-radius: 8px;
   border: 2px solid transparent;
-  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.25);
+  box-shadow: 0 4px 12px rgba(71, 85, 105, 0.2);
   transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
 }
 
 .home-bpm-download-btn:hover {
-  background: #1e40af !important; /* Darker blue */
+  background: #334155 !important; /* Darker gray */
   transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(29, 78, 216, 0.35);
+  box-shadow: 0 6px 16px rgba(71, 85, 105, 0.3);
 }
 
 .home-bpm-download-btn:active {
@@ -675,14 +682,190 @@
 /* SVG download button — ghost/outline variant */
 .home-bpm-download-btn--svg {
   background: transparent !important;
-  color: var(--bpm-blue) !important;
-  border: 2px solid var(--bpm-blue) !important;
+  color: #475569 !important;
+  border: 2px solid #475569 !important;
   box-shadow: none !important;
 }
 
 .home-bpm-download-btn--svg:hover {
-  background: rgba(59, 130, 246, 0.08) !important;
+  background: rgba(71, 85, 105, 0.08) !important;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.15) !important;
+  box-shadow: 0 4px 12px rgba(71, 85, 105, 0.1) !important;
+}
+
+/* Flow Selector in BPMS page */
+.home-bpm-flow-selector {
+  display: none; /* Substituted by vertical sidebar */
+}
+
+/* Sidebar selection column */
+.home-bpm-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+
+.sidebar-title {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--bpm-navy);
+  margin: 0 0 0.25rem 0;
+}
+
+.home-bpm-flow-selector-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+}
+
+.bpm-flow-tab-vertical {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  padding: 1rem 1.15rem;
+  background: white;
+  border: 1.5px solid var(--bpm-border-color);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+  width: 100%;
+  box-sizing: border-box;
+  border-left: 4px solid var(--bpm-border-color);
+}
+
+.bpm-flow-tab-vertical:hover {
+  transform: translateY(-2px);
+  border-color: #475569;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.bpm-flow-tab-vertical.active {
+  border-color: #475569;
+  border-left: 4px solid #475569;
+  background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
+  box-shadow: 0 8px 24px rgba(71, 85, 105, 0.06);
+}
+
+.bpm-flow-tab-vertical .tab-indicator-bullet {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  margin-top: 5px;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.bpm-flow-tab-vertical.active .tab-indicator-bullet {
+  background: #475569;
+  box-shadow: 0 0 8px rgba(71, 85, 105, 0.4);
+  transform: scale(1.2);
+}
+
+.bpm-flow-tab-vertical .tab-text-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.bpm-flow-tab-vertical .tab-title {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--bpm-navy);
+}
+
+.bpm-flow-tab-vertical .tab-desc {
+  font-size: 0.78rem;
+  color: var(--bpm-muted);
+  line-height: 1.35;
+  font-weight: 500;
+}
+
+.home-bpm-download-container-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.home-bpm-download-container-sidebar .home-bpm-download-btn {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.bpm-flow-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 300px;
+  width: 100%;
+  background: #fafafa;
+  border: 2px dashed var(--bpm-border-color);
+  border-radius: 12px;
+  margin-top: 10px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 1024px) {
+  .home-bpm-card--standalone {
+    grid-template-columns: 1fr !important;
+    gap: 1.5rem !important;
+  }
+}
+
+/* Animation dots for Adiantamento flow */
+.bpm-moving-dot--adiantamento {
+  offset-path: path('M 81.5 219.5 H 176.5 a 5 5 0 0 1 5 5 V 499.5 H 326.5 a 5 5 0 0 0 5 -5 V 259.5 H 471.5 V 199.5 a 5 5 0 0 0 -5 -5 H 296.5 a 5 5 0 0 1 -5 -5 V 82.5 H 751.5 V 499.5 H 666.5 a 5 5 0 0 1 -5 -5 V 269.5 H 884.5 a 5 5 0 0 0 5 -5 V 82.5 H 1659.5');
+  animation: bpm-move-main-path 20s infinite linear;
+}
+
+.bpm-dot-adiantamento-1 {
+  animation-delay: 0s;
+}
+
+.bpm-dot-adiantamento-2 {
+  animation-delay: -5s;
+}
+
+.bpm-dot-adiantamento-3 {
+  animation-delay: -10s;
+}
+
+.bpm-dot-adiantamento-4 {
+  animation-delay: -15s;
+}
+
+/* Parallel branch dot for Adiantamento */
+.bpm-moving-dot-parallel--adiantamento {
+  offset-path: path('M 1159.5 82.5 V 448.5 a 5 5 0 0 0 5 5 H 1544.5 a 5 5 0 0 0 5 -5 V 82.5');
+  animation: bpm-move-main-path 10s infinite linear;
+}
+
+.bpm-dot-parallel-adiantamento-1 {
+  animation-delay: 0s;
+}
+
+.bpm-dot-parallel-adiantamento-2 {
+  animation-delay: -5s;
+}
+
+/* Reprovado loop from Gateway 1 to RH Envio */
+.bpm-moving-loop-gateway1--adiantamento {
+  offset-path: path('M 471.5 259.5 V 544.5 a 5 5 0 0 1 -5 5 H 186.5 a 5 5 0 0 1 -5 -5 V 499.5');
+  animation: bpm-move-loop-path 6s infinite linear;
+}
+
+/* Reprovado loop from Gateway 2 to BPO Calcular */
+.bpm-moving-loop-gateway2--adiantamento {
+  offset-path: path('M 661.5 269.5 V 174.5 a 5 5 0 0 0 -5 -5 H 336.5 a 5 5 0 0 1 -5 -5 V 82.5');
+  animation: bpm-move-loop-path 6s infinite linear;
 }
 

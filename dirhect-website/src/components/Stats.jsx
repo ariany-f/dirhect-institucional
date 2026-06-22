@@ -18,9 +18,9 @@ const Stats = () => {
     {
       id: 1,
       icon: <Users size={32} />,
-      value: 50000,
+      value: 60000,
       suffix: '+',
-      label: 'Colaboradores ativos',
+      label: 'Colaboradores / beneficiários',
       description: 'Pessoas utilizando nossa plataforma diariamente',
       color: '#3b82f6',
       prefix: ''
@@ -152,7 +152,11 @@ const Stats = () => {
                 <div className="stat-value">
                   <span className="stat-prefix">{stat.prefix}</span>
                   <span className="stat-number">
-                    {isVisible ? (animatedValues[stat.id] || 0) : 0}
+                    {isVisible ? (
+                      stat.id === 5 
+                        ? Number(animatedValues[stat.id] || 0).toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
+                        : Number(animatedValues[stat.id] || 0).toLocaleString('pt-BR')
+                    ) : 0}
                   </span>
                   <span className="stat-suffix">{stat.suffix}</span>
                 </div>

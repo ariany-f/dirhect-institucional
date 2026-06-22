@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import {
   Sliders,
   UserCheck,
@@ -138,7 +139,227 @@ const BpmTaskCard = ({ x, y, width = 110, height = 60, textLines, type = 'grey',
   )
 }
 
+// BpmTaskCard component specifically for the Adiantamento flow to enable coordinate-based collision detection
+const BpmTaskCardAdiantamento = ({ x, y, width = 110, height = 60, textLines, type = 'grey', iconType }) => {
+  let fill = '#f8fafc'
+  let strokeDefault = '#e2e8f0'
+  let strokeActive = '#cbd5e1'
+  let textColor = '#1e293b'
+  let iconColor = '#64748b'
+
+  if (type === 'blue') {
+    fill = '#eff6ff'
+    strokeDefault = '#a5bee8'
+    strokeActive = '#3b82f6'
+    textColor = '#1d4ed8'
+    iconColor = '#3b82f6'
+  } else if (type === 'orange') {
+    fill = '#fff7ed'
+    strokeDefault = '#e8c5a5'
+    strokeActive = '#ff8c00'
+    textColor = '#e67e00'
+    iconColor = '#ff8c00'
+  } else if (type === 'green') {
+    fill = '#f0fdf4'
+    strokeDefault = '#a5e8c2'
+    strokeActive = '#22c55e'
+    textColor = '#15803d'
+    iconColor = '#22c55e'
+  }
+
+  const cardStyle = {
+    '--card-stroke-default': strokeDefault,
+    '--card-stroke-active': strokeActive,
+    transformOrigin: `${width / 2}px ${height / 2}px`,
+  }
+
+  return (
+    <g transform={`translate(${x}, ${y})`}>
+      <g 
+        className="bpm-card-group bpms-adiantamento-flow-card" 
+        style={cardStyle}
+        data-x={x}
+        data-y={y}
+        data-width={width}
+        data-height={height}
+      >
+        <rect 
+          x="0" 
+          y="0" 
+          width={width} 
+          height={height} 
+          rx="8" 
+          fill={fill} 
+          stroke="var(--card-stroke-default)" 
+          strokeWidth="1.5" 
+          className="bpm-svg-card"
+        />
+        
+        {/* Icon rendering in top left */}
+        <g transform="translate(8, 8)">
+          {renderSvgIcon(iconType || type, iconColor)}
+        </g>
+
+        {/* Title Text lines */}
+        {textLines.map((line, idx) => {
+          const totalLinesHeight = textLines.length * 10.5
+          const startY = (height / 2) + 4 - (totalLinesHeight / 2) + 6
+          return (
+            <text 
+              key={idx}
+              x={width / 2} 
+              y={startY + (idx * 10.5)} 
+              fill={textColor} 
+              fontSize="8" 
+              fontWeight="700" 
+              textAnchor="middle"
+              fontFamily="'Inter', sans-serif"
+            >
+              {line}
+            </text>
+          )
+        })}
+      </g>
+    </g>
+  )
+}
+
+// Componente para carregar e renderizar diagramas SVG externos dinamicamente
+const BpmSvgLoader = ({ src }) => {
+  const [svgMarkup, setSvgMarkup] = useState('')
+
+  useEffect(() => {
+    fetch(src)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`)
+        return res.text()
+      })
+      .then((text) => {
+        const svgStart = text.indexOf('<svg')
+        if (svgStart !== -1) {
+          let svgString = text.substring(svgStart)
+          
+          // Adiciona a classe home-bpm-svg no elemento <svg> se não existir
+          if (svgString.startsWith('<svg') && !svgString.includes('class="home-bpm-svg"')) {
+            svgString = svgString.replace('<svg', '<svg class="home-bpm-svg"')
+          }
+          setSvgMarkup(svgString)
+        } else {
+          setSvgMarkup(text)
+        }
+      })
+      .catch((err) => {
+        console.error('Erro ao carregar o diagrama:', err)
+        setSvgMarkup('<div class="bpm-flow-error">Erro ao carregar o diagrama SVG.</div>')
+      })
+  }, [src])
+
+  if (!svgMarkup) {
+    return (
+      <div className="bpm-flow-loading" style={{ padding: '60px 20px', textAlign: 'center', color: 'var(--bpm-muted)' }}>
+        <p>Carregando diagrama...</p>
+      </div>
+    )
+  }
+
+  return <div dangerouslySetInnerHTML={{ __html: svgMarkup }} style={{ display: 'contents' }} />
+}
+
 const HomeBpmFold = ({ isStandalone = false }) => {
+  const [currentFlow, setCurrentFlow] = useState('admissao')
+
+  const flowTabs = [
+    { id: 'admissao', title: 'Admissão', description: 'Fluxo BPMS Admissional de Ponta a Ponta' },
+    { id: 'adiantamento', title: 'Adiantamento', description: 'Fluxo de Adiantamento Quinzenal' },
+    { id: 'ferias', title: 'Férias', description: 'Fluxo BPMS de Solicitação e Aprovação de Férias' },
+    { id: 'desligamento', title: 'Desligamento', description: 'Fluxo BPMS de Desligamento de Colaborador' }
+  ]
+
+  useEffect(() => {
+    if (currentFlow !== 'adiantamento') return
+
+    let active = true
+    let animationFrameId
+
+    const checkCollisions = () => {
+      if (!active) return
+
+      const svgEl = document.querySelector('.home-bpm-svg--adiantamento')
+      if (!svgEl) {
+        animationFrameId = requestAnimationFrame(checkCollisions)
+        return
+      }
+
+      const svgRect = svgEl.getBoundingClientRect()
+      if (svgRect.width === 0 || svgRect.height === 0) {
+        animationFrameId = requestAnimationFrame(checkCollisions)
+        return
+      }
+
+      const scaleX = 1747 / svgRect.width
+      const scaleY = 617 / svgRect.height
+
+      // Query all moving dots in the adiantamento flow
+      const dots = svgEl.querySelectorAll(
+        '.bpm-moving-dot--adiantamento, .bpm-moving-dot-parallel--adiantamento, .bpm-moving-loop-gateway1--adiantamento, .bpm-moving-loop-gateway2--adiantamento'
+      )
+
+      // Query all cards in the adiantamento flow
+      const cards = svgEl.querySelectorAll('.bpms-adiantamento-flow-card')
+
+      // Precompute dot coordinates in viewBox space
+      const dotCoords = []
+      dots.forEach((dot) => {
+        const rect = dot.getBoundingClientRect()
+        if (rect.width > 0) {
+          const cx = (rect.left + rect.width / 2 - svgRect.left) * scaleX
+          const cy = (rect.top + rect.height / 2 - svgRect.top) * scaleY
+          dotCoords.push({ cx, cy })
+        }
+      })
+
+      // Update class for each card
+      cards.forEach((card) => {
+        const x = parseFloat(card.getAttribute('data-x'))
+        const y = parseFloat(card.getAttribute('data-y'))
+        const w = parseFloat(card.getAttribute('data-width'))
+        const h = parseFloat(card.getAttribute('data-height'))
+
+        let hasDot = false
+        for (let i = 0; i < dotCoords.length; i++) {
+          const { cx, cy } = dotCoords[i]
+          if (cx >= x && cx <= x + w && cy >= y && cy <= y + h) {
+            hasDot = true
+            break
+          }
+        }
+
+        if (hasDot) {
+          if (!card.classList.contains('bpm-card-group--active')) {
+            card.classList.add('bpm-card-group--active')
+          }
+        } else {
+          if (card.classList.contains('bpm-card-group--active')) {
+            card.classList.remove('bpm-card-group--active')
+          }
+        }
+      })
+
+      animationFrameId = requestAnimationFrame(checkCollisions)
+    }
+
+    // Delay initialization slightly to let DOM render
+    const timeoutId = setTimeout(() => {
+      animationFrameId = requestAnimationFrame(checkCollisions)
+    }, 100)
+
+    return () => {
+      active = false
+      cancelAnimationFrame(animationFrameId)
+      clearTimeout(timeoutId)
+    }
+  }, [currentFlow])
+
   const handleDownloadSvg = () => {
     // Grab the full SVG element from the DOM (the entire diagram, not just the visible portion)
     const svgEl = document.querySelector('.home-bpm-svg')
@@ -179,39 +400,59 @@ const HomeBpmFold = ({ isStandalone = false }) => {
             <p className="home-bpm-subtitle-bottom home-bpm-subtitle-standalone">
               Com o <strong>Dirhect</strong> você tem todas as informações em um só lugar, independente do seu sistema de RH e DP
             </p>
-            <div className="home-bpm-download-container">
-              <a 
-                href="/images/bpms_animation.gif" 
-                download="fluxo_bpms_dirhect.gif" 
-                className="home-bpm-download-btn"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px' }}>
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                  <polyline points="7 10 12 15 17 10" />
-                  <line x1="12" y1="15" x2="12" y2="3" />
-                </svg>
-                Baixar Animação (.GIF)
-              </a>
-              <button
-                onClick={handleDownloadSvg}
-                className="home-bpm-download-btn home-bpm-download-btn--svg"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px' }}>
-                  <rect x="3" y="3" width="18" height="18" rx="2" />
-                  <circle cx="8.5" cy="8.5" r="1.5" />
-                  <polyline points="21 15 16 10 5 21" />
-                </svg>
-                Baixar Diagrama (.SVG)
-              </button>
-            </div>
           </div>
         )}
 
         {/* Card Principal */}
         <div className={`home-bpm-card ${isStandalone ? 'home-bpm-card--standalone' : ''}`}>
           
-          {/* Lado Esquerdo - Copy e Grid de Funcionalidades */}
-          {!isStandalone && (
+          {/* Lado Esquerdo - Copy e Grid de Funcionalidades OU Flow Selector Sidebar */}
+          {isStandalone ? (
+            <div className="home-bpm-copy-section home-bpm-sidebar">
+              <h3 className="sidebar-title">Fluxos Disponíveis</h3>
+              <div className="home-bpm-flow-selector-vertical">
+                {flowTabs.map((tab) => (
+                  <button
+                    key={tab.id}
+                    className={`bpm-flow-tab-vertical ${currentFlow === tab.id ? 'active' : ''}`}
+                    onClick={() => setCurrentFlow(tab.id)}
+                  >
+                    <span className="tab-indicator-bullet"></span>
+                    <div className="tab-text-wrap">
+                      <span className="tab-title">{tab.title}</span>
+                      <span className="tab-desc">{tab.description}</span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+              <div className="home-bpm-download-container-sidebar">
+                <a 
+                  href="/images/bpms_animation.gif" 
+                  download="fluxo_bpms_dirhect.gif" 
+                  className="home-bpm-download-btn"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px' }}>
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
+                  </svg>
+                  Baixar Animação (.GIF)
+                </a>
+                <button
+                  onClick={handleDownloadSvg}
+                  className="home-bpm-download-btn home-bpm-download-btn--svg"
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px' }}>
+                    <rect x="3" y="3" width="18" height="18" rx="2" />
+                    <circle cx="8.5" cy="8.5" r="1.5" />
+                    <polyline points="21 15 16 10 5 21" />
+                  </svg>
+                  Baixar Diagrama (.SVG)
+                </button>
+              </div>
+            </div>
+          ) : (
             <div className="home-bpm-copy-section">
               <h2 id="home-bpm-title" className="home-bpm-title">
                 Transforme processos complexos <br className="home-bpm-title-br" /> em <span className="home-bpm-accent">fluxos automatizados</span>.
@@ -281,11 +522,14 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                 <div className="home-bpm-diagram-dot red"></div>
                 <div className="home-bpm-diagram-dot yellow"></div>
                 <div className="home-bpm-diagram-dot green"></div>
-                <span className="home-bpm-diagram-title">Fluxo BPMS Admissional de Ponta a Ponta</span>
+                <span className="home-bpm-diagram-title">
+                  {flowTabs.find(t => t.id === currentFlow)?.description}
+                </span>
               </div>
               
               <div className="home-bpm-diagram-scroll-wrap">
-                <svg className="home-bpm-svg" viewBox="0 0 3220 390" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {currentFlow === 'admissao' ? (
+                  <svg className="home-bpm-svg" viewBox="0 0 3220 390" fill="none" xmlns="http://www.w3.org/2000/svg">
                   {/* Definições de Marcadores (Setas) */}
                   <defs>
                     <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -622,6 +866,196 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                   <circle cx="3160" cy="135" r="14" fill="none" stroke="#16a34a" strokeWidth="3" />
                   <circle cx="3160" cy="135" r="8" fill="#16a34a" />
                 </svg>
+                ) : currentFlow === 'adiantamento' ? (
+                  <svg className="home-bpm-svg home-bpm-svg--adiantamento" viewBox="0 0 1747 617" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <marker id="arrow-adiantamento" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569" />
+                      </marker>
+                      <filter id="glow-adiantamento" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feMerge>
+                          <feMergeNode in="blur" />
+                          <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                      </filter>
+                    </defs>
+
+                    {/* Structure of Swimlanes */}
+                    <rect x="0" y="0" width="30" height="617" fill="#fafafa" stroke="#cbd5e1" strokeWidth="1" />
+                    <text x="16" y="308.5" fill="#475569" fontSize="9" fontWeight="800" textAnchor="middle" transform="rotate(-90 16 308.5)">Processo Adiantamento (Dirhect)</text>
+
+                    <rect x="30" y="0" width="50" height="617" fill="#fafafa" stroke="#cbd5e1" strokeWidth="1" />
+                    <line x1="30" y1="339.5" x2="80" y2="339.5" stroke="#cbd5e1" strokeWidth="1" />
+
+                    <text x="55" y="169.75" fill="#475569" fontSize="9" fontWeight="700" textAnchor="middle" transform="rotate(-90 55 169.75)">Operação (BPO)</text>
+                    <text x="55" y="474.5" fill="#475569" fontSize="9" fontWeight="700" textAnchor="middle" transform="rotate(-90 55 474.5)">Cliente (RH)</text>
+
+                    <rect x="80" y="0" width="1667" height="339.5" fill="none" stroke="#cbd5e1" strokeWidth="1" />
+                    <rect x="80" y="339.5" width="1667" height="277.5" fill="none" stroke="#cbd5e1" strokeWidth="1" />
+
+                    {/* Connectors / Paths */}
+                    {/* Start -> 1. RH Envio */}
+                    <path d="M 99.5 219.5 H 176.5 a 5 5 0 0 1 5 5 V 469.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* 1. RH Envio -> BPO Confere */}
+                    <path d="M 236.5 499.5 H 326.5 a 5 5 0 0 0 5 -5 V 289.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* BPO Confere -> Gateway 1 */}
+                    <path d="M 381.5 259.5 H 456.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* Gateway 1 (top) -> BPO Calcular */}
+                    <path d="M 471.5 244.5 V 199.5 a 5 5 0 0 0 -5 -5 H 296.5 a 5 5 0 0 1 -5 -5 V 112.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* Gateway 1 (bottom) -> RH Envio loop */}
+                    <path d="M 471.5 274.5 V 544.5 a 5 5 0 0 1 -5 5 H 186.5 a 5 5 0 0 1 -5 -5 V 529.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* BPO Calcular -> BPO Conferir */}
+                    <path d="M 346.5 82.5 H 386.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* BPO Conferir -> BPO Gerar Folha */}
+                    <path d="M 496.5 82.5 H 556.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* BPO Gerar Folha -> BPO Enviar */}
+                    <path d="M 666.5 82.5 H 696.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* BPO Enviar -> RH Aprovar */}
+                    <path d="M 751.5 112.5 V 469.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* RH Aprovar -> Gateway 2 */}
+                    <path d="M 696.5 499.5 H 666.5 a 5 5 0 0 1 -5 -5 V 294.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* Gateway 2 (top) -> BPO Calcular loop */}
+                    <path d="M 661.5 244.5 V 174.5 a 5 5 0 0 0 -5 -5 H 336.5 a 5 5 0 0 1 -5 -5 V 112.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* Gateway 2 (right) -> BPO Bloquear */}
+                    <path d="M 686.5 269.5 H 884.5 a 5 5 0 0 0 5 -5 V 112.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* BPO Bloquear -> BPO Gerar CNAB */}
+                    <path d="M 944.5 82.5 H 974.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* BPO Gerar CNAB -> Gateway 3 */}
+                    <path d="M 1084.5 82.5 H 1134.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* Gateway 3 (right) -> BPO Enviar CNAB */}
+                    <path d="M 1184.5 82.5 H 1214.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* Gateway 3 (bottom) -> RH Enviar CNAB */}
+                    <path d="M 1159.5 107.5 V 448.5 a 5 5 0 0 0 5 5 H 1214.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* BPO Enviar CNAB -> BPO Disponibiliza */}
+                    <path d="M 1324.5 82.5 H 1356.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* RH Enviar CNAB -> Gateway 4 */}
+                    <path d="M 1324.5 453.5 H 1544.5 a 5 5 0 0 0 5 -5 V 107.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* BPO Disponibiliza -> Gateway 4 */}
+                    <path d="M 1466.5 82.5 H 1524.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+                    {/* Gateway 4 -> End Event */}
+                    <path d="M 1574.5 82.5 H 1641.5" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-adiantamento)" />
+
+                    {/* Animation energy pulses (moving dots) */}
+                    <circle r="4.5" fill="#3b82f6" filter="url(#glow-adiantamento)" className="bpm-moving-dot--adiantamento bpm-dot-adiantamento-1" />
+                    <circle r="4.5" fill="#22c55e" filter="url(#glow-adiantamento)" className="bpm-moving-dot--adiantamento bpm-dot-adiantamento-3" />
+
+                    <circle r="4" fill="#3b82f6" filter="url(#glow-adiantamento)" className="bpm-moving-dot-parallel--adiantamento bpm-dot-parallel-adiantamento-1" />
+
+
+                    <circle r="3.5" fill="#ef4444" filter="url(#glow-adiantamento)" className="bpm-moving-loop-gateway1--adiantamento" />
+                    <circle r="3.5" fill="#f59e0b" filter="url(#glow-adiantamento)" className="bpm-moving-loop-gateway2--adiantamento" />
+
+                    {/* Gateway Diamonds */}
+                    {/* Gateway 1 */}
+                    <g transform="translate(456.5, 244.5)">
+                      <rect x="0" y="0" width="30" height="30" rx="3" transform="rotate(45 15 15)" fill="#fffbeb" stroke="#f59e0b" strokeWidth="1.5" />
+                      <path d="M 8.5 8.5 L 21.5 21.5 M 21.5 8.5 L 8.5 21.5" stroke="#f59e0b" strokeWidth="1.8" strokeLinecap="round" />
+                    </g>
+                    {/* Gateway 2 */}
+                    <g transform="translate(646.5, 254.5)">
+                      <rect x="0" y="0" width="30" height="30" rx="3" transform="rotate(45 15 15)" fill="#fffbeb" stroke="#f59e0b" strokeWidth="1.5" />
+                      <path d="M 8.5 8.5 L 21.5 21.5 M 21.5 8.5 L 8.5 21.5" stroke="#f59e0b" strokeWidth="1.8" strokeLinecap="round" />
+                    </g>
+                    {/* Gateway 3 */}
+                    <g transform="translate(1144.5, 67.5)">
+                      <rect x="0" y="0" width="30" height="30" rx="3" transform="rotate(45 15 15)" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1.5" />
+                      <path d="M 8.5 8.5 L 21.5 21.5 M 21.5 8.5 L 8.5 21.5" stroke="#475569" strokeWidth="1.8" strokeLinecap="round" />
+                    </g>
+                    {/* Gateway 4 */}
+                    <g transform="translate(1534.5, 67.5)">
+                      <rect x="0" y="0" width="30" height="30" rx="3" transform="rotate(45 15 15)" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1.5" />
+                      <path d="M 8.5 8.5 L 21.5 21.5 M 21.5 8.5 L 8.5 21.5" stroke="#475569" strokeWidth="1.8" strokeLinecap="round" />
+                    </g>
+
+                    {/* Gateway Text Labels */}
+                    <text x="495" y="235" fill="#16a34a" fontSize="8" fontWeight="700" fontFamily="'Inter', sans-serif">Aprovado</text>
+                    <text x="420" y="320" fill="#ef4444" fontSize="8" fontWeight="700" fontFamily="'Inter', sans-serif">Reprovado</text>
+                    <text x="715" y="260" fill="#16a34a" fontSize="8" fontWeight="700" fontFamily="'Inter', sans-serif">Aprovado</text>
+                    <text x="590" y="185" fill="#ef4444" fontSize="8" fontWeight="700" fontFamily="'Inter', sans-serif">Reprovado</text>
+
+                    {/* Start Event */}
+                    <circle cx="81.5" cy="219.5" r="14" fill="#f0fdf4" stroke="#22c55e" strokeWidth="2.5" />
+
+                    {/* End Event */}
+                    <circle cx="1659.5" cy="82.5" r="14" fill="none" stroke="#16a34a" strokeWidth="3" />
+                    <circle cx="1659.5" cy="82.5" r="8" fill="#16a34a" />
+
+                    {/* Bpm Task Cards */}
+                    <g className="bpms-adiantamento-flow">
+                      <BpmTaskCardAdiantamento 
+                        x={126.5} y={469.5} width={110} height={60} 
+                        textLines={["1. RH: Envio", "de dados", "(alterações", "contratuais)"]} 
+                        type="orange" iconType="document" 
+                      />
+                      <BpmTaskCardAdiantamento 
+                        x={276.5} y={229.5} width={110} height={60} 
+                        textLines={["BPO: Confere", "dados e realiza", "os inputs"]} 
+                        type="grey" iconType="check" 
+                      />
+                      <BpmTaskCardAdiantamento 
+                        x={236.5} y={52.5} width={110} height={60} 
+                        textLines={["1. BPO: Calcular", "adiantamento"]} 
+                        type="grey" iconType="check" 
+                      />
+                      <BpmTaskCardAdiantamento 
+                        x={386.5} y={52.5} width={110} height={60} 
+                        textLines={["2. BPO: Conferir", "cálculos"]} 
+                        type="grey" iconType="document" 
+                      />
+                      <BpmTaskCardAdiantamento 
+                        x={556.5} y={52.5} width={110} height={60} 
+                        textLines={["3. BPO: Gerar", "folha analítica"]} 
+                        type="grey" iconType="document" 
+                      />
+                      <BpmTaskCardAdiantamento 
+                        x={696.5} y={52.5} width={110} height={60} 
+                        textLines={["4. BPO: Enviar", "ao cliente"]} 
+                        type="grey" iconType="mail" 
+                      />
+                      <BpmTaskCardAdiantamento 
+                        x={696.5} y={469.5} width={110} height={60} 
+                        textLines={["5. RH: Aprovar", "cálculos"]} 
+                        type="orange" iconType="check" 
+                      />
+                      <BpmTaskCardAdiantamento 
+                        x={834.5} y={52.5} width={110} height={60} 
+                        textLines={["10. BPO: Bloquear", "recálculo"]} 
+                        type="grey" iconType="check" 
+                      />
+                      <BpmTaskCardAdiantamento 
+                        x={974.5} y={52.5} width={110} height={60} 
+                        textLines={["7. BPO: Gerar", "CNAB"]} 
+                        type="green" iconType="document" 
+                      />
+                      <BpmTaskCardAdiantamento 
+                        x={1214.5} y={52.5} width={110} height={60} 
+                        textLines={["8. BPO: Enviar", "CNAB para cliente"]} 
+                        type="grey" iconType="mail" 
+                      />
+                      <BpmTaskCardAdiantamento 
+                        x={1214.5} y={423.5} width={110} height={60} 
+                        textLines={["9. RH: Enviar", "CNAB para o banco"]} 
+                        type="orange" iconType="mail" 
+                      />
+                      <BpmTaskCardAdiantamento 
+                        x={1356.5} y={52.5} width={110} height={60} 
+                        textLines={["11. BPO:", "Disponibiliza", "Holerite"]} 
+                        type="green" iconType="document" 
+                      />
+                    </g>
+                  </svg>
+                ) : currentFlow === 'ferias' ? (
+                  <div className="bpm-flow-placeholder" style={{ padding: '60px 20px', textAlign: 'center', color: 'var(--bpm-muted)' }}>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '0.5rem', color: 'var(--bpm-navy)' }}>Fluxo de Férias</h3>
+                    <p>Aguardando o envio do diagrama/SVG do fluxo de Férias pelo usuário.</p>
+                  </div>
+                ) : (
+                  <div className="bpm-flow-placeholder" style={{ padding: '60px 20px', textAlign: 'center', color: 'var(--bpm-muted)' }}>
+                    <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '0.5rem', color: 'var(--bpm-navy)' }}>Fluxo de Desligamento</h3>
+                    <p>Aguardando o envio do diagrama/SVG do fluxo de Desligamento pelo usuário.</p>
+                  </div>
+                )}
               </div>
             </div>
 

@@ -10,7 +10,7 @@ const PartnersStrip = () => {
     { name: 'Closecare', logo: '/images/logos/closecare-logo-white.png' },
     { name: 'LG Sistemas', logo: '/images/logos/lgsistemas-logo-white.png' },
     { name: 'Gupy', logo: '/images/logos/gupy-logo-white.png' },
-    { name: 'Nexti RH Inteligente', logo: '/images/logos/nexti-logo-white.png' }
+    { name: 'Nexti', logo: '/images/logos/nexti-logo-white.png' }
   ]
 
   // Triplicar os parceiros para criar o efeito infinito sem espaços em branco

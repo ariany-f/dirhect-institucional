@@ -114,10 +114,14 @@ const Formulario = () => {
                           if (!active) return;
                           setAnimState('closing1');
 
-                          // Step 4: Abre janela 2 (formulario)
+                          // Step 3.5: Transição para o estado de loading (duração: 2s)
                           timerId = setTimeout(() => {
                             if (!active) return;
-                            setAnimState('window2');
+                            setAnimState('loading');
+
+                            timerId = setTimeout(() => {
+                              if (!active) return;
+                              setAnimState('window2');
 
                             // Step 5: Aparece os campos um a um
                             timerId = setTimeout(() => {
@@ -165,11 +169,13 @@ const Formulario = () => {
 
                           }, 800); // Transicao de abrir janela 2
 
-                        }, 600); // Transicao de fechar janela 1
+                        }, 2000); // Duração do carregamento
 
-                      }, 400); // Tempo do click ativo
+                      }, 600); // Transicao de fechar janela 1
 
-                    }, 400); // Espera com botão clicado
+                    }, 400); // Tempo do click ativo
+
+                  }, 400); // Espera com botão clicado
 
                   }, 800); // Espera antes de simular o clique
 
@@ -374,6 +380,12 @@ const Formulario = () => {
                   </div>
                 </div>
               </div>
+            </div>
+
+            {/* Loading Indicator */}
+            <div className={`form-anim-loading ${animState === 'loading' ? 'active' : ''}`}>
+              <div className="form-loading-spinner"></div>
+              <span className="form-loading-text">Gerando formulário...</span>
             </div>
 
             {/* Checkmark de Sucesso */}
