@@ -269,10 +269,10 @@ const HomeBpmFold = ({ isStandalone = false }) => {
   const [currentFlow, setCurrentFlow] = useState('admissao')
 
   const flowTabs = [
-    { id: 'admissao', title: 'Admissão', description: 'Fluxo BPMS Admissional de Ponta a Ponta' },
-    { id: 'adiantamento', title: 'Adiantamento', description: 'Fluxo de Adiantamento Quinzenal' },
-    { id: 'ferias', title: 'Férias', description: 'Fluxo BPMS de Solicitação e Aprovação de Férias' },
-    { id: 'desligamento', title: 'Desligamento', description: 'Fluxo BPMS de Desligamento de Colaborador' }
+    { id: 'admissao', title: 'Admissão', description: 'Admissional de Ponta a Ponta' },
+    { id: 'adiantamento', title: 'Adiantamento', description: 'Adiantamento Quinzenal' },
+    { id: 'ferias', title: 'Férias', description: 'Solicitação e Aprovação de Férias' },
+    { id: 'desligamento', title: 'Desligamento', description: 'Desligamento de Colaborador' }
   ]
 
   useEffect(() => {
