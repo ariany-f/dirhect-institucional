@@ -1253,4 +1253,57 @@
   .tarefas-success-content p {
     font-size: 0.9rem;
   }
+}
+
+/* Banner de destaque para o BPMS */
+.tarefas-bpms-highlight-banner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 1.5rem 2.5rem;
+  border-radius: var(--tarefas-border-radius-lg);
+  border: 1px solid var(--tarefas-border-color);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  margin-top: 3rem;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 2;
+}
+
+.bpms-highlight-text {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--tarefas-text-dark);
+}
+
+.bpms-highlight-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, var(--tarefas-primary-color), var(--tarefas-secondary-color));
+  color: white !important;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--tarefas-border-radius);
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+  transition: all 0.3s ease;
+}
+
+.bpms-highlight-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(245, 158, 11, 0.3);
+  background: linear-gradient(135deg, var(--tarefas-secondary-color), var(--tarefas-primary-color));
+}
+
+@media (max-width: 768px) {
+  .tarefas-bpms-highlight-banner {
+    flex-direction: column;
+    text-align: center;
+    padding: 1.5rem;
+  }
 } 

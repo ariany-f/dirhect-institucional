@@ -224,6 +224,91 @@ const BpmTaskCardAdiantamento = ({ x, y, width = 110, height = 60, textLines, ty
   )
 }
 
+// BpmTaskCard component specifically for the Variaveis flow to enable coordinate-based collision detection
+const BpmTaskCardVariaveis = ({ x, y, width = 110, height = 60, textLines, type = 'grey', iconType }) => {
+  let fill = '#f8fafc'
+  let strokeDefault = '#e2e8f0'
+  let strokeActive = '#cbd5e1'
+  let textColor = '#1e293b'
+  let iconColor = '#64748b'
+
+  if (type === 'blue') {
+    fill = '#eff6ff'
+    strokeDefault = '#a5bee8'
+    strokeActive = '#3b82f6'
+    textColor = '#1d4ed8'
+    iconColor = '#3b82f6'
+  } else if (type === 'orange') {
+    fill = '#fff7ed'
+    strokeDefault = '#e8c5a5'
+    strokeActive = '#ff8c00'
+    textColor = '#e67e00'
+    iconColor = '#ff8c00'
+  } else if (type === 'green') {
+    fill = '#f0fdf4'
+    strokeDefault = '#a5e8c2'
+    strokeActive = '#22c55e'
+    textColor = '#15803d'
+    iconColor = '#22c55e'
+  }
+
+  const cardStyle = {
+    '--card-stroke-default': strokeDefault,
+    '--card-stroke-active': strokeActive,
+    transformOrigin: `${width / 2}px ${height / 2}px`,
+  }
+
+  return (
+    <g transform={`translate(${x}, ${y})`}>
+      <g 
+        className="bpm-card-group bpms-variaveis-flow-card" 
+        style={cardStyle}
+        data-x={x}
+        data-y={y}
+        data-width={width}
+        data-height={height}
+      >
+        <rect 
+          x="0" 
+          y="0" 
+          width={width} 
+          height={height} 
+          rx="8" 
+          fill={fill} 
+          stroke="var(--card-stroke-default)" 
+          strokeWidth="1.5" 
+          className="bpm-svg-card"
+        />
+        
+        {/* Icon rendering in top left */}
+        <g transform="translate(8, 8)">
+          {renderSvgIcon(iconType || type, iconColor)}
+        </g>
+
+        {/* Title Text lines */}
+        {textLines.map((line, idx) => {
+          const totalLinesHeight = textLines.length * 10.5
+          const startY = (height / 2) + 4 - (totalLinesHeight / 2) + 6
+          return (
+            <text 
+              key={idx}
+              x={width / 2} 
+              y={startY + (idx * 10.5)} 
+              fill={textColor} 
+              fontSize="8" 
+              fontWeight="700" 
+              textAnchor="middle"
+              fontFamily="'Inter', sans-serif"
+            >
+              {line}
+            </text>
+          )
+        })}
+      </g>
+    </g>
+  )
+}
+
 // Componente para carregar e renderizar diagramas SVG externos dinamicamente
 const BpmSvgLoader = ({ src }) => {
   const [svgMarkup, setSvgMarkup] = useState('')
@@ -271,6 +356,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
   const flowTabs = [
     { id: 'admissao', title: 'Admissão', description: 'Admissional de Ponta a Ponta' },
     { id: 'adiantamento', title: 'Adiantamento', description: 'Adiantamento Quinzenal' },
+    { id: 'variaveis', title: 'Variáveis', description: 'Importação de Variáveis' },
     { id: 'ferias', title: 'Férias', description: 'Solicitação e Aprovação de Férias' },
     { id: 'desligamento', title: 'Desligamento', description: 'Desligamento de Colaborador' }
   ]
@@ -314,6 +400,91 @@ const HomeBpmFold = ({ isStandalone = false }) => {
         if (rect.width > 0) {
           const cx = (rect.left + rect.width / 2 - svgRect.left) * scaleX
           const cy = (rect.top + rect.height / 2 - svgRect.top) * scaleY
+          dotCoords.push({ cx, cy })
+        }
+      })
+
+      // Update class for each card
+      cards.forEach((card) => {
+        const x = parseFloat(card.getAttribute('data-x'))
+        const y = parseFloat(card.getAttribute('data-y'))
+        const w = parseFloat(card.getAttribute('data-width'))
+        const h = parseFloat(card.getAttribute('data-height'))
+
+        let hasDot = false
+        for (let i = 0; i < dotCoords.length; i++) {
+          const { cx, cy } = dotCoords[i]
+          if (cx >= x && cx <= x + w && cy >= y && cy <= y + h) {
+            hasDot = true
+            break
+          }
+        }
+
+        if (hasDot) {
+          if (!card.classList.contains('bpm-card-group--active')) {
+            card.classList.add('bpm-card-group--active')
+          }
+        } else {
+          if (card.classList.contains('bpm-card-group--active')) {
+            card.classList.remove('bpm-card-group--active')
+          }
+        }
+      })
+
+      animationFrameId = requestAnimationFrame(checkCollisions)
+    }
+
+    // Delay initialization slightly to let DOM render
+    const timeoutId = setTimeout(() => {
+      animationFrameId = requestAnimationFrame(checkCollisions)
+    }, 100)
+
+    return () => {
+      active = false
+      cancelAnimationFrame(animationFrameId)
+      clearTimeout(timeoutId)
+    }
+  }, [currentFlow])
+
+  useEffect(() => {
+    if (currentFlow !== 'variaveis') return
+
+    let active = true
+    let animationFrameId
+
+    const checkCollisions = () => {
+      if (!active) return
+
+      const svgEl = document.querySelector('.home-bpm-svg--variaveis')
+      if (!svgEl) {
+        animationFrameId = requestAnimationFrame(checkCollisions)
+        return
+      }
+
+      const svgRect = svgEl.getBoundingClientRect()
+      if (svgRect.width === 0 || svgRect.height === 0) {
+        animationFrameId = requestAnimationFrame(checkCollisions)
+        return
+      }
+
+      const scaleX = 927 / svgRect.width
+      const scaleY = 350 / svgRect.height
+
+      // Query all moving dots in the variables flow
+      const dots = svgEl.querySelectorAll(
+        '.bpm-moving-dot--variaveis, .bpm-moving-loop-gateway-upload--variaveis, .bpm-moving-loop-gateway-aprovacao--variaveis'
+      )
+
+      // Query all cards in the variables flow
+      const cards = svgEl.querySelectorAll('.bpms-variaveis-flow-card')
+
+      // Precompute dot coordinates in viewBox space
+      const dotCoords = []
+      dots.forEach((dot) => {
+        const rect = dot.getBoundingClientRect()
+        if (rect.width > 0) {
+          const cx = (rect.left + rect.width / 2 - svgRect.left) * scaleX + 118
+          const cy = (rect.top + rect.height / 2 - svgRect.top) * scaleY - 85
           dotCoords.push({ cx, cy })
         }
       })
@@ -1025,6 +1196,115 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                         type="green" iconType="document" 
                       />
                     </g>
+                  </svg>
+                ) : currentFlow === 'variaveis' ? (
+                  <svg className="home-bpm-svg home-bpm-svg--variaveis" viewBox="118 -85 927 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <marker id="arrow-variaveis" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569" />
+                      </marker>
+                      <filter id="glow-variaveis" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feMerge>
+                          <feMergeNode in="blur" />
+                          <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                      </filter>
+                    </defs>
+
+                    {/* Estrutura de Swimlanes */}
+                    <rect x="123" y="-80" width="30" height="340" fill="#fafafa" stroke="#cbd5e1" strokeWidth="1" />
+                    <text x="138" y="90" fill="#475569" fontSize="9" fontWeight="800" textAnchor="middle" transform="rotate(-90 138 90)">Processo Variáveis (Dirhect)</text>
+
+                    <rect x="153" y="-80" width="30" height="340" fill="#fafafa" stroke="#cbd5e1" strokeWidth="1" />
+                    <line x1="153" y1="120" x2="183" y2="120" stroke="#cbd5e1" strokeWidth="1" />
+                    <text x="168" y="20" fill="#475569" fontSize="9" fontWeight="700" textAnchor="middle" transform="rotate(-90 168 20)">Cliente</text>
+                    <text x="168" y="190" fill="#475569" fontSize="9" fontWeight="700" textAnchor="middle" transform="rotate(-90 168 190)">Operação (BPO)</text>
+
+                    <rect x="183" y="-80" width="857" height="200" fill="none" stroke="#cbd5e1" strokeWidth="1" />
+                    <rect x="183" y="120" width="857" height="140" fill="none" stroke="#cbd5e1" strokeWidth="1" />
+
+                    {/* Conectores e Linhas */}
+                    {/* Start -> Verificar Upload */}
+                    <line x1="264" y1="60" x2="325" y2="60" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-variaveis)" />
+                    {/* Verificar Upload -> Gateway Upload */}
+                    <line x1="435" y1="60" x2="485" y2="60" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-variaveis)" />
+                    {/* Gateway Upload -> Anexar Arquivo */}
+                    <line x1="535" y1="60" x2="585" y2="60" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-variaveis)" />
+                    {/* Gateway Upload -> Validar Envio (Sim/Upload Ok) */}
+                    <line x1="510" y1="85" x2="510" y2="150" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-variaveis)" />
+                    {/* Loop Anexar Arquivo -> Verificar Upload */}
+                    <path d="M 640 30 V -40 H 380 V 30" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-variaveis)" />
+                    {/* Validar Envio -> Gateway Aprovação */}
+                    <line x1="565" y1="180" x2="615" y2="180" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-variaveis)" />
+                    {/* Gateway Aprovação -> Confirmar Importação (Sim/True) */}
+                    <line x1="665" y1="180" x2="695" y2="180" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-variaveis)" />
+                    {/* Gateway Aprovação -> Anexar Arquivo (Não/False) */}
+                    <line x1="640" y1="155" x2="640" y2="90" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-variaveis)" />
+                    {/* Confirmar Importação -> Status */}
+                    <line x1="805" y1="180" x2="825" y2="180" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-variaveis)" />
+                    {/* Status -> EndEvent */}
+                    <line x1="935" y1="180" x2="976" y2="180" stroke="#475569" strokeWidth="1.5" markerEnd="url(#arrow-variaveis)" />
+
+                    {/* Labels de Fluxo */}
+                    <text x="520" y="110" fill="#475569" fontSize="8" fontWeight="700" fontFamily="'Inter', sans-serif">Upload Ok</text>
+                    <text x="680" y="172" fill="#16a34a" fontSize="8" fontWeight="700" fontFamily="'Inter', sans-serif">Sim</text>
+                    <text x="648" y="125" fill="#ef4444" fontSize="8" fontWeight="700" fontFamily="'Inter', sans-serif">Não</text>
+
+                    {/* Pulsos de energia (Moving Dots) */}
+                    <circle r="4.5" fill="#3b82f6" filter="url(#glow-variaveis)" className="bpm-moving-dot--variaveis bpm-dot-variaveis-1" />
+                    <circle r="4.5" fill="#22c55e" filter="url(#glow-variaveis)" className="bpm-moving-dot--variaveis bpm-dot-variaveis-2" />
+
+                    <circle r="3.5" fill="#f59e0b" filter="url(#glow-variaveis)" className="bpm-moving-loop-gateway-upload--variaveis" />
+                    <circle r="3.5" fill="#ef4444" filter="url(#glow-variaveis)" className="bpm-moving-loop-gateway-aprovacao--variaveis" />
+
+                    {/* Evento Inicial */}
+                    <circle cx="250" cy="60" r="14" fill="#f0fdf4" stroke="#22c55e" strokeWidth="2.5" />
+
+                    {/* Evento Final */}
+                    <circle cx="990" cy="180" r="14" fill="none" stroke="#16a34a" strokeWidth="3" />
+                    <circle cx="990" cy="180" r="8" fill="#16a34a" />
+
+                    {/* Gateway Upload */}
+                    <g transform="translate(495, 45)">
+                      <rect x="0" y="0" width="30" height="30" rx="3" transform="rotate(45 15 15)" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1.5" />
+                      <path d="M 8.5 8.5 L 21.5 21.5 M 21.5 8.5 L 8.5 21.5" stroke="#475569" strokeWidth="1.8" strokeLinecap="round" />
+                    </g>
+                    
+                    {/* Gateway Aprovação */}
+                    <g transform="translate(625, 165)">
+                      <rect x="0" y="0" width="30" height="30" rx="3" transform="rotate(45 15 15)" fill="#ffffff" stroke="#cbd5e1" strokeWidth="1.5" />
+                      <path d="M 8.5 8.5 L 21.5 21.5 M 21.5 8.5 L 8.5 21.5" stroke="#475569" strokeWidth="1.8" strokeLinecap="round" />
+                    </g>
+                    <text x="640" y="212" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Informações</text>
+                    <text x="640" y="221" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Estão Corretas?</text>
+
+                    {/* Cartões de Tarefa */}
+                    <BpmTaskCardVariaveis 
+                      x={325} y={30} width={110} height={60} 
+                      textLines={["Upload", "Executado?"]} 
+                      type="orange" iconType="check" 
+                    />
+                    <BpmTaskCardVariaveis 
+                      x={585} y={30} width={110} height={60} 
+                      textLines={["Anexar Arquivo", "de Variáveis"]} 
+                      type="orange" iconType="document" 
+                    />
+                    <BpmTaskCardVariaveis 
+                      x={455} y={150} width={110} height={60} 
+                      textLines={["Validar", "Informações"]} 
+                      type="grey" iconType="check" 
+                    />
+                    <BpmTaskCardVariaveis 
+                      x={695} y={150} width={110} height={60} 
+                      textLines={["Confirmar", "Importação", "manual"]} 
+                      type="grey" iconType="user" 
+                    />
+                    <BpmTaskCardVariaveis 
+                      x={825} y={150} width={110} height={60} 
+                      textLines={["Atualizar Status"]} 
+                      type="green" iconType="check" 
+                    />
                   </svg>
                 ) : currentFlow === 'ferias' ? (
                   <div className="bpm-flow-placeholder" style={{ padding: '60px 20px', textAlign: 'center', color: 'var(--bpm-muted)' }}>

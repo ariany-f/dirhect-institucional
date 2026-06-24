@@ -876,3 +876,37 @@
   animation: bpm-move-loop-path 6s infinite linear;
 }
 
+/* Custom size and rendering constraints for Variaveis flow */
+.home-bpm-svg--variaveis {
+  height: 350px !important;
+  width: auto !important;
+  min-width: unset !important;
+}
+
+/* Animation dots for Variaveis flow */
+.bpm-moving-dot--variaveis {
+  offset-path: path('M 250 60 H 510 V 180 H 990');
+  animation: bpm-move-main-path 10s infinite linear;
+}
+
+.bpm-dot-variaveis-1 {
+  animation-delay: 0s;
+}
+
+.bpm-dot-variaveis-2 {
+  animation-delay: -5s;
+}
+
+/* Loop 1: Upload not executed */
+.bpm-moving-loop-gateway-upload--variaveis {
+  offset-path: path('M 510 60 H 640 V -40 H 380 V 60 H 510');
+  animation: bpm-move-loop-path 6s infinite linear;
+}
+
+/* Loop 2: Incorrect information */
+.bpm-moving-loop-gateway-aprovacao--variaveis {
+  offset-path: path('M 640 180 V -40 H 380 V 60 H 510 V 180 H 640');
+  animation: bpm-move-loop-path 8s infinite linear;
+}
+
+

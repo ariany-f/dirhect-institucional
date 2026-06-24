@@ -21,6 +21,7 @@ import {
 } from 'lucide-react';
 import PhoneInput from '../components/PhoneInput';
 import { sendDemoEmail } from '../services/emailService';
+import { Link } from 'react-router-dom';
 import './GestaoTarefas.css';
 import Footer from '../components/Footer';
 
@@ -220,6 +221,14 @@ const GestaoTarefas = () => {
                 para aumentar a eficiência e reduzir erros manuais.
               </p>
             </div>
+          </div>
+          
+          <div className="tarefas-bpms-highlight-banner">
+            <span className="bpms-highlight-text">Conheça os nossos fluxos customizados</span>
+            <Link to="/bpms" className="bpms-highlight-btn">
+              Ver mais
+              <ArrowRight size={16} />
+            </Link>
           </div>
         </div>
       </section>
