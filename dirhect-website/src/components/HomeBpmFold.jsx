@@ -403,13 +403,18 @@ const HomeBpmFold = ({ isStandalone = false }) => {
           </div>
         )}
 
+        {isStandalone && (
+          <h3 className="sidebar-title" style={{ maxWidth: '310px', margin: '0 0 1rem 0' }}>
+            Fluxos Disponíveis
+          </h3>
+        )}
+
         {/* Card Principal */}
         <div className={`home-bpm-card ${isStandalone ? 'home-bpm-card--standalone' : ''}`}>
           
           {/* Lado Esquerdo - Copy e Grid de Funcionalidades OU Flow Selector Sidebar */}
           {isStandalone ? (
             <div className="home-bpm-copy-section home-bpm-sidebar">
-              <h3 className="sidebar-title">Fluxos Disponíveis</h3>
               <div className="home-bpm-flow-selector-vertical">
                 {flowTabs.map((tab) => (
                   <button
