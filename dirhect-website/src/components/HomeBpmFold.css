@@ -620,7 +620,7 @@
 
 .home-bpm-card--standalone {
   display: grid;
-  grid-template-columns: minmax(0, 30fr) minmax(0, 70fr) !important;
+  grid-template-columns: minmax(0, 24fr) minmax(0, 76fr) !important;
   gap: clamp(1.5rem, 3.5vw, 3.5rem) !important;
   align-items: start !important;
   width: 100% !important;
@@ -734,6 +734,7 @@
   text-align: left;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
   width: 100%;
+  max-width: 280px;
   box-sizing: border-box;
   border-left: 4px solid var(--bpm-border-color);
 }
