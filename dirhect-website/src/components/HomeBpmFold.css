@@ -197,7 +197,7 @@
 /* Painel do Diagrama no Estilo Canvas Transparente */
 .home-bpm-diagram-container {
   background: transparent;
-  border: 1.5px solid #475569;
+  border: 1.5px solid #64748b;
   border-radius: 16px;
   overflow: hidden;
   box-shadow: none;
@@ -743,13 +743,13 @@
 
 .bpm-flow-tab-vertical:hover {
   transform: translateY(-2px);
-  border-color: #475569;
+  border-color: #64748b;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
 }
 
 .bpm-flow-tab-vertical.active {
-  border-color: #475569;
-  border-left: 4px solid #475569;
+  border-color: #64748b;
+  border-left: 4px solid #64748b;
   background: linear-gradient(135deg, #ffffff 0%, #f1f5f9 100%);
   box-shadow: 0 8px 24px rgba(71, 85, 105, 0.06);
 }
