@@ -61,7 +61,7 @@ const Hero = () => {
               </span>
             </h1>
             <p className="hero-home-description">
-              Da Admissão Digital, Benefícios e Workflow de Tarefas, às integrações e Processos de RH, Independente do Seu Sistema de RH e PD
+              Da Admissão Digital, Benefícios e Workflow de Tarefas, às Integrações e Processos de RH, Independente do Seu Sistema de RH e PD
             </p>
             <div className="hero-home-actions">
               <Link to="/demo" className="hero-home-btn hero-home-btn--primary">
