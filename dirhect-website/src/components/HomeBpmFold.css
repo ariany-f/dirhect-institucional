@@ -631,6 +631,7 @@
   width: 100% !important;
   max-width: 100% !important;
   min-width: 0 !important;
+  margin-top: 1.85rem;
 }
 
 .home-bpm-card--standalone .home-bpm-diagram-container {
@@ -819,6 +820,9 @@
   .home-bpm-card--standalone {
     grid-template-columns: 1fr !important;
     gap: 1.5rem !important;
+  }
+  .home-bpm-card--standalone .home-bpm-visual-section {
+    margin-top: 0 !important;
   }
 }
 
