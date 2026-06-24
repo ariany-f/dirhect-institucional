@@ -197,7 +197,7 @@
 /* Painel do Diagrama no Estilo Canvas Transparente */
 .home-bpm-diagram-container {
   background: transparent;
-  border: 1.5px solid #64748b;
+  border: 1px solid var(--bpm-border-color);
   border-radius: 16px;
   overflow: hidden;
   box-shadow: none;
@@ -637,6 +637,7 @@
   width: 100% !important;
   max-width: 100% !important;
   min-width: 0 !important;
+  border: 1.5px solid #64748b !important;
 }
 
 /* Standalone BPMS page download button styling */
