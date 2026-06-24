@@ -398,7 +398,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
               Transforme processos complexos de <span className="home-bpm-accent">RH</span> <br className="home-bpm-title-br" /> em <span className="home-bpm-accent">fluxos automatizados</span>.
             </h2>
             <p className="home-bpm-subtitle-bottom home-bpm-subtitle-standalone">
-              Com o <strong>Dirhect</strong> você tem todas as informações em um só lugar, independente do seu sistema de RH e DP
+              Crie regras, aprovações, validações e etapas personalizadas para que cada processo siga exatamente o fluxo definido pela sua empresa.
             </p>
           </div>
         )}
@@ -1082,7 +1082,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
 
         {/* Subtítulo centralizado em baixo de tudo */}
         <p className="home-bpm-subtitle-bottom">
-          Crie regras, aprovações, validações e etapas personalizadas para que cada processo siga exatamente o fluxo definido pela sua empresa.
+          Com o <strong>Dirhect</strong> você tem todas as informações em um só lugar, independente do seu sistema de RH e DP
         </p>
 
       </div>
