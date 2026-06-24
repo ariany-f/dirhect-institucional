@@ -404,7 +404,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
         )}
 
         {isStandalone && (
-          <h3 className="sidebar-title" style={{ maxWidth: '310px', margin: '0 0 1rem 0' }}>
+          <h3 className="sidebar-title" style={{ maxWidth: '310px' }}>
             Alguns exemplos
           </h3>
         )}
