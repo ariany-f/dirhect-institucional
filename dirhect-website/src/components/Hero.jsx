@@ -61,7 +61,7 @@ const Hero = () => {
               </span>
             </h1>
             <p className="hero-home-description">
-              Conecte operadoras, fornecedores, colaboradores e sistemas em uma única plataforma.
+              Da Admissão Digital, Benefícios e Workflow de Tarefas, às integrações e Processos de RH, Independente do Seu Sistema de RH e PD
             </p>
             <div className="hero-home-actions">
               <Link to="/demo" className="hero-home-btn hero-home-btn--primary">
