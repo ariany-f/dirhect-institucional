@@ -531,7 +531,20 @@ const HomeBpmFold = ({ isStandalone = false }) => {
     }
   }, [currentFlow])
 
+  const flowFilenames = {
+    admissao: 'fluxo_admissao_dirhect',
+    adiantamento: 'fluxo_adiantamento_dirhect',
+    variaveis: 'fluxo_variaveis_dirhect',
+    ferias: 'fluxo_ferias_dirhect',
+    desligamento: 'fluxo_desligamento_dirhect'
+  }
+
   const handleDownloadSvg = () => {
+    if (currentFlow === 'ferias' || currentFlow === 'desligamento') {
+      alert('O diagrama deste fluxo estará disponível em breve para download.')
+      return
+    }
+
     // Grab the full SVG element from the DOM (the entire diagram, not just the visible portion)
     const svgEl = document.querySelector('.home-bpm-svg')
     if (!svgEl) return
@@ -549,10 +562,12 @@ const HomeBpmFold = ({ isStandalone = false }) => {
     const blob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' })
     const url = URL.createObjectURL(blob)
 
+    const filename = flowFilenames[currentFlow] || 'fluxo_bpms_dirhect'
+
     // Trigger download
     const link = document.createElement('a')
     link.href = url
-    link.download = 'fluxo_bpms_dirhect.svg'
+    link.download = `${filename}.svg`
     document.body.appendChild(link)
     link.click()
     document.body.removeChild(link)
@@ -605,7 +620,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
               <div className="home-bpm-download-container-sidebar">
                 <a 
                   href="/images/bpms_animation.gif" 
-                  download="fluxo_bpms_dirhect.gif" 
+                  download={`${flowFilenames[currentFlow] || 'fluxo_bpms_dirhect'}.gif`} 
                   className="home-bpm-download-btn"
                 >
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ marginRight: '8px' }}>
