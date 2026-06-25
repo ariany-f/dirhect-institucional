@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import {
   Sliders,
   UserCheck,
@@ -352,6 +352,7 @@ const BpmSvgLoader = ({ src }) => {
 
 const HomeBpmFold = ({ isStandalone = false }) => {
   const [currentFlow, setCurrentFlow] = useState('admissao')
+  const svgRef = useRef(null)
 
   const flowTabs = [
     { id: 'admissao', title: 'Admissão', description: 'Admissional de Ponta a Ponta' },
@@ -545,8 +546,8 @@ const HomeBpmFold = ({ isStandalone = false }) => {
       return
     }
 
-    // Grab the full SVG element from the DOM (the entire diagram, not just the visible portion)
-    const svgEl = document.querySelector('.home-bpm-svg')
+    // Grab the full SVG element directly from the active component ref
+    const svgEl = svgRef.current
     if (!svgEl) return
 
     // Clone so we can clean up animation attributes without affecting the live element
@@ -720,7 +721,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
               
               <div className="home-bpm-diagram-scroll-wrap">
                 {currentFlow === 'admissao' ? (
-                  <svg className="home-bpm-svg" viewBox="0 0 3220 390" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg ref={svgRef} className="home-bpm-svg" viewBox="0 0 3220 390" fill="none" xmlns="http://www.w3.org/2000/svg">
                   {/* Definições de Marcadores (Setas) */}
                   <defs>
                     <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
@@ -1058,7 +1059,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                   <circle cx="3160" cy="135" r="8" fill="#16a34a" />
                 </svg>
                 ) : currentFlow === 'adiantamento' ? (
-                  <svg className="home-bpm-svg home-bpm-svg--adiantamento" viewBox="0 0 1747 617" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg ref={svgRef} className="home-bpm-svg home-bpm-svg--adiantamento" viewBox="0 0 1747 617" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                       <marker id="arrow-adiantamento" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                         <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569" />
@@ -1237,7 +1238,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                     </g>
                   </svg>
                 ) : currentFlow === 'variaveis' ? (
-                  <svg className="home-bpm-svg home-bpm-svg--variaveis" viewBox="118 -85 927 350" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg ref={svgRef} className="home-bpm-svg home-bpm-svg--variaveis" viewBox="118 -85 927 350" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                       <marker id="arrow-variaveis" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                         <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569" />
