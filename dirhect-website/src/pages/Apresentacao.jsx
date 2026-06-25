@@ -24,32 +24,11 @@ const Apresentacao = () => {
       <Header />
       <main className="apresentacao-main">
         <div className="apresentacao-container">
-          <div className="apresentacao-header">
-            <div className="apresentacao-title-group">
-              <FileText className="apresentacao-icon" size={28} />
-              <div>
-                <h1 className="apresentacao-title">Apresentação Dirhect</h1>
-                <p className="apresentacao-subtitle">Soluções Corporativas para Empresas</p>
-              </div>
-            </div>
-            <div className="apresentacao-actions">
-              <a 
-                href="/apresentacao-dirhect-empresas.pdf" 
-                download="Apresentação Dirhect - Empresas.pdf"
-                className="apresentacao-btn apresentacao-btn--primary"
-              >
-                <Download size={16} />
-                Baixar PDF
-              </a>
-              <a 
-                href="/apresentacao-dirhect-empresas.pdf" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="apresentacao-btn apresentacao-btn--secondary"
-              >
-                <ExternalLink size={16} />
-                Abrir em nova guia
-              </a>
+          <div className="apresentacao-title-section">
+            <FileText className="apresentacao-icon" size={24} />
+            <div>
+              <h1 className="apresentacao-title">Apresentação Dirhect</h1>
+              <p className="apresentacao-subtitle">Soluções Corporativas para Empresas</p>
             </div>
           </div>
           
@@ -112,6 +91,31 @@ const Apresentacao = () => {
                 </div>
               </object>
             )}
+          </div>
+
+          <div className="apresentacao-actions-bar">
+            <span className="apresentacao-actions-label">
+              Apresentação Dirhect - Empresas.pdf
+            </span>
+            <div className="apresentacao-actions">
+              <a 
+                href="/apresentacao-dirhect-empresas.pdf" 
+                download="Apresentação Dirhect - Empresas.pdf"
+                className="apresentacao-btn apresentacao-btn--primary"
+              >
+                <Download size={14} />
+                Baixar PDF
+              </a>
+              <a 
+                href="/apresentacao-dirhect-empresas.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="apresentacao-btn apresentacao-btn--secondary"
+              >
+                <ExternalLink size={14} />
+                Abrir em nova guia
+              </a>
+            </div>
           </div>
         </div>
       </main>
