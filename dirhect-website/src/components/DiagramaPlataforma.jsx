@@ -155,7 +155,7 @@ const DiagramaPlataforma = ({ onNavigate }) => {
       <circle cx="16" cy="16" r="16" stroke="none"/>
       <circle cx="16" cy="16" r="15" fill="none"/>
     </g>
-    <g id="Botão_integracao" className="diagram-balloon-btn btn-integracao" onClick={() => onNavigate('/solucoes/hub-de-integracao')}>
+    <g id="Botão_integracao" className="diagram-balloon-btn btn-integracao" onClick={() => onNavigate('/parceiros')}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_49)">
         <g id="Rectangle_49-2" dataName="Rectangle 49" transform="translate(4 817)" fill="#f7f7f7" stroke="#4550fe" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
@@ -183,7 +183,7 @@ integração" transform="translate(239 929)" fill="#585858" fontSize="54" fontFa
         </g>
       </g>
     </g>
-    <g id="Botão_beneficios" className="diagram-balloon-btn btn-beneficios" onClick={() => onNavigate('/solucoes/gestao-de-beneficios')}>
+    <g id="Botão_beneficios" className="diagram-balloon-btn btn-beneficios" onClick={() => onNavigate('/gestao-beneficios')}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_50)">
         <g id="Rectangle_50-2" dataName="Rectangle 50" transform="translate(71 348)" fill="#f7f7f7" stroke="#27aa63" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
@@ -208,7 +208,7 @@ Benefícios" transform="translate(306 460)" fill="#585858" fontSize="54" fontFam
         </g>
       </g>
     </g>
-    <g id="Botão_portal" className="diagram-balloon-btn btn-portal" onClick={() => onNavigate('/solucoes/portal-de-rh')}>
+    <g id="Botão_portal" className="diagram-balloon-btn btn-portal" onClick={() => onNavigate('/portal-rh')}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_45)">
         <g id="Rectangle_45-2" dataName="Rectangle 45" transform="translate(1348 348)" fill="#f7f7f7" stroke="#feb503" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
@@ -251,7 +251,7 @@ de RH" transform="translate(1583 460)" fill="#585858" fontSize="54" fontFamily="
         </g>
       </g>
     </g>
-    <g id="Botão_tarefas" className="diagram-balloon-btn btn-tarefas" onClick={() => onNavigate('/solucoes/gestao-de-tarefas')}>
+    <g id="Botão_tarefas" className="diagram-balloon-btn btn-tarefas" onClick={() => onNavigate('/gestao-tarefas')}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_46)">
         <g id="Rectangle_46-2" dataName="Rectangle 46" transform="translate(1393 817)" fill="#f7f7f7" stroke="#a458fc" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
@@ -275,7 +275,7 @@ de Tarefas" transform="translate(1628 929)" fill="#585858" fontSize="54" fontFam
         </g>
       </g>
     </g>
-    <g id="Botão_formulario" className="diagram-balloon-btn btn-formulario" onClick={() => onNavigate('/solucoes/formularios-customizados')}>
+    <g id="Botão_formulario" className="diagram-balloon-btn btn-formulario" onClick={() => onNavigate('/formulario')}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_47)">
         <g id="Rectangle_47-2" dataName="Rectangle 47" transform="translate(1109 1249)" fill="#f7f7f7" stroke="#17aaaa" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
@@ -299,7 +299,7 @@ customizados" transform="translate(1344 1362)" fill="#585858" fontSize="52" font
         </g>
       </g>
     </g>
-    <g id="Botão_bpmn" className="diagram-balloon-btn btn-bpmn" onClick={() => onNavigate('/solucoes/workflow-bpmn')}>
+    <g id="Botão_bpmn" className="diagram-balloon-btn btn-bpmn" onClick={() => onNavigate('/bpms')}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_48)">
         <g id="Rectangle_48-2" dataName="Rectangle 48" transform="translate(296 1249)" fill="#f7f7f7" stroke="#457cfd" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
@@ -325,7 +325,7 @@ BPMN" transform="translate(531 1361)" fill="#585858" fontSize="54" fontFamily="H
         </g>
       </g>
     </g>
-    <g id="Botão_admissão" className="diagram-balloon-btn btn-admissao" onClick={() => onNavigate('/solucoes/admissao-digital')}>
+    <g id="Botão_admissão" className="diagram-balloon-btn btn-admissao" onClick={() => onNavigate('/admissao-digital')}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_44)">
         <g id="Rectangle_44-2" dataName="Rectangle 44" transform="translate(698 76)" fill="#f7f7f7" stroke="#ff9202" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>

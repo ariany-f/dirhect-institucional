@@ -31,7 +31,7 @@ const SolucoesTeste = () => {
     {
       id: 'admissao',
       title: 'Admissão Digital',
-      link: '/solucoes/admissao-digital',
+      link: '/admissao-digital',
       color: '#ff9202',
       icon: <User size={24} />,
       desc: 'Otimize a contratação de novos colaboradores de forma 100% digital.'
@@ -39,7 +39,7 @@ const SolucoesTeste = () => {
     {
       id: 'portal',
       title: 'Portal de RH',
-      link: '/solucoes/portal-de-rh',
+      link: '/portal-rh',
       color: '#feb503',
       icon: <Users size={24} />,
       desc: 'Centralize dados, comunicações e holerites em um portal corporativo seguro.'
@@ -47,7 +47,7 @@ const SolucoesTeste = () => {
     {
       id: 'tarefas',
       title: 'Gestão de Tarefas',
-      link: '/solucoes/gestao-de-tarefas',
+      link: '/gestao-tarefas',
       color: '#a458fc',
       icon: <CheckSquare size={24} />,
       desc: 'Acompanhe as demandas da equipe com quadros interativos e prazos claros.'
@@ -55,7 +55,7 @@ const SolucoesTeste = () => {
     {
       id: 'formularios',
       title: 'Formulários Customizados',
-      link: '/solucoes/formularios-customizados',
+      link: '/formulario',
       color: '#17aaaa',
       icon: <FileSpreadsheet size={24} />,
       desc: 'Crie e configure formulários dinâmicos de acordo com a necessidade.'
@@ -63,7 +63,7 @@ const SolucoesTeste = () => {
     {
       id: 'bpmn',
       title: 'Workflow BPMN',
-      link: '/solucoes/workflow-bpmn',
+      link: '/bpms',
       color: '#457cfd',
       icon: <GitBranch size={24} />,
       desc: 'Automatize e otimize seus fluxos operacionais com notação padrão BPMN.'
@@ -71,7 +71,7 @@ const SolucoesTeste = () => {
     {
       id: 'integracao',
       title: 'Hub de Integração',
-      link: '/solucoes/hub-de-integracao',
+      link: '/parceiros',
       color: '#4550fe',
       icon: <Cpu size={24} />,
       desc: 'Conecte seus sistemas existentes (ERP, CRM) com facilidade.'
@@ -79,7 +79,7 @@ const SolucoesTeste = () => {
     {
       id: 'beneficios',
       title: 'Gestão de Benefícios',
-      link: '/solucoes/gestao-de-beneficios',
+      link: '/gestao-beneficios',
       color: '#27aa63',
       icon: <Heart size={24} />,
       desc: 'Gerencie planos de saúde, refeição e benefícios flexíveis num só lugar.'
