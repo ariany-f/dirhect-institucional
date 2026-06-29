@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { 
   ArrowLeft, 
@@ -18,13 +18,18 @@ import './SolucoesTeste.css'
 
 const SolucoesTeste = () => {
   const navigate = useNavigate()
+  const [isTransitioning, setIsTransitioning] = useState(false)
 
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
   const handleNavigate = (path) => {
-    navigate(path)
+    if (isTransitioning) return
+    setIsTransitioning(true)
+    setTimeout(() => {
+      navigate(path)
+    }, 600) // 600ms matches CSS transition duration
   }
 
   const solutionsList = [
@@ -87,7 +92,7 @@ const SolucoesTeste = () => {
   ]
 
   return (
-    <div className="solucoes-teste-page">
+    <div className={`solucoes-teste-page ${isTransitioning ? 'solucoes-teste-page--transitioning' : ''}`}>
       <Header />
       <main className="solucoes-teste-main">
         <div className="solucoes-teste-container">

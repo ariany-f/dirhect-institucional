@@ -155,7 +155,8 @@ const DiagramaPlataforma = ({ onNavigate }) => {
       <circle cx="16" cy="16" r="16" stroke="none"/>
       <circle cx="16" cy="16" r="15" fill="none"/>
     </g>
-    <g id="Botão_integracao" className="diagram-balloon-btn btn-integracao" onClick={() => onNavigate('/parceiros')}>
+<g id="Botão_integracao" className="diagram-balloon-btn btn-integracao" >
+      <a href="/parceiros" onClick={(e) => { e.preventDefault(); onNavigate("/parceiros"); } } style={{ textDecoration: "none" }}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_49)">
         <g id="Rectangle_49-2" dataName="Rectangle 49" transform="translate(4 817)" fill="#f7f7f7" stroke="#4550fe" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
@@ -182,8 +183,9 @@ integração" transform="translate(239 929)" fill="#585858" fontSize="54" fontFa
           </g>
         </g>
       </g>
-    </g>
-    <g id="Botão_beneficios" className="diagram-balloon-btn btn-beneficios" onClick={() => onNavigate('/gestao-beneficios')}>
+    </a></g>
+<g id="Botão_beneficios" className="diagram-balloon-btn btn-beneficios" >
+      <a href="/gestao-beneficios" onClick={(e) => { e.preventDefault(); onNavigate("/gestao-beneficios"); } } style={{ textDecoration: "none" }}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_50)">
         <g id="Rectangle_50-2" dataName="Rectangle 50" transform="translate(71 348)" fill="#f7f7f7" stroke="#27aa63" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
@@ -207,8 +209,9 @@ Benefícios" transform="translate(306 460)" fill="#585858" fontSize="54" fontFam
           </g>
         </g>
       </g>
-    </g>
-    <g id="Botão_portal" className="diagram-balloon-btn btn-portal" onClick={() => onNavigate('/portal-rh')}>
+    </a></g>
+<g id="Botão_portal" className="diagram-balloon-btn btn-portal" >
+      <a href="/portal-rh" onClick={(e) => { e.preventDefault(); onNavigate("/portal-rh"); } } style={{ textDecoration: "none" }}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_45)">
         <g id="Rectangle_45-2" dataName="Rectangle 45" transform="translate(1348 348)" fill="#f7f7f7" stroke="#feb503" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
@@ -250,8 +253,9 @@ de RH" transform="translate(1583 460)" fill="#585858" fontSize="54" fontFamily="
           </g>
         </g>
       </g>
-    </g>
-    <g id="Botão_tarefas" className="diagram-balloon-btn btn-tarefas" onClick={() => onNavigate('/gestao-tarefas')}>
+    </a></g>
+<g id="Botão_tarefas" className="diagram-balloon-btn btn-tarefas" >
+      <a href="/gestao-tarefas" onClick={(e) => { e.preventDefault(); onNavigate("/gestao-tarefas"); } } style={{ textDecoration: "none" }}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_46)">
         <g id="Rectangle_46-2" dataName="Rectangle 46" transform="translate(1393 817)" fill="#f7f7f7" stroke="#a458fc" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
@@ -274,8 +278,9 @@ de Tarefas" transform="translate(1628 929)" fill="#585858" fontSize="54" fontFam
           <path id="Path_27" dataName="Path 27" d="M63.238,7.3V55.922l-21.715,21.9q-.087.006-.175.006H7.3a7.3,7.3,0,0,1-7.3-7.3V7.3A7.3,7.3,0,0,1,7.3,0H55.942a7.3,7.3,0,0,1,7.3,7.3ZM7.3,72.967a2.432,2.432,0,0,1-2.432-2.432V7.3A2.432,2.432,0,0,1,7.3,4.864H55.942A2.432,2.432,0,0,1,58.374,7.3V53.509H34.051a2.432,2.432,0,1,0,0,4.864h4.864V72.967ZM43.78,58.374V69.528L54.934,58.374Z" transform="translate(0 0)" fill="#fff" fillRule="evenodd"/>
         </g>
       </g>
-    </g>
-    <g id="Botão_formulario" className="diagram-balloon-btn btn-formulario" onClick={() => onNavigate('/formulario')}>
+    </a></g>
+<g id="Botão_formulario" className="diagram-balloon-btn btn-formulario" >
+      <a href="/formulario" onClick={(e) => { e.preventDefault(); onNavigate("/formulario"); } } style={{ textDecoration: "none" }}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_47)">
         <g id="Rectangle_47-2" dataName="Rectangle 47" transform="translate(1109 1249)" fill="#f7f7f7" stroke="#17aaaa" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
@@ -298,8 +303,9 @@ customizados" transform="translate(1344 1362)" fill="#585858" fontSize="52" font
           <path id="Path_36" dataName="Path 36" d="M183.379,61.756a2.387,2.387,0,1,0,.874,3.261A2.386,2.386,0,0,0,183.379,61.756Zm0,0" transform="translate(-151.155 -51.228)" fill="#fff"/>
         </g>
       </g>
-    </g>
-    <g id="Botão_bpmn" className="diagram-balloon-btn btn-bpmn" onClick={() => onNavigate('/bpms')}>
+    </a></g>
+<g id="Botão_bpmn" className="diagram-balloon-btn btn-bpmn" >
+      <a href="/bpms" onClick={(e) => { e.preventDefault(); onNavigate("/bpms"); } } style={{ textDecoration: "none" }}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_48)">
         <g id="Rectangle_48-2" dataName="Rectangle 48" transform="translate(296 1249)" fill="#f7f7f7" stroke="#457cfd" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
@@ -324,8 +330,9 @@ BPMN" transform="translate(531 1361)" fill="#585858" fontSize="54" fontFamily="H
           <path id="Path_44" dataName="Path 44" d="M24.146,44.22H14.987A13.742,13.742,0,0,1,1.25,30.482V24.987A13.742,13.742,0,0,1,14.987,11.25h10.99a2.747,2.747,0,1,1,0,5.495H14.987a8.255,8.255,0,0,0-8.242,8.242v5.495a8.255,8.255,0,0,0,8.242,8.242h9.158a2.747,2.747,0,0,1,0,5.495Z" transform="translate(0 26.633)" fill="#fff"/>
         </g>
       </g>
-    </g>
-    <g id="Botão_admissão" className="diagram-balloon-btn btn-admissao" onClick={() => onNavigate('/admissao-digital')}>
+    </a></g>
+<g id="Botão_admissão" className="diagram-balloon-btn btn-admissao" >
+      <a href="/admissao-digital" onClick={(e) => { e.preventDefault(); onNavigate("/admissao-digital"); } } style={{ textDecoration: "none" }}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_44)">
         <g id="Rectangle_44-2" dataName="Rectangle 44" transform="translate(698 76)" fill="#f7f7f7" stroke="#ff9202" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
@@ -351,7 +358,7 @@ Digital" transform="translate(942 188)" fill="#585858" fontSize="54" fontFamily=
         <path id="Path_48" dataName="Path 48" d="M30,0C47.36.066,60,13.655,60,30.5S46.569,61,30,61,8.679,54.3,8.679,37.454V28.84L18.75,22.173s-8.572-8.443-7.642-9.558C16.31,6.372,20.521-.036,30,0Z" transform="translate(933 55)" fill="#ff9202"/>
         <path id="user_4034171" d="M57.038,17.823a8.912,8.912,0,1,0-8.912-8.912A8.922,8.922,0,0,0,57.038,17.823Zm0-12.76a3.849,3.849,0,1,1-3.849,3.849,3.853,3.853,0,0,1,3.849-3.849Zm6.478,14.7H50.56A10.626,10.626,0,0,0,39.946,30.375v7.6A2.532,2.532,0,0,0,42.478,40.5H71.6a2.532,2.532,0,0,0,2.532-2.532v-7.6A10.626,10.626,0,0,0,63.516,19.761Zm5.551,15.68H45.009V30.375a5.557,5.557,0,0,1,5.551-5.551H63.516a5.557,5.557,0,0,1,5.551,5.551v5.066Z" transform="translate(904.87 58)" fill="#fff"/>
       </g>
-    </g>
+    </a></g>
     <g id="Botão_dirhect" className="diagram-center-logo">
       <circle id="Ellipse_49" dataName="Ellipse 49" cx="265.5" cy="265.5" r="265.5" transform="translate(666 553)" fill="rgba(250,250,250,0.53)"/>
       <rect id="dirhect_color" width="551" height="222" transform="translate(658 736)" fill="url(#pattern)"/>
