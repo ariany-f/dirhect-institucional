@@ -45,6 +45,7 @@ import ParceiroSubdominio from './pages/ParceiroSubdominio'
 import BPMS from './pages/BPMS'
 import Formulario from './pages/Formulario'
 import Apresentacao from './pages/Apresentacao'
+import SolucoesTeste from './pages/SolucoesTeste'
 
 function App() {
   const hostname = window.location.hostname.toLowerCase()
@@ -133,6 +134,7 @@ function App() {
           <Route path="/formulario" element={<Formulario />} />
           <Route path="/bpms" element={<BPMS />} />
           <Route path="/apresentacao" element={<Apresentacao />} />
+          <Route path="/solucoes_teste" element={<SolucoesTeste />} />
           <Route path="/docs" element={<TechnicalDocumentation />} />
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/termos-uso" element={<TermosUso />} />
