@@ -135,6 +135,7 @@ function App() {
           <Route path="/bpms" element={<BPMS />} />
           <Route path="/apresentacao" element={<Apresentacao />} />
           <Route path="/solucoes_teste" element={<SolucoesTeste />} />
+          <Route path="/solucoes/teste" element={<SolucoesTeste />} />
           <Route path="/docs" element={<TechnicalDocumentation />} />
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/termos-uso" element={<TermosUso />} />

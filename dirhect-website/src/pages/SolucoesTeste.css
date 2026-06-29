@@ -15,32 +15,46 @@
 
 .solucoes-teste-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1300px;
   display: flex;
   flex-direction: column;
   gap: 48px;
 }
 
-/* Hero section with dark premium gradient */
+/* Hero section with split desktop layout */
 .solucoes-teste-hero {
   background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
   border-radius: 24px;
-  padding: 60px 40px;
+  padding: 60px 48px;
   position: relative;
   overflow: hidden;
   border: 1px solid #334155;
   box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
 }
 
-.solucoes-teste-hero::before {
-  content: "";
-  position: absolute;
-  top: -50%;
-  right: -20%;
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, rgba(255, 170, 0, 0.08) 0%, rgba(255, 170, 0, 0) 70%);
-  pointer-events: none;
+.solucoes-teste-hero-flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.solucoes-teste-hero-content {
+  flex: 1;
+  max-width: 520px;
+  z-index: 2;
+}
+
+.solucoes-teste-diagram-wrapper {
+  flex: 1.3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 650px;
+  width: 100%;
+  z-index: 2;
+  position: relative;
 }
 
 .badge-teste {
@@ -73,7 +87,6 @@
 .solucoes-teste-subtitle {
   color: #94a3b8;
   font-size: 1.1rem;
-  max-width: 620px;
   margin: 0 0 32px 0;
   line-height: 1.6;
 }
@@ -104,122 +117,146 @@
   box-shadow: 0 6px 20px rgba(255, 170, 0, 0.4);
 }
 
-/* Solutions Cards Grid */
-.solucoes-teste-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1-fr));
-  gap: 24px;
+/* Diagram Interactive Styling */
+.diagram-balloon-btn {
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transform-box: fill-box;
+  transform-origin: center;
 }
 
-.solucao-teste-card {
-  background: white;
-  border-radius: 16px;
-  border: 1px solid #e2e8f0;
-  padding: 32px;
+.diagram-balloon-btn:hover {
+  transform: scale(1.05);
+}
+
+/* Target background container groups inside the balloons */
+.diagram-balloon-btn g[id^="Rectangle_"] {
+  transition: stroke-width 0.25s ease, fill 0.25s ease;
+}
+
+.diagram-balloon-btn:hover g[id^="Rectangle_"] {
+  stroke-width: 8px !important;
+  fill: #ffffff !important;
+}
+
+.diagram-center-logo {
+  user-select: none;
+  pointer-events: none;
+}
+
+/* Mobile Solutions Fallback Section */
+.solucoes-teste-mobile-section {
+  display: none;
+}
+
+.mobile-section-title {
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #1e293b;
+  margin: 0 0 8px 0;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+.mobile-section-subtitle {
+  font-size: 0.95rem;
+  color: #64748b;
+  margin: 0 0 24px 0;
+}
+
+.mobile-solutions-container {
   display: flex;
   flex-direction: column;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  overflow: hidden;
+  gap: 16px;
 }
 
-.solucao-teste-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background-color: var(--card-accent-color);
-}
-
-.solucao-teste-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 16px 32px rgba(15, 23, 42, 0.05);
-  border-color: #cbd5e1;
-}
-
-.card-header-teste {
+.mobile-solucao-card {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+  border: 4px solid var(--card-accent-color);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.icon-wrapper-teste {
+.mobile-solucao-card:active,
+.mobile-solucao-card:hover {
+  transform: scale(1.02);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+}
+
+.mobile-card-icon-wrapper {
   width: 48px;
   height: 48px;
   border-radius: 12px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
-}
-
-.solucao-teste-card:hover .icon-wrapper-teste {
-  transform: scale(1.1);
-}
-
-.card-status-teste {
-  font-size: 0.75rem;
+  margin-right: 16px;
+  flex-shrink: 0;
   font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 6px;
-  text-transform: uppercase;
-  letter-spacing: 0.02em;
 }
 
-.card-title-teste {
-  font-size: 1.25rem;
+.mobile-card-content {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.mobile-card-title {
+  font-size: 1.1rem;
   font-weight: 800;
   color: #1e293b;
-  margin: 0 0 12px 0;
+  margin: 0 0 4px 0;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
 }
 
-.card-desc-teste {
-  font-size: 0.925rem;
+.mobile-card-desc {
+  font-size: 0.85rem;
   color: #64748b;
-  line-height: 1.6;
-  flex-grow: 1;
-  margin: 0 0 28px 0;
+  margin: 0;
+  line-height: 1.4;
 }
 
-.card-btn-teste {
-  background: white;
-  border: 1px solid #cbd5e1;
-  color: #475569;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-weight: 700;
-  font-size: 0.875rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  width: 100%;
-  text-align: center;
-  outline: none;
-}
-
-.card-btn-teste:hover {
-  background-color: var(--card-accent-color);
-  border-color: var(--card-accent-color);
-  color: white;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+.mobile-card-arrow {
+  flex-shrink: 0;
+  margin-left: 12px;
+  display: flex;
+  align-items: center;
 }
 
 /* Responsiveness */
 @media (max-width: 768px) {
   .solucoes-teste-hero {
     padding: 40px 24px;
-    text-align: center;
   }
-  
+
   .solucoes-teste-title {
     font-size: 2.2rem;
   }
-  
+
+  .solucoes-teste-hero-flex {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .solucoes-teste-hero-content {
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   .solucoes-teste-subtitle {
-    font-size: 1rem;
-    margin: 0 auto 24px auto;
+    margin-bottom: 24px;
+  }
+
+  .solucoes-teste-diagram-wrapper {
+    display: none; /* Hide radial diagram on tablet/mobile to preserve legibility */
+  }
+
+  .solucoes-teste-mobile-section {
+    display: block; /* Show optimized solution buttons */
   }
 }

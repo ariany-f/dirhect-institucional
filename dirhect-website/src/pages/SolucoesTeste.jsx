@@ -1,71 +1,88 @@
 import { useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 import { 
   ArrowLeft, 
+  ArrowRight,
+  User, 
+  Users, 
+  CheckSquare, 
+  FileSpreadsheet, 
+  GitBranch, 
   Cpu, 
-  Database, 
-  ShieldCheck, 
-  Terminal, 
-  Settings, 
-  Activity 
+  Heart 
 } from 'lucide-react'
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import DiagramaPlataforma from '../components/DiagramaPlataforma'
 import './SolucoesTeste.css'
 
 const SolucoesTeste = () => {
+  const navigate = useNavigate()
+
   useEffect(() => {
     window.scrollTo(0, 0)
   }, [])
 
-  const mockSolutions = [
+  const handleNavigate = (path) => {
+    navigate(path)
+  }
+
+  const solutionsList = [
     {
-      id: 'integration',
-      title: 'Sandbox de Integrações',
-      desc: 'Simule o envio e recepção de dados via API REST com seus sistemas de ERP e Folha de Pagamento.',
-      icon: <Terminal size={24} />,
-      status: 'Disponível',
-      color: '#ffaa00'
+      id: 'admissao',
+      title: 'Admissão Digital',
+      link: '/solucoes/admissao-digital',
+      color: '#ff9202',
+      icon: <User size={24} />,
+      desc: 'Otimize a contratação de novos colaboradores de forma 100% digital.'
     },
     {
-      id: 'workflows',
-      title: 'Simulação de Workflow',
-      desc: 'Valide as regras de transição de status, aprovações automáticas e disparos de e-mails em tempo de execução.',
+      id: 'portal',
+      title: 'Portal de RH',
+      link: '/solucoes/portal-de-rh',
+      color: '#feb503',
+      icon: <Users size={24} />,
+      desc: 'Centralize dados, comunicações e holerites em um portal corporativo seguro.'
+    },
+    {
+      id: 'tarefas',
+      title: 'Gestão de Tarefas',
+      link: '/solucoes/gestao-de-tarefas',
+      color: '#a458fc',
+      icon: <CheckSquare size={24} />,
+      desc: 'Acompanhe as demandas da equipe com quadros interativos e prazos claros.'
+    },
+    {
+      id: 'formularios',
+      title: 'Formulários Customizados',
+      link: '/solucoes/formularios-customizados',
+      color: '#17aaaa',
+      icon: <FileSpreadsheet size={24} />,
+      desc: 'Crie e configure formulários dinâmicos de acordo com a necessidade.'
+    },
+    {
+      id: 'bpmn',
+      title: 'Workflow BPMN',
+      link: '/solucoes/workflow-bpmn',
+      color: '#457cfd',
+      icon: <GitBranch size={24} />,
+      desc: 'Automatize e otimize seus fluxos operacionais com notação padrão BPMN.'
+    },
+    {
+      id: 'integracao',
+      title: 'Hub de Integração',
+      link: '/solucoes/hub-de-integracao',
+      color: '#4550fe',
       icon: <Cpu size={24} />,
-      status: 'Disponível',
-      color: '#3b82f6'
+      desc: 'Conecte seus sistemas existentes (ERP, CRM) com facilidade.'
     },
     {
-      id: 'security',
-      title: 'Ambiente de Segurança',
-      desc: 'Valide permissões de usuários, escopo de tokens JWT e encriptação de dados sensíveis sob a LGPD.',
-      icon: <ShieldCheck size={24} />,
-      status: 'Pronto',
-      color: '#10b981'
-    },
-    {
-      id: 'variables',
-      title: 'Importador de Arquivos',
-      desc: 'Faça upload de arquivos CNAB, XML e planilhas de teste para simular o fechamento de folha de pagamento.',
-      icon: <Database size={24} />,
-      status: 'Em Teste',
-      color: '#8b5cf6'
-    },
-    {
-      id: 'settings',
-      title: 'Configurações de Fluxo',
-      desc: 'Ajuste variáveis globais de simulação, latência de resposta das APIs e limites operacionais.',
-      icon: <Settings size={24} />,
-      status: 'Configurável',
-      color: '#64748b'
-    },
-    {
-      id: 'monitoring',
-      title: 'Métricas de Performance',
-      desc: 'Acompanhe em tempo real o tempo de processamento de cada microsserviço e consumo de banda.',
-      icon: <Activity size={24} />,
-      status: 'Ativo',
-      color: '#ef4444'
+      id: 'beneficios',
+      title: 'Gestão de Benefícios',
+      link: '/solucoes/gestao-de-beneficios',
+      color: '#27aa63',
+      icon: <Heart size={24} />,
+      desc: 'Gerencie planos de saúde, refeição e benefícios flexíveis num só lugar.'
     }
   ]
 
@@ -75,46 +92,60 @@ const SolucoesTeste = () => {
       <main className="solucoes-teste-main">
         <div className="solucoes-teste-container">
           
-          {/* Header Section */}
+          {/* Hero Section with Split Layout */}
           <div className="solucoes-teste-hero">
-            <div className="solucoes-teste-hero-content">
-              <span className="badge-teste">Ambiente de Testes</span>
-              <h1 className="solucoes-teste-title">
-                Soluções de <span className="highlight">Teste</span> Dirhect
-              </h1>
-              <p className="solucoes-teste-subtitle">
-                Explore ferramentas de simulação, valide fluxos de trabalho e teste integrações de recursos humanos em tempo real.
-              </p>
-              <div className="solucoes-teste-hero-actions">
-                <Link to="/" className="btn-teste btn-teste--primary">
-                  <ArrowLeft size={16} />
-                  Voltar ao Início
-                </Link>
+            <div className="solucoes-teste-hero-flex">
+              
+              {/* Copy Side */}
+              <div className="solucoes-teste-hero-content">
+                <span className="badge-teste">Ambiente de Testes</span>
+                <h1 className="solucoes-teste-title">
+                  Soluções de <span className="highlight">Teste</span> Dirhect
+                </h1>
+                <p className="solucoes-teste-subtitle">
+                  Explore o ecossistema integrado da plataforma Dirhect. Clique em qualquer balão do diagrama radial ao lado para navegar e conhecer cada detalhe do nosso ecossistema de soluções de RH.
+                </p>
+                <div className="solucoes-teste-hero-actions">
+                  <Link to="/" className="btn-teste btn-teste--primary">
+                    <ArrowLeft size={16} />
+                    Voltar ao Início
+                  </Link>
+                </div>
               </div>
+
+              {/* Diagram Side (Desktop only) */}
+              <div className="solucoes-teste-diagram-wrapper">
+                <DiagramaPlataforma onNavigate={handleNavigate} />
+              </div>
+
             </div>
           </div>
 
-          {/* Solutions Grid */}
-          <div className="solucoes-teste-grid">
-            {mockSolutions.map((sol) => (
-              <div key={sol.id} className="solucao-teste-card" style={{ '--card-accent-color': sol.color }}>
-                <div className="card-header-teste">
-                  <div className="icon-wrapper-teste" style={{ backgroundColor: `${sol.color}15`, color: sol.color }}>
+          {/* Solutions Stack (Visible on Mobile / Fallback) */}
+          <div className="solucoes-teste-mobile-section">
+            <h2 className="mobile-section-title">Explore as Soluções</h2>
+            <p className="mobile-section-subtitle">Toque em qualquer solução abaixo para acessar sua respectiva página:</p>
+            <div className="mobile-solutions-container">
+              {solutionsList.map((sol) => (
+                <div 
+                  key={sol.id} 
+                  className="mobile-solucao-card" 
+                  onClick={() => handleNavigate(sol.link)} 
+                  style={{ '--card-accent-color': sol.color }}
+                >
+                  <div className="mobile-card-icon-wrapper" style={{ backgroundColor: `${sol.color}15`, color: sol.color }}>
                     {sol.icon}
                   </div>
-                  <span className="card-status-teste" style={{ color: sol.color, backgroundColor: `${sol.color}10` }}>
-                    {sol.status}
-                  </span>
+                  <div className="mobile-card-content">
+                    <h3 className="mobile-card-title">{sol.title}</h3>
+                    <p className="mobile-card-desc">{sol.desc}</p>
+                  </div>
+                  <div className="mobile-card-arrow" style={{ color: sol.color }}>
+                    <ArrowRight size={20} />
+                  </div>
                 </div>
-                <h3 className="card-title-teste">{sol.title}</h3>
-                <p className="card-desc-teste">{sol.desc}</p>
-                <div className="card-footer-teste">
-                  <button className="card-btn-teste" onClick={() => alert(`Simulação do módulo "${sol.title}" inicializada com sucesso.`)}>
-                    Iniciar Teste
-                  </button>
-                </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
 
         </div>
