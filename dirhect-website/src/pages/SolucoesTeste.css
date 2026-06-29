@@ -276,7 +276,7 @@
 
 /* Page transition animations */
 .solucoes-teste-page--transitioning .solucoes-teste-hero {
-  transform: scale(1.12);
+  transform: scale(1.25);
   opacity: 0;
   pointer-events: none;
 }
