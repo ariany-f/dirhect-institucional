@@ -294,3 +294,7 @@
 .solucoes-teste-page--transitioning .diagram-balloon-btn {
   pointer-events: none;
 }
+
+.solucoes-teste-diagram-wrapper svg {
+  overflow: visible !important;
+}
