@@ -23,13 +23,13 @@
 
 /* Hero section with split desktop layout */
 .solucoes-teste-hero {
-  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  background: linear-gradient(135deg, #27272a 0%, #18181b 100%);
   border-radius: 24px;
   padding: 60px 48px;
   position: relative;
   overflow: hidden;
-  border: 1px solid #334155;
-  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+  border: 1px solid #3f3f46;
+  box-shadow: 0 10px 30px rgba(24, 24, 27, 0.05);
   transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -58,6 +58,13 @@
   position: relative;
 }
 
+.badges-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
 .badge-teste {
   display: inline-block;
   background: rgba(255, 170, 0, 0.15);
@@ -68,8 +75,28 @@
   border-radius: 50px;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  margin-bottom: 20px;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+}
+
+.badge-instrucao {
+  display: inline-block;
+  background: rgba(255, 170, 0, 0.25);
+  color: #ffb732;
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 6px 16px;
+  border-radius: 50px;
+  letter-spacing: 0.02em;
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  border: 1px solid rgba(255, 170, 0, 0.4);
+}
+
+.subtitle-highlight {
+  color: #ffaa00;
+  background: rgba(255, 170, 0, 0.15);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 700;
 }
 
 .solucoes-teste-title {

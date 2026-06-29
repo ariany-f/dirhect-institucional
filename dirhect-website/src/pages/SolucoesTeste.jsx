@@ -103,12 +103,15 @@ const SolucoesTeste = () => {
               
               {/* Copy Side */}
               <div className="solucoes-teste-hero-content">
-                <span className="badge-teste">Ambiente de Testes</span>
+                <div className="badges-group">
+                  <span className="badge-teste">Ambiente de Testes</span>
+                  <span className="badge-instrucao">👉 Clique em qualquer balão para navegar</span>
+                </div>
                 <h1 className="solucoes-teste-title">
                   Soluções de <span className="highlight">Teste</span> Dirhect
                 </h1>
                 <p className="solucoes-teste-subtitle">
-                  Explore o ecossistema integrado da plataforma Dirhect. Clique em qualquer balão do diagrama radial ao lado para navegar e conhecer cada detalhe do nosso ecossistema de soluções de RH.
+                  Explore o ecossistema integrado da plataforma Dirhect. <strong className="subtitle-highlight">Clique em qualquer balão</strong> do diagrama radial ao lado para navegar e conhecer cada detalhe do nosso ecossistema de soluções de RH.
                 </p>
                 <div className="solucoes-teste-hero-actions">
                   <Link to="/" className="btn-teste btn-teste--primary">
