@@ -131,11 +131,11 @@
 }
 
 /* Target background container groups inside the balloons */
-.diagram-balloon-btn g[id^="Rectangle_"] {
+.diagram-balloon-btn g[id^="Rectangle_"][id$="-2"] {
   transition: stroke-width 0.25s ease, fill 0.25s ease;
 }
 
-.diagram-balloon-btn:hover g[id^="Rectangle_"] {
+.diagram-balloon-btn:hover g[id^="Rectangle_"][id$="-2"] {
   stroke-width: 8px !important;
   fill: #ffffff !important;
 }
