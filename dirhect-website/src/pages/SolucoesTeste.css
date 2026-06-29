@@ -45,6 +45,10 @@
   flex: 1;
   max-width: 520px;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 28px;
 }
 
 .solucoes-teste-diagram-wrapper {
@@ -69,7 +73,7 @@
   letter-spacing: 0.02em;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
   border: 1px solid rgba(255, 146, 2, 0.25);
-  margin-bottom: 20px;
+  margin-bottom: 0;
 }
 
 .subtitle-highlight {
@@ -84,7 +88,7 @@
   color: #0f172a;
   font-size: 2.75rem;
   font-weight: 800;
-  margin: 0 0 16px 0;
+  margin: 0;
   line-height: 1.2;
   font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
 }
@@ -96,7 +100,7 @@
 .solucoes-teste-subtitle {
   color: #475569;
   font-size: 1.1rem;
-  margin: 0 0 32px 0;
+  margin: 0;
   line-height: 1.6;
 }
 
