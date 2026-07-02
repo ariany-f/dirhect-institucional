@@ -1,5 +1,16 @@
-import { ArrowRight } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { useState } from 'react'
+import { useNavigate, Link } from 'react-router-dom'
+import { 
+  ArrowRight,
+  User, 
+  Users, 
+  CheckSquare, 
+  FileSpreadsheet, 
+  GitBranch, 
+  Cpu, 
+  Heart 
+} from 'lucide-react'
+import DiagramaPlataforma from './DiagramaPlataforma'
 import './HomeSolutionModulesFold.css'
 
 const PillCheckIcon = () => (
@@ -16,10 +27,84 @@ const PillCheckIcon = () => (
 )
 
 const HomeSolutionModulesFold = () => {
+  const navigate = useNavigate()
+  const [isTransitioning, setIsTransitioning] = useState(false)
+
+  const handleNavigate = (path) => {
+    if (isTransitioning) return
+    setIsTransitioning(true)
+    setTimeout(() => {
+      navigate(path)
+    }, 600) // 600ms matches CSS transition duration
+  }
+
+  const solutionsList = [
+    {
+      id: 'admissao',
+      title: 'Admissão Digital',
+      link: '/admissao-digital',
+      color: '#ff9202',
+      icon: <User size={24} />,
+      desc: 'Otimize a contratação de novos colaboradores de forma 100% digital.'
+    },
+    {
+      id: 'portal',
+      title: 'Portal de RH',
+      link: '/portal-rh',
+      color: '#feb503',
+      icon: <Users size={24} />,
+      desc: 'Centralize dados, comunicações e holerites em um portal corporativo seguro.'
+    },
+    {
+      id: 'tarefas',
+      title: 'Gestão de Tarefas',
+      link: '/gestao-tarefas',
+      color: '#a458fc',
+      icon: <CheckSquare size={24} />,
+      desc: 'Acompanhe as demandas da equipe com quadros interativos e prazos claros.'
+    },
+    {
+      id: 'formularios',
+      title: 'Formulários Customizados',
+      link: '/formulario',
+      color: '#17aaaa',
+      icon: <FileSpreadsheet size={24} />,
+      desc: 'Crie e configure formulários dinâmicos de acordo com a necessidade.'
+    },
+    {
+      id: 'bpmn',
+      title: 'Workflow BPMN',
+      link: '/bpms',
+      color: '#457cfd',
+      icon: <GitBranch size={24} />,
+      desc: 'Automatize e otimize seus fluxos operacionais com notação padrão BPMN.'
+    },
+    {
+      id: 'integracao',
+      title: 'Hub de Integração',
+      link: '/parceiros',
+      color: '#4550fe',
+      icon: <Cpu size={24} />,
+      desc: 'Conecte seus sistemas existentes (ERP, CRM) com facilidade.'
+    },
+    {
+      id: 'beneficios',
+      title: 'Gestão de Benefícios',
+      link: '/gestao-beneficios',
+      color: '#27aa63',
+      icon: <Heart size={24} />,
+      desc: 'Gerencie planos de saúde, refeição e benefícios flexíveis num só lugar.'
+    }
+  ]
+
   return (
-    <section className="home-solution-modules" aria-labelledby="home-solution-modules-title">
+    <section 
+      className={`home-solution-modules ${isTransitioning ? 'home-solution-modules--transitioning' : ''}`} 
+      aria-labelledby="home-solution-modules-title"
+    >
       <div className="home-solution-modules-container home-fold-container">
         <div className="home-solution-modules-intro">
+          
           <div className="home-solution-modules-top">
             <p className="home-solution-modules-eyebrow">Principais pilares da solução</p>
             <div className="home-solution-modules-copy">
@@ -54,18 +139,38 @@ const HomeSolutionModulesFold = () => {
             </div>
           </div>
 
+          {/* Interactive Radial Diagram (Desktop only) */}
           <div className="home-solution-modules-visual">
-            <img
-              className="home-solution-modules-diagram"
-              src="/images/home-solution-modules-diagram.png?v=20260602b"
-              alt="Diagrama dos sete módulos integrados da plataforma Dirhect"
-              width={1536}
-              height={1024}
-              decoding="async"
-              loading="lazy"
-            />
+            <div className="home-solution-modules-diagram-container">
+              <DiagramaPlataforma onNavigate={handleNavigate} />
+            </div>
           </div>
+
         </div>
+
+        {/* Mobile Stack Alternative (Visible on mobile instead of diagram) */}
+        <div className="home-solution-modules-mobile-list">
+          {solutionsList.map((sol) => (
+            <div 
+              key={sol.id} 
+              className="home-modules-mobile-card" 
+              onClick={() => handleNavigate(sol.link)} 
+              style={{ '--card-accent-color': sol.color }}
+            >
+              <div className="home-modules-card-icon-wrapper" style={{ backgroundColor: `${sol.color}15`, color: sol.color }}>
+                {sol.icon}
+              </div>
+              <div className="home-modules-card-content">
+                <h3 className="home-modules-card-title">{sol.title}</h3>
+                <p className="home-modules-card-desc">{sol.desc}</p>
+              </div>
+              <div className="home-modules-card-arrow" style={{ color: sol.color }}>
+                <ArrowRight size={20} />
+              </div>
+            </div>
+          ))}
+        </div>
+
       </div>
     </section>
   )
