@@ -168,9 +168,11 @@
 .home-solution-modules-diagram-container {
   display: block;
   width: 100%;
-  max-width: clamp(300px, 48vw, 540px);
+  max-width: clamp(340px, 52vw, 600px);
   height: auto;
   margin: 0 0 0 auto;
+  padding: 30px;
+  box-sizing: border-box;
 }
 
 /* Interactive SVG Diagram styles inside home section */
