@@ -15,7 +15,7 @@ const DiagramaPlataforma = ({ onNavigate }) => {
       <feComposite operator="in" in2="blur"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <filter id="Rectangle_49" x="-18.5" y="797.5" width="515" height="285" filterUnits="userSpaceOnUse">
+    <filter id="Rectangle_49" x="-120" y="720" width="720" height="440" filterUnits="userSpaceOnUse">
       <feOffset dy="3" input="SourceAlpha"/>
       <feGaussianBlur stdDeviation="7.5" result="blur-2"/>
       <feFlood floodOpacity="0.161"/>
@@ -25,7 +25,7 @@ const DiagramaPlataforma = ({ onNavigate }) => {
     <clipPath id="clip-path">
       <path id="path972" d="M0-682.665H77.726v77.726H0Z" transform="translate(0 682.665)" fill="#fff"/>
     </clipPath>
-    <filter id="Rectangle_50" x="48.5" y="328.5" width="515" height="285" filterUnits="userSpaceOnUse">
+    <filter id="Rectangle_50" x="-50" y="250" width="720" height="440" filterUnits="userSpaceOnUse">
       <feOffset dy="3" input="SourceAlpha"/>
       <feGaussianBlur stdDeviation="7.5" result="blur-3"/>
       <feFlood floodOpacity="0.161"/>
@@ -35,7 +35,7 @@ const DiagramaPlataforma = ({ onNavigate }) => {
     <clipPath id="clip-path-2">
       <path id="path1890" d="M0-682.665H74.419v74.419H0Z" transform="translate(0 682.665)"/>
     </clipPath>
-    <filter id="Rectangle_45" x="1325.5" y="328.5" width="515" height="285" filterUnits="userSpaceOnUse">
+    <filter id="Rectangle_45" x="1220" y="250" width="720" height="440" filterUnits="userSpaceOnUse">
       <feOffset dy="3" input="SourceAlpha"/>
       <feGaussianBlur stdDeviation="7.5" result="blur-4"/>
       <feFlood floodOpacity="0.161"/>
@@ -45,28 +45,28 @@ const DiagramaPlataforma = ({ onNavigate }) => {
     <clipPath id="clip-path-3">
       <path id="path1899" d="M0-682.665H76.466V-606.2H0Z" transform="translate(0 682.665)"/>
     </clipPath>
-    <filter id="Rectangle_46" x="1370.5" y="797.5" width="515" height="285" filterUnits="userSpaceOnUse">
+    <filter id="Rectangle_46" x="1270" y="720" width="720" height="440" filterUnits="userSpaceOnUse">
       <feOffset dy="3" input="SourceAlpha"/>
       <feGaussianBlur stdDeviation="7.5" result="blur-5"/>
       <feFlood floodOpacity="0.161"/>
       <feComposite operator="in" in2="blur-5"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <filter id="Rectangle_47" x="1086.5" y="1229.5" width="515" height="285" filterUnits="userSpaceOnUse">
+    <filter id="Rectangle_47" x="980" y="1150" width="720" height="440" filterUnits="userSpaceOnUse">
       <feOffset dy="3" input="SourceAlpha"/>
       <feGaussianBlur stdDeviation="7.5" result="blur-6"/>
       <feFlood floodOpacity="0.161"/>
       <feComposite operator="in" in2="blur-6"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <filter id="Rectangle_48" x="273.5" y="1229.5" width="515" height="285" filterUnits="userSpaceOnUse">
+    <filter id="Rectangle_48" x="170" y="1150" width="720" height="440" filterUnits="userSpaceOnUse">
       <feOffset dy="3" input="SourceAlpha"/>
       <feGaussianBlur stdDeviation="7.5" result="blur-7"/>
       <feFlood floodOpacity="0.161"/>
       <feComposite operator="in" in2="blur-7"/>
       <feComposite in="SourceGraphic"/>
     </filter>
-    <filter id="Rectangle_44" x="675.5" y="56.5" width="515" height="285" filterUnits="userSpaceOnUse">
+    <filter id="Rectangle_44" x="570" y="-30" width="720" height="440" filterUnits="userSpaceOnUse">
       <feOffset dy="3" input="SourceAlpha"/>
       <feGaussianBlur stdDeviation="7.5" result="blur-8"/>
       <feFlood floodOpacity="0.161"/>
@@ -80,7 +80,7 @@ const DiagramaPlataforma = ({ onNavigate }) => {
       <rect width="1868" height="1521"/>
     </clipPath>
   </defs>
-  <g id="Artboard_11" dataName="Artboard – 11" clipPath="url(#clip-Artboard_11)">
+  <g id="Artboard_11" dataName="Artboard – 11">
     <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Ellipse_52)">
       <circle id="Ellipse_52-2" dataName="Ellipse 52" cx="304.5" cy="304.5" r="304.5" transform="translate(629 514)" opacity="0.999" fill="url(#linear-gradient)"/>
     </g>
