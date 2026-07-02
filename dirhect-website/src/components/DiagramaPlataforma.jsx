@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const DiagramaPlataforma = ({ onNavigate }) => {
   return (
@@ -11,14 +11,14 @@ const DiagramaPlataforma = ({ onNavigate }) => {
     <filter id="Ellipse_52" x="599" y="487" width="669" height="669" filterUnits="userSpaceOnUse">
       <feOffset dy="3" input="SourceAlpha"/>
       <feGaussianBlur stdDeviation="10" result="blur"/>
-      <feFlood floodOpacity="0.161"/>
+      <feFlood flood-opacity="0.161"/>
       <feComposite operator="in" in2="blur"/>
       <feComposite in="SourceGraphic"/>
     </filter>
     <filter id="Rectangle_49" x="-120" y="720" width="720" height="440" filterUnits="userSpaceOnUse">
       <feOffset dy="3" input="SourceAlpha"/>
       <feGaussianBlur stdDeviation="7.5" result="blur-2"/>
-      <feFlood floodOpacity="0.161"/>
+      <feFlood flood-opacity="0.161"/>
       <feComposite operator="in" in2="blur-2"/>
       <feComposite in="SourceGraphic"/>
     </filter>
@@ -28,7 +28,7 @@ const DiagramaPlataforma = ({ onNavigate }) => {
     <filter id="Rectangle_50" x="-50" y="250" width="720" height="440" filterUnits="userSpaceOnUse">
       <feOffset dy="3" input="SourceAlpha"/>
       <feGaussianBlur stdDeviation="7.5" result="blur-3"/>
-      <feFlood floodOpacity="0.161"/>
+      <feFlood flood-opacity="0.161"/>
       <feComposite operator="in" in2="blur-3"/>
       <feComposite in="SourceGraphic"/>
     </filter>
@@ -38,7 +38,7 @@ const DiagramaPlataforma = ({ onNavigate }) => {
     <filter id="Rectangle_45" x="1220" y="250" width="720" height="440" filterUnits="userSpaceOnUse">
       <feOffset dy="3" input="SourceAlpha"/>
       <feGaussianBlur stdDeviation="7.5" result="blur-4"/>
-      <feFlood floodOpacity="0.161"/>
+      <feFlood flood-opacity="0.161"/>
       <feComposite operator="in" in2="blur-4"/>
       <feComposite in="SourceGraphic"/>
     </filter>
@@ -48,28 +48,28 @@ const DiagramaPlataforma = ({ onNavigate }) => {
     <filter id="Rectangle_46" x="1270" y="720" width="720" height="440" filterUnits="userSpaceOnUse">
       <feOffset dy="3" input="SourceAlpha"/>
       <feGaussianBlur stdDeviation="7.5" result="blur-5"/>
-      <feFlood floodOpacity="0.161"/>
+      <feFlood flood-opacity="0.161"/>
       <feComposite operator="in" in2="blur-5"/>
       <feComposite in="SourceGraphic"/>
     </filter>
     <filter id="Rectangle_47" x="980" y="1150" width="720" height="440" filterUnits="userSpaceOnUse">
       <feOffset dy="3" input="SourceAlpha"/>
       <feGaussianBlur stdDeviation="7.5" result="blur-6"/>
-      <feFlood floodOpacity="0.161"/>
+      <feFlood flood-opacity="0.161"/>
       <feComposite operator="in" in2="blur-6"/>
       <feComposite in="SourceGraphic"/>
     </filter>
     <filter id="Rectangle_48" x="170" y="1150" width="720" height="440" filterUnits="userSpaceOnUse">
       <feOffset dy="3" input="SourceAlpha"/>
       <feGaussianBlur stdDeviation="7.5" result="blur-7"/>
-      <feFlood floodOpacity="0.161"/>
+      <feFlood flood-opacity="0.161"/>
       <feComposite operator="in" in2="blur-7"/>
       <feComposite in="SourceGraphic"/>
     </filter>
     <filter id="Rectangle_44" x="570" y="-30" width="720" height="440" filterUnits="userSpaceOnUse">
       <feOffset dy="3" input="SourceAlpha"/>
       <feGaussianBlur stdDeviation="7.5" result="blur-8"/>
-      <feFlood floodOpacity="0.161"/>
+      <feFlood flood-opacity="0.161"/>
       <feComposite operator="in" in2="blur-8"/>
       <feComposite in="SourceGraphic"/>
     </filter>
@@ -155,10 +155,10 @@ const DiagramaPlataforma = ({ onNavigate }) => {
       <circle cx="16" cy="16" r="16" stroke="none"/>
       <circle cx="16" cy="16" r="15" fill="none"/>
     </g>
-<g id="Botão_integracao" className="diagram-balloon-btn btn-integracao" >
-      <a href="/parceiros" onClick={(e) => { e.preventDefault(); onNavigate("/parceiros"); } } style={{ textDecoration: "none" }}>
+    <g id="Botão_integracao" className="diagram-balloon-btn btn-integracao">
+      <a href="/parceiros" onClick={(e) => { e.preventDefault(); onNavigate("/parceiros"); }} style={{ textDecoration: "none" }}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_49)">
-        <g id="Rectangle_49-2" dataName="Rectangle 49" transform="translate(4 817)" fill="#f7f7f7" stroke="#4550fe" strokeWidth="5">
+        <g id="Rectangle_49-2" dataName="Rectangle 49" transform="translate(4 817)" fill="#fafafa" stroke="#4550fe" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
           <rect x="2.5" y="2.5" width="465" height="235" rx="35.5" fill="none"/>
         </g>
@@ -171,23 +171,24 @@ integração" transform="translate(239 929)" fill="#585858" fontSize="54" fontFa
           <g id="g968" transform="translate(0 -682.665)">
             <g id="g970" clipPath="url(#clip-path)">
               <g id="g976" transform="translate(2.288 2.299)">
-                <path id="path978" d="M-215.533-313.615a5.784,5.784,0,0,0-.94-3.172h9.823v-9.924a5.607,5.607,0,0,0,3.787,1.471,5.713,5.713,0,0,0,5.673-5.753,5.713,5.713,0,0,0-5.673-5.753,5.607,5.607,0,0,0-3.787,1.471V-345.2h-9.689a5.786,5.786,0,0,0,.807-2.957,5.713,5.713,0,0,0-5.673-5.753,5.713,5.713,0,0,0-5.673,5.753,5.786,5.786,0,0,0,.807,2.957h-8.892v9.088a5.581,5.581,0,0,0-2.589-.635,5.713,5.713,0,0,0-5.673,5.753,5.713,5.713,0,0,0,5.673,5.753,5.583,5.583,0,0,0,2.589-.635v9.088h9.026a5.784,5.784,0,0,0-.94,3.172,5.713,5.713,0,0,0,5.673,5.753A5.713,5.713,0,0,0-215.533-313.615Z" transform="translate(243.226 353.91)" fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="4"/>
+                <path id="path978" d="M-215.533-313.615a5.784,5.784,0,0,0-.94-3.172h9.823v-9.924a5.607,5.607,0,0,0,3.787,1.471,5.713,5.713,0,0,0,5.673-5.753,5.713,5.713,0,0,0-5.673-5.753,5.607,5.607,0,0,0-3.787,1.471V-345.2h-9.689a5.786,5.786,0,0,0,.807-2.957,5.713,5.713,0,0,0-5.673-5.753,5.713,5.713,0,0,0-5.673,5.753,5.786,5.786,0,0,0,.807,2.957h-8.892v9.088a5.581,5.581,0,0,0-2.589-.635,5.713,5.713,0,0,0-5.673,5.753,5.713,5.713,0,0,0,5.673,5.753,5.583,5.583,0,0,0,2.589-.635v9.088h9.026a5.784,5.784,0,0,0-.94,3.172,5.713,5.713,0,0,0,5.673,5.753A5.713,5.713,0,0,0-215.533-313.615Z" transform="translate(243.226 353.91)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeMiterlimit="10" strokeWidth="4"/>
               </g>
               <g id="g980" transform="translate(38.864 2.3)">
-                <path id="path982" d="M0-288.917H9.389a5.813,5.813,0,0,0-.622,2.624,5.734,5.734,0,0,0,5.693,5.774,5.734,5.734,0,0,0,5.693-5.774,5.813,5.813,0,0,0-.622-2.624h8.782v-9.065a5.6,5.6,0,0,0,2.59.632,5.734,5.734,0,0,0,5.693-5.774A5.734,5.734,0,0,0,30.9-308.9a5.6,5.6,0,0,0-2.59.632v-9.065H19.667a5.807,5.807,0,0,0,.791-2.935,5.734,5.734,0,0,0-5.693-5.774,5.734,5.734,0,0,0-5.693,5.774,5.807,5.807,0,0,0,.791,2.935H0" transform="translate(0 326.039)" fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="4"/>
+                <path id="path982" d="M0-288.917H9.389a5.813,5.813,0,0,0-.622,2.624,5.734,5.734,0,0,0,5.693,5.774,5.734,5.734,0,0,0,5.693-5.774,5.813,5.813,0,0,0-.622-2.624h8.782v-9.065a5.6,5.6,0,0,0,2.59.632,5.734,5.734,0,0,0,5.693-5.774A5.734,5.734,0,0,0,30.9-308.9a5.6,5.6,0,0,0-2.59.632v-9.065H19.667a5.807,5.807,0,0,0,.791-2.935,5.734,5.734,0,0,0-5.693-5.774,5.734,5.734,0,0,0-5.693,5.774,5.807,5.807,0,0,0,.791,2.935H0" transform="translate(0 326.039)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeMiterlimit="10" strokeWidth="4"/>
               </g>
               <g id="g984" transform="translate(38.864 39.422)">
-                <path id="path986" d="M0,0V28.413H9.575a5.565,5.565,0,0,0-.4,2.078,5.439,5.439,0,1,0,10.876,0,5.565,5.565,0,0,0-.4-2.078h8.664V19.525a5.356,5.356,0,0,0,2.828.8,5.515,5.515,0,0,0,0-11.03,5.356,5.356,0,0,0-2.828.8V0" fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="4"/>
+                <path id="path986" d="M0,0V28.413H9.575a5.565,5.565,0,0,0-.4,2.078,5.439,5.439,0,1,0,10.876,0,5.565,5.565,0,0,0-.4-2.078h8.664V19.525a5.356,5.356,0,0,0,2.828.8,5.515,5.515,0,0,0,0-11.03,5.356,5.356,0,0,0-2.828.8V0" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeMiterlimit="10" strokeWidth="4"/>
               </g>
             </g>
           </g>
         </g>
       </g>
-    </a></g>
-<g id="Botão_beneficios" className="diagram-balloon-btn btn-beneficios" >
-      <a href="/gestao-beneficios" onClick={(e) => { e.preventDefault(); onNavigate("/gestao-beneficios"); } } style={{ textDecoration: "none" }}>
+      </a>
+    </g>
+    <g id="Botão_beneficios" className="diagram-balloon-btn btn-beneficios">
+      <a href="/gestao-beneficios" onClick={(e) => { e.preventDefault(); onNavigate("/gestao-beneficios"); }} style={{ textDecoration: "none" }}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_50)">
-        <g id="Rectangle_50-2" dataName="Rectangle 50" transform="translate(71 348)" fill="#f7f7f7" stroke="#27aa63" strokeWidth="5">
+        <g id="Rectangle_50-2" dataName="Rectangle 50" transform="translate(71 348)" fill="#fafafa" stroke="#27aa63" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
           <rect x="2.5" y="2.5" width="465" height="235" rx="35.5" fill="none"/>
         </g>
@@ -200,20 +201,21 @@ Benefícios" transform="translate(306 460)" fill="#585858" fontSize="54" fontFam
           <g id="g1886" transform="translate(0 -682.665)">
             <g id="g1888" clipPath="url(#clip-path-2)">
               <g id="g1894" transform="translate(2.18 4.506)">
-                <path id="path1896" d="M-286.3-133.648S-282.117-150-268.861-150c10.326,0,17.587,9.375,17.587,20.481,0,15.36-14.341,25.531-35.029,44.926-20.688-19.4-35.029-29.566-35.029-44.926,0-11.106,7.262-20.481,17.587-20.481C-290.489-150-286.3-133.648-286.3-133.648Z" transform="translate(321.333 150)" fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
+                <path id="path1896" d="M-286.3-133.648S-282.117-150-268.861-150c10.326,0,17.587,9.375,17.587,20.481,0,15.36-14.341,25.531-35.029,44.926-20.688-19.4-35.029-29.566-35.029-44.926,0-11.106,7.262-20.481,17.587-20.481C-290.489-150-286.3-133.648-286.3-133.648Z" transform="translate(321.333 150)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
               </g>
               <g id="g1898" transform="translate(2.18 30.669)">
-                <path id="path1900" d="M0-142.558H21.948l4.36-8.721,4.36,17.442L35.029-160l4.36,17.442,4.36-8.721,4.36,8.721H70.058" transform="translate(0 160)" fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
+                <path id="path1900" d="M0-142.558H21.948l4.36-8.721,4.36,17.442L35.029-160l4.36,17.442,4.36-8.721,4.36,8.721H70.058" transform="translate(0 160)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
               </g>
             </g>
           </g>
         </g>
       </g>
-    </a></g>
-<g id="Botão_portal" className="diagram-balloon-btn btn-portal" >
-      <a href="/portal-rh" onClick={(e) => { e.preventDefault(); onNavigate("/portal-rh"); } } style={{ textDecoration: "none" }}>
+      </a>
+    </g>
+    <g id="Botão_portal" className="diagram-balloon-btn btn-portal">
+      <a href="/portal-rh" onClick={(e) => { e.preventDefault(); onNavigate("/portal-rh"); }} style={{ textDecoration: "none" }}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_45)">
-        <g id="Rectangle_45-2" dataName="Rectangle 45" transform="translate(1348 348)" fill="#f7f7f7" stroke="#feb503" strokeWidth="5">
+        <g id="Rectangle_45-2" dataName="Rectangle 45" transform="translate(1348 348)" fill="#fafafa" stroke="#feb503" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
           <rect x="2.5" y="2.5" width="465" height="235" rx="35.5" fill="none"/>
         </g>
@@ -226,44 +228,45 @@ de RH" transform="translate(1583 460)" fill="#585858" fontSize="54" fontFamily="
           <g id="g1895" transform="translate(0 -682.665)">
             <g id="g1897" clipPath="url(#clip-path-3)">
               <g id="g1903" transform="translate(2.39 38.382)">
-                <path id="path1905" d="M-284.156-142.078a17.922,17.922,0,0,1-17.922,17.922A17.922,17.922,0,0,1-320-142.078,17.922,17.922,0,0,1-302.077-160,17.922,17.922,0,0,1-284.156-142.078Z" transform="translate(319.999 160)" fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
+                <path id="path1905" d="M-284.156-142.078a17.922,17.922,0,0,1-17.922,17.922A17.922,17.922,0,0,1-320-142.078,17.922,17.922,0,0,1-302.077-160,17.922,17.922,0,0,1-284.156-142.078Z" transform="translate(319.999 160)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
               </g>
               <g id="g1907" transform="translate(20.311 2.24)">
-                <path id="path1909" d="M0-570.679H49.285a4.481,4.481,0,0,0,4.48-4.481v-52.57L38.831-642.665H4.48A4.481,4.481,0,0,0,0-638.185v31.662" transform="translate(0 642.665)" fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
+                <path id="path1909" d="M0-570.679H49.285a4.481,4.481,0,0,0,4.48-4.481v-52.57L38.831-642.665H4.48A4.481,4.481,0,0,0,0-638.185v31.662" transform="translate(0 642.665)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
               </g>
               <g id="g1911" transform="translate(59.142 2.24)">
-                <path id="path1913" d="M0,0V14.935H14.935Z" fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
+                <path id="path1913" d="M0,0V14.935H14.935Z" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
               </g>
               <g id="g1915" transform="translate(32.164 42.863)">
-                <path id="path1917" d="M0,0H31.458" fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
+                <path id="path1917" d="M0,0H31.458" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
               </g>
               <g id="g1919" transform="translate(30.766 29.422)">
-                <path id="path1921" d="M0,0H32.857" fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
+                <path id="path1921" d="M0,0H32.857" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
               </g>
               <g id="g1923" transform="translate(38.233 56.304)">
-                <path id="path1925" d="M0,0H25.389" fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
+                <path id="path1925" d="M0,0H25.389" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
               </g>
               <g id="g1927" transform="translate(12.695 58.246)">
-                <path id="path1929" d="M-35.519-35.519-40-40" transform="translate(40 40)" fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
+                <path id="path1929" d="M-35.519-35.519-40-40" transform="translate(40 40)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
               </g>
               <g id="g1931" transform="translate(17.175 52.272)">
-                <path id="path1933" d="M0-82.879,10.454-93.333" transform="translate(0 93.333)" fill="none" stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
+                <path id="path1933" d="M0-82.879,10.454-93.333" transform="translate(0 93.333)" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round" strokeMiterlimit="10" strokeWidth="5"/>
               </g>
             </g>
           </g>
         </g>
       </g>
-    </a></g>
-<g id="Botão_tarefas" className="diagram-balloon-btn btn-tarefas" >
-      <a href="/gestao-tarefas" onClick={(e) => { e.preventDefault(); onNavigate("/gestao-tarefas"); } } style={{ textDecoration: "none" }}>
+      </a>
+    </g>
+    <g id="Botão_tarefas" className="diagram-balloon-btn btn-tarefas">
+      <a href="/gestao-tarefas" onClick={(e) => { e.preventDefault(); onNavigate("/gestao-tarefas"); }} style={{ textDecoration: "none" }}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_46)">
-        <g id="Rectangle_46-2" dataName="Rectangle 46" transform="translate(1393 817)" fill="#f7f7f7" stroke="#a458fc" strokeWidth="5">
+        <g id="Rectangle_46-2" dataName="Rectangle 46" transform="translate(1393 817)" fill="#fafafa" stroke="#a458fc" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
           <rect x="2.5" y="2.5" width="465" height="235" rx="35.5" fill="none"/>
         </g>
       </g>
-      <text id="Gestão_de_Tarefas" dataName="Gestão 
-de Tarefas" transform="translate(1628 929)" fill="#585858" fontSize="54" fontFamily="HelveticaNeue-Bold, Helvetica Neue" fontWeight="700"><tspan x="-99.495" y="0">Gestão </tspan><tspan x="-133.002" y="67">de Tarefas</tspan></text>
+      <text id="Orquestrador_de_Tarefas" dataName="Orquestrador 
+de Tarefas" transform="translate(1628 924)" fill="#585858" fontSize="54" fontFamily="HelveticaNeue-Bold, Helvetica Neue" fontWeight="700"><tspan x="-180.036" y="0">Orquestrador </tspan><tspan x="-133.002" y="67">de Tarefas</tspan></text>
       <g id="Group_558" dataName="Group 558">
         <rect id="Rectangle_53" dataName="Rectangle 53" width="120" height="116" rx="22" transform="translate(1568 741)" fill="#a458fc"/>
         <g id="data_13953332" transform="translate(1596 760)">
@@ -275,14 +278,15 @@ de Tarefas" transform="translate(1628 929)" fill="#585858" fontSize="54" fontFam
           <path id="Path_24" dataName="Path 24" d="M25.161,21.432a2.432,2.432,0,0,1-2.432,2.432h-7.3a2.432,2.432,0,0,1,0-4.864h7.3A2.432,2.432,0,0,1,25.161,21.432Z" transform="translate(18.619 27.213)" fill="#fff"/>
           <path id="Path_25" dataName="Path 25" d="M20.608,11.529A2.432,2.432,0,0,1,21,14.946l-7.739,9.729a2.432,2.432,0,0,1-3.807,0L5.029,19.116a2.432,2.432,0,1,1,3.807-3.028l2.519,3.166,5.835-7.336A2.432,2.432,0,0,1,20.608,11.529Z" transform="translate(6.445 15.755)" fill="#fff"/>
           <path id="Path_26" dataName="Path 26" d="M21,22.446a2.432,2.432,0,1,0-3.807-3.028l-5.835,7.336L8.836,23.588a2.432,2.432,0,1,0-3.807,3.028l4.422,5.559a2.432,2.432,0,0,0,3.807,0Z" transform="translate(6.445 26.496)" fill="#fff"/>
-          <path id="Path_27" dataName="Path 27" d="M63.238,7.3V55.922l-21.715,21.9q-.087.006-.175.006H7.3a7.3,7.3,0,0,1-7.3-7.3V7.3A7.3,7.3,0,0,1,7.3,0H55.942a7.3,7.3,0,0,1,7.3,7.3ZM7.3,72.967a2.432,2.432,0,0,1-2.432-2.432V7.3A2.432,2.432,0,0,1,7.3,4.864H55.942A2.432,2.432,0,0,1,58.374,7.3V53.509H34.051a2.432,2.432,0,1,0,0,4.864h4.864V72.967ZM43.78,58.374V69.528L54.934,58.374Z" transform="translate(0 0)" fill="#fff" fillRule="evenodd"/>
+          <path id="Path_27" dataName="Path 27" d="M63.238,7.3V55.922l-21.715,21.9q-.087.006-.175.006H7.3a7.3,7.3,0,0,1-7.3-7.3V7.3A7.3,7.3,0,0,1,7.3,0H55.942a7.3,7.3,0,0,1,7.3,7.3ZM7.3,72.967a2.432,2.432,0,0,1-2.432-2.432V7.3A2.432,2.432,0,0,1,7.3,4.864H55.942A2.432,2.432,0,0,1,58.374,7.3V53.509H34.051a2.432,2.432,0,1,0,0,4.864h4.864V72.967ZM43.78,58.374V69.528L54.934,58.374Z" transform="translate(0 0)" fill="#fff" fill-rule="evenodd"/>
         </g>
       </g>
-    </a></g>
-<g id="Botão_formulario" className="diagram-balloon-btn btn-formulario" >
-      <a href="/formulario" onClick={(e) => { e.preventDefault(); onNavigate("/formulario"); } } style={{ textDecoration: "none" }}>
+      </a>
+    </g>
+    <g id="Botão_formulario" className="diagram-balloon-btn btn-formulario">
+      <a href="/formulario" onClick={(e) => { e.preventDefault(); onNavigate("/formulario"); }} style={{ textDecoration: "none" }}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_47)">
-        <g id="Rectangle_47-2" dataName="Rectangle 47" transform="translate(1109 1249)" fill="#f7f7f7" stroke="#17aaaa" strokeWidth="5">
+        <g id="Rectangle_47-2" dataName="Rectangle 47" transform="translate(1109 1249)" fill="#fafafa" stroke="#17aaaa" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
           <rect x="2.5" y="2.5" width="465" height="235" rx="35.5" fill="none"/>
         </g>
@@ -303,17 +307,18 @@ customizados" transform="translate(1344 1362)" fill="#585858" fontSize="52" font
           <path id="Path_36" dataName="Path 36" d="M183.379,61.756a2.387,2.387,0,1,0,.874,3.261A2.386,2.386,0,0,0,183.379,61.756Zm0,0" transform="translate(-151.155 -51.228)" fill="#fff"/>
         </g>
       </g>
-    </a></g>
-<g id="Botão_bpmn" className="diagram-balloon-btn btn-bpmn" >
-      <a href="/bpms" onClick={(e) => { e.preventDefault(); onNavigate("/bpms"); } } style={{ textDecoration: "none" }}>
+      </a>
+    </g>
+    <g id="Botão_bpmn" className="diagram-balloon-btn btn-bpmn">
+      <a href="/bpms" onClick={(e) => { e.preventDefault(); onNavigate("/bpms"); }} style={{ textDecoration: "none" }}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_48)">
-        <g id="Rectangle_48-2" dataName="Rectangle 48" transform="translate(296 1249)" fill="#f7f7f7" stroke="#457cfd" strokeWidth="5">
+        <g id="Rectangle_48-2" dataName="Rectangle 48" transform="translate(296 1249)" fill="#fafafa" stroke="#457cfd" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
           <rect x="2.5" y="2.5" width="465" height="235" rx="35.5" fill="none"/>
         </g>
       </g>
-      <text id="Workflow_BPMN" dataName="Workflow 
-BPMN" transform="translate(531 1361)" fill="#585858" fontSize="54" fontFamily="HelveticaNeue-Bold, Helvetica Neue" fontWeight="700"><tspan x="-128.925" y="0">Workflow </tspan><tspan x="-81.513" y="67">BPMN</tspan></text>
+      <text id="Workflow_BPMS" dataName="Workflow 
+BPMS" transform="translate(531 1361)" fill="#585858" fontSize="54" fontFamily="HelveticaNeue-Bold, Helvetica Neue" fontWeight="700"><tspan x="-128.925" y="0">Workflow </tspan><tspan x="-79.029" y="67">BPMS</tspan></text>
       <g id="Group_554" dataName="Group 554">
         <rect id="Rectangle_55" dataName="Rectangle 55" width="120" height="116" rx="22" transform="translate(463 1171)" fill="#457cfd"/>
         <g id="process_18364833" transform="translate(482.75 1188.75)">
@@ -330,11 +335,12 @@ BPMN" transform="translate(531 1361)" fill="#585858" fontSize="54" fontFamily="H
           <path id="Path_44" dataName="Path 44" d="M24.146,44.22H14.987A13.742,13.742,0,0,1,1.25,30.482V24.987A13.742,13.742,0,0,1,14.987,11.25h10.99a2.747,2.747,0,1,1,0,5.495H14.987a8.255,8.255,0,0,0-8.242,8.242v5.495a8.255,8.255,0,0,0,8.242,8.242h9.158a2.747,2.747,0,0,1,0,5.495Z" transform="translate(0 26.633)" fill="#fff"/>
         </g>
       </g>
-    </a></g>
-<g id="Botão_admissão" className="diagram-balloon-btn btn-admissao" >
-      <a href="/admissao-digital" onClick={(e) => { e.preventDefault(); onNavigate("/admissao-digital"); } } style={{ textDecoration: "none" }}>
+      </a>
+    </g>
+    <g id="Botão_admissão" className="diagram-balloon-btn btn-admissao">
+      <a href="/admissao-digital" onClick={(e) => { e.preventDefault(); onNavigate("/admissao-digital"); }} style={{ textDecoration: "none" }}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_44)">
-        <g id="Rectangle_44-2" dataName="Rectangle 44" transform="translate(698 76)" fill="#f7f7f7" stroke="#ff9202" strokeWidth="5">
+        <g id="Rectangle_44-2" dataName="Rectangle 44" transform="translate(698 76)" fill="#fafafa" stroke="#ff9202" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>
           <rect x="2.5" y="2.5" width="465" height="235" rx="35.5" fill="none"/>
         </g>
@@ -358,15 +364,15 @@ Digital" transform="translate(942 188)" fill="#585858" fontSize="54" fontFamily=
         <path id="Path_48" dataName="Path 48" d="M30,0C47.36.066,60,13.655,60,30.5S46.569,61,30,61,8.679,54.3,8.679,37.454V28.84L18.75,22.173s-8.572-8.443-7.642-9.558C16.31,6.372,20.521-.036,30,0Z" transform="translate(933 55)" fill="#ff9202"/>
         <path id="user_4034171" d="M57.038,17.823a8.912,8.912,0,1,0-8.912-8.912A8.922,8.922,0,0,0,57.038,17.823Zm0-12.76a3.849,3.849,0,1,1-3.849,3.849,3.853,3.853,0,0,1,3.849-3.849Zm6.478,14.7H50.56A10.626,10.626,0,0,0,39.946,30.375v7.6A2.532,2.532,0,0,0,42.478,40.5H71.6a2.532,2.532,0,0,0,2.532-2.532v-7.6A10.626,10.626,0,0,0,63.516,19.761Zm5.551,15.68H45.009V30.375a5.557,5.557,0,0,1,5.551-5.551H63.516a5.557,5.557,0,0,1,5.551,5.551v5.066Z" transform="translate(904.87 58)" fill="#fff"/>
       </g>
-    </a></g>
+      </a>
+    </g>
     <g id="Botão_dirhect" className="diagram-center-logo">
       <circle id="Ellipse_49" dataName="Ellipse 49" cx="265.5" cy="265.5" r="265.5" transform="translate(666 553)" fill="rgba(250,250,250,0.53)"/>
       <rect id="dirhect_color" width="551" height="222" transform="translate(658 736)" fill="url(#pattern)"/>
     </g>
   </g>
 </svg>
+  );
+};
 
-  )
-}
-
-export default DiagramaPlataforma
+export default DiagramaPlataforma;
