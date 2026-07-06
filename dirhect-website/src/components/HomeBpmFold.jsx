@@ -224,6 +224,91 @@ const BpmTaskCardAdiantamento = ({ x, y, width = 110, height = 60, textLines, ty
   )
 }
 
+// BpmTaskCard component specifically for the Ferias flow to enable coordinate-based collision detection
+const BpmTaskCardFerias = ({ x, y, width = 100, height = 80, textLines, type = 'grey', iconType }) => {
+  let fill = '#f8fafc'
+  let strokeDefault = '#e2e8f0'
+  let strokeActive = '#cbd5e1'
+  let textColor = '#1e293b'
+  let iconColor = '#64748b'
+
+  if (type === 'blue') {
+    fill = '#eff6ff'
+    strokeDefault = '#a5bee8'
+    strokeActive = '#3b82f6'
+    textColor = '#1d4ed8'
+    iconColor = '#3b82f6'
+  } else if (type === 'orange') {
+    fill = '#fff7ed'
+    strokeDefault = '#e8c5a5'
+    strokeActive = '#ff8c00'
+    textColor = '#e67e00'
+    iconColor = '#ff8c00'
+  } else if (type === 'green') {
+    fill = '#f0fdf4'
+    strokeDefault = '#a5e8c2'
+    strokeActive = '#22c55e'
+    textColor = '#15803d'
+    iconColor = '#22c55e'
+  }
+
+  const cardStyle = {
+    '--card-stroke-default': strokeDefault,
+    '--card-stroke-active': strokeActive,
+    transformOrigin: `${width / 2}px ${height / 2}px`,
+  }
+
+  return (
+    <g transform={`translate(${x}, ${y})`}>
+      <g 
+        className="bpm-card-group bpms-ferias-flow-card" 
+        style={cardStyle}
+        data-x={x}
+        data-y={y}
+        data-width={width}
+        data-height={height}
+      >
+        <rect 
+          x="0" 
+          y="0" 
+          width={width} 
+          height={height} 
+          rx="8" 
+          fill={fill} 
+          stroke="var(--card-stroke-default)" 
+          strokeWidth="1.5" 
+          className="bpm-svg-card"
+        />
+        
+        {/* Icon rendering in top left */}
+        <g transform="translate(8, 8)">
+          {renderSvgIcon(iconType || type, iconColor)}
+        </g>
+
+        {/* Title Text lines */}
+        {textLines.map((line, idx) => {
+          const totalLinesHeight = textLines.length * 10.5
+          const startY = (height / 2) + 4 - (totalLinesHeight / 2) + 6
+          return (
+            <text 
+              key={idx}
+              x={width / 2} 
+              y={startY + (idx * 10.5)} 
+              fill={textColor} 
+              fontSize="8" 
+              fontWeight="700" 
+              textAnchor="middle"
+              fontFamily="'Inter', sans-serif"
+            >
+              {line}
+            </text>
+          )
+        })}
+      </g>
+    </g>
+  )
+}
+
 // BpmTaskCard component specifically for the Desligamento flow to enable coordinate-based collision detection
 const BpmTaskCardDesligamento = ({ x, y, width = 100, height = 80, textLines, type = 'grey', iconType }) => {
   let fill = '#f8fafc'
@@ -708,6 +793,97 @@ const HomeBpmFold = ({ isStandalone = false }) => {
     }
   }, [currentFlow])
 
+  useEffect(() => {
+    if (currentFlow !== 'ferias') return
+
+    let active = true
+    let animationFrameId
+
+    const checkCollisions = () => {
+      if (!active) return
+
+      const svgEl = document.querySelector('.home-bpm-svg--ferias')
+      if (!svgEl) {
+        animationFrameId = requestAnimationFrame(checkCollisions)
+        return
+      }
+
+      const svgRect = svgEl.getBoundingClientRect()
+      if (svgRect.width === 0 || svgRect.height === 0) {
+        animationFrameId = requestAnimationFrame(checkCollisions)
+        return
+      }
+
+      const scaleX = 1058 / svgRect.width
+      const scaleY = 470 / svgRect.height
+
+      // Query all moving dots in the ferias flow
+      const dots = svgEl.querySelectorAll(
+        '.bpm-moving-dot--ferias, .bpm-moving-dot-parallel--ferias, .bpm-moving-loop-error--ferias'
+      )
+
+      // Query all cards in the ferias flow
+      const cards = svgEl.querySelectorAll('.bpms-ferias-flow-card')
+
+      // Precompute dot coordinates in viewBox space
+      const dotCoords = []
+      dots.forEach((dot) => {
+        const rect = dot.getBoundingClientRect()
+        if (rect.width > 0) {
+          const cx = (rect.left + rect.width / 2 - svgRect.left) * scaleX + 67
+          const cy = (rect.top + rect.height / 2 - svgRect.top) * scaleY + 15
+          dotCoords.push({ cx, cy })
+        }
+      })
+
+      // Update class for each card
+      cards.forEach((card) => {
+        const x = parseFloat(card.getAttribute('data-x'))
+        const y = parseFloat(card.getAttribute('data-y'))
+        const w = parseFloat(card.getAttribute('data-width'))
+        const h = parseFloat(card.getAttribute('data-height'))
+
+        const margin = 15
+        let hasDot = false
+        for (let i = 0; i < dotCoords.length; i++) {
+          const { cx, cy } = dotCoords[i]
+          if (
+            cx >= x - margin &&
+            cx <= x + w + margin &&
+            cy >= y - margin &&
+            cy <= y + h + margin
+          ) {
+            hasDot = true
+            break
+          }
+        }
+
+        if (hasDot) {
+          if (!card.classList.contains('bpm-card-group--active')) {
+            card.classList.add('bpm-card-group--active')
+          }
+        } else {
+          if (card.classList.contains('bpm-card-group--active')) {
+            card.classList.remove('bpm-card-group--active')
+          }
+        }
+      })
+
+      animationFrameId = requestAnimationFrame(checkCollisions)
+    }
+
+    // Delay initialization slightly to let DOM render
+    const timeoutId = setTimeout(() => {
+      animationFrameId = requestAnimationFrame(checkCollisions)
+    }, 100)
+
+    return () => {
+      active = false
+      cancelAnimationFrame(animationFrameId)
+      clearTimeout(timeoutId)
+    }
+  }, [currentFlow])
+
   const flowFilenames = {
     admissao: 'fluxo_admissao_dirhect',
     adiantamento: 'fluxo_adiantamento_dirhect',
@@ -717,10 +893,6 @@ const HomeBpmFold = ({ isStandalone = false }) => {
   }
 
   const handleDownloadSvg = () => {
-    if (currentFlow === 'ferias') {
-      alert('O diagrama deste fluxo estará disponível em breve para download.')
-      return
-    }
 
     // Grab the full SVG element directly from the active component ref
     const svgEl = svgRef.current
@@ -1523,10 +1695,233 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                     />
                   </svg>
                 ) : currentFlow === 'ferias' ? (
-                  <div className="bpm-flow-placeholder" style={{ padding: '60px 20px', textAlign: 'center', color: 'var(--bpm-muted)' }}>
-                    <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '0.5rem', color: 'var(--bpm-navy)' }}>Fluxo de Férias</h3>
-                    <p>Aguardando o envio do diagrama/SVG do fluxo de Férias pelo usuário.</p>
-                  </div>
+                  <svg ref={svgRef} className="home-bpm-svg home-bpm-svg--ferias" viewBox="67 15 1058 470" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <marker id="arrow-ferias" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569" />
+                      </marker>
+                      <filter id="glow-ferias" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feMerge>
+                          <feMergeNode in="blur" />
+                          <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                      </filter>
+                    </defs>
+
+                    {/* Estrutura de Swimlanes */}
+                    <g>
+                      {/* Pool border */}
+                      <rect x="72" y="20" width="1048" height="460" rx="0" ry="0" stroke="#cbd5e1" strokeWidth="1.5" fill="none" />
+                      <line x1="102" y1="20" x2="102" y2="480" stroke="#cbd5e1" strokeWidth="1.5" />
+                      <text x="87" y="250" fill="#475569" fontSize="12" fontWeight="700" textAnchor="middle" transform="rotate(-90 87 250)">Fluxo de Férias</text>
+                      
+                      {/* Lane Cliente: Y: 20 to 150 */}
+                      <rect x="102" y="20" width="1018" height="130" fill="none" stroke="#cbd5e1" strokeWidth="1.5" />
+                      <text x="117" y="85" fill="#475569" fontSize="11" fontWeight="700" textAnchor="middle" transform="rotate(-90 117 85)">Cliente</text>
+                      
+                      {/* Lane BPO: Y: 150 to 290 */}
+                      <rect x="102" y="150" width="1018" height="140" fill="none" stroke="#cbd5e1" strokeWidth="1.5" />
+                      <text x="117" y="220" fill="#475569" fontSize="11" fontWeight="700" textAnchor="middle" transform="rotate(-90 117 220)">BPO</text>
+                      
+                      {/* Lane Dirhect: Y: 290 to 480 */}
+                      <rect x="102" y="290" width="1018" height="190" fill="none" stroke="#cbd5e1" strokeWidth="1.5" />
+                      <text x="117" y="385" fill="#475569" fontSize="11" fontWeight="700" textAnchor="middle" transform="rotate(-90 117 385)">Dirhect</text>
+                    </g>
+
+                    {/* Connectores (Fluxos de Sequência) */}
+                    <g>
+                      {/* Cliente Solicita Férias -> Aprovar Solicitação de Férias */}
+                      <path d="M 242 128 V 235 C 242 237.5 244.5 240 247 240 H 272" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      
+                      {/* Aprovar Solicitação de Férias -> Gateway Aprovado? */}
+                      <path d="M 372 240 H 427" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      
+                      {/* Gateway Aprovado? (True) -> Preparar Integração Férias */}
+                      <path d="M 452 265 V 400" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      <text x="462" y="302" fill="#475569" fontSize="8" fontWeight="700" textAnchor="start">True</text>
+                      
+                      {/* Gateway Aprovado? (False) -> Setar Usuário */}
+                      <path d="M 452 215 V 110 C 452 107.5 454.5 110 457 110 H 542" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      <text x="446" y="143" fill="#475569" fontSize="8" fontWeight="700" textAnchor="end">False</text>
+                      
+                      {/* Preparar Integração Férias -> Integrar ERP (Async) */}
+                      <path d="M 502 440 H 542" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      
+                      {/* Integrar ERP (Async) -> Fim */}
+                      <path d="M 642 440 H 1104" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      
+                      {/* Boundary Event Event_callback -> Verificar se é Erro Tratável */}
+                      <path d="M 624 400 V 360 C 624 357.5 626.5 355 629 355 H 672" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      
+                      {/* Verificar se é Erro Tratável -> Gateway Erro Tratável */}
+                      <path d="M 722 320 V 245 C 722 240 724.5 240 727 240 H 777" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      
+                      {/* Gateway Erro Tratável (True) -> Event_1ffnrue (Mensagem) */}
+                      <path d="M 827 240 H 874" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      <text x="844" y="233" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle">True</text>
+                      
+                      {/* Event_1ffnrue (Mensagem) -> Solicitar Ação Usuário */}
+                      <path d="M 910 240 H 962" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      
+                      {/* Gateway Erro Tratável (False) -> Event_0iy6p9c (Mensagem) */}
+                      <path d="M 802 265 V 355 C 802 360 804.5 360 807 360 H 874" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      <text x="838" y="353" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle">False</text>
+                      
+                      {/* Event_0iy6p9c (Mensagem) -> Solicitar Ação Suporte */}
+                      <path d="M 910 360 H 962" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      
+                      {/* Solicitar Ação Usuário -> Fim */}
+                      <path d="M 1062 240 H 1117 C 1120 240 1122 242.5 1122 245 V 422" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      
+                      {/* Solicitar Ação Suporte -> Fim */}
+                      <path d="M 1062 360 H 1117 C 1120 360 1122 362.5 1122 365 V 422" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      
+                      {/* Setar Usuário -> Event_1aouort (Mensagem) */}
+                      <path d="M 642 110 H 714" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      
+                      {/* Event_1aouort (Mensagem) -> Cancelado */}
+                      <path d="M 750 110 H 824" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                    </g>
+
+                    {/* Elementos e Nós do Fluxo */}
+                    <g>
+                      {/* Evento Inicial */}
+                      <g transform="translate(224, 92)">
+                        <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="2" fill="#fff" />
+                        <circle cx="18" cy="18" r="23" stroke="#cbd5e1" strokeWidth="1" strokeDasharray="2 2" fill="none" />
+                      </g>
+                      <text x="242" y="58" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Cliente Solicita</text>
+                      <text x="242" y="68" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Férias</text>
+
+                      {/* Task: Aprovar Solicitação de Férias */}
+                      <BpmTaskCardFerias 
+                        x={272} y={200} width={100} height={80} 
+                        textLines={["Aprovar", "Solicitação de", "Férias"]} 
+                        type="blue" iconType="user" 
+                      />
+
+                      {/* Gateway: Aprovado? */}
+                      <g transform="translate(427, 215)">
+                        <polygon points="25,0 50,25 25,50 0,25" stroke="#22242a" strokeWidth="2" fill="#fff" />
+                        <path d="M 16 15 L 34 35 M 34 15 L 16 35" stroke="#22242a" strokeWidth="2" />
+                      </g>
+                      <text x="452" y="208" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Aprovado?</text>
+
+                      {/* Task: Setar Usuário */}
+                      <BpmTaskCardFerias 
+                        x={542} y={70} width={100} height={80} 
+                        textLines={["Setar Usuário"]} 
+                        type="blue" iconType="user" 
+                      />
+
+                      {/* Evento Intermediário Mensagem */}
+                      <g transform="translate(714, 92)">
+                        <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="1.5" fill="#fff" />
+                        <circle cx="18" cy="18" r="15" stroke="#22242a" strokeWidth="1.5" fill="none" />
+                        <path d="m 10 13 h 16 v 10 h -16 z M 10 13 L 18 19 L 26 13" fill="none" stroke="#22242a" strokeWidth="1.2" />
+                      </g>
+
+                      {/* Evento Final: Cancelado */}
+                      <g transform="translate(824, 92)">
+                        <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="4" fill="#fff" />
+                        <circle cx="18" cy="18" r="10" stroke="#22242a" strokeWidth="4" fill="#22242a" />
+                      </g>
+                      <text x="842" y="142" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Cancelado</text>
+
+                      {/* Task: Preparar Integração Férias */}
+                      <BpmTaskCardFerias 
+                        x={402} y={400} width={100} height={80} 
+                        textLines={["Preparar", "Integração", "Férias"]} 
+                        type="green" iconType="cog" 
+                      />
+
+                      {/* Task: Integrar ERP (Async) */}
+                      <BpmTaskCardFerias 
+                        x={542} y={400} width={100} height={80} 
+                        textLines={["Integrar ERP", "(Async)"]} 
+                        type="green" iconType="cog" 
+                      />
+
+                      {/* Boundary Event */}
+                      <g transform="translate(624, 382)">
+                        <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="1.5" fill="#fff" />
+                        <circle cx="18" cy="18" r="15" stroke="#cbd5e1" strokeWidth="1.5" fill="none" />
+                        <path d="m 7.2 25.992 l 0.093 -0.025 l 7.339 -9.61 l 7.667 8.966 l 4.7 -18.22 l -5.87 11.65 l -7.3 -9.585 z" fill="#fff" stroke="#22242a" strokeWidth="1" />
+                      </g>
+                      <text x="590" y="366" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Aguardando</text>
+                      <text x="590" y="376" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Retorno N8N</text>
+
+                      {/* Task: Verificar se é Erro Tratável */}
+                      <BpmTaskCardFerias 
+                        x={672} y={320} width={100} height={80} 
+                        textLines={["Verificar se é", "Erro Tratável"]} 
+                        type="orange" iconType="check" 
+                      />
+
+                      {/* Gateway de erro */}
+                      <g transform="translate(777, 215)">
+                        <polygon points="25,0 50,25 25,50 0,25" stroke="#22242a" strokeWidth="2" fill="#fff" />
+                        <path d="M 16 15 L 34 35 M 34 15 L 16 35" stroke="#22242a" strokeWidth="2" />
+                      </g>
+
+                      {/* Evento Intermediário Mensagem (True) */}
+                      <g transform="translate(874, 222)">
+                        <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="1.5" fill="#fff" />
+                        <circle cx="18" cy="18" r="15" stroke="#22242a" strokeWidth="1.5" fill="none" />
+                        <path d="m 10 13 h 16 v 10 h -16 z M 10 13 L 18 19 L 26 13" fill="none" stroke="#22242a" strokeWidth="1.2" />
+                      </g>
+
+                      {/* Task: Solicitar Ação Usuário */}
+                      <BpmTaskCardFerias 
+                        x={962} y={200} width={100} height={80} 
+                        textLines={["Solicitar Ação", "Usuário"]} 
+                        type="orange" iconType="user" 
+                      />
+
+                      {/* Evento Intermediário Mensagem (False) */}
+                      <g transform="translate(874, 342)">
+                        <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="1.5" fill="#fff" />
+                        <circle cx="18" cy="18" r="15" stroke="#22242a" strokeWidth="1.5" fill="none" />
+                        <path d="m 10 13 h 16 v 10 h -16 z M 10 13 L 18 19 L 26 13" fill="none" stroke="#22242a" strokeWidth="1.2" />
+                      </g>
+
+                      {/* Task: Solicitar Ação Suporte */}
+                      <BpmTaskCardFerias 
+                        x={962} y={300} width={100} height={80} 
+                        textLines={["Solicitar Ação", "Suporte"]} 
+                        type="orange" iconType="cog" 
+                      />
+
+                      {/* Evento Final */}
+                      <g transform="translate(1104, 422)">
+                        <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="4" fill="#fff" />
+                        <circle cx="18" cy="18" r="10" stroke="#22242a" strokeWidth="4" fill="#22242a" />
+                      </g>
+                      <text x="1122" y="470" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Fim</text>
+                    </g>
+
+                    {/* Bolinhas Animadas (Pulsos de Energia) */}
+                    <g>
+                      {/* Happy Path */}
+                      <circle cx="0" cy="0" r="4" fill="#3b82f6" className="bpm-moving-dot--ferias bpm-dot-ferias-1" filter="url(#glow-ferias)" />
+                      <circle cx="0" cy="0" r="4" fill="#3b82f6" className="bpm-moving-dot--ferias bpm-dot-ferias-2" filter="url(#glow-ferias)" />
+                      <circle cx="0" cy="0" r="4" fill="#3b82f6" className="bpm-moving-dot--ferias bpm-dot-ferias-3" filter="url(#glow-ferias)" />
+                      <circle cx="0" cy="0" r="4" fill="#3b82f6" className="bpm-moving-dot--ferias bpm-dot-ferias-4" filter="url(#glow-ferias)" />
+
+                      {/* Alternative Path (Not Approved) */}
+                      <circle cx="0" cy="0" r="4" fill="#ef4444" className="bpm-moving-dot-alternative--ferias bpm-dot-alternative-ferias-1" filter="url(#glow-ferias)" />
+                      <circle cx="0" cy="0" r="4" fill="#ef4444" className="bpm-moving-dot-alternative--ferias bpm-dot-alternative-ferias-2" filter="url(#glow-ferias)" />
+
+                      {/* Error True Path */}
+                      <circle cx="0" cy="0" r="4" fill="#f97316" className="bpm-moving-dot-parallel-true--ferias bpm-dot-parallel-true-ferias-1" filter="url(#glow-ferias)" />
+                      <circle cx="0" cy="0" r="4" fill="#f97316" className="bpm-moving-dot-parallel-true--ferias bpm-dot-parallel-true-ferias-2" filter="url(#glow-ferias)" />
+
+                      {/* Error False Path */}
+                      <circle cx="0" cy="0" r="4" fill="#f97316" className="bpm-moving-dot-parallel-false--ferias bpm-dot-parallel-false-ferias-1" filter="url(#glow-ferias)" />
+                      <circle cx="0" cy="0" r="4" fill="#f97316" className="bpm-moving-dot-parallel-false--ferias bpm-dot-parallel-false-ferias-2" filter="url(#glow-ferias)" />
+                    </g>
+                  </svg>
                 ) : (
                   <svg ref={svgRef} className="home-bpm-svg home-bpm-svg--desligamento" viewBox="118 -55 1577 450" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <defs>
