@@ -1571,7 +1571,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                     {/* Gateway 2o Nível (top) -> Validar, Complementar e Aprovar */}
                     <path d="M 635 120 L 700 120" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
                     {/* Gateway 2o Nível (middle) -> Validar e Complementar */}
-                    <path d="M 610 145 L 610 215 C 610 217.5 612.5 220 615 220 L 700 220" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    <path d="M 630 130 L 630 215 C 630 217.5 632.5 220 635 220 L 700 220" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
                     {/* Validar, Complementar e Aprovar -> Gateway Decisão Integração */}
                     <path d="M 800 120 L 875 120 C 877.5 120 880 122.5 880 125 L 880 195" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
                     {/* Gateway Decisão Integração -> Validar e Complementar */}

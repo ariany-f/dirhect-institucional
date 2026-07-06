@@ -933,7 +933,7 @@
 
 /* Parallel validation dot for Desligamento */
 .bpm-moving-dot-parallel--desligamento {
-  offset-path: path('M 610 120 V 215 C 610 217.5 612.5 220 615 220 H 750 V 340 H 875 C 877.5 340 880 337.5 880 335 V 220');
+  offset-path: path('M 630 125 V 215 C 630 217.5 632.5 220 635 220 H 750 V 340 H 875 C 877.5 340 880 337.5 880 335 V 220');
   animation: bpm-move-main-path 10s infinite linear;
 }
 
