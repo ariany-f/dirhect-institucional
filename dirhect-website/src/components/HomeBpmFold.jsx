@@ -1570,14 +1570,14 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                     <path d="M 635 120 L 700 120" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
                     {/* Gateway 2o Nível (middle) -> Validar e Complementar */}
                     <path d="M 610 145 L 610 215 C 610 217.5 612.5 220 615 220 L 700 220" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
-                    {/* Gateway 2o Nível (bottom) -> Validar e Aprovar */}
-                    <path d="M 800 120 L 875 120 C 877.5 120 880 122.5 880 125 L 880 195" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
                     {/* Validar, Complementar e Aprovar -> Gateway Decisão Integração */}
-                    <path d="M 800 340 L 875 340 C 877.5 340 880 337.5 880 335 L 880 245" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
-                    {/* Validar e Complementar -> Gateway Decisão Integração */}
-                    <path d="M 800 340 L 875 340 C 877.5 340 880 337.5 880 335 L 880 245" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
-                    {/* Validar e Aprovar -> Gateway Decisão Integração */}
+                    <path d="M 800 120 L 875 120 C 877.5 120 880 122.5 880 125 L 880 195" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Gateway Decisão Integração -> Validar e Complementar */}
                     <path d="M 855 220 L 800 220" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Validar e Complementar -> Validar e Aprovar */}
+                    <path d="M 750 260 L 750 300" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Validar e Aprovar -> Gateway Decisão Integração */}
+                    <path d="M 800 340 L 875 340 C 877.5 340 880 337.5 880 335 L 880 245" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
                     {/* Gateway Decisão Integração -> Finalizar Desligamento */}
                     <path d="M 905 220 H 970" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
                     {/* Finalizar Desligamento -> Integrar Sistema de RH */}
