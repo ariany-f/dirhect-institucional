@@ -667,10 +667,16 @@ const HomeBpmFold = ({ isStandalone = false }) => {
         const w = parseFloat(card.getAttribute('data-width'))
         const h = parseFloat(card.getAttribute('data-height'))
 
+        const margin = 15
         let hasDot = false
         for (let i = 0; i < dotCoords.length; i++) {
           const { cx, cy } = dotCoords[i]
-          if (cx >= x && cx <= x + w && cy >= y && cy <= y + h) {
+          if (
+            cx >= x - margin &&
+            cx <= x + w + margin &&
+            cy >= y - margin &&
+            cy <= y + h + margin
+          ) {
             hasDot = true
             break
           }
