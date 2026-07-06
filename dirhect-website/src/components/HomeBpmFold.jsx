@@ -1646,7 +1646,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                       <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="4" fill="#fff" />
                       <circle cx="18" cy="18" r="10" stroke="#22242a" strokeWidth="4" fill="#22242a" />
                     </g>
-                    <text x="1530" y="268" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Finalizar</text>
+                    <text x="1530" y="283" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Finalizar</text>
 
                     {/* Bolinhas Animadas (Pulsos de Energia) */}
                     <circle r="4.5" fill="#3b82f6" filter="url(#glow-desligamento)" className="bpm-moving-dot--desligamento bpm-dot-desligamento-1" />
