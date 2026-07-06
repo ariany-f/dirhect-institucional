@@ -1024,7 +1024,7 @@
 
 /* Custom size constraints for Ferias flow */
 .home-bpm-svg--ferias {
-  height: 440px !important;
+  height: 330px !important;
   width: auto !important;
   min-width: unset !important;
 }
