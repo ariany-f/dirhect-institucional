@@ -819,7 +819,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
 
       // Query all moving dots in the ferias flow
       const dots = svgEl.querySelectorAll(
-        '.bpm-moving-dot--ferias, .bpm-moving-dot-parallel--ferias, .bpm-moving-loop-error--ferias'
+        '.bpm-moving-dot--ferias, .bpm-moving-dot-alternative--ferias, .bpm-moving-dot-parallel-true--ferias, .bpm-moving-dot-parallel-false--ferias'
       )
 
       // Query all cards in the ferias flow
