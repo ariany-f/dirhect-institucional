@@ -814,7 +814,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
         return
       }
 
-      const scaleX = 1058 / svgRect.width
+      const scaleX = 1358 / svgRect.width
       const scaleY = 470 / svgRect.height
 
       // Query all moving dots in the ferias flow
@@ -1695,7 +1695,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                     />
                   </svg>
                 ) : currentFlow === 'ferias' ? (
-                  <svg ref={svgRef} className="home-bpm-svg home-bpm-svg--ferias" viewBox="67 15 1058 470" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <svg ref={svgRef} className="home-bpm-svg home-bpm-svg--ferias" viewBox="67 15 1358 470" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <defs>
                       <marker id="arrow-ferias" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
                         <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569" />
@@ -1712,20 +1712,20 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                     {/* Estrutura de Swimlanes */}
                     <g>
                       {/* Pool border */}
-                      <rect x="72" y="20" width="1048" height="460" rx="0" ry="0" stroke="#cbd5e1" strokeWidth="1.5" fill="none" />
+                      <rect x="72" y="20" width="1348" height="460" rx="0" ry="0" stroke="#cbd5e1" strokeWidth="1.5" fill="none" />
                       <line x1="102" y1="20" x2="102" y2="480" stroke="#cbd5e1" strokeWidth="1.5" />
                       <text x="87" y="250" fill="#475569" fontSize="12" fontWeight="700" textAnchor="middle" transform="rotate(-90 87 250)">Fluxo de Férias</text>
                       
                       {/* Lane Cliente: Y: 20 to 150 */}
-                      <rect x="102" y="20" width="1018" height="130" fill="none" stroke="#cbd5e1" strokeWidth="1.5" />
+                      <rect x="102" y="20" width="1318" height="130" fill="none" stroke="#cbd5e1" strokeWidth="1.5" />
                       <text x="117" y="85" fill="#475569" fontSize="11" fontWeight="700" textAnchor="middle" transform="rotate(-90 117 85)">Cliente</text>
                       
                       {/* Lane BPO: Y: 150 to 290 */}
-                      <rect x="102" y="150" width="1018" height="140" fill="none" stroke="#cbd5e1" strokeWidth="1.5" />
+                      <rect x="102" y="150" width="1318" height="140" fill="none" stroke="#cbd5e1" strokeWidth="1.5" />
                       <text x="117" y="220" fill="#475569" fontSize="11" fontWeight="700" textAnchor="middle" transform="rotate(-90 117 220)">BPO</text>
                       
                       {/* Lane Dirhect: Y: 290 to 480 */}
-                      <rect x="102" y="290" width="1018" height="190" fill="none" stroke="#cbd5e1" strokeWidth="1.5" />
+                      <rect x="102" y="290" width="1318" height="190" fill="none" stroke="#cbd5e1" strokeWidth="1.5" />
                       <text x="117" y="385" fill="#475569" fontSize="11" fontWeight="700" textAnchor="middle" transform="rotate(-90 117 385)">Dirhect</text>
                     </g>
 
@@ -1749,7 +1749,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                       <path d="M 502 440 H 542" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
                       
                       {/* Integrar ERP (Async) -> Fim */}
-                      <path d="M 642 440 H 1104" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      <path d="M 642 440 H 1404" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
                       
                       {/* Boundary Event Event_callback -> Verificar se é Erro Tratável */}
                       <path d="M 624 400 V 360 C 624 357.5 626.5 355 629 355 H 672" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
@@ -1772,10 +1772,10 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                       <path d="M 910 360 H 962" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
                       
                       {/* Solicitar Ação Usuário -> Fim */}
-                      <path d="M 1062 240 H 1117 C 1120 240 1122 242.5 1122 245 V 422" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      <path d="M 1062 240 H 1417 C 1420 240 1422 242.5 1422 245 V 422" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
                       
                       {/* Solicitar Ação Suporte -> Fim */}
-                      <path d="M 1062 360 H 1117 C 1120 360 1122 362.5 1122 365 V 422" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      <path d="M 1062 360 H 1417 C 1420 360 1422 362.5 1422 365 V 422" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
                       
                       {/* Setar Usuário -> Event_1aouort (Mensagem) */}
                       <path d="M 642 110 H 714" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
@@ -1894,11 +1894,11 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                       />
 
                       {/* Evento Final */}
-                      <g transform="translate(1104, 422)">
+                      <g transform="translate(1332, 422)">
                         <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="4" fill="#fff" />
                         <circle cx="18" cy="18" r="10" stroke="#22242a" strokeWidth="4" fill="#22242a" />
                       </g>
-                      <text x="1122" y="470" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Fim</text>
+                      <text x="1350" y="470" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Fim</text>
                     </g>
 
                     {/* Bolinhas Animadas (Pulsos de Energia) */}
