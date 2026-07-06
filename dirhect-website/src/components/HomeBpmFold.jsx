@@ -1894,7 +1894,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                       />
 
                       {/* Evento Final */}
-                      <g transform="translate(1280, 422)">
+                      <g transform="translate(1280, 402)">
                         <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="4" fill="#fff" />
                         <circle cx="18" cy="18" r="10" stroke="#22242a" strokeWidth="4" fill="#22242a" />
                       </g>
