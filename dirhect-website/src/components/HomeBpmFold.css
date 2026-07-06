@@ -960,7 +960,7 @@
 
 /* Animation dots for Ferias flow */
 .bpm-moving-dot--ferias {
-  offset-path: path('M 242 110 V 235 C 242 237.5 244.5 240 247 240 H 427 H 452 V 400 H 1104 H 1122');
+  offset-path: path('M 242 110 V 235 C 242 237.5 244.5 240 247 240 H 427 H 452 V 440 H 1122');
   animation: bpm-move-main-path 14s infinite linear;
 }
 
@@ -996,7 +996,7 @@
 
 /* Parallel path for Ferias (Error True/User Action) */
 .bpm-moving-dot-parallel-true--ferias {
-  offset-path: path('M 642 400 L 624 400 V 360 C 624 357.5 626.5 355 629 355 H 672 H 722 V 245 C 722 240 724.5 240 727 240 H 1062 H 1117 C 1120 240 1122 242.5 1122 245 V 422');
+  offset-path: path('M 642 400 L 624 400 V 360 C 624 357.5 626.5 355 629 355 H 672 H 722 V 245 C 722 240 724.5 240 727 240 H 1062 H 1117 C 1120 240 1122 242.5 1122 245 V 440');
   animation: bpm-move-main-path 12s infinite linear;
 }
 
@@ -1010,7 +1010,7 @@
 
 /* Parallel path for Ferias (Error False/Support Action) */
 .bpm-moving-dot-parallel-false--ferias {
-  offset-path: path('M 802 240 V 355 C 802 360 804.5 360 807 360 H 1062 H 1117 C 1120 360 1122 362.5 1122 365 V 422');
+  offset-path: path('M 802 240 V 355 C 802 360 804.5 360 807 360 H 1062 H 1117 C 1120 360 1122 362.5 1122 365 V 440');
   animation: bpm-move-main-path 10s infinite linear;
 }
 
