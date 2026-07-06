@@ -224,6 +224,91 @@ const BpmTaskCardAdiantamento = ({ x, y, width = 110, height = 60, textLines, ty
   )
 }
 
+// BpmTaskCard component specifically for the Desligamento flow to enable coordinate-based collision detection
+const BpmTaskCardDesligamento = ({ x, y, width = 100, height = 80, textLines, type = 'grey', iconType }) => {
+  let fill = '#f8fafc'
+  let strokeDefault = '#e2e8f0'
+  let strokeActive = '#cbd5e1'
+  let textColor = '#1e293b'
+  let iconColor = '#64748b'
+
+  if (type === 'blue') {
+    fill = '#eff6ff'
+    strokeDefault = '#a5bee8'
+    strokeActive = '#3b82f6'
+    textColor = '#1d4ed8'
+    iconColor = '#3b82f6'
+  } else if (type === 'orange') {
+    fill = '#fff7ed'
+    strokeDefault = '#e8c5a5'
+    strokeActive = '#ff8c00'
+    textColor = '#e67e00'
+    iconColor = '#ff8c00'
+  } else if (type === 'green') {
+    fill = '#f0fdf4'
+    strokeDefault = '#a5e8c2'
+    strokeActive = '#22c55e'
+    textColor = '#15803d'
+    iconColor = '#22c55e'
+  }
+
+  const cardStyle = {
+    '--card-stroke-default': strokeDefault,
+    '--card-stroke-active': strokeActive,
+    transformOrigin: `${width / 2}px ${height / 2}px`,
+  }
+
+  return (
+    <g transform={`translate(${x}, ${y})`}>
+      <g 
+        className="bpm-card-group bpms-desligamento-flow-card" 
+        style={cardStyle}
+        data-x={x}
+        data-y={y}
+        data-width={width}
+        data-height={height}
+      >
+        <rect 
+          x="0" 
+          y="0" 
+          width={width} 
+          height={height} 
+          rx="8" 
+          fill={fill} 
+          stroke="var(--card-stroke-default)" 
+          strokeWidth="1.5" 
+          className="bpm-svg-card"
+        />
+        
+        {/* Icon rendering in top left */}
+        <g transform="translate(8, 8)">
+          {renderSvgIcon(iconType || type, iconColor)}
+        </g>
+
+        {/* Title Text lines */}
+        {textLines.map((line, idx) => {
+          const totalLinesHeight = textLines.length * 10.5
+          const startY = (height / 2) + 4 - (totalLinesHeight / 2) + 6
+          return (
+            <text 
+              key={idx}
+              x={width / 2} 
+              y={startY + (idx * 10.5)} 
+              fill={textColor} 
+              fontSize="8" 
+              fontWeight="700" 
+              textAnchor="middle"
+              fontFamily="'Inter', sans-serif"
+            >
+              {line}
+            </text>
+          )
+        })}
+      </g>
+    </g>
+  )
+}
+
 // BpmTaskCard component specifically for the Variaveis flow to enable coordinate-based collision detection
 const BpmTaskCardVariaveis = ({ x, y, width = 110, height = 60, textLines, type = 'grey', iconType }) => {
   let fill = '#f8fafc'
@@ -532,6 +617,91 @@ const HomeBpmFold = ({ isStandalone = false }) => {
     }
   }, [currentFlow])
 
+  useEffect(() => {
+    if (currentFlow !== 'desligamento') return
+
+    let active = true
+    let animationFrameId
+
+    const checkCollisions = () => {
+      if (!active) return
+
+      const svgEl = document.querySelector('.home-bpm-svg--desligamento')
+      if (!svgEl) {
+        animationFrameId = requestAnimationFrame(checkCollisions)
+        return
+      }
+
+      const svgRect = svgEl.getBoundingClientRect()
+      if (svgRect.width === 0 || svgRect.height === 0) {
+        animationFrameId = requestAnimationFrame(checkCollisions)
+        return
+      }
+
+      const scaleX = 1577 / svgRect.width
+      const scaleY = 450 / svgRect.height
+
+      // Query all moving dots in the desligamento flow
+      const dots = svgEl.querySelectorAll(
+        '.bpm-moving-dot--desligamento, .bpm-moving-dot-parallel--desligamento, .bpm-moving-loop-error--desligamento'
+      )
+
+      // Query all cards in the desligamento flow
+      const cards = svgEl.querySelectorAll('.bpms-desligamento-flow-card')
+
+      // Precompute dot coordinates in viewBox space
+      const dotCoords = []
+      dots.forEach((dot) => {
+        const rect = dot.getBoundingClientRect()
+        if (rect.width > 0) {
+          const cx = (rect.left + rect.width / 2 - svgRect.left) * scaleX + 118
+          const cy = (rect.top + rect.height / 2 - svgRect.top) * scaleY - 55
+          dotCoords.push({ cx, cy })
+        }
+      })
+
+      // Update class for each card
+      cards.forEach((card) => {
+        const x = parseFloat(card.getAttribute('data-x'))
+        const y = parseFloat(card.getAttribute('data-y'))
+        const w = parseFloat(card.getAttribute('data-width'))
+        const h = parseFloat(card.getAttribute('data-height'))
+
+        let hasDot = false
+        for (let i = 0; i < dotCoords.length; i++) {
+          const { cx, cy } = dotCoords[i]
+          if (cx >= x && cx <= x + w && cy >= y && cy <= y + h) {
+            hasDot = true
+            break
+          }
+        }
+
+        if (hasDot) {
+          if (!card.classList.contains('bpm-card-group--active')) {
+            card.classList.add('bpm-card-group--active')
+          }
+        } else {
+          if (card.classList.contains('bpm-card-group--active')) {
+            card.classList.remove('bpm-card-group--active')
+          }
+        }
+      })
+
+      animationFrameId = requestAnimationFrame(checkCollisions)
+    }
+
+    // Delay initialization slightly to let DOM render
+    const timeoutId = setTimeout(() => {
+      animationFrameId = requestAnimationFrame(checkCollisions)
+    }, 100)
+
+    return () => {
+      active = false
+      cancelAnimationFrame(animationFrameId)
+      clearTimeout(timeoutId)
+    }
+  }, [currentFlow])
+
   const flowFilenames = {
     admissao: 'fluxo_admissao_dirhect',
     adiantamento: 'fluxo_adiantamento_dirhect',
@@ -541,7 +711,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
   }
 
   const handleDownloadSvg = () => {
-    if (currentFlow === 'ferias' || currentFlow === 'desligamento') {
+    if (currentFlow === 'ferias') {
       alert('O diagrama deste fluxo estará disponível em breve para download.')
       return
     }
@@ -1352,10 +1522,178 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                     <p>Aguardando o envio do diagrama/SVG do fluxo de Férias pelo usuário.</p>
                   </div>
                 ) : (
-                  <div className="bpm-flow-placeholder" style={{ padding: '60px 20px', textAlign: 'center', color: 'var(--bpm-muted)' }}>
-                    <h3 style={{ fontSize: '1.25rem', fontWeight: '700', marginBottom: '0.5rem', color: 'var(--bpm-navy)' }}>Fluxo de Desligamento</h3>
-                    <p>Aguardando o envio do diagrama/SVG do fluxo de Desligamento pelo usuário.</p>
-                  </div>
+                  <svg ref={svgRef} className="home-bpm-svg home-bpm-svg--desligamento" viewBox="118 -55 1577 450" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                      <marker id="arrow-desligamento" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                        <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#475569" />
+                      </marker>
+                      <filter id="glow-desligamento" x="-50%" y="-50%" width="200%" height="200%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feMerge>
+                          <feMergeNode in="blur" />
+                          <feMergeNode in="SourceGraphic" />
+                        </feMerge>
+                      </filter>
+                    </defs>
+
+                    {/* Estrutura de Swimlanes */}
+                    <rect x="123" y="-50" width="30" height="440" fill="#fafafa" stroke="#cbd5e1" strokeWidth="1" />
+                    <text x="138" y="170" fill="#475569" fontSize="9" fontWeight="800" textAnchor="middle" transform="rotate(-90 138 170)">Processo Desligamento (Dirhect)</text>
+
+                    <rect x="153" y="-50" width="30" height="440" fill="#fafafa" stroke="#cbd5e1" strokeWidth="1" />
+                    <line x1="153" y1="50" x2="183" y2="50" stroke="#cbd5e1" strokeWidth="1" />
+                    <line x1="153" y1="280" x2="183" y2="280" stroke="#cbd5e1" strokeWidth="1" />
+                    <text x="168" y="0" fill="#475569" fontSize="9" fontWeight="700" textAnchor="middle" transform="rotate(-90 168 0)">Candidato</text>
+                    <text x="168" y="165" fill="#475569" fontSize="9" fontWeight="700" textAnchor="middle" transform="rotate(-90 168 165)">Analista</text>
+                    <text x="168" y="335" fill="#475569" fontSize="9" fontWeight="700" textAnchor="middle" transform="rotate(-90 168 335)">Aprovador</text>
+
+                    <rect x="183" y="-50" width="1507" height="100" fill="none" stroke="#cbd5e1" strokeWidth="1" />
+                    <rect x="183" y="50" width="1507" height="230" fill="none" stroke="#cbd5e1" strokeWidth="1" />
+                    <rect x="183" y="280" width="1507" height="110" fill="none" stroke="#cbd5e1" strokeWidth="1" />
+
+                    {/* Conectores e Linhas */}
+                    {/* Start -> Gateway E-mail */}
+                    <path d="M 228 120 L 295 120" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Gateway E-mail -> Enviar E-mail */}
+                    <path d="M 345 120 L 400 120" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Enviar E-mail -> Candidato (Preencher Dados) */}
+                    <path d="M 450 80 L 450 5 C 450 2.5 452.5 0 455 0 L 480 0" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Candidato (Preencher Dados) -> Gateway 2o Nível */}
+                    <path d="M 580 0 L 605 0 C 607.5 0 610 2.5 610 5 L 610 95" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Gateway 2o Nível (top) -> Validar, Complementar e Aprovar */}
+                    <path d="M 635 120 L 700 120" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Gateway 2o Nível (middle) -> Validar e Complementar */}
+                    <path d="M 620 135 L 620 215 C 620 217.5 622.5 220 625 220 L 700 220" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Gateway 2o Nível (bottom) -> Validar e Aprovar */}
+                    <path d="M 800 120 L 875 120 C 877.5 120 880 122.5 880 125 L 880 195" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Validar, Complementar e Aprovar -> Gateway Decisão Integração */}
+                    <path d="M 800 340 L 875 340 C 877.5 340 880 337.5 880 335 L 880 245" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Validar e Complementar -> Gateway Decisão Integração */}
+                    <path d="M 800 340 L 875 340 C 877.5 340 880 337.5 880 335 L 880 245" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Validar e Aprovar -> Gateway Decisão Integração */}
+                    <path d="M 855 220 L 800 220" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Gateway Decisão Integração -> Finalizar Desligamento */}
+                    <path d="M 905 220 H 970" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Finalizar Desligamento -> Integrar Sistema de RH */}
+                    <path d="M 1070 220 H 1140" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Integrar Sistema de RH -> Evento Finalizar */}
+                    <path d="M 1240 250 H 1512" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Integrar Sistema de RH (boundary) -> Tratamento de Erro */}
+                    <path d="M 1240 162 V 145 C 1240 142.5 1242.5 140 1245 140 H 1320" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Tratamento de Erro -> Gateway Ressubmeter */}
+                    <path d="M 1420 140 H 1465" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Gateway Ressubmeter (Sim) -> Integrar Sistema de RH */}
+                    <path d="M 1490 115 V 85 C 1490 82.5 1487.5 80 1485 80 H 1208" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Gateway Ressubmeter (Não) -> Cancelado */}
+                    <path d="M 1515 140 H 1555 C 1557.5 140 1560 142.5 1560 145 V 205 C 1560 207.5 1557.5 210 1555 210 H 1240" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" strokeDasharray="3" />
+                    {/* Gateway Decisão Integração (Reject/Loop) -> Gateway E-mail */}
+                    <path d="M 890 205 V 85 C 890 82.5 892.5 80 895 80 H 1172" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+
+                    {/* Elementos Estáticos: Start, End, Gateways */}
+                    {/* Start Event */}
+                    <circle cx="210" cy="120" r="18" stroke="#22242a" strokeWidth="2" fill="#fff" />
+
+                    {/* Gateway E-mail */}
+                    <g transform="translate(295, 95)">
+                      <polygon points="25,0 50,25 25,50 0,25" stroke="#22242a" strokeWidth="2" fill="#fff" />
+                      <path d="m 16,15 7.42857142857143,9.714285714285715 -7.42857142857143,9.714285714285715 3.428571428571429,0 5.714285714285715,-7.464228571428572 5.714285714285715,7.464228571428572 3.428571428571429,0 -7.42857142857143,-9.714285714285715 7.42857142857143,-9.714285714285715 -3.428571428571429,0 -5.714285714285715,7.464228571428572 -5.714285714285715,-7.464228571428572 -3.428571428571429,0 z" fill="#22242a" stroke="#22242a" strokeWidth="1" />
+                    </g>
+
+                    {/* Gateway 2o Nível */}
+                    <g transform="translate(585, 95)">
+                      <polygon points="25,0 50,25 25,50 0,25" stroke="#22242a" strokeWidth="2" fill="#fff" />
+                      <path d="m 16,15 7.42857142857143,9.714285714285715 -7.42857142857143,9.714285714285715 3.428571428571429,0 5.714285714285715,-7.464228571428572 5.714285714285715,7.464228571428572 3.428571428571429,0 -7.42857142857143,-9.714285714285715 7.42857142857143,-9.714285714285715 -3.428571428571429,0 -5.714285714285715,7.464228571428572 -5.714285714285715,-7.464228571428572 -3.428571428571429,0 z" fill="#22242a" stroke="#22242a" strokeWidth="1" />
+                    </g>
+
+                    {/* Gateway Decisão Integração */}
+                    <g transform="translate(855, 195)">
+                      <polygon points="25,0 50,25 25,50 0,25" stroke="#22242a" strokeWidth="2" fill="#fff" />
+                      <path d="m 16,15 7.42857142857143,9.714285714285715 -7.42857142857143,9.714285714285715 3.428571428571429,0 5.714285714285715,-7.464228571428572 5.714285714285715,7.464228571428572 3.428571428571429,0 -7.42857142857143,-9.714285714285715 7.42857142857143,-9.714285714285715 -3.428571428571429,0 -5.714285714285715,7.464228571428572 -5.714285714285715,-7.464228571428572 -3.428571428571429,0 z" fill="#22242a" stroke="#22242a" strokeWidth="1" />
+                    </g>
+
+                    {/* Gateway Ressubmeter */}
+                    <g transform="translate(1465, 115)">
+                      <polygon points="25,0 50,25 25,50 0,25" stroke="#22242a" strokeWidth="2" fill="#fff" />
+                      <path d="m 16,15 7.42857142857143,9.714285714285715 -7.42857142857143,9.714285714285715 3.428571428571429,0 5.714285714285715,-7.464228571428572 5.714285714285715,7.464228571428572 3.428571428571429,0 -7.42857142857143,-9.714285714285715 7.42857142857143,-9.714285714285715 -3.428571428571429,0 -5.714285714285715,7.464228571428572 -5.714285714285715,-7.464228571428572 -3.428571428571429,0 z" fill="#22242a" stroke="#22242a" strokeWidth="1" />
+                    </g>
+                    <text x="1490" y="180" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Ressubmeter?</text>
+
+                    {/* Boundary Event: Aguardando Resposta Sistema RH */}
+                    <g transform="translate(1222, 162)">
+                      <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="1.5" fill="#fff" />
+                      <circle cx="18" cy="18" r="15" stroke="#22242a" strokeWidth="1.5" fill="none" />
+                      {/* Lightning boundary icon */}
+                      <path d="m 7.2,25.991999999999997 0.09350000000000001,-0.025300000000000003 7.3392,-9.610700000000001 7.667000000000001,8.9661 4.7003,-18.2204 -5.8707,11.6501 -7.299600000000001,-9.585400000000002 z" fill="#fff" stroke="#22242a" strokeWidth="1" />
+                    </g>
+                    <text x="1190" y="142" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Aguardando</text>
+                    <text x="1190" y="152" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Resposta RH</text>
+
+                    {/* Evento Cancelado */}
+                    <g transform="translate(1172, 62)">
+                      <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="4" fill="#fff" />
+                      <circle cx="18" cy="18" r="10" stroke="#22242a" strokeWidth="4" fill="#22242a" />
+                    </g>
+                    <text x="1190" y="113" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Cancelado</text>
+
+                    {/* Evento Finalizar */}
+                    <g transform="translate(1512, 232)">
+                      <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="4" fill="#fff" />
+                      <circle cx="18" cy="18" r="10" stroke="#22242a" strokeWidth="4" fill="#22242a" />
+                    </g>
+                    <text x="1530" y="268" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Finalizar</text>
+
+                    {/* Bolinhas Animadas (Pulsos de Energia) */}
+                    <circle r="4.5" fill="#3b82f6" filter="url(#glow-desligamento)" className="bpm-moving-dot--desligamento bpm-dot-desligamento-1" />
+                    <circle r="4.5" fill="#22c55e" filter="url(#glow-desligamento)" className="bpm-moving-dot--desligamento bpm-dot-desligamento-3" />
+                    
+                    <circle r="4" fill="#3b82f6" filter="url(#glow-desligamento)" className="bpm-moving-dot-parallel--desligamento bpm-dot-parallel-desligamento-1" />
+                    
+                    <circle r="3.5" fill="#ef4444" filter="url(#glow-desligamento)" className="bpm-moving-loop-error--desligamento" />
+
+                    {/* Grupo de Cartões de Tarefa interativos para Desligamento */}
+                    <g className="bpms-desligamento-flow">
+                      <BpmTaskCardDesligamento 
+                        x={400} y={80} 
+                        textLines={["Enviar E-mail", "para Candidato", "Complementar"]} 
+                        type="blue" iconType="user" 
+                      />
+                      <BpmTaskCardDesligamento 
+                        x={480} y={-40} 
+                        textLines={["Preencher", "Dados"]} 
+                        type="orange" iconType="check" 
+                      />
+                      <BpmTaskCardDesligamento 
+                        x={700} y={80} 
+                        textLines={["Validar,", "Complementar", "e Aprovar"]} 
+                        type="blue" iconType="check" 
+                      />
+                      <BpmTaskCardDesligamento 
+                        x={700} y={180} 
+                        textLines={["Validar e", "Complementar"]} 
+                        type="blue" iconType="user" 
+                      />
+                      <BpmTaskCardDesligamento 
+                        x={700} y={300} 
+                        textLines={["Validar e", "Aprovar"]} 
+                        type="blue" iconType="check" 
+                      />
+                      <BpmTaskCardDesligamento 
+                        x={970} y={180} 
+                        textLines={["Finalizar", "Desligamento"]} 
+                        type="green" iconType="check" 
+                      />
+                      <BpmTaskCardDesligamento 
+                        x={1140} y={180} 
+                        textLines={["Integrar", "Sistema de RH"]} 
+                        type="green" iconType="cog" 
+                      />
+                      <BpmTaskCardDesligamento 
+                        x={1320} y={100} 
+                        textLines={["Tratamento de", "Erro"]} 
+                        type="orange" iconType="alert" 
+                      />
+                    </g>
+                  </svg>
                 )}
               </div>
             </div>

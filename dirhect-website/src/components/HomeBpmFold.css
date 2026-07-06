@@ -909,4 +909,53 @@
   animation: bpm-move-loop-path 8s infinite linear;
 }
 
+/* Animation dots for Desligamento flow */
+.bpm-moving-dot--desligamento {
+  offset-path: path('M 210 120 H 450 V 80 L 450 5 C 450 2.5 452.5 0 455 0 L 580 0 L 605 0 C 607.5 0 610 2.5 610 5 L 610 120 H 800 L 875 120 C 877.5 120 880 122.5 880 125 L 880 220 H 1240 H 1512');
+  animation: bpm-move-main-path 16s infinite linear;
+}
+
+.bpm-dot-desligamento-1 {
+  animation-delay: 0s;
+}
+
+.bpm-dot-desligamento-2 {
+  animation-delay: -4s;
+}
+
+.bpm-dot-desligamento-3 {
+  animation-delay: -8s;
+}
+
+.bpm-dot-desligamento-4 {
+  animation-delay: -12s;
+}
+
+/* Parallel validation dot for Desligamento */
+.bpm-moving-dot-parallel--desligamento {
+  offset-path: path('M 610 120 V 215 C 610 217.5 612.5 220 615 220 H 750 V 340 H 875 C 877.5 340 880 337.5 880 335 V 220');
+  animation: bpm-move-main-path 10s infinite linear;
+}
+
+.bpm-dot-parallel-desligamento-1 {
+  animation-delay: 0s;
+}
+
+.bpm-dot-parallel-desligamento-2 {
+  animation-delay: -5s;
+}
+
+/* Error boundary flow dot for Desligamento */
+.bpm-moving-loop-error--desligamento {
+  offset-path: path('M 1240 162 V 145 C 1240 142.5 1242.5 140 1245 140 H 1490 V 85 C 1490 82.5 1487.5 80 1485 80 H 1208');
+  animation: bpm-move-loop-path 8s infinite linear;
+}
+
+/* Custom size constraints for Desligamento flow */
+.home-bpm-svg--desligamento {
+  height: 440px !important;
+  width: auto !important;
+  min-width: unset !important;
+}
+
 
