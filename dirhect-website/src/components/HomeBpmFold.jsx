@@ -1566,6 +1566,8 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                     <path d="M 450 80 L 450 5 C 450 2.5 452.5 0 455 0 L 480 0" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
                     {/* Candidato (Preencher Dados) -> Gateway 2o Nível */}
                     <path d="M 580 0 L 605 0 C 607.5 0 610 2.5 610 5 L 610 95" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    {/* Gateway E-mail -> Gateway 2o Nível (bottom loop) */}
+                    <path d="M 320 145 L 320 215 C 320 217.5 322.5 220 325 220 L 605 220 C 607.5 220 610 217.5 610 215 L 610 145" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
                     {/* Gateway 2o Nível (top) -> Validar, Complementar e Aprovar */}
                     <path d="M 635 120 L 700 120" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
                     {/* Gateway 2o Nível (middle) -> Validar e Complementar */}
