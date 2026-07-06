@@ -1585,7 +1585,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                     {/* Finalizar Desligamento -> Integrar Sistema de RH */}
                     <path d="M 1070 220 H 1140" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
                     {/* Integrar Sistema de RH -> Evento Finalizar */}
-                    <path d="M 1240 250 H 1512" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
+                    <path d="M 1240 220 L 1370 220 C 1372.5 220 1375 222.5 1375 225 L 1375 245 C 1375 247.5 1377.5 250 1380 250 L 1512 250" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
                     {/* Integrar Sistema de RH (boundary) -> Tratamento de Erro */}
                     <path d="M 1240 162 V 145 C 1240 142.5 1242.5 140 1245 140 H 1320" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-desligamento)" />
                     {/* Tratamento de Erro -> Gateway Ressubmeter */}

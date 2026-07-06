@@ -911,7 +911,7 @@
 
 /* Animation dots for Desligamento flow */
 .bpm-moving-dot--desligamento {
-  offset-path: path('M 210 120 H 450 V 80 L 450 5 C 450 2.5 452.5 0 455 0 L 580 0 L 605 0 C 607.5 0 610 2.5 610 5 L 610 120 H 800 L 875 120 C 877.5 120 880 122.5 880 125 L 880 220 H 1240 H 1512');
+  offset-path: path('M 210 120 H 450 V 80 L 450 5 C 450 2.5 452.5 0 455 0 L 580 0 L 605 0 C 607.5 0 610 2.5 610 5 L 610 120 H 800 L 875 120 C 877.5 120 880 122.5 880 125 L 880 220 H 1370 C 1372.5 220 1375 222.5 1375 225 V 245 C 1375 247.5 1377.5 250 1380 250 H 1512');
   animation: bpm-move-main-path 16s infinite linear;
 }
 
