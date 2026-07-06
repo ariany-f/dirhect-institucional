@@ -592,7 +592,7 @@
 }
 
 .home-bpm-svg--adiantamento {
-  height: 380px !important;
+  height: 330px !important;
   width: auto !important;
   min-width: unset !important;
 }
@@ -878,7 +878,7 @@
 
 /* Custom size and rendering constraints for Variaveis flow */
 .home-bpm-svg--variaveis {
-  height: 350px !important;
+  height: 300px !important;
   width: auto !important;
   min-width: unset !important;
 }
@@ -953,7 +953,7 @@
 
 /* Custom size constraints for Desligamento flow */
 .home-bpm-svg--desligamento {
-  height: 440px !important;
+  height: 330px !important;
   width: auto !important;
   min-width: unset !important;
 }
