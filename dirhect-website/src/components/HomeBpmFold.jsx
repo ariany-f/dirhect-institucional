@@ -1626,16 +1626,6 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                     </g>
                     <text x="1490" y="180" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Ressubmeter?</text>
 
-                    {/* Boundary Event: Aguardando Resposta Sistema RH */}
-                    <g transform="translate(1222, 162)">
-                      <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="1.5" fill="#fff" />
-                      <circle cx="18" cy="18" r="15" stroke="#22242a" strokeWidth="1.5" fill="none" />
-                      {/* Lightning boundary icon */}
-                      <path d="m 7.2,25.991999999999997 0.09350000000000001,-0.025300000000000003 7.3392,-9.610700000000001 7.667000000000001,8.9661 4.7003,-18.2204 -5.8707,11.6501 -7.299600000000001,-9.585400000000002 z" fill="#fff" stroke="#22242a" strokeWidth="1" />
-                    </g>
-                    <text x="1190" y="142" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Aguardando</text>
-                    <text x="1190" y="152" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Resposta RH</text>
-
                     {/* Evento Cancelado */}
                     <g transform="translate(1172, 62)">
                       <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="4" fill="#fff" />
@@ -1701,6 +1691,16 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                         type="orange" iconType="alert" 
                       />
                     </g>
+
+                    {/* Boundary Event: Aguardando Resposta Sistema RH (desenhado por cima dos cartões) */}
+                    <g transform="translate(1222, 162)">
+                      <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="1.5" fill="#fff" />
+                      <circle cx="18" cy="18" r="15" stroke="#22242a" strokeWidth="1.5" fill="none" />
+                      {/* Lightning boundary icon */}
+                      <path d="m 7.2,25.991999999999997 0.09350000000000001,-0.025300000000000003 7.3392,-9.610700000000001 7.667000000000001,8.9661 4.7003,-18.2204 -5.8707,11.6501 -7.299600000000001,-9.585400000000002 z" fill="#fff" stroke="#22242a" strokeWidth="1" />
+                    </g>
+                    <text x="1190" y="142" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Aguardando</text>
+                    <text x="1190" y="152" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Resposta RH</text>
                   </svg>
                 )}
               </div>
