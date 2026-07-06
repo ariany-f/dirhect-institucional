@@ -1749,7 +1749,7 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                       <path d="M 502 440 H 542" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
                       
                       {/* Integrar ERP (Async) -> Fim */}
-                      <path d="M 642 440 H 1404" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      <path d="M 642 440 H 1202" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
                       
                       {/* Boundary Event Event_callback -> Verificar se é Erro Tratável */}
                       <path d="M 624 400 V 360 C 624 357.5 626.5 355 629 355 H 672" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
@@ -1772,10 +1772,10 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                       <path d="M 910 360 H 962" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
                       
                       {/* Solicitar Ação Usuário -> Fim */}
-                      <path d="M 1062 240 H 1417 C 1420 240 1422 242.5 1422 245 V 422" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      <path d="M 1062 240 H 1215 C 1218 240 1220 242.5 1220 245 V 422" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
                       
                       {/* Solicitar Ação Suporte -> Fim */}
-                      <path d="M 1062 360 H 1417 C 1420 360 1422 362.5 1422 365 V 422" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
+                      <path d="M 1062 360 H 1215 C 1218 360 1220 362.5 1220 365 V 422" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
                       
                       {/* Setar Usuário -> Event_1aouort (Mensagem) */}
                       <path d="M 642 110 H 714" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
@@ -1894,11 +1894,11 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                       />
 
                       {/* Evento Final */}
-                      <g transform="translate(1332, 422)">
+                      <g transform="translate(1130, 422)">
                         <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="4" fill="#fff" />
                         <circle cx="18" cy="18" r="10" stroke="#22242a" strokeWidth="4" fill="#22242a" />
                       </g>
-                      <text x="1350" y="470" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Fim</text>
+                      <text x="1148" y="470" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Fim</text>
                     </g>
 
                     {/* Bolinhas Animadas (Pulsos de Energia) */}
