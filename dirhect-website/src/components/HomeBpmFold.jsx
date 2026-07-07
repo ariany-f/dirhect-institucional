@@ -1784,6 +1784,27 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                       <path d="M 750 110 H 824" stroke="#475569" strokeWidth="1.5" fill="none" markerEnd="url(#arrow-ferias)" />
                     </g>
 
+                    {/* Bolinhas Animadas (Pulsos de Energia) */}
+                    <g>
+                      {/* Happy Path */}
+                      <circle cx="0" cy="0" r="4" fill="#3b82f6" className="bpm-moving-dot--ferias bpm-dot-ferias-1" filter="url(#glow-ferias)" />
+                      <circle cx="0" cy="0" r="4" fill="#3b82f6" className="bpm-moving-dot--ferias bpm-dot-ferias-2" filter="url(#glow-ferias)" />
+                      <circle cx="0" cy="0" r="4" fill="#3b82f6" className="bpm-moving-dot--ferias bpm-dot-ferias-3" filter="url(#glow-ferias)" />
+                      <circle cx="0" cy="0" r="4" fill="#3b82f6" className="bpm-moving-dot--ferias bpm-dot-ferias-4" filter="url(#glow-ferias)" />
+
+                      {/* Alternative Path (Not Approved) */}
+                      <circle cx="0" cy="0" r="4" fill="#ef4444" className="bpm-moving-dot-alternative--ferias bpm-dot-alternative-ferias-1" filter="url(#glow-ferias)" />
+                      <circle cx="0" cy="0" r="4" fill="#ef4444" className="bpm-moving-dot-alternative--ferias bpm-dot-alternative-ferias-2" filter="url(#glow-ferias)" />
+
+                      {/* Error True Path */}
+                      <circle cx="0" cy="0" r="4" fill="#f97316" className="bpm-moving-dot-parallel-true--ferias bpm-dot-parallel-true-ferias-1" filter="url(#glow-ferias)" />
+                      <circle cx="0" cy="0" r="4" fill="#f97316" className="bpm-moving-dot-parallel-true--ferias bpm-dot-parallel-true-ferias-2" filter="url(#glow-ferias)" />
+
+                      {/* Error False Path */}
+                      <circle cx="0" cy="0" r="4" fill="#f97316" className="bpm-moving-dot-parallel-false--ferias bpm-dot-parallel-false-ferias-1" filter="url(#glow-ferias)" />
+                      <circle cx="0" cy="0" r="4" fill="#f97316" className="bpm-moving-dot-parallel-false--ferias bpm-dot-parallel-false-ferias-2" filter="url(#glow-ferias)" />
+                    </g>
+
                     {/* Elementos e Nós do Fluxo */}
                     <g>
                       {/* Evento Inicial */}
@@ -1894,32 +1915,11 @@ const HomeBpmFold = ({ isStandalone = false }) => {
                       />
 
                       {/* Evento Final */}
-                      <g transform="translate(1280, 402)">
+                      <g transform="translate(1352, 422)">
                         <circle cx="18" cy="18" r="18" stroke="#22242a" strokeWidth="4" fill="#fff" />
                         <circle cx="18" cy="18" r="10" stroke="#22242a" strokeWidth="4" fill="#22242a" />
                       </g>
-                      <text x="1298" y="470" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Fim</text>
-                    </g>
-
-                    {/* Bolinhas Animadas (Pulsos de Energia) */}
-                    <g>
-                      {/* Happy Path */}
-                      <circle cx="0" cy="0" r="4" fill="#3b82f6" className="bpm-moving-dot--ferias bpm-dot-ferias-1" filter="url(#glow-ferias)" />
-                      <circle cx="0" cy="0" r="4" fill="#3b82f6" className="bpm-moving-dot--ferias bpm-dot-ferias-2" filter="url(#glow-ferias)" />
-                      <circle cx="0" cy="0" r="4" fill="#3b82f6" className="bpm-moving-dot--ferias bpm-dot-ferias-3" filter="url(#glow-ferias)" />
-                      <circle cx="0" cy="0" r="4" fill="#3b82f6" className="bpm-moving-dot--ferias bpm-dot-ferias-4" filter="url(#glow-ferias)" />
-
-                      {/* Alternative Path (Not Approved) */}
-                      <circle cx="0" cy="0" r="4" fill="#ef4444" className="bpm-moving-dot-alternative--ferias bpm-dot-alternative-ferias-1" filter="url(#glow-ferias)" />
-                      <circle cx="0" cy="0" r="4" fill="#ef4444" className="bpm-moving-dot-alternative--ferias bpm-dot-alternative-ferias-2" filter="url(#glow-ferias)" />
-
-                      {/* Error True Path */}
-                      <circle cx="0" cy="0" r="4" fill="#f97316" className="bpm-moving-dot-parallel-true--ferias bpm-dot-parallel-true-ferias-1" filter="url(#glow-ferias)" />
-                      <circle cx="0" cy="0" r="4" fill="#f97316" className="bpm-moving-dot-parallel-true--ferias bpm-dot-parallel-true-ferias-2" filter="url(#glow-ferias)" />
-
-                      {/* Error False Path */}
-                      <circle cx="0" cy="0" r="4" fill="#f97316" className="bpm-moving-dot-parallel-false--ferias bpm-dot-parallel-false-ferias-1" filter="url(#glow-ferias)" />
-                      <circle cx="0" cy="0" r="4" fill="#f97316" className="bpm-moving-dot-parallel-false--ferias bpm-dot-parallel-false-ferias-2" filter="url(#glow-ferias)" />
+                      <text x="1370" y="470" fill="#475569" fontSize="8" fontWeight="700" textAnchor="middle" fontFamily="'Inter', sans-serif">Fim</text>
                     </g>
                   </svg>
                 ) : (

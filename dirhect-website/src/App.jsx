@@ -139,7 +139,7 @@ function App() {
           <Route path="/docs" element={<TechnicalDocumentation />} />
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/termos-uso" element={<TermosUso />} />
-          <Route path="/parceiros" element={<Parceiros />} />
+          <Route path="/ecossistema" element={<Parceiros />} />
           <Route path="/parceiro" element={<ParceiroSubdominio />} />
           <Route path="/area-colaborador" element={<ColaboradorLogin />} />
           <Route path="/area-colaborador/painel" element={<ColaboradorPainel />} />

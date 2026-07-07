@@ -156,7 +156,7 @@ const DiagramaPlataforma = ({ onNavigate }) => {
       <circle cx="16" cy="16" r="15" fill="none"/>
     </g>
     <g id="Botão_integracao" className="diagram-balloon-btn btn-integracao">
-      <a href="/parceiros" onClick={(e) => { e.preventDefault(); onNavigate("/parceiros"); }} style={{ textDecoration: "none" }}>
+      <a href="/ecossistema" onClick={(e) => { e.preventDefault(); onNavigate("/ecossistema"); }} style={{ textDecoration: "none" }}>
       <g transform="matrix(1, 0, 0, 1, 0, 0)" filter="url(#Rectangle_49)">
         <g id="Rectangle_49-2" dataName="Rectangle 49" transform="translate(4 817)" fill="#fafafa" stroke="#4550fe" strokeWidth="5">
           <rect width="470" height="240" rx="38" stroke="none"/>

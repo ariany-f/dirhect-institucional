@@ -76,7 +76,7 @@ const SolucoesTeste = () => {
     {
       id: 'integracao',
       title: 'Hub de Integração',
-      link: '/parceiros',
+      link: '/ecossistema',
       color: '#4550fe',
       icon: <Cpu size={24} />,
       desc: 'Conecte seus sistemas existentes (ERP, CRM) com facilidade.'

@@ -82,7 +82,7 @@ const HomeSolutionModulesFold = () => {
     {
       id: 'integracao',
       title: 'Hub de Integração',
-      link: '/parceiros',
+      link: '/ecossistema',
       color: '#4550fe',
       icon: <Cpu size={24} />,
       desc: 'Conecte seus sistemas existentes (ERP, CRM) com facilidade.'
@@ -113,6 +113,9 @@ const HomeSolutionModulesFold = () => {
               </h2>
               <p className="home-solution-modules-sub">
                 Sete módulos integrados — admissão, benefícios, portal, tarefas, formulários, workflows e integrações — em um único ambiente para RH, gestores e colaboradores.
+              </p>
+              <p className="home-solution-modules-tip-desktop">
+                <strong>Dica:</strong> Clique em qualquer balão do diagrama ao lado para navegar e conhecer o respectivo módulo.
               </p>
               <div className="home-solution-modules-pills" role="group" aria-label="Principais características">
                 <span className="home-solution-modules-pill-ic" aria-hidden>

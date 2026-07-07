@@ -253,7 +253,7 @@ const Header = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/parceiros" onClick={() => setIsMobileMenuOpen(false)}>
+                  <Link to="/ecossistema" onClick={() => setIsMobileMenuOpen(false)}>
                     Integrações e ecossistema
                   </Link>
                 </li>
