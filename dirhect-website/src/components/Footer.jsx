@@ -30,6 +30,7 @@ const Footer = () => {
               <li><a href="#solucoes">Gestão de Benefícios</a></li>
               <li><a href="#solucoes">Admissão Digital</a></li>
               <li><Link to="/ecossistema">Integrações e ecossistema</Link></li>
+              <li><Link to="/apresentacao">Apresentação</Link></li>
             </ul>
           </div>
 
