@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { 
   Heart, 
   Activity, 
@@ -25,111 +26,17 @@ import {
   ArrowLeft,
   Settings
 } from 'lucide-react';
-import PhoneInput from '../components/PhoneInput';
-import { sendDemoEmail } from '../services/emailService';
 import './GestaoBeneficios.css';
 import Footer from '../components/Footer';
 
 const GestaoBeneficios = () => {
-  const [formData, setFormData] = useState({
-    nome: '',
-    email: '',
-    telefone: '',
-    empresa: '',
-    colaboradores: '',
-    mensagem: ''
-  });
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState('');
-
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setError('');
-
-    try {
-      const response = await sendDemoEmail({
-        ...formData,
-        nomeContato: formData.nome,
-        nomeEmpresa: formData.empresa,
-        numeroFuncionarios: formData.colaboradores,
-        cargo: 'Não Informado',
-        cnpj: '00.000.000/0000-00',
-        segmento: 'Outros',
-        aceiteTermos: true,
-        tipo: 'Gestão de Benefícios'
-      });
-      
-      if (response && response.success) {
-        setIsSuccess(true);
-      } else {
-        setError(response?.message || 'Erro ao enviar solicitação. Tente novamente.');
-      }
-    } catch (err) {
-      setError('Erro ao enviar solicitação. Tente novamente.');
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const scrollToForm = () => {
-    document.getElementById('beneficios-form').scrollIntoView({ behavior: 'smooth' });
-  };
-
   const scrollToFeatures = () => {
     document.getElementById('beneficios-funcionalidades').scrollIntoView({ behavior: 'smooth' });
   };
-
-  if (isSuccess) {
-    return (
-      <div className="beneficios-success">
-        <div className="container">
-          <div className="beneficios-success-content">
-            <div className="beneficios-success-icon">
-              <CheckCircle2 size={64} />
-            </div>
-            <h1>Solicitação Enviada com Sucesso!</h1>
-            <p>
-              Obrigado pelo seu interesse em nossa solução de Gestão de Benefícios. 
-              Nossa equipe entrará em contato em até 24 horas para agendar sua demonstração.
-            </p>
-            <div className="beneficios-success-info">
-              <div className="beneficios-info-item">
-                <Clock size={20} />
-                <span>Resposta em 24h</span>
-              </div>
-              <div className="beneficios-info-item">
-                <Users size={20} />
-                <span>Demonstração personalizada</span>
-              </div>
-              <div className="beneficios-info-item">
-                <Shield size={20} />
-                <span>Sem compromisso</span>
-              </div>
-            </div>
-            <button className="btn-back-home" onClick={() => window.location.href = '/'}>
-              <ArrowLeft size={18} />
-              Voltar para a Página Inicial
-            </button>
-          </div>
-        </div>
-        <Footer />
-      </div>
-    );
-  }
 
   return (
     <div className="gestao-beneficios-page">
@@ -150,10 +57,10 @@ const GestaoBeneficios = () => {
               </p>
               
               <div className="beneficios-hero-actions">
-                <button onClick={scrollToForm} className="beneficios-cta-button beneficios-cta-button--primary">
+                <Link to="/demo" className="beneficios-cta-button beneficios-cta-button--primary">
                   <Rocket size={20} />
                   Solicitar demonstração
-                </button>
+                </Link>
                 <button onClick={scrollToFeatures} className="beneficios-cta-button beneficios-cta-button--secondary">
                   Conhecer soluções
                   <ArrowRight size={20} />
@@ -543,112 +450,18 @@ const GestaoBeneficios = () => {
         </div>
       </section>
 
-      {/* Formulário / CTA Final */}
-      <section className="beneficios-formulario-section" id="beneficios-form">
+      {/* CTA Final */}
+      <section className="beneficios-cta-final" id="beneficios-form">
         <div className="container">
-          <div className="beneficios-form-content">
-            <div className="beneficios-form-header">
-              <h2>Automatize a gestão de benefícios da sua empresa</h2>
-              <p>
-                O Dirhect conecta todos os envolvidos no processo para tornar a operação de benefícios mais simples, segura e eficiente. Solicite uma demonstração agora mesmo.
-              </p>
-            </div>
-            
-            <form onSubmit={handleSubmit} className="beneficios-form">
-              {error && <div className="beneficios-error-message">{error}</div>}
-              <div className="beneficios-form-grid">
-                <div className="beneficios-form-group">
-                  <label htmlFor="nome">Nome Completo *</label>
-                  <input
-                    type="text"
-                    id="nome"
-                    name="nome"
-                    value={formData.nome}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="Digite seu nome completo"
-                  />
-                </div>
-                <div className="beneficios-form-group">
-                  <label htmlFor="email">E-mail Corporativo *</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="seu.email@empresa.com"
-                  />
-                </div>
-                <div className="beneficios-form-group">
-                  <PhoneInput
-                    id="telefone"
-                    name="telefone"
-                    label="Telefone *"
-                    value={formData.telefone}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="beneficios-form-group">
-                  <label htmlFor="empresa">Empresa *</label>
-                  <input
-                    type="text"
-                    id="empresa"
-                    name="empresa"
-                    value={formData.empresa}
-                    onChange={handleInputChange}
-                    required
-                    placeholder="Nome da sua empresa"
-                  />
-                </div>
-                <div className="beneficios-form-group">
-                  <label htmlFor="colaboradores">Número de Colaboradores *</label>
-                  <select
-                    id="colaboradores"
-                    name="colaboradores"
-                    value={formData.colaboradores}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Selecione uma opção</option>
-                    <option value="1-50">1 a 50 colaboradores</option>
-                    <option value="51-200">51 a 200 colaboradores</option>
-                    <option value="201-500">201 a 500 colaboradores</option>
-                    <option value="501-1000">501 a 1.000 colaboradores</option>
-                    <option value="1000+">Mais de 1.000 colaboradores</option>
-                  </select>
-                </div>
-                <div className="beneficios-form-group beneficios-form-group-full">
-                  <label htmlFor="mensagem">Mensagem (Opcional)</label>
-                  <textarea
-                    id="mensagem"
-                    name="mensagem"
-                    value={formData.mensagem}
-                    onChange={handleInputChange}
-                    placeholder="Conte-nos sobre seus desafios atuais na gestão de benefícios..."
-                  />
-                </div>
-              </div>
-              <button 
-                type="submit" 
-                className="beneficios-submit-btn"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="beneficios-submit-spinner"></div>
-                    Enviando...
-                  </>
-                ) : (
-                  <>
-                    <Rocket size={20} />
-                    Solicitar Demonstração
-                  </>
-                )}
-              </button>
-            </form>
+          <div className="beneficios-cta-content">
+            <h2>Automatize a gestão de benefícios da sua empresa</h2>
+            <p>
+              O Dirhect conecta todos os envolvidos no processo para tornar a operação de benefícios mais simples, segura e eficiente.
+            </p>
+            <Link to="/demo" className="beneficios-cta-button beneficios-cta-button--primary benefits-final-btn">
+              <Rocket size={20} />
+              Solicitar demonstração
+            </Link>
           </div>
         </div>
       </section>
