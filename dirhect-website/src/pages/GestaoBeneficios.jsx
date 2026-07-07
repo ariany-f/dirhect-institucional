@@ -185,12 +185,12 @@ const GestaoBeneficios = () => {
                 <svg viewBox="0 0 500 500" width="100%" height="100%" className="beneficios-diagram-svg">
                   <defs>
                     <radialGradient id="hub-glow" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#27aa63" stopOpacity="0.3" />
-                      <stop offset="100%" stopColor="#27aa63" stopOpacity="0" />
+                      <stop offset="0%" stopColor="#ff8c00" stopOpacity="0.3" />
+                      <stop offset="100%" stopColor="#ff8c00" stopOpacity="0" />
                     </radialGradient>
                     <linearGradient id="hub-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#2ecc71" />
-                      <stop offset="100%" stopColor="#27aa63" />
+                      <stop offset="0%" stopColor="#ffa024" />
+                      <stop offset="100%" stopColor="#ff8c00" />
                     </linearGradient>
                     <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
                       <feDropShadow dx="0" dy="6" stdDeviation="6" floodOpacity="0.1" />
@@ -199,12 +199,12 @@ const GestaoBeneficios = () => {
 
                   {/* Connecting lines */}
                   <g className="connecting-lines">
-                    <line x1="250" y1="250" x2="250" y2="80" stroke="#c2f0d5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
-                    <line x1="250" y1="250" x2="410" y2="160" stroke="#c2f0d5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
-                    <line x1="250" y1="250" x2="410" y2="340" stroke="#c2f0d5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
-                    <line x1="250" y1="250" x2="250" y2="420" stroke="#c2f0d5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
-                    <line x1="250" y1="250" x2="90" y2="340" stroke="#c2f0d5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
-                    <line x1="250" y1="250" x2="90" y2="160" stroke="#c2f0d5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
+                    <line x1="250" y1="250" x2="250" y2="80" stroke="#ffedd5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
+                    <line x1="250" y1="250" x2="410" y2="160" stroke="#ffedd5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
+                    <line x1="250" y1="250" x2="410" y2="340" stroke="#ffedd5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
+                    <line x1="250" y1="250" x2="250" y2="420" stroke="#ffedd5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
+                    <line x1="250" y1="250" x2="90" y2="340" stroke="#ffedd5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
+                    <line x1="250" y1="250" x2="90" y2="160" stroke="#ffedd5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
                   </g>
 
                   {/* Central Hub Glow */}
@@ -214,7 +214,7 @@ const GestaoBeneficios = () => {
                   <g filter="url(#shadow)" className="center-hub">
                     <circle cx="250" cy="250" r="60" fill="url(#hub-gradient)" />
                     <text x="250" y="248" fill="#ffffff" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif">Dirhect</text>
-                    <text x="250" y="264" fill="#e2fbe9" fontSize="9" fontWeight="600" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif">BENEFÍCIOS</text>
+                    <text x="250" y="264" fill="#ffedd5" fontSize="9" fontWeight="600" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif">BENEFÍCIOS</text>
                   </g>
 
                   {/* Floating Bubble 1: Plano de Saúde */}

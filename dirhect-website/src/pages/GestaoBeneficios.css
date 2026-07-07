@@ -1,10 +1,10 @@
 /* Gestão de Benefícios - Design Moderno, Premium e Responsivo */
 
 :root {
-  --beneficios-primary: #27aa63;
-  --beneficios-primary-hover: #1f8b50;
-  --beneficios-primary-light: #e8f8f0;
-  --beneficios-primary-border: #c2f0d5;
+  --beneficios-primary: #ff8c00;
+  --beneficios-primary-hover: #e67e00;
+  --beneficios-primary-light: #fff7ed;
+  --beneficios-primary-border: #ffedd5;
   --beneficios-text-dark: #0f172a;
   --beneficios-text-light: #475569;
   --beneficios-text-muted: #64748b;
@@ -12,7 +12,7 @@
   --beneficios-border: #e2e8f0;
   --beneficios-shadow-sm: 0 4px 12px rgba(15, 23, 42, 0.03);
   --beneficios-shadow-md: 0 8px 30px rgba(15, 23, 42, 0.06);
-  --beneficios-shadow-lg: 0 20px 40px rgba(39, 170, 99, 0.12);
+  --beneficios-shadow-lg: 0 20px 40px rgba(255, 140, 0, 0.12);
 }
 
 .gestao-beneficios-page {
@@ -66,7 +66,7 @@
 
 /* 1. Hero Section */
 .beneficios-hero {
-  background: radial-gradient(circle at 80% 20%, rgba(39, 170, 99, 0.05) 0%, transparent 60%),
+  background: radial-gradient(circle at 80% 20%, rgba(255, 140, 0, 0.05) 0%, transparent 60%),
               radial-gradient(circle at 10% 80%, rgba(59, 130, 246, 0.03) 0%, transparent 50%),
               #ffffff;
   padding: 5rem 0 6rem 0;
@@ -162,14 +162,14 @@
   background-color: var(--beneficios-primary);
   color: #ffffff;
   border: 2px solid var(--beneficios-primary);
-  box-shadow: 0 8px 24px rgba(39, 170, 99, 0.25);
+  box-shadow: 0 8px 24px rgba(255, 140, 0, 0.25);
 }
 
 .beneficios-cta-button--primary:hover {
   background-color: var(--beneficios-primary-hover);
   border-color: var(--beneficios-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(39, 170, 99, 0.35);
+  box-shadow: 0 12px 28px rgba(255, 140, 0, 0.35);
 }
 
 .beneficios-cta-button--secondary {
@@ -397,9 +397,9 @@
 }
 
 .flow-step.highlight {
-  background-color: rgba(39, 170, 99, 0.1);
-  border-color: rgba(39, 170, 99, 0.3);
-  box-shadow: 0 4px 30px rgba(39, 170, 99, 0.15);
+  background-color: rgba(255, 140, 0, 0.1);
+  border-color: rgba(255, 140, 0, 0.3);
+  box-shadow: 0 4px 30px rgba(255, 140, 0, 0.15);
 }
 
 .flow-step.highlight .flow-icon {
@@ -562,7 +562,7 @@
   justify-content: center;
   flex-shrink: 0;
   margin-top: 0.2rem;
-  box-shadow: 0 4px 10px rgba(39, 170, 99, 0.2);
+  box-shadow: 0 4px 10px rgba(255, 140, 0, 0.2);
 }
 
 .empresa-beneficio-item h3 {
@@ -583,7 +583,7 @@
 /* 6. Formulário / CTA Final */
 .beneficios-formulario-section {
   padding: 7rem 0;
-  background: radial-gradient(circle at 10% 20%, rgba(39, 170, 99, 0.04) 0%, transparent 50%),
+  background: radial-gradient(circle at 10% 20%, rgba(255, 140, 0, 0.04) 0%, transparent 50%),
               radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.02) 0%, transparent 40%),
               #ffffff;
 }
@@ -673,7 +673,7 @@
 .beneficios-form-group select:focus,
 .beneficios-form-group textarea:focus {
   border-color: var(--beneficios-primary);
-  box-shadow: 0 0 0 4px rgba(39, 170, 99, 0.12);
+  box-shadow: 0 0 0 4px rgba(255, 140, 0, 0.12);
 }
 
 .beneficios-form-group textarea {
@@ -707,14 +707,14 @@
   cursor: pointer;
   transition: all 0.2s ease;
   margin-top: 1rem;
-  box-shadow: 0 6px 18px rgba(39, 170, 99, 0.2);
+  box-shadow: 0 6px 18px rgba(255, 140, 0, 0.2);
   width: 100%;
 }
 
 .beneficios-submit-btn:hover {
   background-color: var(--beneficios-primary-hover);
   transform: translateY(-1px);
-  box-shadow: 0 8px 22px rgba(39, 170, 99, 0.3);
+  box-shadow: 0 8px 22px rgba(255, 140, 0, 0.3);
 }
 
 .beneficios-submit-btn:disabled {
