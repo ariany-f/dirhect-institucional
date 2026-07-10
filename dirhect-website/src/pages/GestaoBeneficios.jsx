@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
   Heart, 
@@ -24,12 +24,86 @@ import {
   ChevronRight,
   Database,
   ArrowLeft,
-  Settings
+  Settings,
+  Star
 } from 'lucide-react';
 import './GestaoBeneficios.css';
 import Footer from '../components/Footer';
 
 const GestaoBeneficios = () => {
+  const [activePillar, setActivePillar] = useState(0);
+
+  const pillars = [
+    {
+      id: 0,
+      title: "Experiência do Colaborador",
+      icon: <Users size={20} />,
+      features: [
+        {
+          title: "Solicitação de benefícios",
+          desc: "Escolha de planos de saúde, odonto, VR, VA e VT via portal do colaborador.",
+          icon: <FileText size={18} />
+        },
+        {
+          title: "Elegibilidade automática",
+          desc: "Regras dinâmicas por cargo ou localidade, exibindo apenas opções elegíveis.",
+          icon: <Sliders size={18} />
+        }
+      ]
+    },
+    {
+      id: 1,
+      title: "Automação para o RH",
+      icon: <Zap size={20} />,
+      features: [
+        {
+          title: "Aprovação simplificada",
+          desc: "Análise e aprovação ágil de solicitações pelo RH em poucos cliques.",
+          icon: <CheckCircle2 size={18} />
+        },
+        {
+          title: "Movimentações automáticas",
+          desc: "Processamento automático de inclusões e exclusões de beneficiários.",
+          icon: <Zap size={18} />
+        }
+      ]
+    },
+    {
+      id: 2,
+      title: "Integração de Ecossistema",
+      icon: <Database size={20} />,
+      features: [
+        {
+          title: "Integração com operadoras",
+          desc: "Integração e layouts compatíveis com as maiores operadoras.",
+          icon: <Database size={18} />
+        },
+        {
+          title: "Integração com a folha",
+          desc: "Exportação de descontos para fechamento de folha de pagamento sem erros.",
+          icon: <Settings size={18} />
+        }
+      ]
+    },
+    {
+      id: 3,
+      title: "Governança e Controle",
+      icon: <ShieldCheck size={20} />,
+      features: [
+        {
+          title: "Histórico completo",
+          desc: "Trilha de auditoria completa com log de todas as movimentações.",
+          icon: <Clock size={18} />
+        },
+        {
+          title: "Dashboard gerencial",
+          desc: "Acompanhamento de custos por categoria, adesão de planos e pendências.",
+          icon: <TrendingUp size={18} />
+        }
+      ]
+    }
+  ];
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -38,6 +112,16 @@ const GestaoBeneficios = () => {
     document.getElementById('beneficios-funcionalidades').scrollIntoView({ behavior: 'smooth' });
   };
 
+  const partnerLogos = [
+    { name: 'SAP', logo: '/images/logos/sap-logo.webp' },
+    { name: 'TOTVS', logo: '/images/logos/totvs-logo.png' },
+    { name: 'Closecare', logo: '/images/logos/closecare-logo.webp' },
+    { name: 'LG Sistemas', logo: '/images/logos/lgsistemas-logo.png' },
+    { name: 'Pandapé', logo: '/images/logos/pandape-logo.svg' },
+    { name: 'Gupy', logo: '/images/logos/gupy-logo.png' },
+    { name: 'Nexti', logo: '/images/logos/nexti-logo.png' }
+  ];
+
   return (
     <div className="gestao-beneficios-page">
       {/* Hero Section */}
@@ -45,255 +129,213 @@ const GestaoBeneficios = () => {
         <div className="container">
           <div className="beneficios-hero-grid">
             <div className="beneficios-hero-text">
-              <div className="beneficios-professional-badge">
-                <Heart size={16} className="heart-pulse-icon" />
-                <span>Solução de Gestão de Benefícios</span>
+              {/* Badges like "Hello There!" in the mockup */}
+              <div className="beneficios-mockup-badge">
+                <span className="bracket-left">[</span>
+                <span className="badge-text">Solução de Gestão de Benefícios</span>
+                <span className="bracket-right">]</span>
               </div>
+              
               <h1>
-                Gestão de Benefícios <span className="beneficios-highlight">integrada ao seu RH</span>
+                Gestão de Benefícios <br />
+                <span className="beneficios-highlight">integrada ao seu RH</span>
               </h1>
-              <p>
+              
+              <p className="beneficios-hero-subtitle">
                 Centralize solicitações, aprovações, integrações e movimentações de benefícios em uma única plataforma, conectando RH, colaboradores, operadoras e folha de pagamento.
               </p>
               
               <div className="beneficios-hero-actions">
-                <Link to="/demo" className="beneficios-cta-button beneficios-cta-button--primary">
-                  <Rocket size={20} />
-                  Solicitar demonstração
+                <Link to="/demo" className="beneficios-mockup-btn-primary">
+                  <span>Solicitar demonstração</span>
+                  <span className="btn-circle-arrow">
+                    <ArrowRight size={16} />
+                  </span>
                 </Link>
-                <button onClick={scrollToFeatures} className="beneficios-cta-button beneficios-cta-button--secondary">
-                  Conhecer soluções
-                  <ArrowRight size={20} />
+                <button onClick={scrollToFeatures} className="beneficios-mockup-btn-secondary">
+                  <span>Conhecer soluções</span>
                 </button>
               </div>
 
+              {/* Stats row like the mockup */}
               <div className="beneficios-hero-stats">
                 <div className="beneficios-stat-item">
-                  <Clock size={28} />
-                  <strong>-80%</strong>
-                  <span>Tempo operacional</span>
+                  <span className="stat-number">-80%</span>
+                  <span className="stat-label">Tempo operacional</span>
                 </div>
                 <div className="beneficios-stat-item">
-                  <Shield size={28} />
-                  <strong>Zero</strong>
-                  <span>Erros de cálculo</span>
+                  <span className="stat-number">Zero</span>
+                  <span className="stat-label">Erros de cálculo</span>
                 </div>
                 <div className="beneficios-stat-item">
-                  <TrendingUp size={28} />
-                  <strong>100%</strong>
-                  <span>Rastreabilidade</span>
+                  <span className="stat-number">100%</span>
+                  <span className="stat-label">Rastreabilidade</span>
                 </div>
               </div>
             </div>
 
-            {/* Interactive SVG Mockup / Diagram */}
+            {/* Mockup-style visual: Person inside yellow circle with floating tags */}
             <div className="beneficios-hero-visual">
-              <div className="beneficios-diagram-wrapper">
-                <svg viewBox="0 0 500 500" width="100%" height="100%" className="beneficios-diagram-svg">
-                  <defs>
-                    <radialGradient id="hub-glow" cx="50%" cy="50%" r="50%">
-                      <stop offset="0%" stopColor="#ff8c00" stopOpacity="0.3" />
-                      <stop offset="100%" stopColor="#ff8c00" stopOpacity="0" />
-                    </radialGradient>
-                    <linearGradient id="hub-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-                      <stop offset="0%" stopColor="#ffa024" />
-                      <stop offset="100%" stopColor="#ff8c00" />
-                    </linearGradient>
-                    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
-                      <feDropShadow dx="0" dy="6" stdDeviation="6" floodOpacity="0.1" />
-                    </filter>
-                  </defs>
+              <div className="beneficios-visual-wrapper">
+                {/* Yellow circle behind the person */}
+                <div className="beneficios-visual-bg-circle"></div>
+                
+                {/* Person Photo */}
+                <img 
+                  src="/images/hero-parceiro-tablet-sem-fundo.png" 
+                  className="beneficios-visual-person" 
+                  alt="Gestão de Benefícios Dirhect" 
+                />
 
-                  {/* Connecting lines */}
-                  <g className="connecting-lines">
-                    <line x1="250" y1="250" x2="250" y2="80" stroke="#ffedd5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
-                    <line x1="250" y1="250" x2="410" y2="160" stroke="#ffedd5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
-                    <line x1="250" y1="250" x2="410" y2="340" stroke="#ffedd5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
-                    <line x1="250" y1="250" x2="250" y2="420" stroke="#ffedd5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
-                    <line x1="250" y1="250" x2="90" y2="340" stroke="#ffedd5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
-                    <line x1="250" y1="250" x2="90" y2="160" stroke="#ffedd5" strokeWidth="3" strokeDasharray="6 6" className="dash-line" />
-                  </g>
+                {/* Floating tags representing the benefits */}
+                <div className="floating-tag tag-saude">
+                  <Activity size={14} className="tag-icon" />
+                  <span>Plano de Saúde</span>
+                </div>
 
-                  {/* Central Hub Glow */}
-                  <circle cx="250" cy="250" r="100" fill="url(#hub-glow)" />
+                <div className="floating-tag tag-odonto">
+                  <Smile size={14} className="tag-icon" />
+                  <span>Odontológico</span>
+                </div>
 
-                  {/* Central Hub Circle */}
-                  <g filter="url(#shadow)" className="center-hub">
-                    <circle cx="250" cy="250" r="60" fill="url(#hub-gradient)" />
-                    <text x="250" y="248" fill="#ffffff" fontSize="14" fontWeight="800" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif">Dirhect</text>
-                    <text x="250" y="264" fill="#ffedd5" fontSize="9" fontWeight="600" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif">BENEFÍCIOS</text>
-                  </g>
+                <div className="floating-tag tag-refeicao">
+                  <Coffee size={14} className="tag-icon" />
+                  <span>Vale Refeição</span>
+                </div>
 
-                  {/* Floating Bubble 1: Plano de Saúde */}
-                  <g className="floating-bubble bubble-1" filter="url(#shadow)" transform="translate(250, 80)">
-                    <circle cx="0" cy="0" r="34" fill="#ffffff" stroke="#27aa63" strokeWidth="1.5" />
-                    <circle cx="0" cy="0" r="26" fill="#e8f8f0" />
-                    {/* Activity Icon inside circle */}
-                    <path d="M-10 0 L-6 0 L-2 -10 L2 10 L6 -4 L8 0 L12 0" fill="none" stroke="#27aa63" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                    <text x="0" y="48" fill="#1e293b" fontSize="8.5" fontWeight="700" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif">Plano de Saúde</text>
-                  </g>
-
-                  {/* Floating Bubble 2: Plano Odonto */}
-                  <g className="floating-bubble bubble-2" filter="url(#shadow)" transform="translate(410, 160)">
-                    <circle cx="0" cy="0" r="34" fill="#ffffff" stroke="#3b82f6" strokeWidth="1.5" />
-                    <circle cx="0" cy="0" r="26" fill="#eff6ff" />
-                    {/* Smile Icon */}
-                    <path d="M-8 -3 A3 3 0 0 1 -2 -3 M2 -3 A3 3 0 0 1 8 -3" fill="none" stroke="#3b82f6" strokeWidth="2.5" strokeLinecap="round" />
-                    <path d="M-10 6 Q0 16 10 6" fill="none" stroke="#3b82f6" strokeWidth="2.5" strokeLinecap="round" />
-                    <text x="0" y="48" fill="#1e293b" fontSize="8.5" fontWeight="700" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif">Odontológico</text>
-                  </g>
-
-                  {/* Floating Bubble 3: Vale Refeição */}
-                  <g className="floating-bubble bubble-3" filter="url(#shadow)" transform="translate(410, 340)">
-                    <circle cx="0" cy="0" r="34" fill="#ffffff" stroke="#ff8c00" strokeWidth="1.5" />
-                    <circle cx="0" cy="0" r="26" fill="#fff7ed" />
-                    {/* Coffee/Food Icon */}
-                    <path d="M-8 -8 h12 a4 4 0 0 1 4 4 v4 a4 4 0 0 1 -4 4 h-12 z" fill="none" stroke="#ff8c00" strokeWidth="2.5" />
-                    <path d="M4 -4 h4 a2 2 0 0 1 2 2 v0 a2 2 0 0 1 -2 2 h-4" fill="none" stroke="#ff8c00" strokeWidth="2" />
-                    <path d="M-4 -12 v2 M0 -12 v2 M4 -12 v2" fill="none" stroke="#ff8c00" strokeWidth="1.5" strokeLinecap="round" />
-                    <text x="0" y="48" fill="#1e293b" fontSize="8.5" fontWeight="700" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif">Vale Refeição</text>
-                  </g>
-
-                  {/* Floating Bubble 4: Vale Alimentação */}
-                  <g className="floating-bubble bubble-4" filter="url(#shadow)" transform="translate(250, 420)">
-                    <circle cx="0" cy="0" r="34" fill="#ffffff" stroke="#eab308" strokeWidth="1.5" />
-                    <circle cx="0" cy="0" r="26" fill="#fef9c3" />
-                    {/* Apple Icon */}
-                    <path d="M0 6 C-12 6 -10 -10 0 -10 C10 -10 12 6 0 6 z" fill="none" stroke="#eab308" strokeWidth="2.5" />
-                    <path d="M0 -10 C2 -14 6 -12 6 -12" fill="none" stroke="#eab308" strokeWidth="2" strokeLinecap="round" />
-                    <text x="0" y="48" fill="#1e293b" fontSize="8.5" fontWeight="700" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif">Vale Alimentação</text>
-                  </g>
-
-                  {/* Floating Bubble 5: Vale Transporte */}
-                  <g className="floating-bubble bubble-5" filter="url(#shadow)" transform="translate(90, 340)">
-                    <circle cx="0" cy="0" r="34" fill="#ffffff" stroke="#14b8a6" strokeWidth="1.5" />
-                    <circle cx="0" cy="0" r="26" fill="#f0fdfa" />
-                    {/* Bus Icon */}
-                    <rect x="-10" y="-8" width="20" height="14" rx="2" fill="none" stroke="#14b8a6" strokeWidth="2.5" />
-                    <circle cx="-5" cy="10" r="2.5" fill="#14b8a6" />
-                    <circle cx="5" cy="10" r="2.5" fill="#14b8a6" />
-                    <path d="M-10 0 h20" fill="none" stroke="#14b8a6" strokeWidth="1.5" />
-                    <text x="0" y="48" fill="#1e293b" fontSize="8.5" fontWeight="700" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif">Vale Transporte</text>
-                  </g>
-
-                  {/* Floating Bubble 6: Seguro de Vida */}
-                  <g className="floating-bubble bubble-6" filter="url(#shadow)" transform="translate(90, 160)">
-                    <circle cx="0" cy="0" r="34" fill="#ffffff" stroke="#8b5cf6" strokeWidth="1.5" />
-                    <circle cx="0" cy="0" r="26" fill="#f5f3ff" />
-                    {/* Shield Icon */}
-                    <path d="M0 -10 Q8 -10 8 -2 Q8 6 0 10 Q-8 6 -8 -2 Q-8 -10 0 -10 z" fill="none" stroke="#8b5cf6" strokeWidth="2.5" strokeLinejoin="round" />
-                    <text x="0" y="48" fill="#1e293b" fontSize="8.5" fontWeight="700" textAnchor="middle" fontFamily="'Plus Jakarta Sans', sans-serif">Seguro de Vida</text>
-                  </g>
-                </svg>
+                <div className="floating-tag tag-vida">
+                  <ShieldCheck size={14} className="tag-icon" />
+                  <span>Seguro de Vida</span>
+                </div>
+                
+                <div className="floating-tag tag-transporte">
+                  <Bus size={14} className="tag-icon" />
+                  <span>Vale Transporte</span>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Transition Stripe (Gray Banner) */}
+      <div className="beneficios-transition-stripe">
+        <div className="stripe-track">
+          <span className="stripe-item">Plano de Saúde</span> <span className="star-divider">✦</span>
+          <span className="stripe-item">Vale Refeição</span> <span className="star-divider">✦</span>
+          <span className="stripe-item">Seguro de Vida</span> <span className="star-divider">✦</span>
+          <span className="stripe-item">Vale Transporte</span> <span className="star-divider">✦</span>
+          <span className="stripe-item">Odontológico</span> <span className="star-divider">✦</span>
+          <span className="stripe-item">Elegibilidade Automática</span> <span className="star-divider">✦</span>
+          <span className="stripe-item">Integração com Folha</span>
+        </div>
+      </div>
 
       {/* Problema Section */}
       <section className="beneficios-problema">
         <div className="container">
           <div className="section-header">
-            <h2>Sua gestão de benefícios ainda depende de planilhas e e-mails?</h2>
+            <span className="section-tag">— O Problema</span>
+            <h2>Sua gestão de benefícios ainda depende de <span className="highlight-orange">planilhas e e-mails?</span></h2>
             <p>O controle manual de benefícios drena o tempo do seu time e gera erros custosos para a empresa.</p>
           </div>
           <div className="beneficios-problema-grid">
             <div className="problema-card">
               <div className="problema-icon-wrapper">
-                <AlertTriangle size={24} />
+                <AlertTriangle size={18} />
               </div>
               <h3>Informações descentralizadas</h3>
-              <p>Dados de colaboradores espalhados em dezenas de planilhas locais e e-mails, dificultando a conciliação e rastreamento das solicitações.</p>
+              <p>Dados de colaboradores espalhados em dezenas de planilhas locais e e-mails, dificultando a conciliação.</p>
             </div>
             
             <div className="problema-card">
               <div className="problema-icon-wrapper">
-                <AlertTriangle size={24} />
+                <AlertTriangle size={18} />
               </div>
               <h3>Inclusões e exclusões manuais</h3>
-              <p>O RH precisa acessar o portal de cada operadora individualmente para cadastrar ou excluir colaboradores, gerando alto estresse operacional.</p>
+              <p>O RH precisa acessar o portal de cada operadora individualmente para cadastrar ou excluir colaboradores.</p>
             </div>
 
             <div className="problema-card">
               <div className="problema-icon-wrapper">
-                <AlertTriangle size={24} />
+                <AlertTriangle size={18} />
               </div>
               <h3>Risco de erro na folha</h3>
-              <p>Descontos manuais de coparticipação ou atraso no repasse de dados para o fechamento geram erros que afetam diretamente o bolso do colaborador.</p>
+              <p>Descontos manuais de coparticipação ou atraso no repasse de dados geram erros diretamente no fechamento.</p>
             </div>
 
             <div className="problema-card">
               <div className="problema-icon-wrapper">
-                <AlertTriangle size={24} />
+                <AlertTriangle size={18} />
               </div>
               <h3>Falta de histórico</h3>
-              <p>Dificuldade para auditar quem solicitou, quem aprovou e quando a movimentação foi feita na operadora, gerando retrabalho em auditorias.</p>
+              <p>Dificuldade para auditar quem solicitou, quem aprovou e quando a movimentação foi feita na operadora.</p>
             </div>
 
-            <div className="problema-card problema-card--full">
+            <div className="problema-card">
               <div className="problema-icon-wrapper">
-                <AlertTriangle size={24} />
+                <AlertTriangle size={18} />
               </div>
               <h3>Retrabalho constante entre RH, DP e Operadoras</h3>
-              <p>Trocas intermináveis de mensagens para resolver inconsistências cadastrais, faturas divergentes e cartões de benefício não entregues.</p>
+              <p>Trocas intermináveis de mensagens para resolver inconsistências cadastrais, faturas divergentes e cartões não entregues.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Solução Section */}
+      {/* Solução Section (Forest Green Background) */}
       <section className="beneficios-solucao">
         <div className="container">
           <div className="section-header section-header--light">
+            <span className="section-tag section-tag--light">— O Processo</span>
             <h2>Com o Dirhect, o processo fica centralizado e automatizado</h2>
             <p>Conectamos todas as pontas do fluxo de benefícios de ponta a ponta em tempo real.</p>
           </div>
           
           <div className="beneficios-flow">
             <div className="flow-step">
-              <div className="flow-number">1</div>
+              <div className="flow-number">01</div>
               <div className="flow-icon">
-                <Users size={32} />
+                <Users size={28} />
               </div>
               <h3>Colaborador</h3>
               <p>Solicita inclusão ou alteração de benefícios diretamente pelo portal.</p>
             </div>
 
             <div className="flow-connector">
-              <ChevronRight size={28} />
+              <ChevronRight size={24} />
             </div>
 
             <div className="flow-step highlight">
-              <div className="flow-number">2</div>
+              <div className="flow-number">02</div>
               <div className="flow-icon">
-                <Heart size={32} />
+                <Heart size={28} />
               </div>
               <h3>Dirhect Hub</h3>
               <p>Valida a elegibilidade e centraliza os dados cadastrais.</p>
             </div>
 
             <div className="flow-connector">
-              <ChevronRight size={28} />
+              <ChevronRight size={24} />
             </div>
 
             <div className="flow-step">
-              <div className="flow-number">3</div>
+              <div className="flow-number">03</div>
               <div className="flow-icon">
-                <ShieldCheck size={32} />
+                <ShieldCheck size={28} />
               </div>
               <h3>RH / DP</h3>
               <p>Aprova a solicitação no dashboard em apenas um clique.</p>
             </div>
 
             <div className="flow-connector">
-              <ChevronRight size={28} />
+              <ChevronRight size={24} />
             </div>
 
             <div className="flow-step">
-              <div className="flow-number">4</div>
+              <div className="flow-number">04</div>
               <div className="flow-icon">
-                <Zap size={32} />
+                <Zap size={28} />
               </div>
               <h3>Operadora & Folha</h3>
               <p>A movimentação é enviada à operadora e os dados de desconto são computados.</p>
@@ -302,165 +344,208 @@ const GestaoBeneficios = () => {
         </div>
       </section>
 
-      {/* Funcionalidades Section */}
+      {/* Funcionalidades Section (Mockup Services Layout) */}
       <section id="beneficios-funcionalidades" className="beneficios-funcionalidades">
         <div className="container">
           <div className="section-header">
+            <span className="section-tag">— Funcionalidades</span>
             <h2>Gestão ponta a ponta na mesma plataforma</h2>
             <p>Ferramentas robustas criadas para dar autonomia ao colaborador e controle ao RH.</p>
           </div>
 
-          <div className="funcionalidades-grid">
-            <div className="funcionalidade-card">
-              <div className="func-icon">
-                <FileText size={24} />
+          <div className="beneficios-funcionalidades-split">
+            {/* Left Column: Image of the HR Professional */}
+            <div className="funcionalidades-image-column">
+              <div className="funcionalidades-image-wrapper">
+                <div className="funcionalidades-image-bg-effect"></div>
+                <img 
+                  src="/images/hr-professional.png" 
+                  alt="Profissional de RH apresentando a plataforma de benefícios" 
+                  className="funcionalidades-person-img"
+                />
+                <div className="funcionalidades-floating-tag">Plataforma Completa</div>
               </div>
-              <h3>Solicitação de benefícios</h3>
-              <p>Interface simples para colaboradores escolherem planos de saúde, odontológico, alimentação e transporte.</p>
             </div>
 
-            <div className="funcionalidade-card">
-              <div className="func-icon">
-                <CheckCircle2 size={24} />
+            {/* Right Column: Funcionalidades Accordion */}
+            <div className="funcionalidades-cards-column">
+              <div className="funcionalidades-accordion">
+                {pillars.map((pillar) => {
+                  const isActive = activePillar === pillar.id;
+                  return (
+                    <div 
+                      key={pillar.id} 
+                      className={`accordion-pillar ${isActive ? 'active' : ''}`}
+                      onClick={() => setActivePillar(pillar.id)}
+                    >
+                      <div className="accordion-header">
+                        <div className="accordion-title-block">
+                          <div className="accordion-icon-wrapper">
+                            {pillar.icon}
+                          </div>
+                          <h3>{pillar.title}</h3>
+                        </div>
+                        <div className="accordion-chevron">
+                          <ChevronRight size={18} />
+                        </div>
+                      </div>
+                      
+                      <div className="accordion-content">
+                        <div className="accordion-features-grid">
+                          {pillar.features.map((feat, idx) => (
+                            <div key={idx} className="accordion-feature-item">
+                              <div className="accordion-feat-icon">
+                                {feat.icon}
+                              </div>
+                              <div className="accordion-feat-text">
+                                <h4>{feat.title}</h4>
+                                <p>{feat.desc}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <h3>Aprovação simplificada</h3>
-              <p>O RH analisa e aprova solicitações pendentes de maneira ágil, com visibilidade de dependentes e regras.</p>
-            </div>
-
-            <div className="funcionalidade-card">
-              <div className="func-icon">
-                <Sliders size={24} />
-              </div>
-              <h3>Elegibilidade automática</h3>
-              <p>Definição de regras por cargo, localidade ou tempo de casa. O sistema exibe apenas o que o colaborador tem direito.</p>
-            </div>
-
-            <div className="funcionalidade-card">
-              <div className="func-icon">
-                <Zap size={24} />
-              </div>
-              <h3>Movimentações automáticas</h3>
-              <p>Inclusões e exclusões centralizadas e processadas, reduzindo a necessidade de portais de terceiros.</p>
-            </div>
-
-            <div className="funcionalidade-card">
-              <div className="func-icon">
-                <Database size={24} />
-              </div>
-              <h3>Integração com operadoras</h3>
-              <p>Formatos compatíveis com as principais operadoras de saúde, seguros e benefícios flexíveis do mercado.</p>
-            </div>
-
-            <div className="funcionalidade-card">
-              <div className="func-icon">
-                <Settings size={24} />
-              </div>
-              <h3>Integração com a folha</h3>
-              <p>Exportação consolidada dos descontos de benefícios diretamente para fechar a folha sem retrabalho.</p>
-            </div>
-
-            <div className="funcionalidade-card">
-              <div className="func-icon">
-                <Clock size={24} />
-              </div>
-              <h3>Histórico completo</h3>
-              <p>Trilha de auditoria detalhada que registra todas as solicitações, aprovações e processamentos.</p>
-            </div>
-
-            <div className="funcionalidade-card">
-              <div className="func-icon">
-                <TrendingUp size={24} />
-              </div>
-              <h3>Dashboard gerencial</h3>
-              <p>Visão clara dos custos com benefícios por categoria, adesão dos colaboradores e pendências.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Beneficios Empresa Section */}
+      {/* Beneficios Empresa Section (Split: Graphic Left, Benefits Right with Gold Checkmarks) */}
       <section className="beneficios-empresa">
         <div className="container">
-          <div className="section-header">
-            <h2>Por que a sua empresa escolhe o Dirhect?</h2>
-            <p>Entregamos agilidade para o RH e uma experiência de primeiro mundo para os colaboradores.</p>
-          </div>
-
-          <div className="empresa-beneficios-grid">
-            <div className="empresa-beneficio-item">
-              <div className="empresa-icon-bullet">
-                <Check size={18} />
-              </div>
-              <div>
-                <h3>Menos retrabalho</h3>
-                <p>Elimine o preenchimento de planilhas extras e cadastros repetitivos nos sites das operadoras.</p>
-              </div>
-            </div>
-
-            <div className="empresa-beneficio-item">
-              <div className="empresa-icon-bullet">
-                <Check size={18} />
-              </div>
-              <div>
-                <h3>Mais controle e segurança</h3>
-                <p>Monitore prazos e elegibilidade dos pacotes de benefícios oferecidos de acordo com a política interna.</p>
+          <div className="beneficios-empresa-split">
+            {/* Visual element like mockup About section */}
+            <div className="empresa-visual-column">
+              <div className="empresa-circle-image-wrapper">
+                <div className="empresa-bg-decoration-circle"></div>
+                <img 
+                  src="/images/showcase/SITE - BENEFICIOS.png" 
+                  alt="Painel de Benefícios Dirhect" 
+                  className="empresa-main-img" 
+                />
+                
+                {/* Floating pill badges around the image */}
+                <div className="empresa-floating-pill pill-1">Gestão Centralizada</div>
+                <div className="empresa-floating-pill pill-2">Autonomia</div>
+                <div className="empresa-floating-pill pill-3">Sem Erros</div>
               </div>
             </div>
 
-            <div className="empresa-beneficio-item">
-              <div className="empresa-icon-bullet">
-                <Check size={18} />
+            <div className="empresa-content-column">
+              <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2.5rem' }}>
+                <span className="section-tag">— Vantagens</span>
+                <h2>Por que a sua empresa escolhe o Dirhect?</h2>
+                <p>Entregamos agilidade para o RH e uma experiência de primeiro mundo para os colaboradores.</p>
               </div>
-              <div>
-                <h3>Redução drástica de erros</h3>
-                <p>Evite descontos duplicados ou faltantes na folha de pagamento por conta de falhas de digitação.</p>
-              </div>
-            </div>
 
-            <div className="empresa-beneficio-item">
-              <div className="empresa-icon-bullet">
-                <Check size={18} />
-              </div>
-              <div>
-                <h3>Velocidade no atendimento</h3>
-                <p>Processe movimentações e libere a utilização de planos de saúde de forma muito mais rápida.</p>
-              </div>
-            </div>
+              <div className="empresa-beneficios-list">
+                <div className="empresa-beneficio-item">
+                  <div className="empresa-icon-bullet">
+                    <Check size={12} />
+                  </div>
+                  <div className="empresa-item-text">
+                    <h3>Menos retrabalho</h3>
+                    <p>Elimine o preenchimento de planilhas extras e cadastros repetitivos nos sites das operadoras.</p>
+                  </div>
+                </div>
 
-            <div className="empresa-beneficio-item">
-              <div className="empresa-icon-bullet">
-                <Check size={18} />
-              </div>
-              <div>
-                <h3>Melhor experiência do colaborador</h3>
-                <p>Portal intuitivo e integrado onde as solicitações de benefícios são feitas de forma amigável.</p>
-              </div>
-            </div>
+                <div className="empresa-beneficio-item">
+                  <div className="empresa-icon-bullet">
+                    <Check size={12} />
+                  </div>
+                  <div className="empresa-item-text">
+                    <h3>Mais controle e segurança</h3>
+                    <p>Monitore prazos e elegibilidade dos pacotes de benefícios oferecidos de acordo com a política interna.</p>
+                  </div>
+                </div>
 
-            <div className="empresa-beneficio-item">
-              <div className="empresa-icon-bullet">
-                <Check size={18} />
-              </div>
-              <div>
-                <h3>Rastreabilidade total</h3>
-                <p>Acesse o log de auditoria de qualquer movimentação para conferência em poucos segundos.</p>
+                <div className="empresa-beneficio-item">
+                  <div className="empresa-icon-bullet">
+                    <Check size={12} />
+                  </div>
+                  <div className="empresa-item-text">
+                    <h3>Redução drástica de erros</h3>
+                    <p>Evite descontos duplicados ou faltantes na folha de pagamento por conta de falhas de digitação.</p>
+                  </div>
+                </div>
+
+                <div className="empresa-beneficio-item">
+                  <div className="empresa-icon-bullet">
+                    <Check size={12} />
+                  </div>
+                  <div className="empresa-item-text">
+                    <h3>Velocidade no atendimento</h3>
+                    <p>Processe movimentações e libere a utilização de planos de saúde de forma muito mais rápida.</p>
+                  </div>
+                </div>
+
+                <div className="empresa-beneficio-item">
+                  <div className="empresa-icon-bullet">
+                    <Check size={12} />
+                  </div>
+                  <div className="empresa-item-text">
+                    <h3>Melhor experiência do colaborador</h3>
+                    <p>Portal intuitivo e integrado onde as solicitações de benefícios são feitas de forma amigável.</p>
+                  </div>
+                </div>
+
+                <div className="empresa-beneficio-item">
+                  <div className="empresa-icon-bullet">
+                    <Check size={12} />
+                  </div>
+                  <div className="empresa-item-text">
+                    <h3>Rastreabilidade total</h3>
+                    <p>Acesse o log de auditoria de qualquer movimentação para conferência em poucos segundos.</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* CTA Final */}
+      {/* My Favorite Tools Section (Adapted as Partner Integrations) */}
+      <section className="beneficios-integracoes-tools">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-tag">— Integrações</span>
+            <h2>Explorando as Conexões de Sistemas</h2>
+            <p>Integramos nativamente com as principais operadoras de benefícios e sistemas de folha de pagamento do mercado.</p>
+          </div>
+
+          <div className="tools-bubbles-container">
+            {partnerLogos.map((partner, index) => (
+              <div 
+                key={partner.name} 
+                className="tool-bubble-wrapper"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="tool-bubble">
+                  <img src={partner.logo} alt={`Logo ${partner.name}`} className="tool-logo-img" />
+                </div>
+                <span className="tool-bubble-name">{partner.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Final (Mockup styled Contact Section) */}
       <section className="beneficios-cta-final" id="beneficios-form">
         <div className="container">
           <div className="beneficios-cta-content">
-            <h2>Automatize a gestão de benefícios da sua empresa</h2>
-            <p>
-              O Dirhect conecta todos os envolvidos no processo para tornar a operação de benefícios mais simples, segura e eficiente.
-            </p>
-            <Link to="/demo" className="beneficios-cta-button beneficios-cta-button--primary benefits-final-btn">
-              <Rocket size={20} />
-              Solicitar demonstração
+            <div className="beneficios-cta-text">
+              <h2>Automatize a gestão de benefícios da sua empresa</h2>
+            </div>
+            <Link to="/demo" className="beneficios-mockup-btn-primary final-cta-btn">
+              <span>Solicitar demonstração</span>
+              <span className="btn-circle-arrow">
+                <ArrowRight size={16} />
+              </span>
             </Link>
           </div>
         </div>
