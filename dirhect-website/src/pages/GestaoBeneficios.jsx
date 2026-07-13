@@ -10,6 +10,7 @@ import {
   Smile, 
   CheckCircle2, 
   Rocket, 
+  Sparkles,
   ArrowRight, 
   Clock, 
   Shield, 
@@ -131,9 +132,8 @@ const GestaoBeneficios = () => {
             <div className="beneficios-hero-text">
               {/* Badges like "Hello There!" in the mockup */}
               <div className="beneficios-mockup-badge">
-                <span className="bracket-left">[</span>
+                <Sparkles size={14} className="badge-icon" />
                 <span className="badge-text">Solução de Gestão de Benefícios</span>
-                <span className="bracket-right">]</span>
               </div>
               
               <h1>
@@ -340,6 +340,15 @@ const GestaoBeneficios = () => {
               <h3>Operadora & Folha</h3>
               <p>A movimentação é enviada à operadora e os dados de desconto são computados.</p>
             </div>
+          </div>
+          
+          <div className="solucao-cta-container">
+            <Link to="/demo" className="beneficios-mockup-btn-primary solucao-cta-btn">
+              <span>Automatizar meu processo</span>
+              <span className="btn-circle-arrow">
+                <ArrowRight size={16} />
+              </span>
+            </Link>
           </div>
         </div>
       </section>
