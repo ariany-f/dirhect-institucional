@@ -227,6 +227,22 @@
   overflow: visible !important;
 }
 
+/* Dotted diagram rings rotation animation */
+#Ellipse_50 ellipse {
+  transform-origin: 722.5px 707.5px;
+  animation: rotateDiagramRing 90s linear infinite;
+}
+
+#Ellipse_51 circle {
+  transform-origin: 370px 370px;
+  animation: rotateDiagramRing 90s linear infinite;
+}
+
+@keyframes rotateDiagramRing {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 /* Mobile Solutions Fallback for Home modules */
 .home-solution-modules-mobile-list {
   display: none;

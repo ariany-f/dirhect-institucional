@@ -3,7 +3,12 @@ import React from 'react';
 const DiagramaPlataforma = ({ onNavigate }) => {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="100%" height="100%" viewBox="-120 -98 2108 1717" style={{ overflow: "visible" }}>
-  <defs>
+      <style>{`
+        text {
+          font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+        }
+      `}</style>
+      <defs>
     <linearGradient id="linear-gradient" x1="0.185" y1="0.098" x2="0.832" y2="0.962" gradientUnits="objectBoundingBox">
       <stop offset="0" stopColor="#fff"/>
       <stop offset="1" stopColor="#e5e5e5"/>

@@ -132,7 +132,7 @@ const GestaoBeneficios = () => {
             <div className="beneficios-hero-text">
               {/* Badges like "Hello There!" in the mockup */}
               <div className="beneficios-mockup-badge">
-                <Sparkles size={14} className="badge-icon" />
+                <Sparkles size={16} className="badge-icon" />
                 <span className="badge-text">Solução de Gestão de Benefícios</span>
               </div>
               
@@ -235,7 +235,7 @@ const GestaoBeneficios = () => {
       <section className="beneficios-problema">
         <div className="container">
           <div className="section-header">
-            <span className="section-tag">— O Problema</span>
+            <span className="section-tag">O Problema</span>
             <h2>Sua gestão de benefícios ainda depende de <span className="highlight-orange">planilhas e e-mails?</span></h2>
             <p>O controle manual de benefícios drena o tempo do seu time e gera erros custosos para a empresa.</p>
           </div>
@@ -287,7 +287,7 @@ const GestaoBeneficios = () => {
       <section className="beneficios-solucao">
         <div className="container">
           <div className="section-header section-header--light">
-            <span className="section-tag section-tag--light">— O Processo</span>
+            <span className="section-tag section-tag--light">O Processo</span>
             <h2>Com o Dirhect, o processo fica centralizado e automatizado</h2>
             <p>Conectamos todas as pontas do fluxo de benefícios de ponta a ponta em tempo real.</p>
           </div>
@@ -357,7 +357,7 @@ const GestaoBeneficios = () => {
       <section id="beneficios-funcionalidades" className="beneficios-funcionalidades">
         <div className="container">
           <div className="section-header">
-            <span className="section-tag">— Funcionalidades</span>
+            <span className="section-tag">Funcionalidades</span>
             <h2>Gestão ponta a ponta na mesma plataforma</h2>
             <p>Ferramentas robustas criadas para dar autonomia ao colaborador e controle ao RH.</p>
           </div>
@@ -446,7 +446,7 @@ const GestaoBeneficios = () => {
 
             <div className="empresa-content-column">
               <div className="section-header" style={{ textAlign: 'left', margin: '0 0 2.5rem' }}>
-                <span className="section-tag">— Vantagens</span>
+                <span className="section-tag">Vantagens</span>
                 <h2>Por que a sua empresa escolhe o Dirhect?</h2>
                 <p>Entregamos agilidade para o RH e uma experiência de primeiro mundo para os colaboradores.</p>
               </div>
@@ -521,7 +521,7 @@ const GestaoBeneficios = () => {
       <section className="beneficios-integracoes-tools">
         <div className="container">
           <div className="section-header">
-            <span className="section-tag">— Integrações</span>
+            <span className="section-tag">Integrações</span>
             <h2>Explorando as Conexões de Sistemas</h2>
             <p>Integramos nativamente com as principais operadoras de benefícios e sistemas de folha de pagamento do mercado.</p>
           </div>

@@ -38,7 +38,91 @@ import PhoneInput from '../components/PhoneInput';
 import { sendDemoEmail } from '../services/emailService';
 import './AdmissaoDigital.css';
 
+const collaboratorPool = [
+  { nome: 'Lucas Alencar', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&h=80&q=80', unidade: 'Matriz SP', cargo: 'Analista de Vendas', dataAdmissao: '15/10/2026' },
+  { nome: 'Beatriz Farias', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&h=80&q=80', unidade: 'Filial RJ', cargo: 'Dev Frontend Senior', dataAdmissao: '20/10/2026' },
+  { nome: 'Maurício Silva', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&h=80&q=80', unidade: 'Matriz SP', cargo: 'Coordenador Financeiro', dataAdmissao: '01/10/2026' },
+  { nome: 'Mariana Costa', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=80&h=80&q=80', unidade: 'Escritório BH', cargo: 'Gerente de Marketing', dataAdmissao: '18/10/2026' },
+  { nome: 'Thiago Souza', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=80&h=80&q=80', unidade: 'Filial RS', cargo: 'Analista de Suporte', dataAdmissao: '22/10/2026' },
+  { nome: 'Aline Ribeiro', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=80&h=80&q=80', unidade: 'Matriz SP', cargo: 'Designer UX', dataAdmissao: '25/10/2026' },
+  { nome: 'Gabriel Mendes', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=80&h=80&q=80', unidade: 'Filial RJ', cargo: 'Engenheiro de Dados', dataAdmissao: '28/10/2026' },
+  { nome: 'Juliana Lins', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=80&h=80&q=80', unidade: 'Escritório BH', cargo: 'Coordenadora de RH', dataAdmissao: '30/10/2026' }
+];
+
 const AdmissaoDigital = () => {
+  const [activeVantagemPillar, setActiveVantagemPillar] = useState(0);
+
+  const vantagensPillars = [
+    {
+      id: 0,
+      title: "Automação e Produtividade",
+      icon: <Zap size={20} />,
+      features: [
+        {
+          title: "Redução de atividades manuais",
+          desc: "Elimine a digitação repetitiva e centralize as informações do colaborador em um único fluxo transparente.",
+          icon: <Sliders size={18} />
+        },
+        {
+          title: "Menos erros e retrabalho",
+          desc: "Padronize o preenchimento dos dados e identifique informações pendentes ou incorretas antes do fechamento.",
+          icon: <AlertTriangle size={18} />
+        }
+      ]
+    },
+    {
+      id: 1,
+      title: "Gestão e Controle",
+      icon: <Clock size={20} />,
+      features: [
+        {
+          title: "Acompanhamento em tempo real",
+          desc: "Visualize quais admissões estão em andamento, concluídas ou aguardando alguma ação de forma instantânea.",
+          icon: <Clock size={18} />
+        },
+        {
+          title: "Mais controle e rastreabilidade",
+          desc: "Mantenha o histórico completo das etapas de admissão, alteração de dados e permissões.",
+          icon: <ShieldCheck size={18} />
+        }
+      ]
+    },
+    {
+      id: 2,
+      title: "Experiência e Flexibilidade",
+      icon: <Smile size={20} />,
+      features: [
+        {
+          title: "Processos personalizados",
+          desc: "Configure etapas, documentos, campos obrigatórios e fluxos de aprovação conforme as regras do seu negócio.",
+          icon: <Settings size={18} />
+        },
+        {
+          title: "Melhor experiência para o colaborador",
+          desc: "Ofereça uma jornada digital, organizada, fluida e amigável desde o primeiro contato com a empresa.",
+          icon: <Smile size={18} />
+        }
+      ]
+    },
+    {
+      id: 3,
+      title: "Integração e Segurança",
+      icon: <Shield size={20} />,
+      features: [
+        {
+          title: "Integração com o seu ecossistema",
+          desc: "Conecte a admissão aos sistemas de folha, ERP, benefícios, recrutamento e controle de ponto.",
+          icon: <Zap size={18} />
+        },
+        {
+          title: "Segurança das informações",
+          desc: "Centralize os dados dos colaboradores em ambiente seguro, reduzindo envios de arquivos confidenciais por redes sociais.",
+          icon: <Shield size={18} />
+        }
+      ]
+    }
+  ];
+
   const [formData, setFormData] = useState({
     nome: '',
     email: '',
@@ -51,6 +135,115 @@ const AdmissaoDigital = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [submitError, setSubmitError] = useState(null);
+
+  const [dashboardState, setDashboardState] = useState({
+    activeList: [
+      { nome: 'Lucas Alencar', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=80&h=80&q=80', unidade: 'Matriz SP', cargo: 'Analista de Vendas', dataAdmissao: '15/10/2026', progresso: 30, key: 0 },
+      { nome: 'Beatriz Farias', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=80&h=80&q=80', unidade: 'Filial RJ', cargo: 'Dev Frontend Senior', dataAdmissao: '20/10/2026', progresso: 65, key: 1 },
+      { nome: 'Maurício Silva', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=80&h=80&q=80', unidade: 'Matriz SP', cargo: 'Coordenador Financeiro', dataAdmissao: '01/10/2026', progresso: 90, key: 2 }
+    ],
+    poolIdx: 3,
+    keyCounter: 3,
+    isResetting: false
+  });
+
+  useEffect(() => {
+    let timeoutId;
+    const interval = setInterval(() => {
+      setDashboardState(prev => {
+        const { activeList, poolIdx, keyCounter, isResetting } = prev;
+        if (isResetting) return prev;
+
+        const updatedList = activeList.map((col, idx) => {
+          let increment = 5;
+          if (idx === 0) increment = 6;
+          if (idx === 1) increment = 4;
+          if (idx === 2) increment = 3;
+          return {
+            ...col,
+            progresso: Math.min(100, col.progresso + increment)
+          };
+        });
+
+        const reached100Idx = updatedList.findIndex(col => col.progresso >= 100);
+
+        if (reached100Idx !== -1) {
+          timeoutId = setTimeout(() => {
+            setDashboardState(current => {
+              const completedIdx = current.activeList.findIndex(col => col.progresso >= 100);
+              if (completedIdx === -1) return current;
+
+              const nextCollaborator = collaboratorPool[current.poolIdx];
+              const nextPoolIdx = (current.poolIdx + 1) % collaboratorPool.length;
+              const nextKeyCounter = current.keyCounter + 1;
+
+              const remaining = current.activeList.filter((_, idx) => idx !== completedIdx);
+
+              return {
+                activeList: [
+                  { ...nextCollaborator, progresso: 0, key: current.keyCounter },
+                  ...remaining
+                ],
+                poolIdx: nextPoolIdx,
+                keyCounter: nextKeyCounter,
+                isResetting: false
+              };
+            });
+          }, 1000);
+
+          return {
+            ...prev,
+            activeList: updatedList,
+            isResetting: true
+          };
+        }
+
+        return {
+          ...prev,
+          activeList: updatedList
+        };
+      });
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+      if (timeoutId) clearTimeout(timeoutId);
+    };
+  }, []);
+
+  const getStatusInfo = (progresso) => {
+    if (progresso < 30) {
+      return {
+        badgeClass: 'status-badge progress',
+        label: 'Preenchimento',
+        responsavel: 'Colaborador'
+      };
+    } else if (progresso < 75) {
+      return {
+        badgeClass: 'status-badge progress',
+        label: 'Envio de Docs',
+        responsavel: 'Colaborador'
+      };
+    } else if (progresso < 95) {
+      return {
+        badgeClass: 'status-badge review',
+        label: 'Em Análise RH',
+        responsavel: 'RH Dirhect'
+      };
+    } else if (progresso < 100) {
+      return {
+        badgeClass: 'status-badge review',
+        label: 'Aprovação Final',
+        responsavel: 'RH Dirhect'
+      };
+    } else {
+      return {
+        badgeClass: 'status-badge success',
+        label: 'Concluída',
+        responsavel: 'Finalizado'
+      };
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -157,16 +350,29 @@ const AdmissaoDigital = () => {
       
       {/* 1. HERO SECTION */}
       <section className="admissao-hero">
+        <div className="admissao-hero-media" aria-hidden="true">
+          <img
+            className="admissao-hero-image"
+            src="/images/admissao-hero-handshake.jpg"
+            alt=""
+            width={1200}
+            height={800}
+            decoding="async"
+          />
+          <div className="admissao-hero-media-fade" />
+        </div>
+
         <div className="container">
           <div className="admissao-hero-grid">
             <div className="admissao-hero-text">
               <div className="admissao-mockup-badge">
-                <Sparkles size={14} className="badge-icon" />
+                <Sparkles size={16} className="badge-icon" />
                 <span className="badge-text">Solução de Admissão Digital</span>
               </div>
               
               <h1>
-                Transforme a admissão de colaboradores em um processo <br />
+                Transforme a admissão de <br />
+                colaboradores em um processo <br />
                 <span className="admissao-highlight">simples, digital e integrado</span>
               </h1>
               
@@ -175,20 +381,13 @@ const AdmissaoDigital = () => {
               </p>
               
               <div className="admissao-hero-actions">
-                <button onClick={() => scrollToSection('admissao-como-funciona')} className="admissao-mockup-btn-primary">
-                  <span>Conheça a Admissão Digital</span>
+                <Link to="/demo" className="admissao-mockup-btn-primary">
+                  <span>Fale com um especialista</span>
                   <span className="btn-circle-arrow">
                     <ArrowRight size={16} />
                   </span>
-                </button>
-                <Link to="/demo" className="admissao-mockup-btn-secondary">
-                  <span>Fale com um especialista</span>
                 </Link>
               </div>
-
-              <span className="admissao-hero-support-phrase">
-                Menos tarefas manuais. Mais agilidade para o RH e uma experiência melhor para o novo colaborador.
-              </span>
 
               {/* Stats Row */}
               <div className="admissao-hero-stats">
@@ -207,68 +406,8 @@ const AdmissaoDigital = () => {
               </div>
             </div>
 
-            {/* Visual Column: Staggered flowing timeline cards representing the admission process */}
-            <div className="admissao-hero-visual">
-              <div className="admissao-visual-wrapper">
-                <div className="admissao-visual-bg-circle"></div>
-                
-                <div className="admissao-flow-timeline">
-                  <div className="timeline-card card-step-1">
-                    <div className="timeline-icon">
-                      <Mail size={16} />
-                    </div>
-                    <div className="timeline-content">
-                      <h4>Convite enviado</h4>
-                      <p>Link exclusivo enviado por e-mail/WhatsApp</p>
-                    </div>
-                    <div className="timeline-badge pending">Pendente</div>
-                  </div>
-
-                  <div className="timeline-card card-step-2">
-                    <div className="timeline-icon">
-                      <FileText size={16} />
-                    </div>
-                    <div className="timeline-content">
-                      <h4>Preenchimento inteligente</h4>
-                      <p>Dados cadastrais, dependentes e bancários</p>
-                    </div>
-                    <div className="timeline-badge process">Em progresso</div>
-                  </div>
-
-                  <div className="timeline-card card-step-3">
-                    <div className="timeline-icon">
-                      <Upload size={16} />
-                    </div>
-                    <div className="timeline-content">
-                      <h4>Envio de documentos</h4>
-                      <p>Fotos legíveis de CNH, RG, CTPS direto do celular</p>
-                    </div>
-                  </div>
-
-                  <div className="timeline-card card-step-4">
-                    <div className="timeline-icon">
-                      <ShieldCheck size={16} />
-                    </div>
-                    <div className="timeline-content">
-                      <h4>Validação e Aprovação</h4>
-                      <p>Conferência rápida pelo DP em tela unificada</p>
-                    </div>
-                    <div className="timeline-badge success">Aprovado</div>
-                  </div>
-
-                  <div className="timeline-card card-step-5">
-                    <div className="timeline-icon">
-                      <Rocket size={16} />
-                    </div>
-                    <div className="timeline-content">
-                      <h4>Admissão concluída</h4>
-                      <p>Dados enviados para folha e eSocial</p>
-                    </div>
-                    <div className="timeline-badge complete">Concluído ✦</div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            {/* Empty Visual Column to keep the grid spacing */}
+            <div className="admissao-hero-visual" />
           </div>
         </div>
       </section>
@@ -286,72 +425,206 @@ const AdmissaoDigital = () => {
         </div>
       </div>
 
+      {/* 7. GESTÃO DAS ADMISSÕES (Painel Mockup) */}
+      <section className="admissao-painel-rh">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-tag">Gestão Unificada</span>
+            <h2>Acompanhe <span className="highlight-orange">todas as admissões</span> em um único painel</h2>
+            <p>Tenha uma visão centralizada de todos os processos e identifique rapidamente o que precisa de atenção.</p>
+          </div>
+
+          {/* Table Mockup Dashboard */}
+          <div className="dashboard-mockup-container">
+            <div className="dashboard-filters">
+              <div className="filter-group search">
+                <input type="text" placeholder="Buscar colaborador..." disabled />
+              </div>
+              <div className="filter-group">
+                <select disabled><option>Empresa (Todas)</option></select>
+              </div>
+              <div className="filter-group">
+                <select disabled><option>Status (Em preenchimento)</option></select>
+              </div>
+              <div className="filter-group">
+                <select disabled><option>Vínculo (CLT)</option></select>
+              </div>
+            </div>
+
+            <div className="dashboard-table-wrapper">
+              <table className="dashboard-table">
+                <thead>
+                  <tr>
+                    <th>Colaborador</th>
+                    <th>Unidade</th>
+                    <th>Cargo</th>
+                    <th>Data Admissão</th>
+                    <th>Progresso</th>
+                    <th className="col-status">Status</th>
+                    <th>Responsável</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[...dashboardState.activeList]
+                    .sort((a, b) => a.progresso - b.progresso)
+                    .map((col) => {
+                      const statusInfo = getStatusInfo(col.progresso);
+                    return (
+                      <tr key={col.key}>
+                        <td>
+                          <div className="user-avatar-info">
+                            <div className="avatar-circle">
+                              <img src={col.avatar} alt={col.nome} className="avatar-img" />
+                            </div>
+                            <strong>{col.nome}</strong>
+                          </div>
+                        </td>
+                        <td>{col.unidade}</td>
+                        <td>{col.cargo}</td>
+                        <td>{col.dataAdmissao}</td>
+                        <td>
+                          <div className="progress-bar-container">
+                            <span className="progress-text">{col.progresso}%</span>
+                            <div className="progress-bar">
+                              <div 
+                                className={`progress-fill ${col.progresso === 100 ? 'complete' : ''}`} 
+                                style={{ width: `${col.progresso}%`, transition: 'width 0.3s ease' }}
+                              ></div>
+                            </div>
+                          </div>
+                        </td>
+                        <td className="col-status">
+                          <span className={statusInfo.badgeClass}>
+                            {statusInfo.label}
+                          </span>
+                        </td>
+                        <td>{statusInfo.responsavel}</td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div className="admissao-painel-footer">
+            <p>O RH deixa de procurar informações em diferentes planilhas, e-mails e sistemas e passa a acompanhar toda a operação em só um lugar.</p>
+          </div>
+        </div>
+      </section>
+
       {/* 3. SEÇÃO DE PROBLEMA */}
       <section className="admissao-problema">
         <div className="container">
           <div className="section-header">
-            <span className="section-tag">— O Problema</span>
+            <span className="section-tag">O Problema</span>
             <h2>A admissão de colaboradores não precisa ser um <span className="highlight-orange">processo demorado</span></h2>
             <p>
               Em muitas empresas, a admissão ainda depende de planilhas, formulários, documentos enviados por e-mail e conferências manuais. Isso aumenta o risco de erros, atrasa o início do colaborador e gera retrabalho para o RH e o Departamento Pessoal.
             </p>
           </div>
 
-          <div className="admissao-problemas-grid">
-            <div className="problema-card">
-              <div className="problema-icon-wrapper">
-                <AlertTriangle size={18} />
+          <div className="admissao-problemas-diagrama">
+            {/* Coluna 1 */}
+            <div className="diagrama-coluna">
+              <div className="coluna-header">
+                <div className="coluna-number">01</div>
+                <div className="coluna-info">
+                  <h3>Coleta Fragmentada</h3>
+                  <p className="coluna-sub">A primeira barreira do processo: o recebimento de arquivos e dados</p>
+                </div>
               </div>
-              <h3>Documentos por diferentes canais</h3>
-              <p>Arquivos espalhados no e-mail, WhatsApp e pastas físicas, dificultando o controle.</p>
+              <div className="coluna-content">
+                <div className="diagrama-problema-item">
+                  <div className="item-icon-wrapper">
+                    <AlertTriangle size={16} />
+                  </div>
+                  <div className="item-text">
+                    <h4>Documentos dispersos</h4>
+                    <p>Arquivos espalhados entre e-mails, WhatsApp, mensagens e papel físico, gerando desorganização.</p>
+                  </div>
+                </div>
+                <div className="diagrama-problema-item">
+                  <div className="item-icon-wrapper">
+                    <AlertTriangle size={16} />
+                  </div>
+                  <div className="item-text">
+                    <h4>Dados incorretos ou rasurados</h4>
+                    <p>Falta de validação que resulta em fotos ilegíveis, CPFs inválidos e falta de assinaturas.</p>
+                  </div>
+                </div>
+                <div className="diagrama-problema-item">
+                  <div className="item-icon-wrapper">
+                    <AlertTriangle size={16} />
+                  </div>
+                  <div className="item-text">
+                    <h4>Cobrança manual de pendências</h4>
+                    <p>O RH precisa cobrar individualmente cada colaborador por e-mail ou telefone para reenvio.</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="problema-card">
-              <div className="problema-icon-wrapper">
-                <AlertTriangle size={18} />
+            {/* Coluna 2 */}
+            <div className="diagrama-coluna">
+              <div className="coluna-header">
+                <div className="coluna-number">02</div>
+                <div className="coluna-info">
+                  <h3>Retrabalho Operacional</h3>
+                  <p className="coluna-sub">O desperdício de tempo e esforço com tarefas repetitivas</p>
+                </div>
               </div>
-              <h3>Informações incompletas ou incorretas</h3>
-              <p>Erros comuns como falta de assinatura, fotos ilegíveis de RG ou CPF incorreto.</p>
+              <div className="coluna-content">
+                <div className="diagrama-problema-item">
+                  <div className="item-icon-wrapper">
+                    <AlertTriangle size={16} />
+                  </div>
+                  <div className="item-text">
+                    <h4>Digitação duplicada</h4>
+                    <p>Necessidade de digitar os mesmos dados do colaborador em planilhas e sistemas diferentes.</p>
+                  </div>
+                </div>
+                <div className="diagrama-problema-item">
+                  <div className="item-icon-wrapper">
+                    <AlertTriangle size={16} />
+                  </div>
+                  <div className="item-text">
+                    <h4>Ausência de integrações</h4>
+                    <p>RH e DP perdendo horas transferindo informações da ficha de registro para o sistema de folha (ERP).</p>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <div className="problema-card">
-              <div className="problema-icon-wrapper">
-                <AlertTriangle size={18} />
+            {/* Coluna 3 */}
+            <div className="diagrama-coluna">
+              <div className="coluna-header">
+                <div className="coluna-number">03</div>
+                <div className="coluna-info">
+                  <h3>Visão Limitada</h3>
+                  <p className="coluna-sub">Falta de controle geral e padrões descentralizados</p>
+                </div>
               </div>
-              <h3>Digitação repetida dos mesmos dados</h3>
-              <p>Inserção manual das informações do novo contratado na planilha de benefícios, no sistema de folha e no ponto.</p>
-            </div>
-
-            <div className="problema-card">
-              <div className="problema-icon-wrapper">
-                <AlertTriangle size={18} />
+              <div className="coluna-content">
+                <div className="diagrama-problema-item">
+                  <div className="item-icon-wrapper">
+                    <AlertTriangle size={16} />
+                  </div>
+                  <div className="item-text">
+                    <h4>Dificuldade de rastreamento</h4>
+                    <p>Impossibilidade de saber em tempo real em qual etapa cada novo colaborador está no fluxo.</p>
+                  </div>
+                </div>
+                <div className="diagrama-problema-item">
+                  <div className="item-icon-wrapper">
+                    <AlertTriangle size={16} />
+                  </div>
+                  <div className="item-text">
+                    <h4>Falta de padronização</h4>
+                    <p>Diferentes unidades ou filiais realizando a admissão de formas variadas e sem conformidade.</p>
+                  </div>
+                </div>
               </div>
-              <h3>Dificuldade para acompanhar o andamento</h3>
-              <p>Dificuldade em visualizar quem enviou os dados ou quais assinaturas estão pendentes para iniciar a contratação.</p>
-            </div>
-
-            <div className="problema-card">
-              <div className="problema-icon-wrapper">
-                <AlertTriangle size={18} />
-              </div>
-              <h3>Falta de padronização</h3>
-              <p>Unidades distantes ou empresas do mesmo grupo realizando o fluxo de contratação de formas completamente distintas.</p>
-            </div>
-
-            <div className="problema-card">
-              <div className="problema-icon-wrapper">
-                <AlertTriangle size={18} />
-              </div>
-              <h3>Retrabalho na inclusão nos sistemas</h3>
-              <p>Perda de tempo transferindo informações da ficha de registro para o software de folha (ERP).</p>
-            </div>
-
-            <div className="problema-card">
-              <div className="problema-icon-wrapper">
-                <AlertTriangle size={18} />
-              </div>
-              <h3>Pouca visibilidade de pendências</h3>
-              <p>Contatos sucessivos por e-mail para cobrar dependentes, fotos ou assinatura de contratos.</p>
             </div>
           </div>
 
@@ -365,7 +638,7 @@ const AdmissaoDigital = () => {
       <section id="admissao-como-funciona" className="admissao-solucao">
         <div className="container">
           <div className="section-header section-header--light">
-            <span className="section-tag section-tag--light">— O Processo</span>
+            <span className="section-tag section-tag--light">O Processo</span>
             <h2>Uma jornada de admissão simples do início ao fim</h2>
             <p>Conectamos todas as pontas do fluxo de admissão digital em tempo real.</p>
           </div>
@@ -374,98 +647,74 @@ const AdmissaoDigital = () => {
             <div className="flow-step">
               <div className="flow-number">01</div>
               <div className="flow-icon">
-                <Building2 size={24} />
+                <Building2 size={20} />
               </div>
               <h3>Início da admissão</h3>
-              <p>O RH cadastra o novo colaborador ou inicia a admissão por meio de uma integração com o sistema de recrutamento.</p>
-            </div>
-
-            <div className="flow-connector">
-              <ChevronRight size={20} />
+              <p>O RH inicia o processo manualmente ou via integração com o ATS.</p>
             </div>
 
             <div className="flow-step">
               <div className="flow-number">02</div>
               <div className="flow-icon">
-                <Mail size={24} />
+                <Mail size={20} />
               </div>
               <h3>Convite</h3>
-              <p>O novo colaborador recebe um acesso para preencher seus dados e enviar os documentos necessários.</p>
-            </div>
-
-            <div className="flow-connector">
-              <ChevronRight size={20} />
+              <p>O colaborador recebe o link de acesso por e-mail ou WhatsApp.</p>
             </div>
 
             <div className="flow-step highlight">
               <div className="flow-number">03</div>
               <div className="flow-icon">
-                <Smartphone size={24} />
+                <Smartphone size={20} />
               </div>
               <h3>Preenchimento</h3>
-              <p>O colaborador informa seus dados pessoais, bancários, dependentes, benefícios e demais informações exigidas.</p>
-            </div>
-
-            <div className="flow-connector">
-              <ChevronRight size={20} />
+              <p>Preenchimento dos dados cadastrais, dependentes e benefícios.</p>
             </div>
 
             <div className="flow-step">
               <div className="flow-number">04</div>
               <div className="flow-icon">
-                <Upload size={24} />
+                <Upload size={20} />
               </div>
               <h3>Documentos</h3>
-              <p>Os documentos são enviados diretamente pela plataforma, permitindo a conferência e acompanhamento.</p>
-            </div>
-
-            <div className="flow-connector">
-              <ChevronRight size={20} />
+              <p>Envio de fotos dos documentos diretamente pelo celular.</p>
             </div>
 
             <div className="flow-step">
               <div className="flow-number">05</div>
               <div className="flow-icon">
-                <ShieldCheck size={24} />
+                <ShieldCheck size={20} />
               </div>
               <h3>Análise</h3>
-              <p>O RH acompanha o processo, solicita correções quando necessário e aprova as informações recebidas.</p>
-            </div>
-
-            <div className="flow-connector">
-              <ChevronRight size={20} />
+              <p>O DP valida as informações e solicita correções se necessário.</p>
             </div>
 
             <div className="flow-step">
               <div className="flow-number">06</div>
               <div className="flow-icon">
-                <Zap size={24} />
+                <Zap size={20} />
               </div>
               <h3>Integração</h3>
-              <p>Após a aprovação, os dados são enviados para os sistemas de folha, ERP, benefícios e outras plataformas.</p>
-            </div>
-
-            <div className="flow-connector">
-              <ChevronRight size={20} />
+              <p>Envio automático de dados para o sistema de folha e eSocial.</p>
             </div>
 
             <div className="flow-step complete">
               <div className="flow-number">07</div>
               <div className="flow-icon">
-                <CheckCircle2 size={24} />
+                <CheckCircle2 size={20} />
               </div>
               <h3>Concluído</h3>
-              <p>O processo é finalizado com todas as informações organizadas, rastreáveis e disponíveis para consulta.</p>
+              <p>Admissão finalizada, com histórico e documentos salvos.</p>
             </div>
           </div>
 
           <div className="solucao-cta-container">
-            <button onClick={() => scrollToSection('admissao-form')} className="beneficios-mockup-btn-primary solucao-cta-btn">
+            <Link to="/demo" className="beneficios-mockup-btn-primary solucao-cta-btn">
               <span>Automatizar admissões</span>
               <span className="btn-circle-arrow">
                 <ArrowRight size={16} />
               </span>
-            </button>
+            </Link>
           </div>
         </div>
       </section>
@@ -474,74 +723,67 @@ const AdmissaoDigital = () => {
       <section className="admissao-beneficios-detalhados">
         <div className="container">
           <div className="section-header">
-            <span className="section-tag">— Vantagens</span>
+            <span className="section-tag">Vantagens</span>
             <h2>Mais eficiência para o RH. <br />Mais simplicidade para o novo colaborador.</h2>
             <p>Uma solução desenhada para otimizar tempo, eliminar o uso de papéis e garantir conformidade e segurança da informação.</p>
           </div>
 
-          <div className="admissao-beneficios-grid">
-            <div className="beneficio-card">
-              <div className="beneficio-icon">
-                <Sliders size={20} />
+          <div className="admissao-beneficios-split">
+            {/* Left Column: Image of the HR Professional */}
+            <div className="beneficios-image-column">
+              <div className="beneficios-image-wrapper">
+                <div className="beneficios-image-bg-effect"></div>
+                <img 
+                  src="/images/hr-professional.png" 
+                  alt="Profissional de RH apresentando as vantagens da admissão digital" 
+                  className="beneficios-person-img"
+                />
+                <div className="beneficios-floating-tag">Processo Otimizado</div>
               </div>
-              <h3>Redução de atividades manuais</h3>
-              <p>Elimine a digitação repetitiva e centralize as informações do colaborador em um único fluxo transparente.</p>
             </div>
 
-            <div className="beneficio-card">
-              <div className="beneficio-icon">
-                <AlertTriangle size={20} />
+            {/* Right Column: Accordion */}
+            <div className="beneficios-cards-column">
+              <div className="funcionalidades-accordion">
+                {vantagensPillars.map((pillar) => {
+                  const isActive = activeVantagemPillar === pillar.id;
+                  return (
+                    <div 
+                      key={pillar.id} 
+                      className={`accordion-pillar ${isActive ? 'active' : ''}`}
+                      onClick={() => setActiveVantagemPillar(pillar.id)}
+                    >
+                      <div className="accordion-header">
+                        <div className="accordion-title-block">
+                          <div className="accordion-icon-wrapper">
+                            {pillar.icon}
+                          </div>
+                          <h3>{pillar.title}</h3>
+                        </div>
+                        <div className="accordion-chevron">
+                          <ChevronRight size={18} />
+                        </div>
+                      </div>
+                      
+                      <div className="accordion-content">
+                        <div className="accordion-features-grid">
+                          {pillar.features.map((feat, idx) => (
+                            <div key={idx} className="accordion-feature-item">
+                              <div className="accordion-feat-icon">
+                                {feat.icon}
+                              </div>
+                              <div className="accordion-feat-text">
+                                <h4>{feat.title}</h4>
+                                <p>{feat.desc}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
-              <h3>Menos erros e retrabalho</h3>
-              <p>Padronize o preenchimento dos dados e identifique informações pendentes ou incorretas antes do fechamento.</p>
-            </div>
-
-            <div className="beneficio-card">
-              <div className="beneficio-icon">
-                <Clock size={20} />
-              </div>
-              <h3>Acompanhamento em tempo real</h3>
-              <p>Visualize quais admissões estão em andamento, concluídas ou aguardando alguma ação de forma instantânea.</p>
-            </div>
-
-            <div className="beneficio-card">
-              <div className="beneficio-icon">
-                <Settings size={20} />
-              </div>
-              <h3>Processos personalizados</h3>
-              <p>Configure etapas, documentos, campos obrigatórios e fluxos de aprovação conforme as regras do seu negócio.</p>
-            </div>
-
-            <div className="beneficio-card">
-              <div className="beneficio-icon">
-                <Zap size={20} />
-              </div>
-              <h3>Integração com o seu ecossistema</h3>
-              <p>Conecte a admissão aos sistemas de folha, ERP, benefícios, recrutamento e controle de ponto.</p>
-            </div>
-
-            <div className="beneficio-card">
-              <div className="beneficio-icon">
-                <Smile size={20} />
-              </div>
-              <h3>Melhor experiência para o colaborador</h3>
-              <p>Ofereça uma jornada digital, organizada, fluida e amigável desde o primeiro contato com a empresa.</p>
-            </div>
-
-            <div className="beneficio-card">
-              <div className="beneficio-icon">
-                <ShieldCheck size={20} />
-              </div>
-              <h3>Mais controle e rastreabilidade</h3>
-              <p>Mantenha o histórico completa das etapas de admissão, alteração de dados e permissões.</p>
-            </div>
-
-            <div className="beneficio-card">
-              <div className="beneficio-icon">
-                <Shield size={20} />
-              </div>
-              <h3>Segurança das informações</h3>
-              <p>Centralize os dados dos colaboradores em ambiente seguro, reduzindo envios de arquivos confidenciais por redes sociais.</p>
             </div>
           </div>
         </div>
@@ -552,7 +794,7 @@ const AdmissaoDigital = () => {
         <div className="container">
           <div className="personalizacao-split-grid">
             <div className="personalizacao-text-col">
-              <span className="section-tag">— Customização</span>
+              <span className="section-tag">Customização</span>
               <h2>Um processo de admissão adaptado à realidade da sua empresa</h2>
               <p className="subtitle">
                 Cada organização possui documentos, regras, etapas e aprovações diferentes. Por isso, o Dirhect permite estruturar fluxos personalizados de acordo com a operação de cada cliente.
@@ -588,6 +830,7 @@ const AdmissaoDigital = () => {
                   </div>
                 </li>
               </ul>
+
             </div>
 
             {/* Visual: Configured flow diagram representation */}
@@ -635,126 +878,84 @@ const AdmissaoDigital = () => {
                   </div>
                 </div>
               </div>
-            </div>
+          </div>
+        </div>
+
+        <div className="personalizacao-cta-wrapper">
+            <Link to="/demo" className="beneficios-mockup-btn-primary solucao-cta-btn personalizacao-cta-btn">
+              <span>Conhecer o Dirhect</span>
+              <span className="btn-circle-arrow">
+                <ArrowRight size={16} />
+              </span>
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* 7. GESTÃO DAS ADMISSÕES (Painel Mockup) */}
-      <section className="admissao-painel-rh">
+      {/* 8. INTELIGÊNCIA ARTIFICIAL - OCR */}
+      <section className="admissao-ia-ocr">
         <div className="container">
-          <div className="section-header">
-            <span className="section-tag">— Gestão Unificada</span>
-            <h2>Acompanhe todas as admissões em um único painel</h2>
-            <p>Tenha uma visão centralizada de todos os processos e identifique rapidamente o que precisa de atenção.</p>
-          </div>
+          <div className="ia-ocr-grid">
 
-          {/* Table Mockup Dashboard */}
-          <div className="dashboard-mockup-container">
-            <div className="dashboard-filters">
-              <div className="filter-group search">
-                <input type="text" placeholder="Buscar colaborador..." disabled />
-              </div>
-              <div className="filter-group">
-                <select disabled><option>Empresa (Todas)</option></select>
-              </div>
-              <div className="filter-group">
-                <select disabled><option>Status (Em preenchimento)</option></select>
-              </div>
-              <div className="filter-group">
-                <select disabled><option>Vínculo (CLT)</option></select>
+            {/* Coluna Esquerda: GIF */}
+            <div className="ia-ocr-visual">
+              <div className="ia-ocr-gif-wrapper">
+                <img
+                  src="/images/admissao-ocr-ai.gif"
+                  alt="Demonstração da leitura automática de documentos por inteligência artificial"
+                  className="ia-ocr-gif"
+                  loading="lazy"
+                  decoding="async"
+                />
               </div>
             </div>
 
-            <div className="dashboard-table-wrapper">
-              <table className="dashboard-table">
-                <thead>
-                  <tr>
-                    <th>Colaborador</th>
-                    <th>Unidade</th>
-                    <th>Cargo</th>
-                    <th>Data Admissão</th>
-                    <th>Progresso</th>
-                    <th>Status</th>
-                    <th>Responsável</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>
-                      <div className="user-avatar-info">
-                        <div className="avatar-circle">LA</div>
-                        <strong>Lucas Alencar</strong>
-                      </div>
-                    </td>
-                    <td>Matriz SP</td>
-                    <td>Analista de Vendas</td>
-                    <td>15/10/2026</td>
-                    <td>
-                      <div className="progress-bar-container">
-                        <span className="progress-text">60%</span>
-                        <div className="progress-bar"><div className="progress-fill" style={{ width: '60%' }}></div></div>
-                      </div>
-                    </td>
-                    <td><span className="status-badge progress">Preenchimento</span></td>
-                    <td>Colaborador</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="user-avatar-info">
-                        <div className="avatar-circle">BF</div>
-                        <strong>Beatriz Farias</strong>
-                      </div>
-                    </td>
-                    <td>Filial RJ</td>
-                    <td>Dev Frontend Senior</td>
-                    <td>20/10/2026</td>
-                    <td>
-                      <div className="progress-bar-container">
-                        <span className="progress-text">95%</span>
-                        <div className="progress-bar"><div className="progress-fill" style={{ width: '95%' }}></div></div>
-                      </div>
-                    </td>
-                    <td><span className="status-badge review">Em Análise RH</span></td>
-                    <td>RH Dirhect</td>
-                  </tr>
-                  <tr>
-                    <td>
-                      <div className="user-avatar-info">
-                        <div className="avatar-circle">MS</div>
-                        <strong>Maurício Silva</strong>
-                      </div>
-                    </td>
-                    <td>Matriz SP</td>
-                    <td>Coordenador Financeiro</td>
-                    <td>01/10/2026</td>
-                    <td>
-                      <div className="progress-bar-container">
-                        <span className="progress-text">100%</span>
-                        <div className="progress-bar"><div className="progress-fill complete" style={{ width: '100%' }}></div></div>
-                      </div>
-                    </td>
-                    <td><span className="status-badge success">Concluída</span></td>
-                    <td>Finalizado</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
+            {/* Coluna Direita: Texto */}
+            <div className="ia-ocr-text">
+              <span className="section-tag ia-ocr-tag">Inteligência Artificial</span>
+              <h2>
+                Conheça a AR<span className="aria-ia-pulse">IA</span>, a{' '}
+                <span className="admissao-highlight">inteligência artificial</span>{' '}
+                do Dirhect
+              </h2>
+              <p className="ia-ocr-desc">
+                Basta digitalizar o documento ou tirar uma foto. A{' '}
+                <strong>inteligência artificial</strong> do Dirhect identifica os dados e preenche{' '}
+                <strong>automaticamente</strong> as informações do candidato, reduzindo erros e
+                agilizando a admissão.
+              </p>
 
-          <div className="admissao-painel-footer">
-            <p>O RH deixa de procurar informações em diferentes planilhas, e-mails e sistemas e passa a acompanhar toda a operação em um único ambiente.</p>
+              <div className="ia-ocr-benefits">
+                <div className="ia-ocr-benefit">
+                  <span className="ia-benefit-dot" />
+                  <span>Leitura automática</span>
+                </div>
+                <div className="ia-ocr-benefit">
+                  <span className="ia-benefit-dot" />
+                  <span>Preenchimento inteligente</span>
+                </div>
+                <div className="ia-ocr-benefit">
+                  <span className="ia-benefit-dot" />
+                  <span>Menos erros e retrabalho</span>
+                </div>
+              </div>
+            </div>
+
           </div>
         </div>
       </section>
 
       {/* 8. INTEGRAÇÕES */}
+
       <section className="admissao-integracoes">
         <div className="container">
+          <div className="section-header">
+            <span className="section-tag">Conectividade</span>
+            <h2>Conecte a admissão aos sistemas que sua empresa já utiliza</h2>
+          </div>
+
           <div className="integracoes-split-grid">
             <div className="integracoes-text-col">
-              <span className="section-tag">— Conectividade</span>
-              <h2>Conecte a admissão aos sistemas que sua empresa já utiliza</h2>
               <p>
                 O Dirhect não precisa substituir todo o seu ambiente atual. A plataforma conecta as etapas da admissão aos sistemas utilizados pela empresa, reduzindo a necessidade de lançamentos manuais e informações duplicadas.
               </p>
@@ -794,15 +995,42 @@ const AdmissaoDigital = () => {
             {/* Orbit integration visualization */}
             <div className="integracoes-visual-col">
               <div className="orbit-container">
+                {/* SVG Connections with data flow */}
+                <svg className="orbit-connections-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
+                  <line x1="50" y1="50" x2="50" y2="15" className="conn-line conn-folha" />
+                  <line x1="50" y1="50" x2="87" y2="44" className="conn-line conn-erp" />
+                  <line x1="50" y1="50" x2="68" y2="80" className="conn-line conn-ats" />
+                  <line x1="50" y1="50" x2="32" y2="80" className="conn-line conn-ponto" />
+                  <line x1="50" y1="50" x2="13" y2="44" className="conn-line conn-beneficios" />
+                </svg>
+
                 <div className="orbit-center">
+                  <div className="radar-wave wave-1"></div>
+                  <div className="radar-wave wave-2"></div>
+                  <div className="radar-wave wave-3"></div>
                   <strong>Dirhect</strong>
                 </div>
                 <div className="orbit-ring"></div>
-                <div className="orbit-item logo-folha">Folha</div>
-                <div className="orbit-item logo-erp">ERP</div>
-                <div className="orbit-item logo-ats">ATS</div>
-                <div className="orbit-item logo-ponto">Ponto</div>
-                <div className="orbit-item logo-beneficios">Benefícios</div>
+                <div className="orbit-item logo-folha">
+                  <FileText size={16} />
+                  <span>Folha</span>
+                </div>
+                <div className="orbit-item logo-erp">
+                  <Building2 size={16} />
+                  <span>ERP</span>
+                </div>
+                <div className="orbit-item logo-ats">
+                  <Users size={16} />
+                  <span>ATS</span>
+                </div>
+                <div className="orbit-item logo-ponto">
+                  <Clock size={16} />
+                  <span>Ponto</span>
+                </div>
+                <div className="orbit-item logo-beneficios">
+                  <Heart size={16} />
+                  <span>Benefícios</span>
+                </div>
               </div>
             </div>
           </div>
@@ -845,7 +1073,7 @@ const AdmissaoDigital = () => {
             </div>
 
             <div className="experiencia-text-col">
-              <span className="section-tag">— Experiência do Candidato</span>
+              <span className="section-tag">Experiência do Candidato</span>
               <h2>Uma experiência de admissão mais simples desde o primeiro dia</h2>
               <p>
                 O novo colaborador recebe uma jornada clara e orientada, podendo preencher as informações e enviar os documentos pelo computador ou celular de forma fluida.
@@ -886,96 +1114,11 @@ const AdmissaoDigital = () => {
         </div>
       </section>
 
-      {/* 10. CONTROLE, SEGURANÇA E CONFORMIDADE */}
-      <section className="admissao-seguranca">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-tag">— Segurança e LGPD</span>
-            <h2>Dados organizados, acessos controlados e processos rastreáveis</h2>
-            <p>
-              Informações admissionais são altamente sensíveis e precisam ser tratadas com responsabilidade. O Dirhect permite organizar os acessos corporativos e acompanhar as ações de auditoria realizadas durante cada processo.
-            </p>
-          </div>
-
-          <div className="seguranca-grid">
-            <div className="seguranca-card">
-              <div className="seguranca-icon-circle"><ShieldCheck size={20} /></div>
-              <h4>Controle de acesso por perfil</h4>
-              <p>Somente pessoas autorizadas do RH, DP ou contabilidade visualizam dados pessoais e bancários do colaborador.</p>
-            </div>
-
-            <div className="seguranca-card">
-              <div className="seguranca-icon-circle"><FileText size={20} /></div>
-              <h4>Histórico de alterações e auditoria</h4>
-              <p>Mantenha um log detalhado de quem inseriu, alterou ou validou cada informação no sistema.</p>
-            </div>
-
-            <div className="seguranca-card">
-              <div className="seguranca-icon-circle"><CheckCircle2 size={20} /></div>
-              <h4>Registro e conformidade interna</h4>
-              <p>Auxiliamos a sua equipe de compliance a gerenciar termos de consentimento e processos organizados.</p>
-            </div>
-
-            <div className="seguranca-card">
-              <div className="seguranca-icon-circle"><Users size={20} /></div>
-              <h4>Apoio às boas práticas da LGPD</h4>
-              <p>Evite o compartilhamento de cópias de documentos pessoais em canais desprotegidos ou e-mails abertos.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 11. PARA QUEM É */}
-      <section className="admissao-publico">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-tag">— Para Quem É</span>
-            <h2>Admissão Digital para operações de todos os tamanhos</h2>
-            <p>O Dirhect se adapta desde operações mais enxutas até estruturas complexas com múltiplos responsáveis, empresas, filiais e regras de admissão.</p>
-          </div>
-
-          <div className="publico-grid">
-            <div className="publico-item">
-              <div className="publico-icon"><Building2 size={20} /></div>
-              <span>Empresas com alto volume de contratações</span>
-            </div>
-            <div className="publico-item">
-              <div className="publico-icon"><Sliders size={20} /></div>
-              <span>Grupos empresariais com diferentes filiais</span>
-            </div>
-            <div className="publico-item">
-              <div className="publico-icon"><Users size={20} /></div>
-              <span>Departamentos de RH e DP modernos</span>
-            </div>
-            <div className="publico-item">
-              <div className="publico-icon"><FileText size={20} /></div>
-              <span>Escritórios de contabilidade e consultorias</span>
-            </div>
-            <div className="publico-item">
-              <div className="publico-icon"><Zap size={20} /></div>
-              <span>Empresas de BPO de folha de pagamento</span>
-            </div>
-            <div className="publico-item">
-              <div className="publico-icon"><MapPin size={20} /></div>
-              <span>Empresas com operações descentralizadas</span>
-            </div>
-            <div className="publico-item">
-              <div className="publico-icon"><Database size={20} /></div>
-              <span>Organizações que usam vários sistemas de RH</span>
-            </div>
-            <div className="publico-item">
-              <div className="publico-icon"><Check size={20} /></div>
-              <span>Empresas que precisam padronizar admissões</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* 12. RESULTADOS (Antes vs. Depois) */}
       <section className="admissao-resultados">
         <div className="container">
           <div className="section-header">
-            <span className="section-tag">— Resultados</span>
+            <span className="section-tag">Resultados</span>
             <h2>O que muda com a Admissão Digital do Dirhect</h2>
             <p>Compare o fluxo manual tradicional com a eficiência da admissão digital centralizada.</p>
           </div>
@@ -1012,138 +1155,21 @@ const AdmissaoDigital = () => {
         </div>
       </section>
 
-      {/* 13. FORMULÁRIO DE DEMONSTRAÇÃO */}
-      <section id="admissao-form" className="admissao-formulario-section">
-        <div className="container">
-          <div className="admissao-form-content">
-            <div className="admissao-form-header">
-              <h2>Solicite sua demonstração</h2>
-              <p>Preencha os dados e nossa equipe entrará em contato para agendar uma demonstração personalizada da admissão digital.</p>
-            </div>
-            
-            <form onSubmit={handleSubmit} className="admissao-form">
-              <div className="admissao-form-grid">
-                <div className="admissao-form-group">
-                  <label>Nome Completo *</label>
-                  <input
-                    type="text"
-                    name="nome"
-                    value={formData.nome}
-                    onChange={handleInputChange}
-                    placeholder="Seu nome completo"
-                    required
-                  />
-                </div>
-                <div className="admissao-form-group">
-                  <label>E-mail *</label>
-                  <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    placeholder="seu.email@empresa.com"
-                    required
-                  />
-                </div>
-                <div className="admissao-form-group">
-                  <PhoneInput
-                    id="telefone"
-                    name="telefone"
-                    label="Telefone *"
-                    value={formData.telefone}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className="admissao-form-group">
-                  <label>Empresa *</label>
-                  <input
-                    type="text"
-                    name="empresa"
-                    value={formData.empresa}
-                    onChange={handleInputChange}
-                    placeholder="Nome da sua empresa"
-                    required
-                  />
-                </div>
-                <div className="admissao-form-group">
-                  <label>Número de Funcionários *</label>
-                  <select
-                    name="funcionarios"
-                    value={formData.funcionarios}
-                    onChange={handleInputChange}
-                    required
-                  >
-                    <option value="">Selecione a quantidade</option>
-                    {funcionariosOptions.map(opcao => (
-                      <option key={opcao} value={opcao}>{opcao}</option>
-                    ))}
-                  </select>
-                </div>
-                <div className="admissao-form-group admissao-form-group-full">
-                  <label>Mensagem (opcional)</label>
-                  <textarea
-                    name="mensagem"
-                    value={formData.mensagem}
-                    onChange={handleInputChange}
-                    placeholder="Conte-nos mais sobre as necessidades de admissão da sua empresa..."
-                    rows="4"
-                  />
-                </div>
-              </div>
 
-              {submitError && (
-                <div className="admissao-error-message">
-                  <p>{submitError}</p>
-                </div>
-              )}
-
-              <button 
-                type="submit" 
-                className="admissao-submit-btn"
-                disabled={isSubmitting}
-              >
-                {isSubmitting ? (
-                  <>
-                    <div className="admissao-submit-spinner"></div>
-                    Enviando solicitação...
-                  </>
-                ) : (
-                  <>
-                    <Rocket size={18} />
-                    Solicitar Demonstração
-                  </>
-                )}
-              </button>
-            </form>
-          </div>
-        </div>
-      </section>
 
       {/* 14. CTA FINAL (Faixa Laranja) */}
       <section className="admissao-cta-final">
         <div className="container">
-          <div className="admissao-cta-flex">
-            <div className="admissao-cta-text">
-              <h2>Simplifique a admissão dos seus próximos colaboradores</h2>
-              <p className="admissao-cta-sub">Digitalize o processo, reduza o retrabalho e conecte todas as etapas em uma única plataforma.</p>
-            </div>
-            
+          <div className="admissao-cta-flex admissao-cta-flex--single">
+            <h2 className="admissao-cta-title-inline">Simplifique a admissão dos seus próximos colaboradores</h2>
             <div className="admissao-cta-actions">
-              <button onClick={() => scrollToSection('admissao-form')} className="final-cta-btn">
+              <Link to="/demo" className="final-cta-btn">
                 <span>Fale com um especialista</span>
                 <span className="btn-circle-arrow">
                   <ArrowRight size={16} />
                 </span>
-              </button>
-              <button onClick={() => scrollToSection('admissao-form')} className="final-cta-btn secondary">
-                <span>Solicite uma demonstração</span>
-              </button>
+              </Link>
             </div>
-          </div>
-          
-          <div className="admissao-cta-footer-note">
-            <p>Descubra como a Admissão Digital do Dirhect pode se adaptar à operação da sua empresa.</p>
           </div>
         </div>
       </section>

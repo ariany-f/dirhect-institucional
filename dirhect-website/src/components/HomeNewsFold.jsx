@@ -7,7 +7,7 @@ const HomeNewsFold = () => {
         <div className="home-news-content">
           <span className="home-news-tag">Destaques</span>
           <h2 id="news-title" className="home-news-title">
-            Fique por dentro das <span className="gradient-text">Novidades</span>
+            Fique por dentro das <span className="home-news-accent">Novidades</span>
           </h2>
           
           <div className="home-news-text">
