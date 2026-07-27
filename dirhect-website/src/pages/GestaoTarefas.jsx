@@ -11,6 +11,8 @@ import {
   Database, 
   Clock, 
   ShieldCheck, 
+  Monitor,
+  DollarSign,
   TrendingUp, 
   FileText, 
   Sliders, 
@@ -418,58 +420,208 @@ const GestaoTarefas = () => {
       <section className="tarefas-como-funciona" id="tarefas-funcionalidades">
         <div className="container">
           <div className="section-header">
-            <span className="section-tag">COMO FUNCIONA</span>
-            <h2>Da solicitação à conclusão, tudo fica registrado</h2>
-            <p>Um fluxo contínuo onde a conclusão de uma tarefa aciona automaticamente o próximo passo da operação.</p>
+            <span className="section-tag">FLUXO INTELIGENTE</span>
+            <h2>Do início ao fim, <span className="highlight-orange">tudo conectado.</span></h2>
+            <p>Cada área recebe o que precisa fazer, no momento certo.</p>
           </div>
 
-          <div className="tarefas-flow-grid">
-            <div className="flow-card">
-              <div className="flow-card-number">01</div>
-              <div className="flow-card-icon"><FileText size={24} /></div>
-              <h3>Criação</h3>
-              <p>A tarefa pode ser criada manualmente ou gerada automaticamente a partir de um processo realizado no Dirhect.</p>
-              <div className="flow-card-arrow"><ChevronRight size={20} /></div>
+          <div className="tarefas-flow-timeline">
+            
+            {/* Step 1: RH */}
+            <div className="flow-step-node">
+              <div className="flow-step-circle">
+                <Users size={28} className="step-icon-svg" />
+              </div>
+              <div className="flow-step-content">
+                <h3>RH</h3>
+                <p>Inicia o processo e cadastra o novo colaborador.</p>
+              </div>
             </div>
 
-            <div className="flow-card">
-              <div className="flow-card-number">02</div>
-              <div className="flow-card-icon"><Users size={24} /></div>
-              <h3>Distribuição</h3>
-              <p>A atividade é direcionada para uma pessoa, equipe, área ou perfil responsável.</p>
-              <div className="flow-card-arrow"><ChevronRight size={20} /></div>
+            {/* Separator 1 */}
+            <div className="flow-step-separator">
+              <div className="separator-chevron">
+                <ChevronRight size={12} />
+              </div>
             </div>
 
-            <div className="flow-card">
-              <div className="flow-card-number">03</div>
-              <div className="flow-card-icon"><BellRing size={24} /></div>
-              <h3>Notificação</h3>
-              <p>O responsável recebe a tarefa com as informações, orientações e prazo para execução.</p>
-              <div className="flow-card-arrow"><ChevronRight size={20} /></div>
+            {/* Step 2: Gestor */}
+            <div className="flow-step-node">
+              <div className="flow-step-circle">
+                <Users size={28} className="step-icon-svg" />
+              </div>
+              <div className="flow-step-content">
+                <h3>Gestor</h3>
+                <p>Recebe as tarefas, aprova e acompanha o progresso.</p>
+              </div>
             </div>
 
-            <div className="flow-card">
-              <div className="flow-card-number">04</div>
-              <div className="flow-card-icon"><Sliders size={24} /></div>
-              <h3>Execução</h3>
-              <p>A atividade é realizada dentro do fluxo, com possibilidade de anexar documentos, registrar informações e adicionar observações.</p>
-              <div className="flow-card-arrow"><ChevronRight size={20} /></div>
+            {/* Separator 2 */}
+            <div className="flow-step-separator">
+              <div className="separator-chevron">
+                <ChevronRight size={12} />
+              </div>
             </div>
 
-            <div className="flow-card">
-              <div className="flow-card-number">05</div>
-              <div className="flow-card-icon"><ShieldCheck size={24} /></div>
-              <h3>Validação</h3>
-              <p>Quando necessário, a tarefa pode ser encaminhada para análise ou aprovação de outro responsável.</p>
-              <div className="flow-card-arrow"><ChevronRight size={20} /></div>
+            {/* Step 3: TI */}
+            <div className="flow-step-node">
+              <div className="flow-step-circle">
+                <Monitor size={28} className="step-icon-svg" />
+              </div>
+              <div className="flow-step-content">
+                <h3>TI</h3>
+                <p>Executa as demandas de acesso, equipamentos e sistemas.</p>
+              </div>
             </div>
 
-            <div className="flow-card highlight-step">
-              <div className="flow-card-number">06</div>
-              <div className="flow-card-icon"><CheckCircle2 size={24} /></div>
-              <h3>Conclusão</h3>
-              <p>A atividade é finalizada e permanece registrada no histórico do processo, podendo disparar a próxima etapa.</p>
+            {/* Separator 3 */}
+            <div className="flow-step-separator">
+              <div className="separator-chevron">
+                <ChevronRight size={12} />
+              </div>
             </div>
+
+            {/* Step 4: Financeiro */}
+            <div className="flow-step-node">
+              <div className="flow-step-circle">
+                <DollarSign size={28} className="step-icon-svg" />
+              </div>
+              <div className="flow-step-content">
+                <h3>Financeiro</h3>
+                <p>Realiza as liberações e atualiza as informações necessárias.</p>
+              </div>
+            </div>
+
+            {/* Separator 4 */}
+            <div className="flow-step-separator">
+              <div className="separator-chevron">
+                <ChevronRight size={12} />
+              </div>
+            </div>
+
+            {/* Step 5: Concluído */}
+            <div className="flow-step-node step-completed">
+              <div className="flow-step-circle completed-circle">
+                <Check size={32} className="step-icon-svg-white" />
+              </div>
+              <div className="flow-step-content">
+                <h3>Concluído</h3>
+                <p>Processo finalizado com sucesso e tudo registrado.</p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* 4.5. TUDO QUE VOCÊ PRECISA (GESTAO COMPLETA) */}
+      <section className="tarefas-gestao-completa">
+        <div className="container">
+          <div className="section-header">
+            <span className="section-tag">MAIS EFICIÊNCIA PARA O RH</span>
+            <h2>Tudo o que você precisa para uma <span className="highlight-orange">gestão de tarefas completa.</span></h2>
+          </div>
+
+          <div className="gestao-completa-grid">
+            
+            {/* Card 1: Automatize */}
+            <div className="gestao-completa-card">
+              <div className="card-top-content">
+                <div className="card-icon-orange-bg">
+                  <Zap size={22} className="icon-orange" />
+                </div>
+                <h3>Automatize</h3>
+                <p>Crie fluxos de tarefas personalizados e automatize processos de ponta a ponta, reduzindo retrabalho e falhas.</p>
+              </div>
+              <div className="card-visual-wrapper">
+                <img 
+                  src="/images/gestao-tarefas-automatize.jpg" 
+                  alt="Automatize" 
+                  className="card-image-bottom"
+                  onError={(e) => {
+                    // Fallback to a styled placeholder until the user uploads the image
+                    e.target.style.display = 'none';
+                    e.target.parentNode.classList.add('image-placeholder-fallback-1');
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* Card 2: Acompanhe */}
+            <div className="gestao-completa-card">
+              <div className="card-top-content">
+                <div className="card-icon-orange-bg">
+                  <FileText size={22} className="icon-orange" />
+                </div>
+                <h3>Acompanhe</h3>
+                <p>Tenha visibilidade total do andamento das tarefas, prazos e responsáveis em tempo real.</p>
+              </div>
+              <div className="card-visual-wrapper table-visual">
+                <div className="mock-task-table">
+                  <div className="table-row table-header">
+                    <span>Tarefa</span>
+                    <span>Responsável</span>
+                    <span>Prazo</span>
+                    <span>Status</span>
+                  </div>
+                  
+                  <div className="table-row">
+                    <span className="task-name">Enviar contrato</span>
+                    <span>Ana Silva</span>
+                    <span className="deadline-red">24/05</span>
+                    <span><span className="status-badge badge-red">Atrasado</span></span>
+                  </div>
+
+                  <div className="table-row active-row">
+                    <span className="task-name">Criar usuário</span>
+                    <span>Carlos Lima</span>
+                    <span className="deadline-orange">25/05</span>
+                    <span className="status-cell-flex">
+                      <span className="status-badge badge-orange">Em andamento</span>
+                      <ChevronRight size={14} className="row-pointer-arrow" />
+                    </span>
+                  </div>
+
+                  <div className="table-row">
+                    <span className="task-name">Liberar acesso</span>
+                    <span>Juliana Costa</span>
+                    <span className="deadline-blue">26/05</span>
+                    <span><span className="status-badge badge-blue">Pendente</span></span>
+                  </div>
+
+                  <div className="table-row">
+                    <span className="task-name">Agendar exame</span>
+                    <span>Marcos Paulo</span>
+                    <span className="deadline-green">27/05</span>
+                    <span><span className="status-badge badge-green">Concluído</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Card 3: Entregue */}
+            <div className="gestao-completa-card">
+              <div className="card-top-content">
+                <div className="card-icon-orange-bg">
+                  <TrendingUp size={22} className="icon-orange" />
+                </div>
+                <h3>Entregue</h3>
+                <p>Garanta que nada fique para trás e entregue uma experiência incrível para o colaborador e para o negócio.</p>
+              </div>
+              <div className="card-visual-wrapper">
+                <img 
+                  src="/images/gestao-tarefas-entregue.jpg" 
+                  alt="Entregue" 
+                  className="card-image-bottom"
+                  onError={(e) => {
+                    // Fallback to a styled placeholder until the user uploads the image
+                    e.target.style.display = 'none';
+                    e.target.parentNode.classList.add('image-placeholder-fallback-2');
+                  }}
+                />
+              </div>
+            </div>
+
           </div>
         </div>
       </section>

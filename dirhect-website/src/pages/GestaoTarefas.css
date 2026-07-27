@@ -1044,109 +1044,394 @@
    ========================================================================== */
 .tarefas-como-funciona {
   padding: 6rem 0;
-  background-color: var(--tarefas-dark-blue);
-  color: #ffffff;
+  background-color: #ffffff; /* White background as in the image */
+  color: #1E293B;
 }
 
 .tarefas-como-funciona .section-tag {
   color: var(--tarefas-primary);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.tarefas-como-funciona .section-header {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto 4rem auto;
 }
 
 .tarefas-como-funciona .section-header h2 {
-  color: #ffffff;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #1E293B;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.tarefas-como-funciona .highlight-orange {
+  color: var(--tarefas-primary);
 }
 
 .tarefas-como-funciona .section-header p {
-  color: rgba(255, 255, 255, 0.8);
-}
-
-.tarefas-flow-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 1.2rem;
-}
-
-@media (max-width: 1024px) {
-  .tarefas-flow-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-@media (max-width: 640px) {
-  .tarefas-flow-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
-.flow-card {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  padding: 1.8rem 1.2rem;
-  position: relative;
-  transition: all 0.25s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.flow-card:hover {
-  background: rgba(255, 255, 255, 0.12);
-  transform: translateY(-4px);
-  border-color: var(--tarefas-primary);
-}
-
-.highlight-step {
-  border-color: var(--tarefas-primary);
-  background: rgba(255, 140, 0, 0.15);
-}
-
-.flow-card-number {
-  font-size: 0.82rem;
-  font-weight: 800;
-  color: var(--tarefas-primary);
-  margin-bottom: 0.8rem;
-  background: rgba(255, 140, 0, 0.2);
-  padding: 0.2rem 0.6rem;
-  border-radius: 6px;
-}
-
-.flow-card-icon {
-  color: #ffffff;
-  margin-bottom: 1rem;
-}
-
-.flow-card h3 {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0 0 0.6rem 0;
-}
-
-.flow-card p {
-  font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.75);
-  line-height: 1.55;
+  font-size: 1.1rem;
+  color: var(--tarefas-text-light);
+  font-weight: 500;
   margin: 0;
 }
 
-.flow-card-arrow {
-  position: absolute;
-  top: 50%;
-  right: -14px;
-  transform: translateY(-50%);
-  color: var(--tarefas-primary);
-  z-index: 2;
-  display: none;
+/* Timeline Layout */
+.tarefas-flow-timeline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1150px;
+  margin: 0 auto;
 }
 
-@media (min-width: 1025px) {
-  .flow-card-arrow {
-    display: block;
+.flow-step-node {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 170px;
+  flex-shrink: 0;
+}
+
+.flow-step-circle {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 0 10px #FAF5F0, 0 4px 12px rgba(255, 108, 0, 0.06);
+  border: 1px solid rgba(255, 108, 0, 0.15);
+  margin-bottom: 1.8rem;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.flow-step-circle .step-icon-svg {
+  color: #1E293B;
+}
+
+/* Completed Step (Concluído) styling */
+.flow-step-node.step-completed .flow-step-circle {
+  background: var(--tarefas-primary);
+  box-shadow: 0 0 0 10px #FAF5F0, 0 4px 12px rgba(255, 108, 0, 0.15);
+  border-color: var(--tarefas-primary);
+}
+
+.flow-step-circle .step-icon-svg-white {
+  color: #ffffff;
+}
+
+.flow-step-content h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #1E293B;
+  margin: 0 0 0.5rem 0;
+}
+
+.flow-step-content p {
+  font-size: 0.85rem;
+  color: var(--tarefas-text-light);
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Separator Line and Chevron */
+.flow-step-separator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  position: relative;
+  height: 80px; /* Aligns with the circles */
+}
+
+.flow-step-separator::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  border-top: 2px dotted rgba(255, 108, 0, 0.3);
+  z-index: 1;
+}
+
+.separator-chevron {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--tarefas-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(255, 108, 0, 0.25);
+}
+
+/* Responsiveness */
+@media (max-width: 950px) {
+  .tarefas-flow-timeline {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
   }
-  .flow-card:last-child .flow-card-arrow {
-    display: none;
+
+  .flow-step-node {
+    width: 220px;
   }
+
+  .flow-step-separator {
+    height: 40px;
+    width: 100%;
+  }
+
+  .flow-step-separator::before {
+    left: 50%;
+    right: auto;
+    top: 0;
+    bottom: 0;
+    width: 1px;
+    height: 100%;
+    transform: translateX(-50%);
+    border-top: none;
+    border-left: 2px dotted rgba(255, 108, 0, 0.3);
+  }
+
+  .separator-chevron {
+    transform: rotate(90deg);
+  }
+}
+
+/* ==========================================================================
+   4.5. GESTÃO DE TAREFAS COMPLETA
+   ========================================================================== */
+.tarefas-gestao-completa {
+  padding: 6rem 0;
+  background-color: #ffffff;
+}
+
+.tarefas-gestao-completa .section-header {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 4rem auto;
+}
+
+.tarefas-gestao-completa .section-header h2 {
+  font-size: 2.3rem;
+  font-weight: 800;
+  color: #1E293B;
+  margin-top: 0.5rem;
+  line-height: 1.25;
+}
+
+.tarefas-gestao-completa .highlight-orange {
+  color: var(--tarefas-primary);
+}
+
+.gestao-completa-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  align-items: stretch;
+}
+
+@media (max-width: 991px) {
+  .gestao-completa-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+.gestao-completa-card {
+  background: #ffffff;
+  border: 1px solid var(--tarefas-border);
+  border-radius: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+}
+
+.gestao-completa-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--tarefas-shadow-md);
+  border-color: rgba(255, 108, 0, 0.25);
+}
+
+.card-top-content {
+  padding: 2.5rem 2.5rem 1.5rem 2.5rem;
+}
+
+.card-icon-orange-bg {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: #FFF7ED; /* soft orange/peach */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+}
+
+.icon-orange {
+  color: var(--tarefas-primary);
+}
+
+.card-top-content h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1E293B;
+  margin: 0 0 0.8rem 0;
+}
+
+.card-top-content p {
+  font-size: 0.92rem;
+  color: var(--tarefas-text-light);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.card-visual-wrapper {
+  width: 100%;
+  height: 250px;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-image-bottom {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center top;
+}
+
+/* Fallback placeholders for images */
+.image-placeholder-fallback-1 {
+  background: linear-gradient(135deg, #FFF7ED 0%, #FAF5F0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-placeholder-fallback-1::after {
+  content: 'Espaço para Imagem: Automatize';
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--tarefas-primary);
+}
+
+.image-placeholder-fallback-2 {
+  background: linear-gradient(135deg, #EFF6FF 0%, #F8FAFC 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-placeholder-fallback-2::after {
+  content: 'Espaço para Imagem: Entregue';
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #1D4ED8;
+}
+
+/* Table Visual inside Card 2 */
+.card-visual-wrapper.table-visual {
+  background: #F8FAFC;
+  border-top: 1px solid var(--tarefas-border);
+  padding: 1.2rem;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mock-task-table {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid var(--tarefas-border);
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
+  font-size: 0.74rem;
+  overflow: hidden;
+}
+
+.mock-task-table .table-row {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 0.8fr 1.2fr;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid #F1F5F9;
+  align-items: center;
+  color: var(--tarefas-text-light);
+}
+
+.mock-task-table .table-row:last-child {
+  border-bottom: none;
+}
+
+.mock-task-table .table-header {
+  background: #F8FAFC;
+  font-weight: 700;
+  color: var(--tarefas-text-dark);
+  text-transform: capitalize;
+}
+
+.mock-task-table .task-name {
+  font-weight: 700;
+  color: var(--tarefas-text-dark);
+}
+
+/* Deadline text colors */
+.deadline-red { color: #DC2626; font-weight: 600; }
+.deadline-orange { color: #D97706; font-weight: 600; }
+.deadline-blue { color: #2563EB; font-weight: 600; }
+.deadline-green { color: #16A34A; font-weight: 600; }
+
+/* Status Badges */
+.status-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  padding: 0.2rem 0.5rem;
+  border-radius: 99px;
+  display: inline-block;
+}
+
+.badge-red { background: #FEE2E2; color: #991B1B; }
+.badge-orange { background: #FEF3C7; color: #92400E; }
+.badge-blue { background: #DBEAFE; color: #1E40AF; }
+.badge-green { background: #D1FAE5; color: #065F46; }
+
+/* Active row pointer arrow */
+.mock-task-table .active-row {
+  background: #FFF7ED;
+}
+
+.status-cell-flex {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.row-pointer-arrow {
+  color: var(--tarefas-primary);
+  animation: pointer-bob 1s infinite alternate;
+}
+
+@keyframes pointer-bob {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(4px); }
 }
 
 /* ==========================================================================
