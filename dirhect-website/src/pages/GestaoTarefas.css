@@ -1438,6 +1438,220 @@
 }
 
 /* ==========================================================================
+   4.6. BANNER MENOS PLANILHAS (MINI CTA)
+   ========================================================================== */
+.tarefas-banner-cta-section {
+  padding: 4rem 0;
+  background-color: #ffffff;
+}
+
+.banner-cta-card {
+  background: linear-gradient(135deg, #FAF4EE 0%, #FFFFFF 100%);
+  border-radius: 32px;
+  border: 1px solid rgba(255, 108, 0, 0.1);
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.02);
+}
+
+@media (max-width: 991px) {
+  .banner-cta-card {
+    grid-template-columns: 1fr;
+    padding: 3rem 2rem 0 2rem;
+  }
+}
+
+.banner-cta-content {
+  padding: 4rem;
+}
+
+@media (max-width: 991px) {
+  .banner-cta-content {
+    padding: 1rem 1rem 3rem 1rem;
+    text-align: center;
+  }
+}
+
+.banner-cta-title {
+  display: flex;
+  flex-direction: column;
+  font-size: 2.6rem;
+  font-weight: 800;
+  color: #1E293B;
+  line-height: 1.15;
+  margin: 0 0 1.5rem 0;
+}
+
+@media (max-width: 576px) {
+  .banner-cta-title {
+    font-size: 2.1rem;
+  }
+}
+
+.banner-cta-title span {
+  display: block;
+}
+
+.banner-cta-title .orange-text {
+  color: var(--tarefas-primary);
+}
+
+.banner-cta-desc {
+  font-size: 1.1rem;
+  color: var(--tarefas-text-light);
+  margin-bottom: 2rem;
+  line-height: 1.5;
+}
+
+.banner-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  background-color: var(--tarefas-primary);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.95rem;
+  padding: 0.9rem 1.8rem;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 14px rgba(255, 108, 0, 0.25);
+}
+
+.banner-cta-btn:hover {
+  background-color: #E05F00;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 108, 0, 0.35);
+}
+
+.btn-arrow {
+  transition: transform 0.3s ease;
+}
+
+.banner-cta-btn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+@media (max-width: 991px) {
+  .banner-cta-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.banner-cta-visual {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 380px;
+  align-self: stretch;
+  display: flex;
+  align-items: flex-end;
+}
+
+@media (max-width: 991px) {
+  .banner-cta-visual {
+    min-height: 320px;
+    justify-content: center;
+  }
+}
+
+.banner-image-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+}
+
+.banner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center bottom;
+}
+
+.banner-image-placeholder {
+  background: linear-gradient(135deg, #FFF7ED 0%, #FAF5F0 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.banner-image-placeholder::after {
+  content: 'Espaço para Imagem de Conversão';
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--tarefas-primary);
+}
+
+/* Floating Results Widget */
+.floating-results-widget {
+  position: absolute;
+  bottom: 3.5rem;
+  right: 2.5rem;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 1.1rem 1.4rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  z-index: 10;
+  border: 1px solid rgba(255, 108, 0, 0.05);
+}
+
+@media (max-width: 576px) {
+  .floating-results-widget {
+    bottom: 1.5rem;
+    right: 1rem;
+    left: 1rem;
+    padding: 0.9rem 1.1rem;
+  }
+}
+
+.widget-icon-peach {
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  background: #FFF7ED;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.widget-text-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.widget-text-list span {
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: #334155;
+  display: flex;
+  align-items: center;
+}
+
+.widget-text-list span::before {
+  content: '';
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: var(--tarefas-primary);
+  margin-right: 0.5rem;
+}
+
+/* ==========================================================================
    5. TAREFAS INTEGRADAS AOS PROCESSOS
    ========================================================================== */
 .tarefas-integradas-processos {

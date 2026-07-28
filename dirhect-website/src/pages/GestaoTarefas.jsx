@@ -626,6 +626,56 @@ const GestaoTarefas = () => {
         </div>
       </section>
 
+      {/* 4.6. BANNER MENOS PLANILHAS */}
+      <section className="tarefas-banner-cta-section">
+        <div className="container">
+          <div className="banner-cta-card">
+            
+            <div className="banner-cta-content">
+              <h2 className="banner-cta-title">
+                <span>Menos planilhas.</span>
+                <span>Menos e-mails.</span>
+                <span className="orange-text">Mais resultados.</span>
+              </h2>
+              <p className="banner-cta-desc">
+                Transforme a gestão de tarefas da sua empresa com o Dirhect.
+              </p>
+              <a href="/demonstracao" className="banner-cta-btn">
+                Solicite uma demonstração
+                <ArrowRight size={18} className="btn-arrow" />
+              </a>
+            </div>
+
+            <div className="banner-cta-visual">
+              <div className="banner-image-container">
+                <img 
+                  src="/images/gestao-tarefas-cta-banner.jpg" 
+                  alt="Menos planilhas, mais resultados" 
+                  className="banner-image"
+                  onError={(e) => {
+                    e.target.style.display = 'none';
+                    e.target.parentNode.classList.add('banner-image-placeholder');
+                  }}
+                />
+              </div>
+
+              {/* Floating results widget */}
+              <div className="floating-results-widget">
+                <div className="widget-icon-peach">
+                  <TrendingUp size={20} className="icon-orange" />
+                </div>
+                <div className="widget-text-list">
+                  <span>Processos mais rápidos</span>
+                  <span>Equipes mais produtivas</span>
+                  <span>Resultados melhores</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
       {/* 5. TAREFAS INTEGRADAS AOS PROCESSOS */}
       <section className="tarefas-integradas-processos">
         <div className="container">
