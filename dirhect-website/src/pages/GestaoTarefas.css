@@ -1305,7 +1305,7 @@
 
 .card-visual-wrapper {
   width: 100%;
-  height: 220px;
+  aspect-ratio: 946 / 1024;
   position: relative;
   overflow: hidden;
   background-color: #ffffff;
@@ -1314,8 +1314,8 @@
 .card-image-bottom {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: bottom center;
+  object-fit: cover;
+  object-position: center top;
 }
 
 /* Fallback placeholders for images */
@@ -1352,7 +1352,6 @@
   background: #F8FAFC;
   border-top: 1px solid var(--tarefas-border);
   padding: 1.2rem;
-  height: 250px;
   display: flex;
   align-items: center;
   justify-content: center;
