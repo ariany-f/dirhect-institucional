@@ -1309,6 +1309,7 @@
   position: relative;
   overflow: hidden;
   background-color: #ffffff;
+  flex: 0 0 auto; /* Prevents vertical stretching to ensure no horizontal cropping */
 }
 
 .card-image-bottom {
@@ -1352,6 +1353,8 @@
   background: #F8FAFC;
   border-top: 1px solid var(--tarefas-border);
   padding: 1.2rem;
+  flex: 1 1 auto; /* Allows table container to stretch and fill card height */
+  aspect-ratio: auto; /* Overrides default image aspect-ratio */
   display: flex;
   align-items: center;
   justify-content: center;
