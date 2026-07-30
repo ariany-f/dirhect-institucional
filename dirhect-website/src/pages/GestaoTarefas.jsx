@@ -412,6 +412,15 @@ const GestaoTarefas = () => {
             </div>
           </div>
 
+          {/* CTA Solução Geral */}
+          <div className="section-cta-wrapper">
+            <a href="/demonstracao" className="tarefas-mockup-btn-primary">
+              <span>Solicite uma demonstração</span>
+              <span className="btn-circle-arrow">
+                <ArrowRight size={16} />
+              </span>
+            </a>
+          </div>
 
         </div>
       </section>
@@ -649,7 +658,7 @@ const GestaoTarefas = () => {
             <div className="banner-cta-visual">
               <div className="banner-image-container">
                 <img 
-                  src="/images/gestao-tarefas-cta-banner.jpg" 
+                  src="/images/gestao-tarefas-cta-banner-v2.png" 
                   alt="Menos planilhas, mais resultados" 
                   className="banner-image"
                   onError={(e) => {
@@ -676,80 +685,7 @@ const GestaoTarefas = () => {
         </div>
       </section>
 
-      {/* 5. TAREFAS INTEGRADAS AOS PROCESSOS */}
-      <section className="tarefas-integradas-processos">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-tag">INTEGRAÇÃO DE PROCESSOS</span>
-            <h2>Muito mais do que uma lista de tarefas</h2>
-            <p>No Dirhect, as atividades podem ser criadas automaticamente conforme os processos avançam. Assim, cada etapa gera a tarefa certa para a pessoa responsável, no momento adequado.</p>
-          </div>
 
-          <div className="processos-examples-grid">
-            {[
-              'Admissão de colaboradores',
-              'Gestão de benefícios',
-              'Movimentações cadastrais',
-              'Férias e afastamentos',
-              'Desligamentos',
-              'Aprovações internas',
-              'Solicitações dos colaboradores',
-              'Conferência de documentos',
-              'Integrações com outros sistemas',
-              'Processos administrativos'
-            ].map((ex, idx) => (
-              <div key={idx} className="processo-chip-item">
-                <CheckCircle2 size={16} className="chip-icon" />
-                <span>{ex}</span>
-              </div>
-            ))}
-          </div>
-
-          <div className="processos-highlight-callout">
-            <p>O processo avança, as tarefas são distribuídas e cada responsável recebe exatamente o que precisa executar.</p>
-          </div>
-
-          {/* Process Distribution Diagram */}
-          <div className="processos-diagram-container">
-            <div className="diagram-center-node">
-              <Workflow size={32} />
-              <span>Processo Central Dirhect</span>
-            </div>
-
-            <div className="diagram-branches">
-              <div className="branch-node">
-                <div className="branch-icon"><Users size={20} /></div>
-                <h4>RH Operations</h4>
-                <p>Tarefas de Documentação & Triagem</p>
-              </div>
-
-              <div className="branch-node">
-                <div className="branch-icon"><FileText size={20} /></div>
-                <h4>Dept. Pessoal</h4>
-                <p>Tarefas de Folha & Contratos</p>
-              </div>
-
-              <div className="branch-node">
-                <div className="branch-icon"><UserCheck size={20} /></div>
-                <h4>Gestor Direto</h4>
-                <p>Aprovações & Acompanhamento</p>
-              </div>
-
-              <div className="branch-node">
-                <div className="branch-icon"><UserCheck size={20} /></div>
-                <h4>Colaborador</h4>
-                <p>Envio de Dados & Assinatura</p>
-              </div>
-
-              <div className="branch-node">
-                <div className="branch-icon"><Building2 size={20} /></div>
-                <h4>Fornecedores</h4>
-                <p>Solicitação de Planos & Serviços</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
 
       {/* 6. AUTOMAÇÃO DE TAREFAS */}
       <section className="tarefas-automacao">
@@ -818,6 +754,17 @@ const GestaoTarefas = () => {
               </div>
             </div>
           </div>
+
+          {/* CTA Automação */}
+          <div className="section-cta-wrapper">
+            <a href="/demonstracao" className="tarefas-mockup-btn-primary">
+              <span>Solicite uma demonstração</span>
+              <span className="btn-circle-arrow">
+                <ArrowRight size={16} />
+              </span>
+            </a>
+          </div>
+
         </div>
       </section>
 
@@ -938,6 +885,17 @@ const GestaoTarefas = () => {
           <div className="gestao-equipe-footer-text">
             <p>Com uma visão centralizada, os gestores conseguem redistribuir demandas, identificar gargalos e apoiar as equipes nos pontos que realmente precisam de atenção.</p>
           </div>
+
+          {/* CTA Gestão da Equipe */}
+          <div className="section-cta-wrapper">
+            <a href="/demonstracao" className="tarefas-mockup-btn-primary">
+              <span>Solicite uma demonstração</span>
+              <span className="btn-circle-arrow">
+                <ArrowRight size={16} />
+              </span>
+            </a>
+          </div>
+
         </div>
       </section>
 
@@ -1183,42 +1141,22 @@ const GestaoTarefas = () => {
               </div>
             </div>
           </div>
+
+          {/* CTA Diferentes Áreas */}
+          <div className="section-cta-wrapper">
+            <a href="/demonstracao" className="tarefas-mockup-btn-primary">
+              <span>Solicite uma demonstração</span>
+              <span className="btn-circle-arrow">
+                <ArrowRight size={16} />
+              </span>
+            </a>
+          </div>
+
         </div>
       </section>
 
 
-      {/* 14. BENEFÍCIOS */}
-      <section className="tarefas-beneficios-chaves">
-        <div className="container">
-          <div className="section-header">
-            <span className="section-tag">VANTAGENS COMPETITIVAS</span>
-            <h2>Mais produtividade sem perder o controle</h2>
-          </div>
 
-          <div className="beneficios-chaves-grid">
-            {[
-              { title: 'Centralização', desc: 'Todas as tarefas, informações e atualizações ficam organizadas em um único lugar.' },
-              { title: 'Responsabilidades claras', desc: 'Cada atividade possui um responsável, um prazo e um status definido.' },
-              { title: 'Menos atrasos', desc: 'As equipes acompanham suas pendências e identificam o que precisa de atenção.' },
-              { title: 'Mais rastreabilidade', desc: 'Todas as alterações e movimentações permanecem registradas.' },
-              { title: 'Processos padronizados', desc: 'As atividades seguem regras e etapas consistentes em toda a empresa.' },
-              { title: 'Menos trabalho manual', desc: 'Tarefas podem ser criadas e distribuídas automaticamente conforme o processo avança.' },
-              { title: 'Mais visibilidade', desc: 'Os gestores acompanham a operação sem depender de planilhas ou atualizações manuais.' },
-              { title: 'Melhor colaboração', desc: 'Todas as informações necessárias permanecem dentro do contexto da atividade.' }
-            ].map((b, idx) => (
-              <div key={idx} className="beneficio-chave-card">
-                <div className="chave-check-bullet">
-                  <Check size={14} />
-                </div>
-                <div className="chave-card-content">
-                  <h3>{b.title}</h3>
-                  <p>{b.desc}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* 15. COMPARAÇÃO (ANTES vs COM O DIRHECT) */}
       <section className="tarefas-comparacao">
@@ -1266,9 +1204,7 @@ const GestaoTarefas = () => {
             </div>
           </div>
 
-          <div className="comparacao-highlight-banner">
-            <p>Sua equipe deixa de procurar o que precisa fazer e passa a executar cada atividade no momento certo.</p>
-          </div>
+
         </div>
       </section>
 

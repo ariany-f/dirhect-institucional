@@ -1043,7 +1043,7 @@
    4. COMO FUNCIONA (FLUXO)
    ========================================================================== */
 .tarefas-como-funciona {
-  padding: 6rem 0;
+  padding: 6rem 0 2rem 0;
   background-color: #ffffff; /* White background as in the image */
   color: #1E293B;
 }
@@ -1098,6 +1098,8 @@
   text-align: center;
   width: 170px;
   flex-shrink: 0;
+  position: relative;
+  z-index: 2;
 }
 
 .flow-step-circle {
@@ -1152,6 +1154,8 @@
   flex-grow: 1;
   position: relative;
   height: 80px; /* Aligns with the circles */
+  margin: 0 -50px;
+  z-index: 1;
 }
 
 .flow-step-separator::before {
@@ -1193,6 +1197,7 @@
   .flow-step-separator {
     height: 40px;
     width: 100%;
+    margin: 0;
   }
 
   .flow-step-separator::before {
@@ -1216,7 +1221,7 @@
    4.5. GESTÃO DE TAREFAS COMPLETA
    ========================================================================== */
 .tarefas-gestao-completa {
-  padding: 6rem 0;
+  padding: 2rem 0 2rem 0;
   background-color: #ffffff;
 }
 
@@ -1441,7 +1446,7 @@
    4.6. BANNER MENOS PLANILHAS (MINI CTA)
    ========================================================================== */
 .tarefas-banner-cta-section {
-  padding: 4rem 0;
+  padding: 1rem 0 4rem 0;
   background-color: #ffffff;
 }
 
@@ -1450,7 +1455,7 @@
   border-radius: 32px;
   border: 1px solid rgba(255, 108, 0, 0.1);
   display: grid;
-  grid-template-columns: 1fr 1.1fr;
+  grid-template-columns: 1fr 1.35fr;
   align-items: center;
   position: relative;
   overflow: hidden;
@@ -1465,7 +1470,7 @@
 }
 
 .banner-cta-content {
-  padding: 4rem;
+  padding: 2.25rem 3rem;
 }
 
 @media (max-width: 991px) {
@@ -1478,16 +1483,16 @@
 .banner-cta-title {
   display: flex;
   flex-direction: column;
-  font-size: 2.6rem;
+  font-size: 2.15rem;
   font-weight: 800;
   color: #1E293B;
   line-height: 1.15;
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 1.25rem 0;
 }
 
 @media (max-width: 576px) {
   .banner-cta-title {
-    font-size: 2.1rem;
+    font-size: 1.85rem;
   }
 }
 
@@ -1500,9 +1505,9 @@
 }
 
 .banner-cta-desc {
-  font-size: 1.1rem;
+  font-size: 0.95rem;
   color: var(--tarefas-text-light);
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   line-height: 1.5;
 }
 
@@ -1513,8 +1518,8 @@
   background-color: var(--tarefas-primary);
   color: #ffffff;
   font-weight: 700;
-  font-size: 0.95rem;
-  padding: 0.9rem 1.8rem;
+  font-size: 0.9rem;
+  padding: 0.75rem 1.5rem;
   border-radius: 8px;
   text-decoration: none;
   transition: all 0.3s ease;
@@ -1546,7 +1551,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 380px;
+  min-height: 310px;
   align-self: stretch;
   display: flex;
   align-items: flex-end;
@@ -1554,7 +1559,7 @@
 
 @media (max-width: 991px) {
   .banner-cta-visual {
-    min-height: 320px;
+    min-height: 280px;
     justify-content: center;
   }
 }
@@ -1570,11 +1575,30 @@
 
 .banner-image {
   width: 100%;
-  height: 105%;
-  object-fit: cover;
+  height: 100%;
+  object-fit: contain;
+  object-position: right bottom;
   position: absolute;
-  top: -5%;
+  top: 0;
   left: 0;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    transparent 6%,
+    rgba(0, 0, 0, 0.2) 20%,
+    rgba(0, 0, 0, 0.6) 32%,
+    #000 42%,
+    #000 100%
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    transparent 6%,
+    rgba(0, 0, 0, 0.2) 20%,
+    rgba(0, 0, 0, 0.6) 32%,
+    #000 42%,
+    #000 100%
+  );
 }
 
 .banner-image-placeholder {
@@ -2512,6 +2536,7 @@
   font-size: 1.08rem;
   font-weight: 700;
   margin: 0;
+  color: #ffffff;
 }
 
 /* ==========================================================================
@@ -3245,4 +3270,11 @@
   .final-cta-btn-sec {
     width: 100% !important;
   }
+}
+
+.section-cta-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 3.5rem;
+  width: 100%;
 }
