@@ -242,11 +242,7 @@ const Header = () => {
                     Gestão de Tarefas
                   </Link>
                 </li>
-                <li>
-                  <Link to="/portal-rh" onClick={() => setIsMobileMenuOpen(false)}>
-                    Portal RH
-                  </Link>
-                </li>
+
                 <li>
                   <Link to="/formulario" onClick={() => setIsMobileMenuOpen(false)}>
                     Formulários customizados
