@@ -175,8 +175,8 @@ const GestaoTarefas = () => {
               </div>
               
               <h1>
-                Transforme processos em tarefas <br />
-                <span className="tarefas-highlight">claras, organizadas e acompanháveis</span>
+                <span className="hero-title-line">Transforme processos em tarefas</span> <br />
+                <span className="tarefas-highlight hero-title-line">claras, organizadas e acompanháveis</span>
               </h1>
               
               <p className="tarefas-hero-subtitle">

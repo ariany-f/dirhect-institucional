@@ -219,13 +219,23 @@
 }
 
 .tarefas-hero-text h1 {
-  font-size: clamp(1.8rem, 2.6vw, 2.5rem);
+  font-size: clamp(2rem, 3.2vw, 3.1rem);
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 1.15;
   color: var(--tarefas-text-dark);
   margin: 0 0 1.5rem 0;
   letter-spacing: -0.02em;
   width: 100%;
+}
+
+.hero-title-line {
+  display: inline-block;
+}
+
+@media (min-width: 992px) {
+  .hero-title-line {
+    white-space: nowrap;
+  }
 }
 
 .tarefas-highlight {
