@@ -239,7 +239,7 @@
 }
 
 .tarefas-highlight {
-  color: var(--tarefas-dark-blue);
+  color: var(--tarefas-primary);
   position: relative;
   display: inline;
 }
