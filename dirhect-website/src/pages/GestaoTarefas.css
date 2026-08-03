@@ -244,18 +244,7 @@
   display: inline;
 }
 
-.tarefas-highlight::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 6px;
-  width: 100%;
-  height: 8px;
-  background-color: var(--tarefas-primary);
-  z-index: -1;
-  opacity: 0.5;
-  border-radius: 4px;
-}
+
 
 .tarefas-hero-subtitle {
   font-size: clamp(0.95rem, 1.1vw, 1.05rem);
