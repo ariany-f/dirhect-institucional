@@ -440,12 +440,11 @@ export const wordpressService = {
 
   // Buscar posts do blog (com opção de excluir categorias)
   async getPosts(params = {}) {
+    let apiPosts = [];
     try {
       const searchParams = new URLSearchParams({
-        per_page: params.perPage || 10,
-        page: params.page || 1,
-        _embed: true, // Include embedded resources like featured media and author
-        ...params
+        per_page: 100, // Buscar todos para ordenação consistente
+        _embed: true
       })
 
       // Se não foi especificado para excluir categorias, excluir roadmap e banco-conhecimento por padrão
@@ -466,38 +465,89 @@ export const wordpressService = {
 
       const response = await fetch(`${WORDPRESS_API_URL}/posts?${searchParams}`)
       
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`)
+      if (response.ok) {
+        const posts = await response.json()
+        
+        // Transformar os dados para o formato esperado pelo componente
+        apiPosts = posts.map(post => ({
+          id: post.id,
+          title: { rendered: post.title.rendered },
+          excerpt: { rendered: post.excerpt.rendered },
+          content: { rendered: post.content.rendered },
+          date: post.date,
+          modified: post.modified,
+          author: this.getAuthorName(post),
+          featured_media: this.getFeaturedImage(post),
+          categories: this.getCategories(post),
+          categoryIds: this.getCategoryIds(post),
+          tags: this.getTags(post),
+          slug: post.slug,
+          link: post.link,
+          readTime: this.calculateReadTime(post.content.rendered)
+        }))
       }
-
-      const posts = await response.json()
-      
-      // Transformar os dados para o formato esperado pelo componente
-      return posts.map(post => ({
-        id: post.id,
-        title: { rendered: post.title.rendered },
-        excerpt: { rendered: post.excerpt.rendered },
-        content: { rendered: post.content.rendered },
-        date: post.date,
-        modified: post.modified,
-        author: this.getAuthorName(post),
-        featured_media: this.getFeaturedImage(post),
-        categories: this.getCategories(post),
-        categoryIds: this.getCategoryIds(post),
-        tags: this.getTags(post),
-        slug: post.slug,
-        link: post.link,
-        readTime: this.calculateReadTime(post.content.rendered)
-      }))
     } catch (error) {
       console.error('Erro ao buscar posts do WordPress:', error)
-      // Retorna posts estáticos como fallback
-      return this.getFallbackPosts()
     }
+
+    // Obter todos os posts estáticos
+    const fallbackPosts = this.getFallbackPosts()
+
+    // Juntar os posts do API e os fallbacks
+    const mergedPostsMap = new Map();
+    
+    // Inserir primeiro os fallbacks
+    fallbackPosts.forEach(post => {
+      mergedPostsMap.set(post.id, post);
+    });
+    
+    // Inserir/sobrescrever com posts da API
+    apiPosts.forEach(post => {
+      mergedPostsMap.set(post.id, post);
+    });
+
+    let allPosts = Array.from(mergedPostsMap.values());
+
+    // Se o parâmetro categories vier, filtrar
+    if (params.categories) {
+      const categoryId = parseInt(params.categories)
+      allPosts = allPosts.filter(post => post.categoryIds && post.categoryIds.includes(categoryId))
+    }
+
+    // Excluir categorias roadmap e banco-conhecimento se necessário
+    if (!params.includeAllCategories) {
+      const roadmapId = await this.getRoadmapCategoryId()
+      const knowledgeId = await this.getKnowledgeCategoryId()
+      if (roadmapId || knowledgeId) {
+        allPosts = allPosts.filter(post => {
+          if (post.categoryIds) {
+            if (roadmapId && post.categoryIds.includes(roadmapId)) return false
+            if (knowledgeId && post.categoryIds.includes(knowledgeId)) return false
+          }
+          return true
+        })
+      }
+    }
+
+    // Ordenar por data decrescente
+    allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    // Paginação
+    const perPage = params.perPage || 10;
+    const page = params.page || 1;
+    const startIndex = (page - 1) * perPage;
+    return allPosts.slice(startIndex, startIndex + perPage);
   },
 
   // Buscar um post específico por ID
   async getPost(id) {
+    // Verificar primeiro se é um post estático
+    const fallbackPosts = this.getFallbackPosts()
+    const staticPost = fallbackPosts.find(p => p.id === parseInt(id))
+    if (staticPost) {
+      return staticPost
+    }
+
     try {
       const response = await fetch(`${WORDPRESS_API_URL}/posts/${id}?_embed=true`)
       
@@ -531,53 +581,60 @@ export const wordpressService = {
 
   // Buscar posts relacionados por categoria
   async getRelatedPosts(postId, categoryIds, limit = 3) {
+    let apiRelated = [];
     try {
-      if (!categoryIds || categoryIds.length === 0) {
-        return []
+      if (categoryIds && categoryIds.length > 0) {
+        const searchParams = new URLSearchParams({
+          per_page: limit + 5, // buscar mais para filtrar
+          categories: categoryIds[0],
+          exclude: postId,
+          _embed: true
+        })
+
+        const response = await fetch(`${WORDPRESS_API_URL}/posts?${searchParams}`)
+        
+        if (response.ok) {
+          const posts = await response.json()
+          apiRelated = posts.map(post => ({
+            id: post.id,
+            title: { rendered: post.title.rendered },
+            excerpt: { rendered: post.excerpt.rendered },
+            content: { rendered: post.content.rendered },
+            date: post.date,
+            modified: post.modified,
+            author: this.getAuthorName(post),
+            featured_media: this.getFeaturedImage(post),
+            categories: this.getCategories(post),
+            categoryIds: this.getCategoryIds(post),
+            tags: this.getTags(post),
+            slug: post.slug,
+            link: post.link,
+            readTime: this.calculateReadTime(post.content.rendered)
+          }))
+        }
       }
-
-      const searchParams = new URLSearchParams({
-        per_page: limit + 1, // +1 para excluir o post atual se aparecer
-        categories: categoryIds[0], // Usar o primeiro ID da categoria
-        exclude: postId,
-        _embed: true
-      })
-
-      const response = await fetch(`${WORDPRESS_API_URL}/posts?${searchParams}`)
-      
-      if (!response.ok) {
-        console.warn('Erro ao buscar posts relacionados, usando fallback')
-        return []
-      }
-
-      const posts = await response.json()
-      
-      // Transformar os dados e filtrar o post atual
-      const relatedPosts = posts
-        .filter(post => post.id !== postId)
-        .slice(0, limit)
-        .map(post => ({
-          id: post.id,
-          title: { rendered: post.title.rendered },
-          excerpt: { rendered: post.excerpt.rendered },
-          content: { rendered: post.content.rendered },
-          date: post.date,
-          modified: post.modified,
-          author: this.getAuthorName(post),
-          featured_media: this.getFeaturedImage(post),
-          categories: this.getCategories(post),
-          categoryIds: this.getCategoryIds(post),
-          tags: this.getTags(post),
-          slug: post.slug,
-          link: post.link,
-          readTime: this.calculateReadTime(post.content.rendered)
-        }))
-
-      return relatedPosts
     } catch (error) {
-      console.error('Erro ao buscar posts relacionados:', error)
-      return []
+      console.error('Erro ao buscar posts relacionados da API:', error)
     }
+
+    // Buscar posts estáticos relacionados
+    const fallbackRelated = this.getFallbackPosts().filter(post => {
+      if (post.id === postId) return false;
+      return post.categoryIds && post.categoryIds.some(catId => categoryIds.includes(catId));
+    });
+
+    // Mesclar
+    const mergedMap = new Map();
+    fallbackRelated.forEach(post => mergedMap.set(post.id, post));
+    apiRelated.forEach(post => mergedMap.set(post.id, post));
+
+    const allRelated = Array.from(mergedMap.values())
+      .filter(post => post.id !== postId);
+
+    // Ordenar por data
+    allRelated.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    return allRelated.slice(0, limit);
   },
 
   // Buscar categorias
