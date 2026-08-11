@@ -17,6 +17,7 @@ import Conhecimento from './pages/Conhecimento'
 import ConhecimentoDetalhe from './pages/ConhecimentoDetalhe'
 import IndiqueGanhe from './pages/IndiqueGanhe'
 import AdmissaoDigital from './pages/AdmissaoDigital'
+import Admissao55 from './pages/Admissao55'
 import GestaoBeneficios from './pages/GestaoBeneficios'
 import GestaoTarefas from './pages/GestaoTarefas'
 import PortalRH from './pages/PortalRH'
@@ -128,6 +129,7 @@ function App() {
           <Route path="/demo" element={<Demo />} />
           <Route path="/indique-ganhe" element={<IndiqueGanhe />} />
           <Route path="/admissao-digital" element={<AdmissaoDigital />} />
+          <Route path="/admissao_55" element={<Admissao55 />} />
           <Route path="/gestao-beneficios" element={<GestaoBeneficios />} />
           <Route path="/gestao-tarefas" element={<GestaoTarefas />} />
           <Route path="/portal-rh" element={<PortalRH />} />
