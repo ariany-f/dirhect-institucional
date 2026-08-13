@@ -130,7 +130,6 @@ const Admissao55 = () => {
       <section className="admissao-hero" aria-label="Introdução">
         <div className="landing-container admissao-hero-grid">
           <div className="admissao-hero-content animate-fade-in-left">
-            <span className="admissao-badge-tag">ADMISSÃO DIGITAL</span>
             <h1 className="admissao-hero-title">
               Sua próxima admissão pode levar minutos, não horas.
             </h1>
