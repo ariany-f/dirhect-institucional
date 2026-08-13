@@ -363,6 +363,11 @@ const Admissao55 = () => {
                 <span>Acompanhamento do processo</span>
               </li>
             </ul>
+
+            <button onClick={openFormModal} className="admissao-btn-primary context-btn">
+              COMEÇAR MINHA ADMISSÃO DIGITAL
+              <ArrowRight size={18} className="admissao-btn-icon" />
+            </button>
           </div>
         </div>
       </section>

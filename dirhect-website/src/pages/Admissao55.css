@@ -387,6 +387,10 @@
     color: #3b82f6;
   }
 
+  .context-btn {
+    margin-top: 2.25rem;
+  }
+
   /* Dashboard Mockup (Native HTML/CSS UI) */
   .dashboard-mockup-container {
     background: var(--white);
