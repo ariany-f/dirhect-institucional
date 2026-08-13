@@ -131,7 +131,7 @@ const Admissao55 = () => {
         <div className="landing-container admissao-hero-grid">
           <div className="admissao-hero-content animate-fade-in-left">
             <h1 className="admissao-hero-title">
-              Sua próxima admissão pode levar minutos, não horas.
+              Sua próxima admissão <span className="highlight-orange">pode levar minutos</span>, não horas.
             </h1>
             <p className="admissao-hero-desc">
               Centralize documentos, dados e informações do novo colaborador em um único lugar e reduza o trabalho manual do RH.
