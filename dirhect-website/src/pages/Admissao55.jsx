@@ -27,6 +27,7 @@ const Admissao55 = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [activeStep, setActiveStep] = useState(1);
   
   const [formData, setFormData] = useState({
     nomeContato: '',
@@ -66,6 +67,14 @@ const Admissao55 = () => {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Loop for the process steps (every 2 seconds)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveStep(prev => (prev === 4 ? 1 : prev + 1));
+    }, 2000);
+    return () => clearInterval(interval);
   }, []);
 
   const openFormModal = () => {
@@ -219,34 +228,37 @@ const Admissao55 = () => {
           </div>
 
           <div className="admissao-steps-flow">
-            <div className="admissao-step">
+            <div className={`admissao-step ${activeStep === 1 ? 'active' : ''}`}>
               <div className="step-number-container">
                 <span className="step-number">01</span>
-                <div className="step-pulse"></div>
+                {activeStep === 1 && <div className="step-pulse"></div>}
               </div>
               <h3>Envie a admissão</h3>
               <p>O colaborador recebe o acesso para iniciar o processo.</p>
             </div>
 
-            <div className="admissao-step">
+            <div className={`admissao-step ${activeStep === 2 ? 'active' : ''}`}>
               <div className="step-number-container">
                 <span className="step-number">02</span>
+                {activeStep === 2 && <div className="step-pulse"></div>}
               </div>
               <h3>Dados e documentos online</h3>
               <p>Ele preenche as informações e envia os documentos necessários digitalmente.</p>
             </div>
 
-            <div className="admissao-step">
+            <div className={`admissao-step ${activeStep === 3 ? 'active' : ''}`}>
               <div className="step-number-container">
                 <span className="step-number">03</span>
+                {activeStep === 3 && <div className="step-pulse"></div>}
               </div>
               <h3>O RH acompanha</h3>
               <p>Veja o andamento da admissão e tudo que ainda precisa ser concluído.</p>
             </div>
 
-            <div className="admissao-step">
+            <div className={`admissao-step ${activeStep === 4 ? 'active' : ''}`}>
               <div className="step-number-container">
                 <span className="step-number">04</span>
+                {activeStep === 4 && <div className="step-pulse"></div>}
               </div>
               <h3>Processo organizado</h3>
               <p>As informações ficam centralizadas e prontas para seguir para as próximas etapas.</p>

@@ -299,9 +299,10 @@
     margin-bottom: 1.75rem;
     position: relative;
     box-shadow: 0 4px 10px rgba(255, 170, 0, 0.1);
+    transition: all 0.3s ease;
   }
 
-  .admissao-step:first-child .step-number-container {
+  .admissao-step.active .step-number-container {
     background-color: #ffaa00;
     color: var(--white);
   }
