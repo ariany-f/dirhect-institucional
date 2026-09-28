@@ -1,3 +1,5 @@
+import SEO from '../components/SEO';
+import { trackLead } from '../services/analytics';
 import React, { useState, useEffect, useRef } from 'react';
 import { 
   Users, 
@@ -121,6 +123,11 @@ const Admissao55 = () => {
 
       if (response.success) {
         setFormSubmitted(true);
+        trackLead({
+          formName: 'admissao_55_modal',
+          leadType: 'admissao_55',
+          additionalData: { empresa: formData.nomeEmpresa, funcionarios: formData.numeroFuncionarios }
+        });
       } else {
         throw new Error(response.message || 'Erro ao enviar a solicitação.');
       }
@@ -133,6 +140,11 @@ const Admissao55 = () => {
 
   return (
     <div className="admissao-landing-page">
+      <SEO
+        title="Admissão Digital Avulsa por R$ 55 | Dirhect"
+        description="Contrate a admissão digital avulsa do Dirhect por R$ 55 por admissão. Coleta rápida de documentos, validação e integração sem mensalidade fixa."
+        canonical="https://dirhect.com.br/admissao_55"
+      />
       <Header />
 
       {/* SEÇÃO 01 — HERO */}
@@ -193,24 +205,30 @@ const Admissao55 = () => {
               <div className="pain-icon-wrapper">
                 <FileSpreadsheet size={24} className="pain-icon" />
               </div>
-              <h3>Documentos espalhados</h3>
-              <p>Arquivos perdidos em e-mails ou conversas que atrasam a formalização.</p>
+              <div className="pain-text-content">
+                <h3>Documentos espalhados</h3>
+                <p>Arquivos perdidos em e-mails ou conversas que atrasam a formalização.</p>
+              </div>
             </div>
 
             <div className="admissao-pain-item">
               <div className="pain-icon-wrapper">
                 <AlertCircle size={24} className="pain-icon" />
               </div>
-              <h3>Informações incompletas</h3>
-              <p>A necessidade constante de cobrar o colaborador por dados faltantes.</p>
+              <div className="pain-text-content">
+                <h3>Informações incompletas</h3>
+                <p>A necessidade constante de cobrar o colaborador por dados faltantes.</p>
+              </div>
             </div>
 
             <div className="admissao-pain-item">
               <div className="pain-icon-wrapper">
                 <AlertTriangle size={24} className="pain-icon" />
               </div>
-              <h3>Retrabalho do RH</h3>
-              <p>Digitação de dados manualmente em diferentes sistemas internos.</p>
+              <div className="pain-text-content">
+                <h3>Retrabalho do RH</h3>
+                <p>Digitação de dados manualmente em diferentes sistemas internos.</p>
+              </div>
             </div>
           </div>
 

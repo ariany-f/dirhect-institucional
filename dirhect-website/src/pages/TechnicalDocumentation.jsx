@@ -1,3 +1,4 @@
+import SEO from '../components/SEO'
 import { useState } from 'react'
 import { ArrowLeft, Download, Code, Database, Shield, CheckCircle, Copy, ExternalLink, Book, Terminal, Zap } from 'lucide-react'
 import { Link } from 'react-router-dom'
@@ -110,6 +111,12 @@ const syncBenefits = async (employeeId) => {
 
   return (
     <>
+            <SEO
+        title="Documentação Técnica e APIs | Dirhect"
+        description="Documentação técnica das APIs do Dirhect para integração com SAP HCM, TOTVS RM e sistemas corporativos de Recursos Humanos."
+        canonical="https://dirhect.com.br/docs"
+        noindex={false}
+      />
       <Header />
       <div className="technical-docs">
         {/* Hero Section */}

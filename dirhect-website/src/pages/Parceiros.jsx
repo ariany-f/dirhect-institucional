@@ -1,3 +1,4 @@
+import SEO from '../components/SEO'
 import { useEffect, useState } from 'react'
 import { 
   CheckCircle, 
@@ -27,7 +28,7 @@ const Parceiros = () => {
       name: 'SAP',
       logo: '/images/logos/sap-logo.webp',
       category: 'ERP',
-      description: 'Integração nativa com SAP HCM para sincronização completa de dados de funcionários e estrutura organizacional.',
+      description: 'Integração via API e conectores flexíveis com SAP HCM para sincronização de dados de funcionários e estrutura organizacional.',
       features: ['SAP HCM', 'SAP SuccessFactors', 'SAP Business One'],
       status: 'ERP',
       color: '#0FAAFF'
@@ -36,7 +37,7 @@ const Parceiros = () => {
       name: 'TOTVS',
       logo: '/images/logos/totvs-logo.png',
       category: 'ERP',
-      description: 'Conexão direta com TOTVS RM para gestão integrada de recursos humanos e controle de ponto.',
+      description: 'Integração via API e conectores com TOTVS RM para gestão integrada de recursos humanos e controle de ponto.',
       features: ['TOTVS RM', 'TOTVS Datasul', 'TOTVS Microsiga'],
       status: 'ERP',
       color: '#FF6B35'
@@ -90,6 +91,11 @@ const Parceiros = () => {
 
   return (
     <div>
+      <SEO
+        title="Integrações para Sistemas de RH e ERP | Dirhect"
+        description="Conecte o Dirhect a sistemas como SAP HCM, TOTVS RM, Gupy, LG e operadoras via APIs e conectores dedicados para automação de processos de RH."
+        canonical="https://dirhect.com.br/integracoes"
+      />
       <Header />
       
       {/* Hero Section */}

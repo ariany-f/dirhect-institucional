@@ -1,3 +1,4 @@
+import SEO from '../components/SEO'
 import { useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import Header from '../components/Header.jsx?v=menu-nav-20260521'
@@ -28,6 +29,12 @@ const ColaboradorPainel = () => {
 
   return (
     <div className="colab-painel-page">
+            <SEO
+        title="Painel do Colaborador | Dirhect"
+        description="Área restrita do colaborador."
+        canonical="https://dirhect.com.br/area-colaborador/painel"
+        noindex={true}
+      />
       <Header />
       <main className="colab-painel-main">
         <div className="colab-painel-card">

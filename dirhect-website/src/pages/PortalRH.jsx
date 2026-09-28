@@ -1,3 +1,5 @@
+import SEO from '../components/SEO';
+import { trackLead } from '../services/analytics';
 import React, { useState } from 'react';
 import { 
   Users, 
@@ -58,6 +60,11 @@ const PortalRH = () => {
         tipo: 'Portal RH'
       });
       setIsSuccess(true);
+      trackLead({
+        formName: 'portal_rh_form',
+        leadType: 'portal_rh',
+        additionalData: { empresa: formData.empresa, funcionarios: formData.funcionarios }
+      });
     } catch (err) {
       setError('Erro ao enviar solicitação. Tente novamente.');
     } finally {
@@ -73,7 +80,7 @@ const PortalRH = () => {
             <div className="portal-success-icon">
               <CheckCircle size={64} />
             </div>
-            <h1>Solicitação Enviada com Sucesso!</h1>
+            <h2 className="portal-success-title">Solicitação Enviada com Sucesso!</h2>
             <p>
               Obrigado pelo seu interesse em nossa solução de Portal RH. 
               Nossa equipe entrará em contato em até 24 horas para agendar sua demonstração.
@@ -100,6 +107,25 @@ const PortalRH = () => {
 
   return (
     <div className="portal-rh-page">
+      <SEO
+        title="Portal RH e Portal do Colaborador | Dirhect"
+        description="Ofereça uma experiência moderna para seus colaboradores com autosserviço, holerites, solicitações e comunicação centralizada em um só portal."
+        canonical="https://dirhect.com.br/portal-rh"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'SoftwareApplication',
+          'name': 'Dirhect Portal RH',
+          'applicationCategory': 'BusinessApplication',
+          'operatingSystem': 'Web, Cloud',
+          'description': 'Portal de autosserviço e comunicação para colaboradores e departamento pessoal integrado ao RH.',
+          'url': 'https://dirhect.com.br/portal-rh',
+          'provider': {
+            '@type': 'Organization',
+            'name': 'Dirhect',
+            'url': 'https://dirhect.com.br'
+          }
+        }}
+      />
       {/* Hero Section */}
       <section className="portal-hero">
         <div className="portal-hero-background">

@@ -929,9 +929,9 @@ const HomeBpmFold = ({ isStandalone = false }) => {
         
         {isStandalone && (
           <div className="home-bpm-header-standalone">
-            <h2 id="home-bpm-title" className="home-bpm-title home-bpm-title--centered">
+            <h1 id="home-bpm-title" className="home-bpm-title home-bpm-title--centered">
               Transforme processos complexos de <span className="home-bpm-accent">RH</span> <br className="home-bpm-title-br" /> em <span className="home-bpm-accent">fluxos automatizados</span>.
-            </h2>
+            </h1>
             <p className="home-bpm-subtitle-bottom home-bpm-subtitle-standalone">
               Crie regras, aprovações, validações e etapas personalizadas para que cada processo siga exatamente o fluxo definido pela sua empresa.
             </p>

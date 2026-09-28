@@ -1,3 +1,4 @@
+import SEO from '../components/SEO'
 import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { 
@@ -93,6 +94,12 @@ const SolucoesTeste = () => {
 
   return (
     <div className={`solucoes-teste-page ${isTransitioning ? 'solucoes-teste-page--transitioning' : ''}`}>
+            <SEO
+        title="Ambiente de Testes | Dirhect"
+        description="Página de homologação e testes internos."
+        canonical="https://dirhect.com.br/solucoes_teste"
+        noindex={true}
+      />
       <Header />
       <main className="solucoes-teste-main">
         <div className="solucoes-teste-container">

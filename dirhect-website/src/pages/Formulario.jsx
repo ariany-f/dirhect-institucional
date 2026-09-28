@@ -1,3 +1,4 @@
+import SEO from '../components/SEO'
 import React, { useState, useEffect } from 'react';
 import { 
   FileText, 

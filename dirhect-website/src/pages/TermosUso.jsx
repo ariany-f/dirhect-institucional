@@ -1,3 +1,4 @@
+import SEO from '../components/SEO'
 import { FileText, Users, Shield, AlertTriangle, CheckCircle, Scale } from 'lucide-react'
 import './TermosUso.css'
 

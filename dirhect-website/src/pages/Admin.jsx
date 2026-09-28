@@ -1,3 +1,4 @@
+import SEO from '../components/SEO'
 import { useState, useEffect } from 'react'
 import { 
   User, 
@@ -1515,7 +1516,13 @@ const Admin = () => {
   if (loading) {
     return (
       <div className="admin-page">
-        <Header />
+              <SEO
+        title="Painel Administrativo | Dirhect"
+        description="Área administrativa interna."
+        canonical="https://dirhect.com.br/admin"
+        noindex={true}
+      />
+      <Header />
         <div className="admin-loading">
           <div className="loading-spinner"></div>
         </div>

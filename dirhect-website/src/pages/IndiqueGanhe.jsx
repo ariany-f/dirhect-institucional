@@ -1,3 +1,4 @@
+import SEO from '../components/SEO'
 import { useState, useEffect, useRef } from 'react'
 import { 
   Gift, 
@@ -165,7 +166,13 @@ const IndiqueGanhe = () => {
   if (submitSuccess) {
     return (
       <div>
-        <Header />
+              <SEO
+        title="Programa Indique e Ganhe | Dirhect"
+        description="Indique empresas parceiras para transformar a gestão de RH com o Dirhect e receba benefícios exclusivos do nosso programa."
+        canonical="https://dirhect.com.br/indique-ganhe"
+        noindex={false}
+      />
+      <Header />
         <div className="indique-success">
           <div className="container">
             <div className="indique-success-content">

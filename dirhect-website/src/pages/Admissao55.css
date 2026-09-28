@@ -215,11 +215,14 @@
 
   .admissao-pain-item {
     background: var(--white);
-    padding: 2.5rem 2rem;
+    padding: 1.5rem;
     border-radius: var(--border-radius);
     box-shadow: 0 4px 15px rgba(0,0,0,0.02);
     transition: all 0.3s ease;
     border: 1px solid var(--gray-200);
+    display: flex;
+    align-items: flex-start;
+    gap: 1.25rem;
   }
 
   .admissao-pain-item:hover {
@@ -231,23 +234,31 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: 52px;
-    height: 52px;
+    width: 48px;
+    height: 48px;
     border-radius: 12px;
     background-color: #fff7ed;
     color: #ffaa00;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .pain-text-content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: left;
   }
 
   .admissao-pain-item h3 {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     font-weight: 700;
-    margin-bottom: 0.75rem;
+    margin-bottom: 0.35rem;
     color: var(--text-primary);
   }
 
   .admissao-pain-item p {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: var(--text-secondary);
     line-height: 1.5;
   }
@@ -1126,7 +1137,7 @@
     }
 
     .admissao-pain-item {
-      padding: 2rem;
+      padding: 1.25rem;
     }
 
     .admissao-steps-flow {

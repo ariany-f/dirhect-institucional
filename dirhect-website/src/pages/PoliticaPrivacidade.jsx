@@ -1,3 +1,4 @@
+import SEO from '../components/SEO'
 import { Shield, Lock, Eye, UserCheck, FileText, AlertCircle } from 'lucide-react'
 import './PoliticaPrivacidade.css'
 

@@ -475,3 +475,25 @@
     --hero-scrollbar-inset: 0px !important;
   }
 }
+
+/* Unificação do H1 para SEO Semântico */
+.hero-home-break-mobile {
+  display: none;
+}
+.hero-home-break-desktop {
+  display: inline;
+}
+span.hero-home-title-line.hero-home-break-desktop {
+  display: block;
+}
+@media (max-width: 768px) {
+  .hero-home-break-desktop {
+    display: none !important;
+  }
+  .hero-home-break-mobile {
+    display: inline !important;
+  }
+  span.hero-home-title-line.hero-home-break-mobile {
+    display: block !important;
+  }
+}

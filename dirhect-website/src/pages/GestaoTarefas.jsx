@@ -1,3 +1,4 @@
+import SEO from '../components/SEO';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -152,6 +153,25 @@ const GestaoTarefas = () => {
 
   return (
     <div className="gestao-tarefas-page">
+      <SEO
+        title="Gestão de Tarefas e Processos de RH | Dirhect"
+        description="Transforme processos de RH em tarefas claras, organizadas e acompanháveis com prazos e responsáveis centralizados na plataforma Dirhect."
+        canonical="https://dirhect.com.br/gestao-tarefas"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'SoftwareApplication',
+          'name': 'Dirhect Gestão de Tarefas',
+          'applicationCategory': 'BusinessApplication',
+          'operatingSystem': 'Web, Cloud',
+          'description': 'Plataforma para gestão de tarefas, fluxos operacionais de RH e acompanhamento de etapas com prazos e responsáveis.',
+          'url': 'https://dirhect.com.br/gestao-tarefas',
+          'provider': {
+            '@type': 'Organization',
+            'name': 'Dirhect',
+            'url': 'https://dirhect.com.br'
+          }
+        }}
+      />
       {/* 1. HERO SECTION */}
       <section className="tarefas-hero">
         <div className="tarefas-hero-media" aria-hidden="true">

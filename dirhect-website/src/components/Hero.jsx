@@ -1,3 +1,4 @@
+import { trackDemoClick } from '../services/analytics'
 import { ArrowRight } from 'lucide-react'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
@@ -39,32 +40,27 @@ const Hero = () => {
         <div className="hero-home-grid">
           <div className="hero-home-copy">
             <p className="hero-home-eyebrow">PLATAFORMA DE INTEGRAÇÃO PARA RH</p>
-            <h1 className="hero-home-title hero-home-title--desktop">
+            <h1 className="hero-home-title">
               <span className="hero-home-title-line">
-                <span className="hero-home-title-em">Muito mais</span>
-                {' '}do que
+                <span className="hero-home-title-em">Muito mais</span>{' '}
+                <span className="hero-home-break-desktop">do que</span>
+                <span className="hero-home-break-mobile">do</span>
               </span>
-              <span className="hero-home-title-line hero-home-title-line--no-break">
-                um software de RH
-              </span>
-            </h1>
-
-            <h1 className="hero-home-title hero-home-title--mobile">
-              <span className="hero-home-title-line">
-                <span className="hero-home-title-em">Muito mais</span> do
-              </span>
-              <span className="hero-home-title-line">
+              <span className="hero-home-title-line hero-home-break-mobile">
                 que um software
               </span>
-              <span className="hero-home-title-line">
+              <span className="hero-home-title-line hero-home-break-mobile">
                 de RH
+              </span>
+              <span className="hero-home-title-line hero-home-title-line--no-break hero-home-break-desktop">
+                um software de RH
               </span>
             </h1>
             <p className="hero-home-description">
               Da Admissão Digital, Benefícios e Workflow de Tarefas, às Integrações e Processos de RH, Independente do Seu Sistema de RH e PD
             </p>
             <div className="hero-home-actions">
-              <Link to="/demo" className="hero-home-btn hero-home-btn--primary">
+              <Link to="/demo" className="hero-home-btn hero-home-btn--primary" onClick={() => trackDemoClick({ location: 'hero_home' })}>
                 Agendar demonstração
                 <ArrowRight size={16} strokeWidth={2.5} aria-hidden />
               </Link>

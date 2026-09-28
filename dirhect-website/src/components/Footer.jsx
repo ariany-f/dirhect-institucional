@@ -13,10 +13,10 @@ const Footer = () => {
               <p>Revolucionando a gestão de RH com tecnologia inteligente e automação avançada.</p>
             </div>
             <div className="footer-social">
-              <a href="#" className="social-link">
+              <a href="https://www.linkedin.com/company/dirhect" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="LinkedIn da Dirhect">
                 <Linkedin size={20} />
               </a>
-              <a href="#" className="social-link">
+              <a href="https://www.instagram.com/dirhect" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Instagram da Dirhect">
                 <Instagram size={20} />
               </a>
             </div>
@@ -25,11 +25,11 @@ const Footer = () => {
           <div className="footer-section">
             <h4>Soluções</h4>
             <ul className="footer-links">
-              <li><a href="#solucoes">Portal de RH</a></li>
-              <li><a href="#solucoes">Gestão de Tarefas</a></li>
-              <li><a href="#solucoes">Gestão de Benefícios</a></li>
-              <li><a href="#solucoes">Admissão Digital</a></li>
-              <li><Link to="/ecossistema">Integrações e ecossistema</Link></li>
+              <li><Link to="/portal-rh">Portal de RH</Link></li>
+              <li><Link to="/gestao-tarefas">Gestão de Tarefas</Link></li>
+              <li><Link to="/gestao-beneficios">Gestão de Benefícios</Link></li>
+              <li><Link to="/admissao-digital">Admissão Digital</Link></li>
+              <li><Link to="/integracoes">Integrações e ecossistema</Link></li>
               <li><Link to="/apresentacao">Apresentação</Link></li>
             </ul>
           </div>
@@ -52,11 +52,11 @@ const Footer = () => {
             <div className="contact-info">
               <div className="contact-item">
                 <Mail size={16} />
-                <span>contato@dirhect.com.br</span>
+                <a href="mailto:contato@dirhect.com.br" style="color:inherit;text-decoration:none;">contato@dirhect.com.br</a>
               </div>
               <div className="contact-item">
                 <Phone size={16} />
-                <span>(11) 96898-9211</span>
+                <a href="tel:+5511968989211" style="color:inherit;text-decoration:none;">(11) 96898-9211</a>
               </div>
             </div>
           </div>
@@ -66,7 +66,7 @@ const Footer = () => {
           <div className="footer-bottom-content">
             <p>&copy; {new Date().getFullYear()} Dirhect. Todos os direitos reservados.</p>
             <div className="footer-legal">
-              <Link to="/admin">Área Privada</Link>
+              <Link to="/admin" rel="nofollow">Área Privada</Link>
               <Link to="/politica-privacidade">Política de Privacidade</Link>
               <Link to="/termos-uso">Termos de Uso</Link>
             </div>

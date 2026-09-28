@@ -1,3 +1,4 @@
+import SEO from './components/SEO'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { useEffect } from 'react'
 import Home from './pages/Home'
@@ -104,6 +105,11 @@ function App() {
         <Routes>
           <Route path="/" element={
             <>
+              <SEO
+                title="Software de Automação e Integração para RH | Dirhect"
+                description="Automatize processos de RH, admissão digital, gestão de benefícios e tarefas integrando tudo ao seu ERP atual com a plataforma inteligente do Dirhect."
+                canonical="https://dirhect.com.br/"
+              />
               <Hero />
               <HomeAboutFold />
               <HomeConnectorFold />
@@ -130,6 +136,8 @@ function App() {
           <Route path="/indique-ganhe" element={<IndiqueGanhe />} />
           <Route path="/admissao-digital" element={<AdmissaoDigital />} />
           <Route path="/admissao_55" element={<Admissao55 />} />
+          <Route path="/admissao-55" element={<Admissao55 />} />
+          <Route path="/admissao-digital-55" element={<Admissao55 />} />
           <Route path="/gestao-beneficios" element={<GestaoBeneficios />} />
           <Route path="/gestao-tarefas" element={<GestaoTarefas />} />
           <Route path="/portal-rh" element={<PortalRH />} />
@@ -142,6 +150,7 @@ function App() {
           <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
           <Route path="/termos-uso" element={<TermosUso />} />
           <Route path="/ecossistema" element={<Parceiros />} />
+          <Route path="/integracoes" element={<Parceiros />} />
           <Route path="/parceiro" element={<ParceiroSubdominio />} />
           <Route path="/area-colaborador" element={<ColaboradorLogin />} />
           <Route path="/area-colaborador/painel" element={<ColaboradorPainel />} />

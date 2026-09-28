@@ -1,3 +1,4 @@
+import SEO from '../components/SEO'
 import { useState, useEffect, useCallback } from 'react'
 import { Calendar, User, ArrowRight, Clock } from 'lucide-react'
 import { Link } from 'react-router-dom'
@@ -166,6 +167,11 @@ const Blog = () => {
 
   return (
     <div className="blog-page">
+      <SEO
+        title="Conteúdos sobre Automação e Gestão de RH | Dirhect"
+        description="Artigos, guias práticos e tendências sobre automação de processos, admissão digital, gestão de benefícios e tecnologia para RH."
+        canonical="https://dirhect.com.br/blog"
+      />
       <Header />
       
       <main className="blog-main">

@@ -1,3 +1,4 @@
+import SEO from '../components/SEO';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -125,6 +126,25 @@ const GestaoBeneficios = () => {
 
   return (
     <div className="gestao-beneficios-page">
+      <SEO
+        title="Gestão de Benefícios Corporativos | Dirhect"
+        description="Centralize solicitações, movimentações e elegibilidade de benefícios corporativos em uma plataforma integrada ao RH, folha e operadoras."
+        canonical="https://dirhect.com.br/gestao-beneficios"
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'SoftwareApplication',
+          'name': 'Dirhect Gestão de Benefícios',
+          'applicationCategory': 'BusinessApplication',
+          'operatingSystem': 'Web, Cloud',
+          'description': 'Plataforma para centralização, automação e gestão de benefícios corporativos integrada a sistemas de folha e operadoras.',
+          'url': 'https://dirhect.com.br/gestao-beneficios',
+          'provider': {
+            '@type': 'Organization',
+            'name': 'Dirhect',
+            'url': 'https://dirhect.com.br'
+          }
+        }}
+      />
       {/* Hero Section */}
       <section className="beneficios-hero">
         <div className="container">

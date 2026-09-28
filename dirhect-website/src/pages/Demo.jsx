@@ -1,3 +1,5 @@
+import SEO from '../components/SEO'
+import { trackLead, trackFormSubmit } from '../services/analytics'
 import { useState, useEffect } from 'react'
 import Header from '../components/Header.jsx?v=menu-nav-20260521'
 import Footer from '../components/Footer'
@@ -69,6 +71,11 @@ const Demo = () => {
         }
         
         setSubmitSuccess(true)
+        trackLead({
+          formName: 'demo_page_form',
+          leadType: 'demo',
+          additionalData: { cargo: formData.cargo, empresa: formData.nomeEmpresa, funcionarios: formData.numeroFuncionarios }
+        })
       } catch (emailError) {
         console.error('Erro ao enviar emails:', emailError)
         setSubmitError(`Erro inesperado: ${emailError.message}`)
@@ -93,7 +100,7 @@ const Demo = () => {
               <div className="success-icon">
                 <CheckCircle2 size={80} />
               </div>
-              <h1>Solicitação Enviada com Sucesso!</h1>
+              <h2 className="demo-success-title">Solicitação Enviada com Sucesso!</h2>
               <p>
                 Obrigado pelo seu interesse na Dirhect. Nossa equipe entrará em contato 
                 em até 24 horas para agendar sua demonstração personalizada.
@@ -121,6 +128,11 @@ const Demo = () => {
 
   return (
     <div>
+      <SEO
+        title="Agendar Demonstração | Dirhect"
+        description="Agende uma demonstração personalizada com nossos especialistas e veja como o Dirhect pode automatizar e integrar os processos de RH da sua empresa."
+        canonical="https://dirhect.com.br/demo"
+      />
       <Header />
       <section className="demo-hero">
         <div className="home-fold-container">

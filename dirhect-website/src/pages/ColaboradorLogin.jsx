@@ -1,3 +1,4 @@
+import SEO from '../components/SEO'
 import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import Header from '../components/Header.jsx?v=menu-nav-20260521'
@@ -61,6 +62,12 @@ const ColaboradorLogin = () => {
 
   return (
     <div className="colab-login-page">
+            <SEO
+        title="Área do Colaborador - Login | Dirhect"
+        description="Acesso ao portal do colaborador Dirhect."
+        canonical="https://dirhect.com.br/area-colaborador"
+        noindex={true}
+      />
       <Header />
       <main className="colab-login-main">
         <div className="colab-login-card">

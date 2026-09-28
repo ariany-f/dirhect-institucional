@@ -1,3 +1,4 @@
+import SEO from '../components/SEO'
 import { Home, ArrowLeft, Search, RefreshCw } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import './NotFound.css'
@@ -5,6 +6,12 @@ import './NotFound.css'
 const NotFound = () => {
   return (
     <div className="not-found-page">
+      <SEO
+        title="Página Não Encontrada | Dirhect"
+        description="A página solicitada não foi encontrada."
+        canonical="https://dirhect.com.br/404"
+        noindex={true}
+      />
       <div className="not-found-container">
         <div className="not-found-content">
           {/* 404 Animation */}

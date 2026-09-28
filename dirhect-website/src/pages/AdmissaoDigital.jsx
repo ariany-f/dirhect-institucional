@@ -1,3 +1,5 @@
+import SEO from '../components/SEO';
+import { trackLead, trackFormSubmit, trackDemoClick } from '../services/analytics';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -283,6 +285,11 @@ const AdmissaoDigital = () => {
 
       if (result.success) {
         setSubmitSuccess(true);
+        trackLead({
+          formName: 'admissao_digital_modal',
+          leadType: 'admissao',
+          additionalData: { empresa: formData.empresa, funcionarios: formData.funcionarios }
+        });
         console.log('Solicitação enviada:', result);
       } else {
         throw new Error(result.message || 'Erro ao enviar solicitação');
@@ -725,7 +732,7 @@ const AdmissaoDigital = () => {
           <div className="section-header">
             <span className="section-tag">Vantagens</span>
             <h2>Mais eficiência para o RH. <br />Mais simplicidade para o novo colaborador.</h2>
-            <p>Uma solução desenhada para otimizar tempo, eliminar o uso de papéis e garantir conformidade e segurança da informação.</p>
+            <p>Uma solução desenhada para otimizar tempo, eliminar o uso de papéis e promover conformidade e segurança da informação no processo admissional.</p>
           </div>
 
           <div className="admissao-beneficios-split">

@@ -1,3 +1,4 @@
+import SEO from '../components/SEO'
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { Calendar, Clock, ArrowLeft, ArrowRight, User, Tag, Share2, Facebook, Twitter, Linkedin } from 'lucide-react'
@@ -162,6 +163,33 @@ const BlogPost = () => {
 
   return (
     <div className="blog-post-page">
+      <SEO
+        title={`${stripHtml(post.title?.rendered || 'Artigo')} | Blog Dirhect`}
+        description={stripHtml(post.excerpt?.rendered || post.content?.rendered || '').slice(0, 160)}
+        canonical={`https://dirhect.com.br/blog/${post.slug || id}`}
+        ogType="article"
+        ogImage={post.featured_media ? (post.featured_media.startsWith('http') ? post.featured_media : `https://dirhect.com.br${post.featured_media}`) : undefined}
+        schema={{
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          'headline': stripHtml(post.title?.rendered || ''),
+          'description': stripHtml(post.excerpt?.rendered || '').slice(0, 200),
+          'image': post.featured_media ? (post.featured_media.startsWith('http') ? post.featured_media : `https://dirhect.com.br${post.featured_media}`) : undefined,
+          'datePublished': post.date,
+          'author': {
+            '@type': 'Person',
+            'name': post.author || 'Equipe Dirhect'
+          },
+          'publisher': {
+            '@type': 'Organization',
+            'name': 'Dirhect',
+            'logo': {
+              '@type': 'ImageObject',
+              'url': 'https://dirhect.com.br/images/dirhect_color.svg'
+            }
+          }
+        }}
+      />
       <Header />
       
       <main className="blog-post-main">
