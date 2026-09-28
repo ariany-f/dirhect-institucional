@@ -52,11 +52,11 @@ const Footer = () => {
             <div className="contact-info">
               <div className="contact-item">
                 <Mail size={16} />
-                <a href="mailto:contato@dirhect.com.br" style="color:inherit;text-decoration:none;">contato@dirhect.com.br</a>
+                <a href="mailto:contato@dirhect.com.br" style={{ color: 'inherit', textDecoration: 'none' }}>contato@dirhect.com.br</a>
               </div>
               <div className="contact-item">
                 <Phone size={16} />
-                <a href="tel:+5511968989211" style="color:inherit;text-decoration:none;">(11) 96898-9211</a>
+                <a href="tel:+5511968989211" style={{ color: 'inherit', textDecoration: 'none' }}>(11) 96898-9211</a>
               </div>
             </div>
           </div>
