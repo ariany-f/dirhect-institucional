@@ -16,7 +16,7 @@ const Footer = () => {
               <a href="https://www.linkedin.com/company/dirhect" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="LinkedIn da Dirhect">
                 <Linkedin size={20} />
               </a>
-              <a href="https://www.instagram.com/dirhect" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Instagram da Dirhect">
+              <a href="https://www.instagram.com/dirhectoficial/" target="_blank" rel="noopener noreferrer" className="social-link" aria-label="Instagram da Dirhect">
                 <Instagram size={20} />
               </a>
             </div>

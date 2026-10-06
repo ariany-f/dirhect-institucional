@@ -55,8 +55,20 @@ const PhoneInput = ({
   }
 
   const handleNationalInput = (e) => {
+    let raw = e.target.value
+    if (raw.includes('+')) {
+      const parsed = parsePhoneValue(raw, countryIso)
+      setCountryIso(parsed.iso)
+      setNational(parsed.national)
+      emit(parsed.iso, parsed.national)
+      return
+    }
+
+    let digits = raw.replace(/\D/g, '')
     const c = getCountryByIso(countryIso)
-    const digits = e.target.value.replace(/\D/g, '')
+    if (c.dial && digits.startsWith(c.dial) && digits.length > (c.mask === 'br' ? 11 : 10)) {
+      digits = digits.slice(c.dial.length)
+    }
     setNational(digits)
     emit(countryIso, digits)
   }

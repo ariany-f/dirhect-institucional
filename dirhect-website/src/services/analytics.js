@@ -6,32 +6,32 @@
 
 export const trackEvent = (eventName, params = {}) => {
   try {
-    // 1. Google Tag Manager (dataLayer)
-    if (typeof window !== 'undefined' && Array.isArray(window.dataLayer)) {
-      window.dataLayer.push({
-        event: eventName,
-        ...params,
-        event_time: new Date().toISOString()
-      })
-    }
-
-    // 2. Google Analytics 4 (gtag)
-    if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
-      window.gtag('event', eventName, params)
-    }
-
-    // 3. Meta Pixel (fbq)
-    if (typeof window !== 'undefined' && typeof window.fbq === 'function') {
-      if (eventName === 'generate_lead') {
-        window.fbq('track', 'Lead', {
-          content_name: params.form_name || 'Demonstração',
-          currency: 'BRL',
-          value: params.value || 0
+    if (typeof window !== 'undefined') {
+      // Prioridade mútua exclusiva: se gtag está ativo (GA4 direto), usa gtag.
+      // Se não, utiliza o dataLayer (Google Tag Manager), evitando duplicidade.
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', eventName, params)
+      } else {
+        window.dataLayer = window.dataLayer || []
+        window.dataLayer.push({
+          event: eventName,
+          ...params
         })
-      } else if (eventName === 'click_demo') {
-        window.fbq('trackCustom', 'ClickDemo', params)
-      } else if (eventName === 'click_whatsapp') {
-        window.fbq('trackCustom', 'ClickWhatsApp', params)
+      }
+
+      // Meta Pixel (fbq) se presente
+      if (typeof window.fbq === 'function') {
+        if (eventName === 'generate_lead') {
+          window.fbq('track', 'Lead', {
+            content_name: params.form_name || 'Demonstração',
+            currency: 'BRL',
+            value: params.value || 0
+          })
+        } else if (eventName === 'click_demo') {
+          window.fbq('trackCustom', 'ClickDemo', params)
+        } else if (eventName === 'click_whatsapp') {
+          window.fbq('trackCustom', 'ClickWhatsApp', params)
+        }
       }
     }
 
@@ -46,10 +46,11 @@ export const trackEvent = (eventName, params = {}) => {
 /**
  * Disparado estritamente após a confirmação de envio bem-sucedido de um formulário de lead.
  */
-export const trackLead = ({ formName, leadType = 'demo', additionalData = {} }) => {
+export const trackLead = ({ formName = 'admissao_digital', formLocation = 'landing_page_admissao_55', leadType, additionalData = {} }) => {
   trackEvent('generate_lead', {
     form_name: formName,
-    lead_type: leadType,
+    form_location: formLocation,
+    ...(leadType ? { lead_type: leadType } : {}),
     ...additionalData
   })
 }

@@ -31,7 +31,10 @@ export function getCountryByIso(iso) {
 }
 
 export function parsePhoneValue(value, defaultIso = DEFAULT_PHONE_COUNTRY) {
-  const raw = String(value ?? '').trim()
+  const unwrapped = (value && typeof value === 'object' && 'target' in value)
+    ? value.target?.value
+    : value
+  const raw = String(unwrapped ?? '').trim()
   if (!raw) {
     const c = getCountryByIso(defaultIso)
     return { iso: c.iso, dial: c.dial, national: '' }
@@ -80,7 +83,7 @@ export function formatNational(mask, nationalDigits) {
 export function buildFullPhone(iso, nationalDigits) {
   const c = getCountryByIso(iso)
   const formatted = formatNational(c.mask, nationalDigits)
-  if (!formatted) return `+${c.dial}`
+  if (!formatted) return ''
   return `+${c.dial} ${formatted}`
 }
 

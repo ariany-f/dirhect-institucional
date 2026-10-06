@@ -82,7 +82,15 @@ const sendWordPressEmail = async (formData, type) => {
 
 // Função para enviar email de demonstração
 export const sendDemoEmail = async (formData) => {
-  return await sendWordPressEmail(formData, 'demo')
+  const payload = {
+    ...formData,
+    nomeEmpresa: (formData.nomeEmpresa || formData.empresa || '').trim() || 'Não informada',
+    cnpj: (formData.cnpj || '').trim() || 'Não informado',
+    cargo: (formData.cargo || '').trim() || 'Não informado',
+    numeroFuncionarios: formData.numeroFuncionarios || formData.funcionarios || formData.colaboradores || '1-10 funcionários',
+    segmento: (formData.segmento || '').trim() || 'Outros'
+  }
+  return await sendWordPressEmail(payload, 'demo')
 }
 
 // Função para enviar email de suporte
