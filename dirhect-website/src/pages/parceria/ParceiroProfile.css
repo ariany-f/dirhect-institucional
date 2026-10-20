@@ -1,0 +1,477 @@
+/* Reset e Estrutura da Página de Perfil — Fundo Branco & Identidade Dirhect */
+.parceiro-profile-page {
+  min-height: 100vh;
+  background-color: #ffffff;
+  color: #0f172a;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: clip;
+}
+
+/* ───────────────────────────────────────────────────────────
+   TOPO VISUAL DE DESTAQUE (BACKDROP 300-350PX)
+─────────────────────────────────────────────────────────── */
+.parceiro-hero-backdrop {
+  position: relative;
+  width: 100%;
+  height: 220px;
+  background: linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%);
+  border-bottom: 1px solid #e2e8f0;
+  overflow: hidden;
+}
+
+.parceiro-hero-glow {
+  position: absolute;
+  top: -100px;
+  left: -60px;
+  width: 520px;
+  height: 520px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 170, 0, 0.16) 0%, rgba(255, 140, 0, 0.05) 50%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.parceiro-hero-dots {
+  position: absolute;
+  top: 20px;
+  right: clamp(20px, 6vw, 100px);
+  width: 280px;
+  height: 200px;
+  background-image: radial-gradient(rgba(255, 170, 0, 0.28) 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
+  pointer-events: none;
+  opacity: 0.8;
+  mask-image: radial-gradient(circle at top right, black 40%, transparent 80%);
+  -webkit-mask-image: radial-gradient(circle at top right, black 40%, transparent 80%);
+  z-index: 1;
+}
+
+
+/* ───────────────────────────────────────────────────────────
+   CONTAINER PRINCIPAL COM DUAS COLUNAS (67% / 33%)
+   Sobreposição com margem negativa sobre o hero backdrop
+─────────────────────────────────────────────────────────── */
+.parceiro-profile-main {
+  position: relative;
+  z-index: 3;
+  margin-top: -150px;
+  padding-bottom: 80px;
+  background-color: transparent;
+}
+
+.parceiro-profile-container {
+  max-width: 1600px;
+  margin: 0 auto;
+  padding: 0 clamp(20px, 4vw, 48px);
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(28px, 3vw, 40px);
+}
+
+.parceiro-left-column {
+  flex: 0 0 67%;
+  width: 67%;
+  min-width: 0;
+}
+
+.parceiro-right-column {
+  flex: 0 0 calc(33% - clamp(28px, 3vw, 40px));
+  width: calc(33% - clamp(28px, 3vw, 40px));
+  min-width: 0;
+  position: sticky;
+  top: 24px;
+  align-self: flex-start;
+  z-index: 10;
+}
+
+/* ───────────────────────────────────────────────────────────
+   CARD PRINCIPAL DA EMPRESA
+─────────────────────────────────────────────────────────── */
+.parceiro-main-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: clamp(24px, 3.5vw, 40px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+.parceiro-main-card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(20px, 2.5vw, 36px);
+}
+
+/* Logo Box 170x170 */
+.parceiro-main-logo-box {
+  width: 170px;
+  height: 170px;
+  min-width: 170px;
+  background-color: #ffffff;
+  border: 1.5px solid #e2e8f0;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  overflow: hidden;
+}
+
+.parceiro-main-logo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.parceiro-main-logo-fallback {
+  color: #ff8c00;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 800;
+  font-size: 2.4rem;
+  letter-spacing: 0.05em;
+}
+
+/* Informações ao lado do logo */
+.parceiro-main-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.parceiro-main-name {
+  color: #0f172a;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(1.8rem, 2.6vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  margin: 0 0 12px;
+}
+
+.parceiro-main-short-desc {
+  color: #475569;
+  font-size: clamp(0.98rem, 1.2vw, 1.1rem);
+  line-height: 1.65;
+  margin: 0 0 18px;
+}
+
+.parceiro-main-meta-row {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.parceiro-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #64748b;
+  font-size: 0.94rem;
+  font-weight: 500;
+}
+
+.parceiro-meta-icon {
+  color: #ffaa00;
+  flex-shrink: 0;
+}
+
+.parceiro-meta-icon--orange {
+  color: #ea580c;
+}
+
+.parceiro-website-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background-color: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 8px;
+  color: #ea580c;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.parceria-website-link:hover,
+.parceiro-website-link:hover {
+  background-color: #ffedd5;
+  border-color: #fdba74;
+  transform: translateY(-1px);
+}
+
+.parceiro-external-icon {
+  opacity: 0.85;
+}
+
+/* Divisória fina */
+.parceiro-main-divider {
+  height: 1px;
+  background-color: #eef2f6;
+  margin: 28px 0 24px;
+  width: 100%;
+}
+
+/* Seção Áreas de Atuação */
+.parceiro-areas-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.parceiro-areas-title {
+  color: #94a3b8;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.76rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.parceiro-tags-wrapper {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* Etiquetas Laranja: Áreas Principais */
+.parceiro-tag--primary {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 15px;
+  border-radius: 100px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  color: #ea580c;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  box-shadow: 0 1px 3px rgba(255, 170, 0, 0.08);
+}
+
+/* Etiquetas Grafite: Áreas Secundárias */
+.parceiro-tag--secondary {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 15px;
+  border-radius: 100px;
+  background-color: #f1f5f9;
+  border: 1px solid #e2e8f0;
+  color: #475569;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+/* ───────────────────────────────────────────────────────────
+   SEÇÃO SOBRE A EMPRESA (CARD SEPARADO ABAIXO)
+─────────────────────────────────────────────────────────── */
+.parceiro-about-section {
+  margin-top: clamp(32px, 3.5vw, 44px);
+}
+
+.parceiro-about-title {
+  color: #0f172a;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(1.4rem, 2vw, 1.75rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 16px;
+}
+
+.parceiro-about-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: clamp(24px, 3vw, 36px);
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.parceiro-about-paragraph {
+  color: #334155;
+  font-size: 1rem;
+  line-height: 1.8;
+  margin: 0 0 20px;
+}
+
+.parceiro-about-paragraph:last-child {
+  margin-bottom: 0;
+}
+
+/* ───────────────────────────────────────────────────────────
+   PÁGINA 404 PERSONALIZADA
+─────────────────────────────────────────────────────────── */
+.parceiro-not-found-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  background-color: #f8fafc;
+}
+
+.parceiro-not-found-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 48px 36px;
+  max-width: 540px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.06);
+}
+
+.parceiro-not-found-icon-wrap {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.parceiro-not-found-icon {
+  color: #ea580c;
+}
+
+.parceiro-not-found-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  border-radius: 100px;
+  color: #dc2626;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+
+.parceiro-not-found-title {
+  color: #0f172a;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 800;
+  margin: 0 0 12px;
+}
+
+.parceiro-not-found-desc {
+  color: #64748b;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 28px;
+}
+
+.parceiro-not-found-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 12px;
+  padding: 13px 26px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 18px rgba(255, 170, 0, 0.35);
+}
+
+.parceiro-not-found-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(255, 170, 0, 0.45);
+}
+
+/* Loading State */
+.parceiro-profile-loading {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120px 20px;
+  gap: 16px;
+  color: #64748b;
+  background-color: #ffffff;
+}
+
+.parceiro-profile-spinner {
+  width: 44px;
+  height: 44px;
+  border: 3px solid #e2e8f0;
+  border-top-color: #ff8c00;
+  border-radius: 50%;
+  animation: spinner 0.8s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ───────────────────────────────────────────────────────────
+   RESPONSIVIDADE
+─────────────────────────────────────────────────────────── */
+@media (max-width: 1199px) {
+  .parceiro-profile-container {
+    flex-direction: column;
+  }
+  .parceiro-left-column {
+    flex: 0 0 100%;
+    width: 100%;
+  }
+  .parceiro-right-column {
+    flex: 0 0 100%;
+    width: 100%;
+    margin-top: 24px;
+    position: static;
+    top: auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .parceiro-hero-backdrop {
+    height: 180px;
+  }
+  .parceiro-profile-main {
+    margin-top: -120px;
+  }
+  .parceiro-main-card-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .parceiro-main-logo-box {
+    width: 120px;
+    height: 120px;
+    min-width: 120px;
+  }
+  .parceiro-main-meta-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+  .parceiro-tag--primary,
+  .parceiro-tag--secondary {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+  }
+}

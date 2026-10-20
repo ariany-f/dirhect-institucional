@@ -5,7 +5,8 @@ const WORDPRESS_CONFIG = {
     demo: '/wp-json/dirhect/v1/send-demo',
     support: '/wp-json/dirhect/v1/send-support',
     indication: '/wp-json/dirhect/v1/send-indication',
-    partnership: '/wp-json/dirhect/v1/send-partnership'
+    partnership: '/wp-json/dirhect/v1/send-partnership',
+    partnerLead: '/wp-json/dirhect/v1/send-partner-lead'
   }
 }
 
@@ -108,9 +109,15 @@ export const sendPartnershipEmail = async (formData) => {
   return await sendWordPressEmail(formData, 'partnership')
 }
 
+// Função para enviar lead de parceiro (Portal de Parceiros)
+export const sendPartnerLeadEmail = async (formData) => {
+  return await sendWordPressEmail(formData, 'partnerLead')
+}
+
 export default {
   sendDemoEmail,
   sendSupportEmail,
   sendIndicationEmail,
-  sendPartnershipEmail
+  sendPartnershipEmail,
+  sendPartnerLeadEmail
 } 

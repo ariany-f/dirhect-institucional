@@ -1,0 +1,349 @@
+/* Reset & Wrapper da Página de Diretório — Fundo Branco & Identidade Dirhect */
+.parceria-page-wrapper {
+  min-height: 100vh;
+  background-color: #ffffff;
+  color: #0f172a;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ───────────────────────────────────────────────────────────
+   SEÇÃO SUPERIOR — HERO COM IMAGEM ALINHADA À DIREITA COM 0 MARGEM
+─────────────────────────────────────────────────────────── */
+.parceria-hero {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(180deg, #f8fafc 0%, #ffffff 100%);
+  border-bottom: 1px solid #eef2f6;
+  padding: clamp(12px, 1.6vw, 22px) 0 0;
+  overflow: hidden;
+}
+
+/* Iluminação laranja suave na extremidade esquerda */
+.parceria-hero-glow {
+  position: absolute;
+  top: -120px;
+  left: -80px;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 170, 0, 0.14) 0%, rgba(255, 140, 0, 0.05) 50%, transparent 70%);
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.parceria-hero-container {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding-left: max(clamp(24px, 5vw, 96px), calc((100% - 1440px) / 2 + clamp(24px, 5vw, 96px)));
+  padding-right: 0; /* 0 margem/padding para a direita */
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: clamp(20px, 3vw, 40px);
+  box-sizing: border-box;
+}
+
+/* Conteúdo Textual à Esquerda */
+.parceria-hero-content {
+  flex: 0 1 650px;
+  max-width: 680px;
+  min-width: 0;
+  text-align: left;
+  padding-top: 8px;
+  padding-bottom: clamp(14px, 2vw, 24px);
+}
+
+.parceria-hero-title {
+  color: #0f172a;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(2.3rem, 3.8vw, 3.25rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  margin: 0 0 12px;
+}
+
+.parceria-hero-title-highlight {
+  background: linear-gradient(135deg, #ffaa00 0%, #ff8c00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.parceria-hero-subtitle {
+  color: #1e293b;
+  font-size: clamp(1.15rem, 1.55vw, 1.34rem);
+  font-weight: 500;
+  line-height: 1.45;
+  margin: 0 0 10px;
+  max-width: 580px;
+}
+
+.parceria-hero-auxiliary {
+  color: #475569;
+  font-size: clamp(0.98rem, 1.15vw, 1.08rem);
+  line-height: 1.5;
+  margin: 0;
+  max-width: 540px;
+}
+
+/* Imagem de Destaque no Canto Direito com 0 Margem */
+.parceria-hero-image-wrap {
+  flex: 1 1 auto;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-right: 0;
+  padding-right: 0;
+  line-height: 0;
+}
+
+.parceria-hero-image {
+  max-width: min(460px, 34vw);
+  max-height: 245px;
+  width: auto;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  object-position: right bottom;
+  margin-right: 0;
+  filter: drop-shadow(0 12px 28px rgba(255, 140, 0, 0.12));
+  transition: transform 0.4s ease;
+}
+
+.parceria-hero-image:hover {
+  transform: translateY(-4px) scale(1.01);
+}
+
+/* ───────────────────────────────────────────────────────────
+   SEÇÃO PRINCIPAL — LISTAGEM E GRADE
+─────────────────────────────────────────────────────────── */
+.parceria-main {
+  flex: 1;
+  background-color: #ffffff;
+  padding: 24px 0 48px;
+}
+
+.parceria-main-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 clamp(24px, 5vw, 96px);
+}
+
+/* Cabeçalho da Seção de Parceiros */
+.parceria-section-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #f1f5f9;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.parceria-section-title {
+  color: #0f172a;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: clamp(1.15rem, 1.5vw, 1.35rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 4px;
+}
+
+.parceria-section-desc {
+  color: #64748b;
+  font-size: 0.88rem;
+  margin: 0;
+}
+
+.parceria-section-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 12px;
+  background: #fff7ed;
+  border: 1px solid #fed7aa;
+  border-radius: 100px;
+  color: #ea580c;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.parceria-section-badge strong {
+  margin-right: 4px;
+}
+
+/* ───────────────────────────────────────────────────────────
+   GRADE DE CARDS (4 COLUNAS POR LINHA)
+─────────────────────────────────────────────────────────── */
+.parceria-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 1200px) {
+  .parceria-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 860px) {
+  .parceria-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 580px) {
+  .parceria-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────
+   SKELETON CARDS (MICRO-LOADING SUAVE)
+─────────────────────────────────────────────────────────── */
+.parceria-skeleton-card {
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 24px;
+  min-height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.parceria-skeleton-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.parceria-skeleton-logo {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: #f1f5f9;
+  animation: parceriaPulse 1.4s ease-in-out infinite;
+}
+
+.parceria-skeleton-meta {
+  flex: 1;
+}
+
+.parceria-skeleton-line {
+  height: 12px;
+  background: #f1f5f9;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  animation: parceriaPulse 1.4s ease-in-out infinite;
+}
+
+.parceria-skeleton-line--title {
+  height: 16px;
+  width: 75%;
+}
+
+.parceria-skeleton-line--sub {
+  width: 45%;
+}
+
+.parceria-skeleton-line--short {
+  width: 60%;
+}
+
+.parceria-skeleton-footer {
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+}
+
+.parceria-skeleton-badge {
+  height: 20px;
+  width: 110px;
+  background: #f1f5f9;
+  border-radius: 100px;
+  animation: parceriaPulse 1.4s ease-in-out infinite;
+}
+
+@keyframes parceriaPulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.45;
+  }
+}
+
+/* ───────────────────────────────────────────────────────────
+   RESPONSIVIDADE DA HERO
+─────────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .parceria-hero {
+    padding-top: 24px;
+  }
+
+  .parceria-hero-container {
+    flex-direction: column;
+    align-items: center;
+    padding-left: clamp(20px, 4vw, 40px);
+    padding-right: clamp(20px, 4vw, 40px);
+    gap: 20px;
+  }
+
+  .parceria-hero-content {
+    flex: 0 1 auto;
+    max-width: 100%;
+    text-align: center;
+    padding-bottom: 0;
+  }
+
+  .parceria-hero-subtitle,
+  .parceria-hero-auxiliary {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .parceria-hero-image-wrap {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .parceria-hero-image {
+    max-width: min(380px, 80%);
+    max-height: 200px;
+    object-position: center bottom;
+  }
+}
+
+@media (max-width: 640px) {
+  .parceria-hero {
+    padding-top: 20px;
+  }
+  .parceria-hero-title {
+    font-size: clamp(2rem, 7.5vw, 2.35rem);
+  }
+  .parceria-hero-subtitle {
+    font-size: 1.08rem;
+  }
+  .parceria-hero-auxiliary {
+    font-size: 0.95rem;
+  }
+  .parceria-hero-image {
+    max-width: 280px;
+    max-height: 160px;
+  }
+  .parceria-section-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

@@ -1,5 +1,5 @@
 import SEO from './components/SEO'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { useEffect } from 'react'
 import Home from './pages/Home'
 import Blog from './pages/Blog'
@@ -48,6 +48,104 @@ import BPMS from './pages/BPMS'
 import Formulario from './pages/Formulario'
 import Apresentacao from './pages/Apresentacao'
 import SolucoesTeste from './pages/SolucoesTeste'
+import ParceriaDirectory from './pages/parceria/ParceriaDirectory'
+import ParceiroProfile from './pages/parceria/ParceiroProfile'
+import SejaParceiro from './pages/SejaParceiro'
+
+function MainLayout() {
+  const location = useLocation()
+  const isParceriaRoute =
+    location.pathname === '/parceria' ||
+    location.pathname.startsWith('/parceria/') ||
+    location.pathname === '/parcerias' ||
+    location.pathname.startsWith('/parcerias/') ||
+    location.pathname === '/ativary'
+
+  return (
+    <div className="app">
+      {/* O menu superior institucional não é exibido nas rotas do Portal de Parcerias */}
+      {!isParceriaRoute && <Header />}
+      <Routes>
+        <Route path="/" element={
+          <>
+            <SEO
+              title="Software de Automação e Integração para RH | Dirhect"
+              description="Automatize processos de RH, admissão digital, gestão de benefícios e tarefas integrando tudo ao seu ERP atual com a plataforma inteligente do Dirhect."
+              canonical="https://dirhect.com.br/"
+            />
+            <Hero />
+            <HomeAboutFold />
+            <HomeConnectorFold />
+            <HomeRhChallengesFold />
+            <HomeSolutionFold />
+            <HomeBpmFold />
+            <HomeSolutionModulesFold />
+            <HomePlatformFold />
+            <HomeResultsFold />
+            <AppFeatures />
+            <HomeAppFeaturesCardsFold />
+            <Integrations />
+            <HomeNewsFold />
+            <Stats />
+            <Footer />
+          </>
+        } />
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:id" element={<BlogPost />} />
+        <Route path="/roadmap" element={<Roadmap />} />
+        <Route path="/conhecimento" element={<Conhecimento />} />
+        <Route path="/conhecimento/:id" element={<ConhecimentoDetalhe />} />
+        <Route path="/demo" element={<Demo />} />
+        <Route path="/indique-ganhe" element={<IndiqueGanhe />} />
+        <Route path="/admissao-digital" element={<AdmissaoDigital />} />
+        <Route path="/admissao_55" element={<Admissao55 />} />
+        <Route path="/admissao-55" element={<Admissao55 />} />
+        <Route path="/admissao-digital-55" element={<Admissao55 />} />
+        <Route path="/gestao-beneficios" element={<GestaoBeneficios />} />
+        <Route path="/gestao-tarefas" element={<GestaoTarefas />} />
+        <Route path="/portal-rh" element={<PortalRH />} />
+        <Route path="/formulario" element={<Formulario />} />
+        <Route path="/bpms" element={<BPMS />} />
+        <Route path="/apresentacao" element={<Apresentacao />} />
+        <Route path="/solucoes_teste" element={<SolucoesTeste />} />
+        <Route path="/solucoes/teste" element={<SolucoesTeste />} />
+        <Route path="/docs" element={<TechnicalDocumentation />} />
+        <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
+        <Route path="/termos-uso" element={<TermosUso />} />
+
+        {/* Programa de Parceiros (Página com o homem na hero e formulário para se cadastrar como parceiro) */}
+        <Route path="/parceiro" element={<ParceiroSubdominio />} />
+        <Route path="/parceiros" element={<ParceiroSubdominio />} />
+
+        {/* Integrações e Ecossistema (SAP, TOTVS, Gupy, etc.) */}
+        <Route path="/ecossistema" element={<Parceiros />} />
+        <Route path="/integracoes" element={<Parceiros />} />
+
+        <Route path="/area-colaborador" element={<ColaboradorLogin />} />
+        <Route path="/area-colaborador/painel" element={<ColaboradorPainel />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/criar-post" element={<CriarPost />} />
+        <Route path="/admin/criar-roadmap" element={<CriarRoadmap />} />
+        <Route path="/admin/criar-conhecimento" element={<CriarConhecimento />} />
+
+        {/* Portal de Parcerias Dirhect (Empresas Homologadas / Diretório e Perfis) */}
+        <Route path="/parceria" element={<ParceriaDirectory />} />
+        <Route path="/parcerias" element={<ParceriaDirectory />} />
+        <Route path="/parceria/:slug" element={<ParceiroProfile />} />
+        <Route path="/parcerias/:slug" element={<ParceiroProfile />} />
+        <Route path="/ativary" element={<ParceiroProfile forcedSlug="ativary" />} />
+
+        {/* Seja Parceiro (Comercial & Indicador - Novo Modelo Oficial) */}
+        <Route path="/seja-parceiro" element={<SejaParceiro />} />
+        <Route path="/seja-parceiros" element={<SejaParceiro />} />
+        <Route path="/seja-um-parceiro" element={<SejaParceiro />} />
+
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <CookieConsent />
+    </div>
+  )
+}
 
 function App() {
   const hostname = window.location.hostname.toLowerCase()
@@ -100,68 +198,7 @@ function App() {
 
   return (
     <Router>
-      <div className="app">
-        <Header />
-        <Routes>
-          <Route path="/" element={
-            <>
-              <SEO
-                title="Software de Automação e Integração para RH | Dirhect"
-                description="Automatize processos de RH, admissão digital, gestão de benefícios e tarefas integrando tudo ao seu ERP atual com a plataforma inteligente do Dirhect."
-                canonical="https://dirhect.com.br/"
-              />
-              <Hero />
-              <HomeAboutFold />
-              <HomeConnectorFold />
-              <HomeRhChallengesFold />
-              <HomeSolutionFold />
-              <HomeBpmFold />
-              <HomeSolutionModulesFold />
-              <HomePlatformFold />
-              <HomeResultsFold />
-              <AppFeatures />
-              <HomeAppFeaturesCardsFold />
-              <Integrations />
-              <HomeNewsFold />
-              <Stats />
-              <Footer />
-            </>
-          } />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/blog/:id" element={<BlogPost />} />
-          <Route path="/roadmap" element={<Roadmap />} />
-          <Route path="/conhecimento" element={<Conhecimento />} />
-          <Route path="/conhecimento/:id" element={<ConhecimentoDetalhe />} />
-          <Route path="/demo" element={<Demo />} />
-          <Route path="/indique-ganhe" element={<IndiqueGanhe />} />
-          <Route path="/admissao-digital" element={<AdmissaoDigital />} />
-          <Route path="/admissao_55" element={<Admissao55 />} />
-          <Route path="/admissao-55" element={<Admissao55 />} />
-          <Route path="/admissao-digital-55" element={<Admissao55 />} />
-          <Route path="/gestao-beneficios" element={<GestaoBeneficios />} />
-          <Route path="/gestao-tarefas" element={<GestaoTarefas />} />
-          <Route path="/portal-rh" element={<PortalRH />} />
-          <Route path="/formulario" element={<Formulario />} />
-          <Route path="/bpms" element={<BPMS />} />
-          <Route path="/apresentacao" element={<Apresentacao />} />
-          <Route path="/solucoes_teste" element={<SolucoesTeste />} />
-          <Route path="/solucoes/teste" element={<SolucoesTeste />} />
-          <Route path="/docs" element={<TechnicalDocumentation />} />
-          <Route path="/politica-privacidade" element={<PoliticaPrivacidade />} />
-          <Route path="/termos-uso" element={<TermosUso />} />
-          <Route path="/ecossistema" element={<Parceiros />} />
-          <Route path="/integracoes" element={<Parceiros />} />
-          <Route path="/parceiro" element={<ParceiroSubdominio />} />
-          <Route path="/area-colaborador" element={<ColaboradorLogin />} />
-          <Route path="/area-colaborador/painel" element={<ColaboradorPainel />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/admin/criar-post" element={<CriarPost />} />
-          <Route path="/admin/criar-roadmap" element={<CriarRoadmap />} />
-          <Route path="/admin/criar-conhecimento" element={<CriarConhecimento />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        <CookieConsent />
-      </div>
+      <MainLayout />
     </Router>
   )
 }

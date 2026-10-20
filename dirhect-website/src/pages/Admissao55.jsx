@@ -768,6 +768,27 @@ const Admissao55 = () => {
             ))}
           </div>
 
+          <div className="admissao-integration-notice-card">
+            <div className="integration-notice-body">
+              <div className="integration-notice-icon-badge" aria-hidden="true">
+                <AlertCircle size={22} />
+              </div>
+              <div className="integration-notice-info">
+                <div className="integration-notice-headline">
+                  <span className="integration-notice-pill">Plano Avulso</span>
+                  <span className="integration-notice-title">Este plano é sem integração</span>
+                </div>
+                <p className="integration-notice-text">
+                  O valor de <strong>R$ 55 por admissão não inclui integração aos ERPs</strong>. Se a sua empresa deseja integrar a admissão digital diretamente com seus sistemas, entre em contato com a equipe Dirhect.
+                </p>
+              </div>
+            </div>
+            <button onClick={openFormModal} className="integration-notice-action-btn">
+              Falar com a equipe Dirhect
+              <ArrowRight size={15} className="notice-btn-arrow" />
+            </button>
+          </div>
+
           <div className="admissao-integrations-bottom-bar">
             <div className="integration-trust-item">
               <Shield size={18} className="integration-trust-icon" aria-hidden="true" />

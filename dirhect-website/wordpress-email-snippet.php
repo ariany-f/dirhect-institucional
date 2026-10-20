@@ -494,6 +494,12 @@ add_action('rest_api_init', function () {
         'callback' => 'dirhect_send_partnership_email',
         'permission_callback' => '__return_true',
     ));
+
+    register_rest_route('dirhect/v1', '/send-partner-lead', array(
+        'methods' => 'POST',
+        'callback' => 'dirhect_send_partner_lead_email',
+        'permission_callback' => '__return_true',
+    ));
 });
 
 function dirhect_send_demo_email($request) {
@@ -755,6 +761,84 @@ function dirhect_send_partnership_email($request) {
             ),
             'Conhecer o programa',
             DIRHECT_SITE_URL . '/parceiro'
+        ),
+        $email
+    );
+}
+
+
+/**
+ * Envio de lead originado pelo Portal de Parceiros Dirhect (/parceria/:slug)
+ * Atribui automaticamente o lead à empresa parceira correspondente.
+ */
+function dirhect_send_partner_lead_email($request) {
+    $params = dirhect_get_request_params($request);
+
+    $required_fields = array('name', 'email', 'partnerSlug');
+    foreach ($required_fields as $field) {
+        if (empty($params[$field])) {
+            return new WP_Error('missing_field', "Campo obrigatório: $field", array('status' => 400));
+        }
+    }
+
+    $nome = sanitize_text_field($params['name']);
+    $email = sanitize_email($params['email']);
+    $telefone = !empty($params['phone']) ? sanitize_text_field($params['phone']) : 'Não informado';
+    $mensagem = !empty($params['message']) ? sanitize_textarea_field($params['message']) : 'Não informada';
+
+    // Nome do parceiro dinâmico (ex: Ativary ou nome do parceiro da página)
+    $parceiro = !empty($params['parceiro'])
+        ? sanitize_text_field($params['parceiro'])
+        : (!empty($params['partnerName'])
+            ? sanitize_text_field($params['partnerName'])
+            : (!empty($params['partnerSlug'])
+                ? ucfirst(sanitize_text_field($params['partnerSlug']))
+                : 'Parceiro Dirhect'));
+
+    $partner_id = !empty($params['partnerId']) ? sanitize_text_field($params['partnerId']) : sanitize_title($params['partnerSlug']);
+    $source_url = !empty($params['sourceUrl']) ? esc_url_raw($params['sourceUrl']) : (DIRHECT_SITE_URL . '/parceria/' . sanitize_title($params['partnerSlug']));
+    $timestamp = !empty($params['readableDateTime']) ? sanitize_text_field($params['readableDateTime']) : current_time('mysql');
+
+    if (!is_email($email)) {
+        return new WP_Error('invalid_email', 'E-mail corporativo inválido', array('status' => 400));
+    }
+
+    // Assunto exigido: Novo lead de parceiro — [Nome do Parceiro]
+    $subject_comercial = "Novo lead de parceiro — " . $parceiro;
+
+    $rows = array(
+        // Campo Parceiro exibido em destaque absoluto no topo da tabela para quem recebe o e-mail
+        array('Parceiro', $parceiro),
+        array('Nome do Contato', $nome),
+        array('E-mail Corporativo', $email),
+        array('Telefone', $telefone),
+        array('Mensagem', $mensagem),
+        array('Link de Origem', $source_url),
+        array('Data e Hora', $timestamp),
+    );
+
+    $message_comercial = dirhect_email_team(
+        'Nova solicitação recebida pelo Portal de Parceiros Dirhect',
+        'Lead de Parceiro',
+        'Um novo potencial cliente solicitou contato através da página do parceiro ' . $parceiro . '.',
+        $rows
+    );
+
+    return dirhect_send_form_emails(
+        $subject_comercial,
+        $message_comercial,
+        $email,
+        'Solicitação recebida — Dirhect & ' . $parceiro,
+        dirhect_email_user_confirm(
+            'Solicitação enviada com sucesso!',
+            $nome,
+            'Nossa equipe recebeu seus dados através da página do parceiro ' . $parceiro . ' e entrará em contato em breve para apresentar como podemos transformar a gestão de RH da sua empresa.',
+            array(
+                array('Parceiro', $parceiro),
+                array('E-mail cadastrado', $email),
+            ),
+            'Conhecer Soluções Dirhect',
+            DIRHECT_SITE_URL
         ),
         $email
     );
