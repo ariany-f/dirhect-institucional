@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import SEO from '../../components/SEO'
-import ParceriaHeader from '../../components/parceria/ParceriaHeader'
 import ParceriaFooter from '../../components/parceria/ParceriaFooter'
 import PartnerContactForm from '../../components/parceria/PartnerContactForm'
 import { getPartnerBySlug } from '../../data/partnersData'
@@ -41,7 +40,6 @@ export default function ParceiroProfile({ forcedSlug }) {
           title="Parceiro não encontrado | Dirhect"
           description="A página da empresa parceira solicitada não foi encontrada no Portal de Parceiros Dirhect."
         />
-        <ParceriaHeader />
 
         <div className="parceiro-not-found-container">
           <div className="parceiro-not-found-card">
@@ -68,7 +66,6 @@ export default function ParceiroProfile({ forcedSlug }) {
   if (loading || !partner) {
     return (
       <div className="parceiro-profile-page">
-        <ParceriaHeader />
         <div className="parceiro-profile-loading">
           <div className="parceiro-profile-spinner" />
           <p>Carregando informações do parceiro...</p>
@@ -94,13 +91,16 @@ export default function ParceiroProfile({ forcedSlug }) {
         canonical={`https://dirhect.com.br/parceria/${partner.slug}`}
       />
 
-      {/* Header independente */}
-      <ParceriaHeader currentPartner={partner} />
-
       {/* Topo Visual de Destaque como plano de fundo */}
       <div className="parceiro-hero-backdrop">
         <div className="parceiro-hero-glow" aria-hidden="true" />
         <div className="parceiro-hero-dots" aria-hidden="true" />
+        <div className="parceiro-backdrop-nav">
+          <Link to="/parceria" className="parceiro-back-link">
+            <ArrowLeft size={16} />
+            <span>Todos os parceiros</span>
+          </Link>
+        </div>
       </div>
 
       {/* Container Principal com Layout de Duas Colunas (67% / 33%) Sobreposto */}

@@ -1,6 +1,5 @@
 import { useState, useMemo, useEffect } from 'react'
 import SEO from '../../components/SEO'
-import ParceriaHeader from '../../components/parceria/ParceriaHeader'
 import ParceriaFooter from '../../components/parceria/ParceriaFooter'
 import PartnerCard from '../../components/parceria/PartnerCard'
 import { getActivePartners } from '../../data/partnersData'
@@ -27,9 +26,6 @@ export default function ParceriaDirectory() {
         description="Conheça as empresas parceiras autorizadas da Dirhect. Conecte sua empresa a soluções completas em admissão digital, benefícios, workflows e integrações com sistemas de RH."
         canonical="https://dirhect.com.br/parceria"
       />
-
-      {/* Header independente do portal (sem menu institucional) */}
-      <ParceriaHeader />
 
       {/* Seção Superior — Hero com texto à esquerda e imagem de destaque alinhada à direita com 0 de margem */}
       <section className="parceria-hero">

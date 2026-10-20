@@ -53,18 +53,9 @@ import ParceiroProfile from './pages/parceria/ParceiroProfile'
 import SejaParceiro from './pages/SejaParceiro'
 
 function MainLayout() {
-  const location = useLocation()
-  const isParceriaRoute =
-    location.pathname === '/parceria' ||
-    location.pathname.startsWith('/parceria/') ||
-    location.pathname === '/parcerias' ||
-    location.pathname.startsWith('/parcerias/') ||
-    location.pathname === '/ativary'
-
   return (
     <div className="app">
-      {/* O menu superior institucional não é exibido nas rotas do Portal de Parcerias */}
-      {!isParceriaRoute && <Header />}
+      <Header />
       <Routes>
         <Route path="/" element={
           <>
