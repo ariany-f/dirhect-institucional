@@ -260,10 +260,32 @@ const Header = () => {
                 BPMS
               </Link>
             </li>
-            <li>
-              <Link to="/parceiro" onClick={() => setIsMobileMenuOpen(false)}>
+            <li className="nav-item-with-dropdown">
+              <Link 
+                to="/parceiro" 
+                onClick={(e) => {
+                  if (window.innerWidth <= 768) {
+                    e.preventDefault()
+                  } else {
+                    setIsMobileMenuOpen(false)
+                  }
+                }}
+              >
                 Parceiros
+                <ChevronDown size={16} className="dropdown-chevron" />
               </Link>
+              <ul className="dropdown-menu">
+                <li>
+                  <Link to="/parceiro" onClick={() => setIsMobileMenuOpen(false)}>
+                    Seja um parceiro
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/parceria" onClick={() => setIsMobileMenuOpen(false)}>
+                    Nossas Parcerias
+                  </Link>
+                </li>
+              </ul>
             </li>
             <li>
               <Link to="/blog" onClick={() => setIsMobileMenuOpen(false)}>
