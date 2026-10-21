@@ -6,7 +6,7 @@
 <title>Dirhect — Programa de Parceiros</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 /* ── TOKENS ─────────────────────────────────────── */
 :root {
@@ -387,8 +387,10 @@ section { padding: 96px 6vw; }
   position: relative;
   z-index: 1;
   background: var(--bg);
-  margin-top: -128px;
-  margin-bottom: -36px;
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 16px !important;
+  padding-bottom: 16px !important;
 }
 .partner-fold2-shell { width: 100%; }
 .partner-fold2-banner {
@@ -568,266 +570,7 @@ section.ben-section::after {
 }
 .ben-card:hover::before { transform: scaleX(1); }
 .mod-section { background: var(--bg); }
-.mod-section.stack-mod {
-  background-color: #fafbfd;
-  background-image:
-    radial-gradient(circle at 1px 1px, rgba(27, 34, 50, 0.055) 1px, transparent 0);
-  background-size: 26px 26px;
-  margin-top: -40px;
-}
-.stack-mod { overflow-x: clip; scroll-margin-top: 88px; }
-.stack-intro-row {
-  display: grid;
-  grid-template-columns: 40% 60%;
-  gap: clamp(20px, 3vw, 40px);
-  align-items: center;
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto clamp(40px, 6vw, 72px);
-}
-@media (min-width: 1101px) {
-  .stack-intro-row .stack-top {
-    transform: translateY(-100px);
-  }
-}
-.stack-top {
-  display: block;
-  text-align: left;
-  margin-bottom: 0;
-  max-width: none;
-  min-width: 0;
-}
-.stack-top-copy .s-sub {
-  max-width: none;
-  margin-top: 4px;
-  margin-left: 0;
-  margin-right: 0;
-}
-.stack-pills {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start;
-  gap: 8px 14px;
-  margin: 22px 0 0;
-  padding: 12px 18px;
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  font-size: .8rem; font-weight: 600; color: var(--text-mid);
-  box-shadow: var(--shadow-sm);
-  max-width: 100%;
-}
-.stack-pills span.dot-pill { color: var(--orange); font-weight: 800; opacity: .85; }
-.stack-pill-ic {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--orange);
-  margin-right: 4px;
-  vertical-align: middle;
-}
-.stack-pill-ic svg { width: 17px; height: 17px; display: block; }
-.stack-intro-row .stack-top-title {
-  white-space: normal;
-  font-size: clamp(1.15rem, 1.1vw + 0.95rem, 2.35rem);
-  line-height: 1.2;
-}
-.stack-top-title {
-  white-space: nowrap;
-  font-size: clamp(1rem, 2.4vw + 0.72rem, 2.8rem);
-  line-height: 1.15;
-}
-@media (max-width: 380px) {
-  .stack-top-title,
-  .stack-intro-row .stack-top-title { white-space: normal; }
-}
-.stack-modulos-diagram {
-  width: 100%;
-  max-width: 1120px;
-  margin: clamp(20px, 4vw, 44px) auto 0;
-  display: block;
-  padding-inline: 8px;
-}
-.stack-modulos-diagram img {
-  width: 100%;
-  max-width: min(1024px, 100%);
-  height: auto;
-  border-radius: var(--radius-md);
-}
-.stack-modulos-diagram-img--desktop {
-  display: block;
-  margin: 0 auto;
-}
-.stack-modulos-diagram-img--mobile {
-  display: none;
-  margin: 0 auto;
-}
-.stack-intro-row .stack-modulos-diagram {
-  margin: 0;
-  max-width: none;
-  padding-inline: 0;
-  min-width: 0;
-}
-.stack-intro-row .stack-modulos-diagram img {
-  max-width: 100%;
-}
-.stack-highlights-shell {
-  margin-top: clamp(40px, 6vw, 72px);
-  padding: clamp(22px, 3vw, 34px) clamp(18px, 2.5vw, 28px);
-  background: var(--white);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-sm);
-}
-.stack-highlights {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: clamp(14px, 2.2vw, 24px);
-  margin: 0;
-  padding: 0;
-  border: none;
-}
-.stack-hi {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 10px;
-}
-.stack-hi-ic {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.stack-hi-ic svg { width: 22px; height: 22px; }
-.stack-hi-ic--o { background: #FFF3D6; color: #F59A00; }
-.stack-hi-ic--g { background: #DCFCE7; color: #16A34A; }
-.stack-hi-ic--b { background: #DBEAFE; color: #2563EB; }
-.stack-hi-ic--p { background: #EDE9FE; color: #7C3AED; }
-.stack-hi-ic--y { background: #FEF9C3; color: #CA8A04; }
-.stack-hi h4 { font-size: .84rem; font-weight: 800; color: var(--navy); letter-spacing: -0.02em; }
-.stack-hi p { font-size: .72rem; color: var(--text-muted); line-height: 1.5; margin: 0; }
-.stack-cta-bar {
-  margin-top: clamp(28px, 4vw, 40px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  flex-wrap: wrap;
-  padding: clamp(18px, 2.5vw, 26px) clamp(22px, 3vw, 36px);
-  background: var(--white);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-  box-shadow: var(--shadow-sm);
-}
-.stack-cta-bar-copy {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  min-width: min(100%, 420px);
-  flex: 1;
-}
-.stack-cta-bar-ic {
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
-  background: var(--white);
-  color: var(--orange);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  box-shadow: var(--shadow-sm);
-}
-.stack-cta-bar-ic svg { width: 24px; height: 24px; }
-.stack-cta-bar-copy p {
-  margin: 0;
-  font-size: clamp(.85rem, 1.1vw, .95rem);
-  font-weight: 600;
-  color: var(--navy);
-  line-height: 1.45;
-  max-width: 520px;
-}
-.stack-cta-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  flex-shrink: 0;
-  padding: 20px 32px;
-  border-radius: 999px;
-  background: var(--orange);
-  color: var(--white);
-  font-weight: 800;
-  font-size: .92rem;
-  letter-spacing: .02em;
-  box-shadow: 0 6px 20px rgba(245,154,0,.35);
-  transition: background .2s, transform .15s, box-shadow .2s;
-  white-space: nowrap;
-}
-.stack-cta-btn svg {
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
-  stroke: currentColor;
-}
-.stack-cta-btn:hover {
-  background: var(--orange-dark);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 26px rgba(245,154,0,.45);
-}
-@media (max-width: 1100px) {
-  .stack-intro-row {
-    grid-template-columns: 1fr;
-    gap: 28px;
-    margin-bottom: clamp(32px, 5vw, 56px);
-  }
-  .stack-top {
-    text-align: center;
-    padding-inline: 4px;
-  }
-  .stack-top-copy .s-sub {
-    max-width: 560px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .stack-pills {
-    justify-content: center;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .stack-intro-row .stack-top-title {
-    white-space: normal;
-    font-size: clamp(1rem, 2.4vw + 0.72rem, 2.8rem);
-    line-height: 1.15;
-  }
-  .stack-modulos-diagram { margin-top: 0; padding-inline: 0; }
-  .stack-highlights-shell { padding: 18px 14px; }
-  .stack-highlights {
-    grid-template-columns: repeat(2, 1fr);
-    text-align: left;
-  }
-  .stack-hi { flex-direction: row; align-items: flex-start; text-align: left; }
-  .stack-cta-bar { flex-direction: column; align-items: stretch; text-align: center; }
-  .stack-cta-bar-copy { flex-direction: column; text-align: center; }
-  .stack-cta-btn { width: 100%; justify-content: center; }
-}
-@media (max-width: 768px) {
-  .stack-intro-row .stack-top {
-    padding-top: 28px;
-  }
-  .stack-modulos-diagram-img--desktop {
-    display: none !important;
-  }
-  .stack-modulos-diagram-img--mobile {
-    display: block !important;
-    width: 100%;
-    max-width: 100%;
-  }
-  .stack-highlights { grid-template-columns: 1fr; }
-  .stack-hi { flex-direction: row; }
-}
+
 .how-section { background: var(--white); }
 .how-hd { text-align: center; max-width: 520px; margin: 0 auto 60px; }
 .steps { display: flex; justify-content: center; align-items: flex-start; gap: 0; }
@@ -1386,6 +1129,372 @@ footer .logo .h-letter { color: var(--white); }
     padding-bottom: clamp(28px, 5vw, 40px);
   }
 }
+
+
+/* ───────────────────────────────────────────────────────────
+   DOBRA: PARCERIA NA PRÁTICA (importada de /seja-parceiro)
+─────────────────────────────────────────────────────────── */
+.sp-support-section {
+  padding: 100px 0;
+  background: #ffffff;
+  position: relative;
+  scroll-margin-top: 88px;
+}
+
+.sp-container {
+  width: 100%;
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 0 24px;
+  box-sizing: border-box;
+}
+
+.sp-section-heading {
+  text-align: center;
+  max-width: 820px;
+  margin: 0 auto 56px;
+}
+
+.sp-eyebrow {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #FF8C00;
+  background: #FFF7ED;
+  border: 1px solid #FFEDD5;
+  padding: 6px 16px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+
+.sp-section-title {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: clamp(2rem, 3vw, 2.6rem);
+  font-weight: 800;
+  line-height: 1.22;
+  color: #0F172A;
+  margin: 0 0 16px;
+  letter-spacing: -0.025em;
+}
+
+.sp-gradient-text {
+  color: #FF8C00;
+  display: inline;
+}
+
+.sp-section-desc {
+  font-size: clamp(1rem, 1.2vw, 1.15rem);
+  line-height: 1.65;
+  color: #475569;
+  margin: 0;
+}
+
+/* Card Vitrine Minimalista Unificado */
+.sp-practice-showcase-card {
+  background: #FAF9F6;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 28px;
+  padding: 44px;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: 36px;
+  align-items: stretch;
+  box-shadow: 0 4px 25px rgba(10, 37, 64, 0.04);
+  box-sizing: border-box;
+}
+
+/* Coluna 1: Lista de Recursos / Ferramentas */
+.sp-practice-features-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.sp-practice-item {
+  background: #ffffff;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 20px;
+  padding: 22px 24px;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 2px 8px rgba(10, 37, 64, 0.02);
+  box-sizing: border-box;
+}
+
+.sp-practice-item:hover {
+  transform: translateX(4px);
+  border-color: rgba(255, 140, 0, 0.35);
+  box-shadow: 0 10px 24px rgba(10, 37, 64, 0.06);
+}
+
+.sp-practice-icon-box {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  background: #FFF7ED;
+  border: 1px solid #FFEDD5;
+  color: #FF8C00;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.sp-practice-icon-box--cyan {
+  background: #F0FDFA;
+  border-color: #CCFBF1;
+  color: #0D9488;
+}
+
+.sp-practice-icon-box--purple {
+  background: #FAF5FF;
+  border-color: #F3E8FF;
+  color: #9333EA;
+}
+
+.sp-practice-item-content {
+  flex: 1;
+}
+
+.sp-practice-item-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.sp-practice-item-header h4 {
+  font-family: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #0F172A;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.sp-practice-item-content p {
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: #475569;
+  margin: 0;
+}
+
+/* Pills de Categoria */
+.sp-practice-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  background: #FFF7ED;
+  color: #C2410C;
+  border: 1px solid #FFEDD5;
+  white-space: nowrap;
+}
+
+.sp-practice-pill--cyan {
+  background: #F0FDFA;
+  color: #0F766E;
+  border-color: #CCFBF1;
+}
+
+.sp-practice-pill--purple {
+  background: #FAF5FF;
+  color: #7E22CE;
+  border-color: #F3E8FF;
+}
+
+/* Coluna 2: Mockup Frame Minimalista da Página de Parceiros */
+.sp-practice-mockup-col {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.sp-clean-device-frame {
+  background: #ffffff;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(10, 37, 64, 0.08), 0 2px 8px rgba(10, 37, 64, 0.04);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
+}
+
+.sp-clean-device-frame:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 22px 50px rgba(10, 37, 64, 0.12);
+}
+
+.sp-clean-device-bar {
+  background: #F8FAFC;
+  border-bottom: 1px solid #E2E8F0;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.sp-clean-device-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sp-clean-device-dots span {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.sp-clean-device-dots span:nth-child(1) { background: #FDA4AF; }
+.sp-clean-device-dots span:nth-child(2) { background: #FDE047; }
+.sp-clean-device-dots span:nth-child(3) { background: #86EFAC; }
+
+.sp-clean-device-url {
+  background: #ffffff;
+  border: 1px solid #E2E8F0;
+  border-radius: 8px;
+  padding: 4px 12px;
+  font-size: 0.74rem;
+  color: #64748B;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+  font-weight: 500;
+  flex: 1;
+  max-width: 250px;
+  box-sizing: border-box;
+}
+
+.sp-lock-icon {
+  color: #10B981;
+  flex-shrink: 0;
+}
+
+.sp-clean-device-screen {
+  background: #ffffff;
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px 20px;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.sp-clean-device-img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+  filter: drop-shadow(0 10px 25px rgba(10, 37, 64, 0.08));
+}
+
+.sp-clean-device-frame:hover .sp-clean-device-img {
+  transform: scale(1.02);
+}
+
+.sp-clean-device-footer {
+  background: #F8FAFC;
+  border-top: 1px solid #E2E8F0;
+  padding: 12px 18px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #475569;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.sp-footer-shield {
+  color: #FF8C00;
+  flex-shrink: 0;
+}
+
+/* Responsividade de PARCERIA NA PRÁTICA */
+@media (max-width: 991px) {
+  .sp-support-section {
+    padding: 70px 0;
+  }
+
+  .sp-practice-showcase-card {
+    grid-template-columns: 1fr;
+    gap: 36px;
+    padding: 32px;
+  }
+
+  .sp-practice-mockup-col {
+    height: auto;
+  }
+
+  .sp-clean-device-frame {
+    height: auto;
+  }
+
+  .sp-clean-device-screen {
+    min-height: 260px;
+    max-height: 380px;
+  }
+}
+
+@media (max-width: 640px) {
+  .sp-support-section {
+    padding: 50px 0;
+  }
+
+  .sp-section-heading {
+    margin-bottom: 36px;
+  }
+
+  .sp-section-title {
+    font-size: 1.8rem;
+  }
+
+  .sp-practice-showcase-card {
+    padding: 20px 16px;
+    border-radius: 20px;
+    gap: 24px;
+  }
+
+  .sp-practice-item {
+    padding: 18px 16px;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .sp-practice-item-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+  }
+}
+
 </style>
 </head>
 <body>
@@ -1509,7 +1618,6 @@ footer .logo .h-letter { color: var(--white); }
   </div>
   <div class="ben-fold-tail" aria-hidden="true"></div>
 </section>
-
 <div class="divider"></div>
 
 <section class="partner-fold2" id="solucao">
@@ -1530,79 +1638,101 @@ footer .logo .h-letter { color: var(--white); }
 
 <div class="divider"></div>
 
-<section class="mod-section stack-mod" id="modulos">
-  <div class="stack-intro-row">
-  <div class="stack-top fi">
-    <div class="stack-top-copy">
-      <div class="s-eyebrow">Principais pilares da solução</div>
-      <h2 class="s-title stack-top-title">Stack de RH completo em <span class="accent">um só ambiente</span></h2>
-      <p class="s-sub">Sete módulos integrados — admissão, benefícios, portal, tarefas, formulários, workflows e integrações — em um único ambiente para RH, gestores e colaboradores.</p>
-      <div class="stack-pills" role="group" aria-label="Principais características">
-        <span class="stack-pill-ic" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.5"/><path d="M6 10l2.5 2.5L14 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
-        <span>100% integrado</span><span class="dot-pill" aria-hidden="true">•</span>
-        <span>Centralizado</span><span class="dot-pill" aria-hidden="true">•</span>
-        <span>Seguro</span><span class="dot-pill" aria-hidden="true">•</span>
-        <span>Escalável</span>
-      </div>
+<!-- ───────────────────────────────────────────────────────────
+    ESTRUTURA E FERRAMENTAS QUE A DIRHECT OFERECE - PARCERIA NA PRÁTICA
+─────────────────────────────────────────────────────────── -->
+<section class="sp-support-section" id="parceria-na-pratica">
+  <div class="sp-container">
+    <div class="sp-section-heading">
+      <span class="sp-eyebrow">PARCERIA NA PRÁTICA</span>
+      <h2 class="sp-section-title">
+        Você vende. A Dirhect <span class="sp-gradient-text">está ao seu lado</span>
+      </h2>
+      <p class="sp-section-desc">
+        Estrutura e ferramentas de ponta para apoiar e acelerar suas oportunidades comerciais.
+      </p>
     </div>
-  </div>
 
-  <div class="stack-modulos-diagram fi d1">
-    <img class="stack-modulos-diagram-img--desktop" src="/images/parceiro-stack-modulos-diagrama.png?v=r140-20260514" width="1024" height="825" alt="Diagrama do stack Dirhect: sete módulos em torno do hub central — admissão digital, gestão de benefícios, portal de RH, tarefas, formulários, workflow BPMS e integration hub." decoding="async" loading="lazy">
-    <img class="stack-modulos-diagram-img--mobile" src="/images/parceiro-stack-modulos-diagrama-mobile.png?v=20260521d" width="1024" height="825" alt="Diagrama mobile do stack Dirhect com sete módulos integrados ao redor do hub central." decoding="async" loading="lazy">
-  </div>
-  </div>
+    <div class="sp-practice-showcase-card">
+      <!-- Coluna 1: As 3 Ferramentas em Cards Minimalistas -->
+      <div class="sp-practice-features-col">
+        <div class="sp-practice-item">
+          <div class="sp-practice-icon-box">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          </div>
+          <div class="sp-practice-item-content">
+            <div class="sp-practice-item-header">
+              <h4>Suporte Comercial</h4>
+              <span class="sp-practice-pill">Apoio Direto</span>
+            </div>
+            <p>Apoio de especialistas da Dirhect em apresentações, diagnósticos de RH e negociações com seus clientes.</p>
+          </div>
+        </div>
 
-  <div class="stack-highlights-shell fi d2">
-    <div class="stack-highlights">
-    <div class="stack-hi">
-      <div class="stack-hi-ic stack-hi-ic--o" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2H5a3 3 0 0 0-3 3v4"/><path d="M9 22h4a3 3 0 0 0 3-3v-4"/><path d="M22 9v4a3 3 0 0 1-3 3h-4"/><path d="M2 15v-4a3 3 0 0 1 3-3h4"/><rect x="7" y="7" width="10" height="10" rx="2"/></svg>
-      </div>
-      <h4>Tudo conectado</h4>
-      <p>Módulos integrados em um único ambiente.</p>
-    </div>
-    <div class="stack-hi">
-      <div class="stack-hi-ic stack-hi-ic--g" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg>
-      </div>
-      <h4>Mais eficiência</h4>
-      <p>Automação de processos e redução de retrabalho.</p>
-    </div>
-    <div class="stack-hi">
-      <div class="stack-hi-ic stack-hi-ic--b" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
-      </div>
-      <h4>Dados que geram valor</h4>
-      <p>Relatórios e indicadores para decisões melhores.</p>
-    </div>
-    <div class="stack-hi">
-      <div class="stack-hi-ic stack-hi-ic--p" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-      </div>
-      <h4>Segurança total</h4>
-      <p>Conformidade com LGPD e padrões enterprise.</p>
-    </div>
-    <div class="stack-hi">
-      <div class="stack-hi-ic stack-hi-ic--y" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
-      </div>
-      <h4>Escalável</h4>
-      <p>Do pequeno negócio à grande operação.</p>
-    </div>
-    </div>
-  </div>
+        <div class="sp-practice-item">
+          <div class="sp-practice-icon-box sp-practice-icon-box--cyan">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
+          </div>
+          <div class="sp-practice-item-content">
+            <div class="sp-practice-item-header">
+              <h4>Página Exclusiva</h4>
+              <span class="sp-practice-pill sp-practice-pill--cyan">Credencial Oficial</span>
+            </div>
+            <p>Sua página no Portal de Parceiros Dirhect com credenciais, logotipo e identificação homologada.</p>
+          </div>
+        </div>
 
-  <div class="stack-cta-bar fi d3">
-    <div class="stack-cta-bar-copy">
-      <div class="stack-cta-bar-ic" aria-hidden="true">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <div class="sp-practice-item">
+          <div class="sp-practice-icon-box sp-practice-icon-box--purple">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <div class="sp-practice-item-content">
+            <div class="sp-practice-item-header">
+              <h4>Link de Indicação</h4>
+              <span class="sp-practice-pill sp-practice-pill--purple">Atribuição Inteligente</span>
+            </div>
+            <p>Formulário digital vinculado às suas oportunidades para rastreamento transparente de cada lead indicado.</p>
+          </div>
+        </div>
       </div>
-      <p>Uma plataforma completa para transformar a gestão de pessoas na sua empresa.</p>
+
+      <!-- Coluna 2: Mockup Frame Minimalista da Página de Parceiros -->
+      <div class="sp-practice-mockup-col">
+        <div class="sp-clean-device-frame">
+          <div class="sp-clean-device-bar">
+            <div class="sp-clean-device-dots">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="sp-clean-device-url">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sp-lock-icon"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+              <span>dirhect.com.br/parceria</span>
+            </div>
+          </div>
+
+          <div class="sp-clean-device-screen">
+            <img
+              src="/images/parceria-hero-laptop.png"
+              alt="Portal de Parceiros Dirhect - Página Exclusiva"
+              class="sp-clean-device-img"
+              width="650"
+              height="400"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+
+          <div class="sp-clean-device-footer">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="sp-footer-shield"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></svg>
+            <span>Espaço exclusivo no Portal de Parceiros Homologados Dirhect</span>
+          </div>
+        </div>
+      </div>
     </div>
-    <a href="#contato" class="stack-cta-btn">Quero conhecer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg></a>
   </div>
 </section>
+
 
 <div class="divider"></div>
 
@@ -1677,7 +1807,7 @@ footer .logo .h-letter { color: var(--white); }
   <p>Junte-se à rede de parceiros Dirhect e construa um fluxo de renda escalável e recorrente com a plataforma mais completa do mercado.</p>
   <div class="cta-row">
     <a href="#contato" class="btn-primary" style="font-size:1rem;padding:15px 34px">Iniciar Candidatura de Parceiro</a>
-    <a href="#modulos" class="btn-outline-white">Explorar a Plataforma</a>
+    <a href="#solucao" class="btn-outline-white">Explorar a Plataforma</a>
   </div>
 </section>
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import './ParceiroSubdominio.css'
 
 /** Bump ao alterar `public/parceiro-template.html` (cache bust na query string). */
-const PARTNER_TEMPLATE_VERSION = 'partnership-form-api-5211'
+const PARTNER_TEMPLATE_VERSION = 'remove-pilares-parceiro-20261021'
 
 function partnerTemplateUrl() {
   const base = import.meta.env.BASE_URL || '/'
