@@ -125,6 +125,7 @@ function MainLayout() {
         <Route path="/parceria/:slug" element={<ParceiroProfile />} />
         <Route path="/parcerias/:slug" element={<ParceiroProfile />} />
         <Route path="/ativary" element={<ParceiroProfile forcedSlug="ativary" />} />
+        <Route path="/solange" element={<ParceiroProfile forcedSlug="solange" />} />
 
         {/* Seja Parceiro (Comercial & Indicador - Novo Modelo Oficial) */}
         <Route path="/seja-parceiro" element={<SejaParceiro />} />

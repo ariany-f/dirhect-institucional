@@ -51,7 +51,43 @@ Em parceria com a Dirhect, a Ativary potencializa a transformação dos departam
     ],
     isActive: true,
     createdAt: '2024-01-15'
-  }
+  },
+  {
+    id: 'partner_solange_002',
+    name: 'Sol Tecnologia para RH',
+    brandName: 'Sol Tecnologia',
+    slug: 'solange',
+    aliases: ['sol-tecnologia', 'soltecnologia'],
+    logo: '/images/logos/solange-logo.jpg',
+    city: 'São Paulo',
+    state: 'SP',
+    country: 'Brasil',
+    website: 'https://dirhect.com.br/parceria/solange',
+    shortDescription: 'Consultoria especializada em soluções integradas, otimização de processos de Recursos Humanos, implantação e sustentação no ecossistema TOTVS RM e parceira homologada Dirhect.',
+    fullDescription: `Sol Tecnologia para RH é especialista em soluções integradas com foco profundo no ERP TOTVS RM e integrações, inteligência de processos, conformidade trabalhista e automação de rotinas de Recursos Humanos.
+
+Com 26 anos de sólida trajetória no mercado corporativo, atua de forma estratégica na implementação, sustentação e otimização de arquiteturas de RH, combinando especialização técnica em Departamento Pessoal a uma visão integrada da Gestão de Pessoas.
+
+Transforma a gestão de Recursos Humanos combinando a inteligência do TOTVS RM com a agilidade do Dirhect:
+• Eficiência Operacional: Eliminação de processos manuais, gargalos e retrabalhos.
+• Performance: Redução expressiva de custos e máxima rapidez nos fechamentos de folha, nas admissões e rotinas do RH.`,
+    primaryAreas: [
+      'TOTVS RM (Labore, Chronus, Vitae)',
+      'Consultoria e Implantação',
+      'Otimização de Processos de RH',
+      'Admissão Digital & Benefícios',
+      'Orquestrador de Tarefas'
+    ],
+    secondaryAreas: [
+      'Folha de Pagamento & Ponto',
+      'Conformidade Trabalhista & eSocial',
+      'SST e Segurança Ocupacional',
+      'App Meu RH',
+      'Treinamentos Especializados'
+    ],
+    isActive: true,
+    createdAt: '2026-10-22'
+  },
   /*
    * =======================================================================
    * MODELO PARA ADICIONAR NOVAS EMPRESAS PARCEIRAS NO FUTURO:
@@ -102,7 +138,7 @@ export function getPartnerBySlug(slug) {
   if (!slug) return null
   const cleanSlug = String(slug).trim().toLowerCase()
   return PARTNERS_DATA.find(
-    (p) => p.slug.toLowerCase() === cleanSlug && p.isActive
+    (p) => (p.slug.toLowerCase() === cleanSlug || (p.aliases && p.aliases.includes(cleanSlug))) && p.isActive
   ) || null
 }
 
