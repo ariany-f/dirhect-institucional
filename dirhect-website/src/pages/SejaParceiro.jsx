@@ -90,8 +90,8 @@ export default function SejaParceiro() {
   const simulatedArr = simulatedMrr * 12
   const isDirectMaxTier = simulatedArr >= 100000
 
-  // Alíquotas Comercial: 10% (<50k), 13% (50k-99.9k), 20% (>=100k)
-  const commercialRate = simulatedArr >= 100000 ? 0.20 : simulatedArr >= 50000 ? 0.13 : 0.10
+  // Alíquotas Comercial: 10% (<50k), 13% (50k-99.9k), 16% (>=100k)
+  const commercialRate = simulatedArr >= 100000 ? 0.16 : simulatedArr >= 50000 ? 0.13 : 0.10
   // Alíquotas Indicador: 5% (<50k), 7% (50k-99.9k), 10% (>=100k)
   const indicatorRate = simulatedArr >= 100000 ? 0.10 : simulatedArr >= 50000 ? 0.07 : 0.05
 
@@ -145,7 +145,7 @@ export default function SejaParceiro() {
     const endpoint = `${wpBaseUrl}/wp-json/dirhect/v1/send-partnership`
 
     const modeloNome = formData.modeloDesejado === 'comercial'
-      ? 'Parceiro Comercial (até 20% + Implantação)'
+      ? 'Parceiro Comercial (até 16% + Implantação)'
       : formData.modeloDesejado === 'indicador'
       ? 'Parceiro Indicador (até 10% + Implantação)'
       : 'Avaliação de Ambos os Modelos'
@@ -190,7 +190,7 @@ export default function SejaParceiro() {
     <div className="seja-parceiro-page">
       <SEO
         title="Seja um Parceiro Dirhect | Programa de Comissionamento Comercial e Indicador"
-        description="Conheça os programas de parceria da Dirhect. Ganhe remuneração recorrente mensal de até 20% + comissão sobre a taxa de implantação como Parceiro Comercial ou Indicador."
+        description="Conheça os programas de parceria da Dirhect. Ganhe remuneração recorrente mensal de até 16% + comissão sobre a taxa de implantação como Parceiro Comercial ou Indicador."
         canonical="https://dirhect.com.br/seja-parceiro"
       />
 
@@ -231,7 +231,7 @@ export default function SejaParceiro() {
             {/* Micro métricas na hero */}
             <div className="sp-hero-stats">
               <div className="sp-stat-item">
-                <span className="sp-stat-number">Até 20%</span>
+                <span className="sp-stat-number">Até 16%</span>
                 <span className="sp-stat-label">Comissão Recorrente</span>
               </div>
               <div className="sp-stat-divider" />
@@ -298,7 +298,7 @@ export default function SejaParceiro() {
               <div className="sp-model-highlight-box">
                 <div className="sp-highlight-label">Faixa de Comissionamento Recorrente</div>
                 <div className="sp-highlight-value sp-highlight-value--orange">
-                  10% <span>→</span> 13% <span>→</span> 20%
+                  10% <span>→</span> 13% <span>→</span> 16%
                 </div>
                 <div className="sp-highlight-sub">Progressão conforme o ARR anual gerado</div>
               </div>
@@ -306,11 +306,11 @@ export default function SejaParceiro() {
               <div className="sp-model-perks">
                 <div className="sp-perk-row">
                   <CheckCircle2 size={18} className="sp-perk-check" />
-                  <span><strong>Até 20% de comissão sobre o MRR</strong> de cada contrato durante toda a vigência.</span>
+                  <span><strong>Até 16% de comissão sobre o MRR</strong> de cada contrato durante toda a vigência.</span>
                 </div>
                 <div className="sp-perk-row">
                   <CheckCircle2 size={18} className="sp-perk-check" />
-                  <span><strong>+ Percentual alcançado aplicado sobre a taxa de implantação</strong> (ex: 20% de R$ 50k = R$ 10.000).</span>
+                  <span><strong>+ Percentual alcançado aplicado sobre a taxa de implantação</strong> (ex: 16% de R$ 50k = R$ 8.000).</span>
                 </div>
                 <div className="sp-perk-row">
                   <CheckCircle2 size={18} className="sp-perk-check" />
@@ -419,7 +419,7 @@ export default function SejaParceiro() {
                 onClick={() => setPartnerModel('comercial')}
               >
                 <Briefcase size={15} />
-                <span>Modelo Comercial (10% → 13% → 20%)</span>
+                <span>Modelo Comercial (10% → 13% → 16%)</span>
               </button>
               <button
                 type="button"
@@ -535,7 +535,7 @@ export default function SejaParceiro() {
 
               <div className="sp-visual-tier-rate-box">
                 <div className="sp-visual-tier-rate sp-visual-tier-rate--gold">
-                  {partnerModel === 'comercial' ? '20%' : '10%'}
+                  {partnerModel === 'comercial' ? '16%' : '10%'}
                   <small>/mês</small>
                 </div>
                 <span className="sp-visual-tier-rate-sub">Comissão Recorrente</span>
@@ -564,7 +564,7 @@ export default function SejaParceiro() {
                 </li>
                 <li>
                   <CheckCircle2 size={16} className="sp-tier-check-icon" />
-                  <span>{partnerModel === 'comercial' ? '20%' : '10%'} integral na implantação</span>
+                  <span>{partnerModel === 'comercial' ? '16%' : '10%'} integral na implantação</span>
                 </li>
                 <li>
                   <CheckCircle2 size={16} className="sp-tier-check-icon" />
@@ -596,7 +596,7 @@ export default function SejaParceiro() {
               </div>
               <div className="sp-rule-card-content">
                 <h4>Comissão Aplicada sobre o Setup</h4>
-                <p>A alíquota da sua faixa alcançada (10%, 13% ou 20% no Comercial / 5%, 7% ou 10% no Indicador) também é aplicada integralmente sobre o valor da taxa de implantação.</p>
+                <p>A alíquota da sua faixa alcançada (10%, 13% ou 16% no Comercial / 5%, 7% ou 10% no Indicador) também é aplicada integralmente sobre o valor da taxa de implantação.</p>
               </div>
             </div>
           </div>
@@ -614,7 +614,7 @@ export default function SejaParceiro() {
               Uma única venda pode levar <span className="sp-gradient-text">direto à faixa máxima</span>
             </h2>
             <p className="sp-section-desc">
-              Quando um contrato individual já supera R$ 100 mil de ARR, a comissão começa em 20% no Comercial ou 10% no Indicador.
+              Quando um contrato individual já supera R$ 100 mil de ARR, a comissão começa em 16% no Comercial ou 10% no Indicador.
             </p>
           </div>
 
@@ -634,7 +634,7 @@ export default function SejaParceiro() {
                   onClick={() => setPartnerModel('comercial')}
                 >
                   <Briefcase size={15} />
-                  <span>Comercial (10% a 20%)</span>
+                  <span>Comercial (10% a 16%)</span>
                 </button>
                 <button
                   type="button"
@@ -880,7 +880,7 @@ export default function SejaParceiro() {
                 </div>
               </div>
               <h3 className="sp-flow-title">Faixa Atingida</h3>
-              <p className="sp-flow-desc">Comercial (10%, 13% ou 20%) ou Indicador (5%, 7% ou 10%) aplicada imediatamente.</p>
+              <p className="sp-flow-desc">Comercial (10%, 13% ou 16%) ou Indicador (5%, 7% ou 10%) aplicada imediatamente.</p>
               <div className="sp-flow-arrow">
                 <ArrowRight size={13} />
               </div>
@@ -1245,7 +1245,7 @@ export default function SejaParceiro() {
                         <div className="sp-radio-icon-wrap">
                           <Briefcase size={16} />
                         </div>
-                        <span className="sp-radio-pill">Até 20% + Setup</span>
+                        <span className="sp-radio-pill">Até 16% + Setup</span>
                       </div>
                       <div className="sp-radio-content">
                         <strong>Parceiro Comercial</strong>
@@ -1461,7 +1461,7 @@ export default function SejaParceiro() {
             {[
               {
                 q: 'Como é calculada a comissão sobre a implantação?',
-                a: 'O percentual alcançado pelo parceiro (por exemplo, 20% no Comercial ou 10% no Indicador) também é aplicado diretamente sobre o valor da taxa de implantação cobrada do cliente. Se a implantação for de R$ 50.000 e o parceiro estiver na faixa de 20%, ele recebe R$ 10.000.'
+                a: 'O percentual alcançado pelo parceiro (por exemplo, 16% no Comercial ou 10% no Indicador) também é aplicado diretamente sobre o valor da taxa de implantação cobrada do cliente. Se a implantação for de R$ 50.000 e o parceiro estiver na faixa de 16%, ele recebe R$ 8.000.'
               },
               {
                 q: 'Como funciona a regra de não retroatividade?',
@@ -1473,7 +1473,7 @@ export default function SejaParceiro() {
               },
               {
                 q: 'Qual a diferença prática entre Parceiro Comercial e Indicador?',
-                a: 'O Parceiro Comercial participa ativamente das apresentações e reuniões comerciais com seus clientes, tendo comissões maiores (10% a 20%). O Parceiro Indicador apenas faz a indicação qualificada da oportunidade e a equipe Dirhect cuida de todo o ciclo de vendas (comissões de 5% a 10%).'
+                a: 'O Parceiro Comercial participa ativamente das apresentações e reuniões comerciais com seus clientes, tendo comissões maiores (10% a 16%). O Parceiro Indicador apenas faz a indicação qualificada da oportunidade e a equipe Dirhect cuida de todo o ciclo de vendas (comissões de 5% a 10%).'
               },
               {
                 q: 'O que acontece se um cliente atrasar a mensalidade?',

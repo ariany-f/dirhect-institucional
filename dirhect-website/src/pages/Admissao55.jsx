@@ -6,9 +6,7 @@ import {
   Users, 
   FileText, 
   CheckCircle2, 
-  Clock, 
   Shield, 
-  Zap,
   ArrowRight,
   Check,
   AlertTriangle,
@@ -27,7 +25,6 @@ import {
   Sparkles,
   ArrowUpRight
 } from 'lucide-react';
-import Header from '../components/Header.jsx?v=menu-nav-20260521';
 import Footer from '../components/Footer';
 import PhoneInput from '../components/PhoneInput';
 import { sendDemoEmail } from '../services/emailService';
@@ -108,54 +105,26 @@ const BASE_SET_INDEX = 2; // Conjunto central
 const BASE_OFFSET = BASE_SET_INDEX * OTHER_PRODUCTS.length; // 12
 const CAROUSEL_ITEMS = Array.from({ length: REPEAT_SETS }).flatMap(() => OTHER_PRODUCTS);
 
-const INTEGRATION_COMPANIES = [
+const FAQ_ITEMS = [
   {
-    name: 'TOTVS',
-    src: '/images/logos/totvs-logo.png',
-    category: 'ERP & Folha',
-    title: 'TOTVS RM & Protheus',
-    description: 'Sincronização direta de dados cadastrais e documentos para a folha de pagamento.',
-    highlight: 'Conexão Nativa'
+    q: 'Preciso pagar mensalidade?',
+    a: 'Não. No plano avulso você paga R$ 55 por admissão realizada, sem mensalidade fixa.'
   },
   {
-    name: 'SAP',
-    src: '/images/logos/sap-logo.webp',
-    category: 'ERP Global',
-    title: 'SAP HCM & SuccessFactors',
-    description: 'Integração de novos colaboradores e estrutura organizacional sem retrabalho.',
-    highlight: 'Conexão Segura'
+    q: 'Preciso contratar uma plataforma completa de RH?',
+    a: 'Não. Você usa apenas a Admissão Digital: o colaborador envia dados e documentos online e o RH acompanha tudo em um único lugar.'
   },
   {
-    name: 'LG lugar de gente',
-    src: '/images/logos/lgsistemas-logo.png',
-    category: 'Folha & DP',
-    title: 'LG Sistemas',
-    description: 'Alimentação automatizada das rotinas de Departamento Pessoal e folha.',
-    highlight: 'Fluxo Automatizado'
+    q: 'Funciona integrado ao meu ERP ou sistema de folha?',
+    a: 'O plano avulso de R$ 55 não inclui integração. Se você precisa conectar a admissão a sistemas como TOTVS, SAP, LG ou Gupy, fale com a equipe Dirhect.'
   },
   {
-    name: 'Gupy',
-    src: '/images/logos/gupy-logo.png',
-    category: 'R&S / ATS',
-    title: 'Gupy Admissão',
-    description: 'Puxe candidatos aprovados direto do processo seletivo para a admissão digital.',
-    highlight: 'Importação Direta'
+    q: 'Como eu começo?',
+    a: 'Preencha o formulário desta página. Nossa equipe comercial entra em contato nas próximas horas para liberar o seu acesso.'
   },
   {
-    name: 'Nexti',
-    src: '/images/logos/nexti-logo.png',
-    category: 'Ponto & Escala',
-    title: 'Nexti RH',
-    description: 'Ativação imediata do colaborador nas escalas de trabalho e controle de ponto.',
-    highlight: 'Sincronia em Tempo Real'
-  },
-  {
-    name: 'Closecare',
-    src: '/images/logos/closecare-logo.webp',
-    category: 'Saúde & Benefícios',
-    title: 'Closecare Saúde',
-    description: 'Validação integrada de atestados e documentações médicas admissionais.',
-    highlight: 'Validação Digital'
+    q: 'Os dados dos colaboradores ficam seguros?',
+    a: 'Sim. Os dados enviados são tratados de acordo com a LGPD.'
   }
 ];
 
@@ -190,6 +159,13 @@ const Admissao55 = () => {
 
   // Active product index (0 a 5) para indicadores e acessibilidade
   const activeProductIndex = ((currentIndex % OTHER_PRODUCTS.length) + OTHER_PRODUCTS.length) % OTHER_PRODUCTS.length;
+
+  // A rota fica dentro do MainLayout, que sempre renderiza o Header do site.
+  // Nesta landing ele é escondido (ver .lp-hide-site-header no CSS) para valer só o header enxuto.
+  useEffect(() => {
+    document.body.classList.add('lp-hide-site-header');
+    return () => document.body.classList.remove('lp-hide-site-header');
+  }, []);
 
   // Autoplay: avança continuamente a cada 3.5 segundos (pausa ao interagir)
   useEffect(() => {
@@ -389,7 +365,15 @@ const Admissao55 = () => {
         description="Contrate a admissão digital avulsa do Dirhect por R$ 55 por admissão. Coleta rápida de documentos, validação e integração sem mensalidade fixa."
         canonical="https://dirhect.com.br/admissao_55"
       />
-      <Header />
+      {/* HEADER ENXUTO DA LANDING (sem menu, para não tirar o visitante da página) */}
+      <header className="lp-header">
+        <div className="landing-container lp-header-inner">
+          <img src="/images/dirhect_color.svg" alt="Dirhect" width={120} className="lp-header-logo" />
+          <button type="button" onClick={openFormModal} className="lp-header-cta">
+            Começar por R$ 55
+          </button>
+        </div>
+      </header>
 
       {/* SEÇÃO 01 — HERO */}
       <section className="admissao-hero" aria-label="Introdução">
@@ -422,6 +406,11 @@ const Admissao55 = () => {
                 </div>
               </div>
             </div>
+
+            <p className="admissao-hero-nofee">
+              <CheckCircle2 size={18} className="nofee-icon" aria-hidden="true" />
+              <span><strong>Sem mensalidade:</strong> você paga só pelas admissões que fizer.</span>
+            </p>
 
             <div className="admissao-hero-action">
               <button onClick={openFormModal} className="admissao-btn-primary">
@@ -730,80 +719,18 @@ const Admissao55 = () => {
         </div>
       </section>
 
-      {/* SEÇÃO — INTEGRAÇÃO & CONECTIVIDADE (SHOWCASE PREMIUM) */}
-      <section className="admissao-integrations-section" aria-labelledby="integrations-title">
+      {/* SEÇÃO — INTEGRAÇÃO (RESUMIDA) */}
+      <section className="admissao-integration-short" aria-label="Integração com ERPs">
         <div className="landing-container">
-          <div className="admissao-integrations-header">
-            <div className="admissao-integrations-badge">
-              <span className="integrations-badge-dot" aria-hidden="true" />
-              <Zap size={14} className="integrations-badge-icon" aria-hidden="true" />
-              <span>INTEGRAÇÃO & CONECTIVIDADE</span>
-            </div>
-            <h2 id="integrations-title" className="admissao-integrations-title">
-              Conectado aos principais <span className="highlight-orange">sistemas e ERPs</span> do mercado
-            </h2>
-            <p className="admissao-integrations-desc">
-              Os dados e documentos da admissão digital fluem com segurança direto para a folha e o DP, eliminando retrabalho manual e digitação dupla.
+          <div className="integration-short-card">
+            <Layers size={22} className="integration-short-icon" aria-hidden="true" />
+            <p>
+              <strong>Precisa integrar com seu ERP ou folha?</strong> O plano avulso de R$ 55 não inclui integração.
+              Para conectar a admissão a sistemas como TOTVS, SAP, LG ou Gupy,{' '}
+              <button type="button" onClick={openFormModal} className="integration-short-link">
+                fale com a equipe Dirhect
+              </button>.
             </p>
-          </div>
-
-          <div className="admissao-integrations-grid">
-            {INTEGRATION_COMPANIES.map((company) => (
-              <div key={company.name} className="admissao-integration-tile">
-                <div className="integration-tile-top">
-                  <div className="integration-logo-badge">
-                    <img src={company.src} alt={`Logo ${company.name}`} loading="lazy" />
-                  </div>
-                  <span className="integration-category-pill">{company.category}</span>
-                </div>
-                <h3 className="integration-tile-title">{company.title}</h3>
-                <p className="integration-tile-desc">{company.description}</p>
-                <div className="integration-tile-footer">
-                  <span className="integration-status">
-                    <CheckCircle2 size={13} className="status-check" aria-hidden="true" />
-                    {company.highlight}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="admissao-integration-notice-card">
-            <div className="integration-notice-body">
-              <div className="integration-notice-icon-badge" aria-hidden="true">
-                <AlertCircle size={22} />
-              </div>
-              <div className="integration-notice-info">
-                <div className="integration-notice-headline">
-                  <span className="integration-notice-pill">Plano Avulso</span>
-                  <span className="integration-notice-title">Este plano é sem integração</span>
-                </div>
-                <p className="integration-notice-text">
-                  O valor de <strong>R$ 55 por admissão não inclui integração aos ERPs</strong>. Se a sua empresa deseja integrar a admissão digital diretamente com seus sistemas, entre em contato com a equipe Dirhect.
-                </p>
-              </div>
-            </div>
-            <button onClick={openFormModal} className="integration-notice-action-btn">
-              Falar com a equipe Dirhect
-              <ArrowRight size={15} className="notice-btn-arrow" />
-            </button>
-          </div>
-
-          <div className="admissao-integrations-bottom-bar">
-            <div className="integration-trust-item">
-              <Shield size={18} className="integration-trust-icon" aria-hidden="true" />
-              <span>APIs RESTful seguras & criptografia ponta a ponta</span>
-            </div>
-            <span className="benefit-separator" aria-hidden="true">•</span>
-            <div className="integration-trust-item">
-              <Clock size={18} className="integration-trust-icon" aria-hidden="true" />
-              <span>Sincronização ágil sem espera de TI</span>
-            </div>
-            <span className="benefit-separator" aria-hidden="true">•</span>
-            <div className="integration-trust-item">
-              <Check size={18} className="integration-trust-icon" aria-hidden="true" />
-              <span>Sem custo adicional de mensalidade</span>
-            </div>
           </div>
         </div>
       </section>
@@ -835,6 +762,21 @@ const Admissao55 = () => {
               <span className="offer-detail-divider">•</span>
               <span className="offer-detail-item highlight-free">Sem mensalidade</span>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* SEÇÃO — PERGUNTAS FREQUENTES */}
+      <section className="admissao-faq-section" aria-labelledby="faq-title">
+        <div className="landing-container admissao-faq-container">
+          <h2 id="faq-title">Perguntas frequentes</h2>
+          <div className="admissao-faq-list">
+            {FAQ_ITEMS.map((item) => (
+              <details key={item.q} className="admissao-faq-item">
+                <summary>{item.q}</summary>
+                <p>{item.a}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>
